@@ -1,0 +1,61 @@
+/*布局*/
+.flex-row{
+  width:100%;
+  height:100%;
+  display: flex;
+  flex-wrap:nowrap;
+  align-items: center;
+  align-content:center;
+  flex-direction:row;
+}
+.flex-col-1{flex: 1;align-self:center;}
+.flex-col-2{flex: 2;align-self:center;}
+.flex-col-3{flex: 3;align-self:center;}
+.flex-col-4{flex: 4;align-self:center;}
+.flex-col-5{flex: 5;align-self:center;}
+.flex-col-6{flex: 6;align-self:center;}
+.flex-col-7{flex: 7;align-self:center;}
+.flex-col-8{flex: 8;align-self:center;}
+.flex-col-9{flex: 9;align-self:center;}
+.flex-col-10{flex: 10;align-self:center;}
+.flex-col-12{flex: 12;align-self:center;}
+.flex-col-13{flex: 13;align-self:center;}
+/*纵向flex*/
+.flex-col{
+  display: flex;
+  flex-wrap:nowrap;
+  align-items: center;
+  align-content: center;
+  flex-direction: column;
+}
+.flex-row-1{flex: 1;align-self:center;}
+.flex-row-2{flex: 2;align-self:center;}
+.flex-col-3{flex: 3;align-self:center;}
+.flex-col-4{flex: 4;align-self:center;}
+.flex-col-5{flex: 5;align-self:center;}
+.flex-col-6{flex: 6;align-self:center;}
+.flex-col-7{flex: 7;align-self:center;}
+.flex-col-8{flex: 8;align-self:center;}
+.flex-col-9{flex: 9;align-self:center;}
+.flex-col-10{flex: 10;align-self:center;}
+.flex-col-12{flex: 12;align-self:center;}
+.flex-col-13{flex: 13;align-self:center;}
+
+.clearfix:after {
+  display: table;
+  content: " ";
+}
+/* 文字居中 */
+.text-left{text-align: left}
+.text-center{text-align: center}
+.text-right{text-align:right}
+
+.overflow-ellipsis{
+  overflow:hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+/*box-model*/
+.hide{
+  display: none;
+}

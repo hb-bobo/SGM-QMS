@@ -1,0 +1,68 @@
+/*过度动画*/
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+}
+/*Dialog*/
+.details-list>li:not(:last-child) {
+    border-bottom: 1px solid #EDEDED;
+    padding: 0.5em 0;
+}
+.details-item-left{
+    color: #000;
+}
+.details-item-right{
+
+}
+/*list*/
+.list-more{
+    padding: 0.4em 0;
+}
+/*item*/
+
+.item-title-center{
+    font-size: 0.8em;
+}
+.item-content{
+    padding-left: 2.6em;
+    margin-top: 0.8em;
+}
+.item-top{
+    padding: 1em 1.5em;
+    font-size: 0.8em;
+}
+.item-top span{
+    display: inline-block;
+    max-width: 7.5em;
+    overflow:hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.item-project-progress{
+    padding: 1em 1em;
+}
+
+.icon {
+    /* 通过设置 font-size 来改变图标大小 */
+    width: 1em; height: 1em;
+    /* 图标和文字相邻时，垂直对齐 */
+    vertical-align: -0.15em;
+    /* 通过设置 color 来改变 SVG 的颜色/fill */
+    fill: currentColor;
+    /* path 和 stroke 溢出 viewBox 部分在 IE 下会显示
+        normalize.css 中也包含这行 */
+    overflow: hidden;
+}

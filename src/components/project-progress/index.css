@@ -1,0 +1,33 @@
+
+.p-progress{
+    position: relative;
+}
+.p-progress .p-line{
+    position: absolute;
+    top: 36%;
+    width: 100%;
+    height: 18px;
+    z-index: -1;
+}
+.p-progress .p-content{
+    position: relative;
+    height: 62px;
+}
+.p-progress .p-time{
+    font-size: 10px;
+    transform: scale(0.8);
+    min-height: 12px;
+}
+.p-progress .p-content .icon{
+    width: 48px;
+    height: 48px;
+    color: #BFBFBF;
+}
+.p-progress .p-text{
+    position: absolute;
+    left: 50%;
+    top: 28%;
+    color: #FFF;
+    font-size: 10px;
+    transform: translateX(-50%) scale(1);
+}
