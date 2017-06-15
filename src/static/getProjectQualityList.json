@@ -1,0 +1,702 @@
+﻿{
+    "count": 12,
+    "result": [
+        {
+        "pqmName": "炊万辉Cuan Wanhui",
+        "prjctId": 108724,
+        "SUB_PRJCT_ID": 548,
+        "timingName": "ALL",
+        "prjctName": "9BLB-MY19",
+        "prjctChangeLevel": "New",
+        "prtsPrjctNo": "9BLB 2019,Y,",
+        "pqrrIveDate": "Dec 9, 2016 12:00:00 AM",
+        "pqrrPpvDate": "Jul 3, 2017 12:00:00 AM",
+        "pqrrMvbnsDate": "Sep 18, 2017 12:00:00 AM",
+        "pqrrMvbsDate": "Nov 27, 2017 12:00:00 AM",
+        "pqrrSorpDate": "Mar 5, 2018 12:00:00 AM",
+        "pqrrStcDate": "Mar 11, 2018 12:00:00 AM",
+        "pqrrNctDate": "Apr 28, 2017 12:00:00 AM",
+        "pqrrIvsDate": "May 25, 2016 12:00:00 AM",
+        "progress": [{
+            "subProjectID": "548",
+            "projectPhase": "IVS",
+            "openStatus": "Y",
+            "regateTime": "May 25, 2016 12:00:00 AM",
+            "isCrntPhase": "Y"
+        },
+        {
+            "subProjectID": "548",
+            "projectPhase": "IVE",
+            "openStatus": "Y",
+            "regateTime": "Dec 9, 2016 12:00:00 AM",
+            "isCrntPhase": "N"
+        },
+        {
+            "subProjectID": "548",
+            "projectPhase": "NCT",
+            "openStatus": "Y",
+            "regateTime": "Apr 28, 2017 12:00:00 AM",
+            "isCrntPhase": "N"
+        },
+        {
+            "subProjectID": "548",
+            "projectPhase": "PPV",
+            "openStatus": "Y",
+            "regateTime": "Jul 3, 2017 12:00:00 AM",
+            "isCrntPhase": "N"
+        },
+        {
+            "subProjectID": "548",
+            "projectPhase": "MVBns",
+            "openStatus": "N",
+            "regateTime": "Sep 18, 2017 12:00:00 AM",
+            "isCrntPhase": "N"
+        }],
+        "VOCCount": 0,
+        "VECount": 0,
+        "previous": {
+            "previousDate": "",
+            "previousDFMEACount": 0,
+            "previousDFMECountRatio": 0,
+            "previousDFMEAGreenCount": 0
+        },
+        "next": {
+            "nextDFMEAGreenCount": 0,
+            "previousDate": "",
+            "nextDFMEACount": 0,
+            "nextDFMECountRatio": 0
+        },
+        "sourceCounts": "5/0",
+        "hotLevelCounts": 0,
+        "orgnlStatusCount": "36/13",
+        "LLCount": "0/0/0",
+        "DFSSCOUNT": 0,
+        "JDPCOUNT": 0
+        },
+        {
+            "pqmName": "刘东升Liu Dongsheng",
+            "prjctId": 180398,
+            "SUB_PRJCT_ID": 1365,
+            "timingName": "ALL",
+            "pqrrStatus": "G",
+            "prjctName": "C1UL-MY18",
+            "prjctChangeLevel": "Major",
+            "prtsPrjctNo": "C1UL-S 2018,Y,2016-10-30;9T60 China,Y,2016-10-30",
+            "pqrrPpvDate": "Oct 30, 2016 12:00:00 AM",
+            "pqrrMvbnsDate": "Feb 6, 2017 12:00:00 AM",
+            "pqrrMvbsDate": "Apr 20, 2017 12:00:00 AM",
+            "pqrrSorpDate": "Jun 30, 2017 12:00:00 AM",
+            "pqrrStcDate": "Jul 10, 2017 12:00:00 AM",
+            "pqrrLtrDate": "Sep 25, 2017 12:00:00 AM",
+            "progress": [{
+                "subProjectID": "1365",
+                "projectPhase": "PPV",
+                "openStatus": "Y",
+                "regateTime": "Oct 30, 2016 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1365",
+                "projectPhase": "MVBns",
+                "openStatus": "Y",
+                "regateTime": "Feb 6, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1365",
+                "projectPhase": "MVBs",
+                "openStatus": "Y",
+                "regateTime": "Apr 20, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1365",
+                "projectPhase": "SORP",
+                "openStatus": "Y",
+                "regateTime": "Jun 30, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1365",
+                "projectPhase": "STC",
+                "openStatus": "Y",
+                "regateTime": "Jul 10, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            }],
+            "VOCCount": 0,
+            "VECount": 0,
+            "previous": {
+                "previousDate": "",
+                "previousDFMEACount": 0,
+                "previousDFMECountRatio": 0,
+                "previousDFMEAGreenCount": 0
+            },
+            "next": {
+                "nextDFMEAGreenCount": 0,
+                "previousDate": "",
+                "nextDFMEACount": 0,
+                "nextDFMECountRatio": 0
+            },
+            "sourceCounts": "5/0",
+            "hotLevelCounts": 0,
+            "orgnlStatusCount": "7/3",
+            "LLCount": "0/0/0",
+            "DFSSCOUNT": 0,
+            "JDPCOUNT": 0
+        },
+        {
+            "pqmName": "顾立晨Gu Lichen",
+            "prjctId": 328,
+            "SUB_PRJCT_ID": 1262,
+            "timingName": "ALL",
+            "pqrrStatus": "R",
+            "prjctName": "E2SB-MY18",
+            "prjctChangeLevel": "Major",
+            "prtsPrjctNo": "E2SB-S 2018,Y,2016-07-18",
+            "pqrrPpvDate": "Nov 18, 2016 12:00:00 AM",
+            "pqrrMvbnsDate": "Feb 20, 2017 12:00:00 AM",
+            "pqrrMvbsDate": "May 2, 2017 12:00:00 AM",
+            "pqrrSorpDate": "Jul 14, 2017 12:00:00 AM",
+            "pqrrStcDate": "Jul 24, 2017 12:00:00 AM",
+            "pqrrLtrDate": "Oct 9, 2017 12:00:00 AM",
+            "pqrrDsoDate": "May 19, 2014 12:00:00 AM",
+            "pqrrCsoDate": "Aug 8, 2014 12:00:00 AM",
+            "pqrrNctDate": "Sep 8, 2016 12:00:00 AM",
+            "progress": [{
+                "subProjectID": "1262",
+                "projectPhase": "DSO",
+                "openStatus": "Y",
+                "regateTime": "May 19, 2014 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1262",
+                "projectPhase": "CSO",
+                "openStatus": "Y",
+                "regateTime": "Aug 8, 2014 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1262",
+                "projectPhase": "NCT",
+                "openStatus": "Y",
+                "regateTime": "Sep 8, 2016 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1262",
+                "projectPhase": "PPV",
+                "openStatus": "Y",
+                "regateTime": "Nov 18, 2016 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1262",
+                "projectPhase": "MVBns",
+                "openStatus": "Y",
+                "regateTime": "Feb 20, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            }],
+            "VOCCount": 0,
+            "VECount": 0,
+            "previous": {
+                "previousDate": "",
+                "previousDFMEACount": 0,
+                "previousDFMECountRatio": 0,
+                "previousDFMEAGreenCount": 0
+            },
+            "next": {
+                "nextDFMEAGreenCount": 0,
+                "previousDate": "",
+                "nextDFMEACount": 0,
+                "nextDFMECountRatio": 0
+            },
+            "sourceCounts": "5/0",
+            "hotLevelCounts": 0,
+            "orgnlStatusCount": "11/0",
+            "LLCount": "0/0/0",
+            "DFSSCOUNT": 0,
+            "JDPCOUNT": 0
+        },
+        {
+            "pqmName": "孙凯Sun Kai",
+            "prjctId": 984,
+            "SUB_PRJCT_ID": 6502,
+            "timingName": "C10T",
+            "pqrrStatus": "Y",
+            "prjctName": "K216-MY17",
+            "prjctChangeLevel": "Major",
+            "pqrrPpvDate": "Oct 9, 2016 12:00:00 AM",
+            "pqrrMvbnsDate": "Dec 27, 2016 12:00:00 AM",
+            "pqrrMvbsDate": "May 18, 2017 12:00:00 AM",
+            "pqrrSorpDate": "Oct 23, 2017 12:00:00 AM",
+            "pqrrStcDate": "Oct 31, 2017 12:00:00 AM",
+            "progress": [{
+                "subProjectID": "6502",
+                "projectPhase": "PPV",
+                "openStatus": "Y",
+                "regateTime": "Oct 9, 2016 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "6502",
+                "projectPhase": "MVBns",
+                "openStatus": "Y",
+                "regateTime": "Dec 27, 2016 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "6502",
+                "projectPhase": "MVBs",
+                "openStatus": "Y",
+                "regateTime": "May 18, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "6502",
+                "projectPhase": "SORP",
+                "openStatus": "N",
+                "regateTime": "Oct 23, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "6502",
+                "projectPhase": "STC",
+                "openStatus": "N",
+                "regateTime": "Oct 31, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            }],
+            "VOCCount": 0,
+            "VECount": 0,
+            "previous": {
+                "previousDate": "",
+                "previousDFMEACount": 0,
+                "previousDFMECountRatio": 0,
+                "previousDFMEAGreenCount": 0
+            },
+            "next": {
+                "nextDFMEAGreenCount": 0,
+                "previousDate": "",
+                "nextDFMEACount": 0,
+                "nextDFMECountRatio": 0
+            },
+            "sourceCounts": "0/0",
+            "hotLevelCounts": 0,
+            "orgnlStatusCount": "0/0",
+            "LLCount": "0/0/1",
+            "DFSSCOUNT": 0,
+            "JDPCOUNT": 0
+        },
+        {
+            "pqmName": "徐龙Xu Long",
+            "prjctId": 773,
+            "SUB_PRJCT_ID": 391,
+            "timingName": "ALL",
+            "pqrrStatus": "Y",
+            "prjctName": "K215-MY18",
+            "prjctChangeLevel": "MCP",
+            "pqrrIveDate": "Apr 8, 2017 12:00:00 AM",
+            "pqrrPpvDate": "Apr 8, 2017 12:00:00 AM",
+            "pqrrMvbnsDate": "Jul 4, 2017 12:00:00 AM",
+            "pqrrMvbsDate": "Aug 29, 2017 12:00:00 AM",
+            "pqrrSorpDate": "Apr 1, 2017 12:00:00 AM",
+            "pqrrStcDate": "Sep 30, 2017 12:00:00 AM",
+            "pqrrNctDate": "Mar 31, 2017 12:00:00 AM",
+            "progress": [{
+                "subProjectID": "391",
+                "projectPhase": "PFI",
+                "openStatus": "N",
+                "regateTime": "Apr 4, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "391",
+                "projectPhase": "SORP",
+                "openStatus": "N",
+                "regateTime": "Apr 1, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            }],
+            "VOCCount": 0,
+            "VECount": 0,
+            "previous": {
+                "previousDate": "",
+                "previousDFMEACount": 0,
+                "previousDFMECountRatio": 0,
+                "previousDFMEAGreenCount": 0
+            },
+            "next": {
+                "nextDFMEAGreenCount": 0,
+                "previousDate": "Feb 7, 2018 12:00:00 AM",
+                "nextDFMEACount": 39,
+                "nextDFMECountRatio": "0.00"
+            },
+            "sourceCounts": "1/0",
+            "hotLevelCounts": 0,
+            "orgnlStatusCount": "2/2",
+            "LLCount": "0/0/0",
+            "DFSSCOUNT": 0,
+            "JDPCOUNT": 0
+        },
+        {
+            "pqmName": "刘东升Liu Dongsheng",
+            "prjctId": 547977,
+            "SUB_PRJCT_ID": 1553,
+            "timingName": "ALL",
+            "pqrrStatus": "W",
+            "prjctName": "E2LB-MY18",
+            "prjctChangeLevel": "LCI 2",
+            "prtsPrjctNo": "E2LB 2018,Y,2016-04-13",
+            "pqrrPpvDate": "May 15, 2017 12:00:00 AM",
+            "pqrrMvbnsDate": "Aug 7, 2017 12:00:00 AM",
+            "pqrrMvbsDate": "Oct 16, 2017 12:00:00 AM",
+            "pqrrSorpDate": "Dec 29, 2017 12:00:00 AM",
+            "pqrrStcDate": "Jan 5, 2018 12:00:00 AM",
+            "progress": [{
+                "subProjectID": "1553",
+                "projectPhase": "PPV",
+                "openStatus": "N",
+                "regateTime": "May 15, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1553",
+                "projectPhase": "MVBns",
+                "openStatus": "N",
+                "regateTime": "Aug 7, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1553",
+                "projectPhase": "MVBs",
+                "openStatus": "N",
+                "regateTime": "Oct 16, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1553",
+                "projectPhase": "SORP",
+                "openStatus": "N",
+                "regateTime": "Dec 29, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1553",
+                "projectPhase": "STC",
+                "openStatus": "N",
+                "regateTime": "Jan 5, 2018 12:00:00 AM",
+                "isCrntPhase": "N"
+            }],
+            "VOCCount": 0,
+            "VECount": 0,
+            "previous": {
+                "previousDate": "",
+                "previousDFMEACount": 0,
+                "previousDFMECountRatio": 0,
+                "previousDFMEAGreenCount": 0
+            },
+            "next": {
+                "nextDFMEAGreenCount": 0,
+                "previousDate": "",
+                "nextDFMEACount": 0,
+                "nextDFMECountRatio": 0
+            },
+            "sourceCounts": "0/0",
+            "hotLevelCounts": 0,
+            "orgnlStatusCount": "0/0",
+            "LLCount": "0/0/0",
+            "DFSSCOUNT": 0,
+            "JDPCOUNT": 0
+        },
+        {
+            "pqmName": "孙凯Sun Kai",
+            "prjctId": 636,
+            "SUB_PRJCT_ID": 1028,
+            "timingName": "ALL",
+            "pqrrStatus": "Y",
+            "prjctName": "K256-MY18",
+            "prjctChangeLevel": "Major",
+            "pqrrIveDate": "Dec 23, 2016 12:00:00 AM",
+            "pqrrPpvDate": "May 12, 2017 12:00:00 AM",
+            "pqrrMvbnsDate": "Jul 17, 2017 12:00:00 AM",
+            "pqrrMvbsDate": "Sep 28, 2017 12:00:00 AM",
+            "pqrrSorpDate": "Nov 27, 2017 12:00:00 AM",
+            "pqrrStcDate": "Dec 4, 2017 12:00:00 AM",
+            "pqrrLtrDate": "Feb 19, 2018 12:00:00 AM",
+            "pqrrDsoDate": "Sep 21, 2015 12:00:00 AM",
+            "pqrrCsoDate": "Nov 27, 2015 12:00:00 AM",
+            "pqrrVdrDate": "Apr 19, 2016 12:00:00 AM",
+            "pqrrNctDate": "Mar 10, 2017 12:00:00 AM",
+            "pqrrIvsDate": "Jun 24, 2016 12:00:00 AM",
+            "progress": [{
+                "subProjectID": "1028",
+                "projectPhase": "CSO",
+                "openStatus": "Y",
+                "regateTime": "Nov 27, 2015 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1028",
+                "projectPhase": "VDR",
+                "openStatus": "Y",
+                "regateTime": "Apr 19, 2016 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1028",
+                "projectPhase": "IVS",
+                "openStatus": "Y",
+                "regateTime": "Jun 24, 2016 12:00:00 AM",
+                "isCrntPhase": "Y"
+            },
+            {
+                "subProjectID": "1028",
+                "projectPhase": "IVE",
+                "openStatus": "Y",
+                "regateTime": "Dec 23, 2016 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1028",
+                "projectPhase": "NCT",
+                "openStatus": "Y",
+                "regateTime": "Mar 10, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            }],
+            "VOCCount": 0,
+            "VECount": 0,
+            "previous": {
+                "previousDate": "",
+                "previousDFMEACount": 0,
+                "previousDFMECountRatio": 0,
+                "previousDFMEAGreenCount": 0
+            },
+            "next": {
+                "nextDFMEAGreenCount": 0,
+                "previousDate": "Jan 15, 2018 12:00:00 AM",
+                "nextDFMEACount": 99,
+                "nextDFMECountRatio": "0.00"
+            },
+            "sourceCounts": "0/0",
+            "hotLevelCounts": 2,
+            "orgnlStatusCount": "8/6",
+            "LLCount": "0/0/0",
+            "DFSSCOUNT": 0,
+            "JDPCOUNT": 9
+        },
+        {
+            "pqmName": "张磊Zhang Lei",
+            "prjctId": 163410,
+            "SUB_PRJCT_ID": 1363,
+            "timingName": "ALL",
+            "pqrrStatus": "W",
+            "prjctName": "D2JB-MY18",
+            "prjctChangeLevel": "LCI 1",
+            "prtsPrjctNo": "D2JB-S 2018,Y,2017-02-10",
+            "pqrrPpvDate": "Feb 13, 2017 12:00:00 AM",
+            "pqrrMvbnsDate": "May 12, 2017 12:00:00 AM",
+            "pqrrMvbsDate": "Jul 24, 2017 12:00:00 AM",
+            "pqrrSorpDate": "Oct 23, 2017 12:00:00 AM",
+            "pqrrStcDate": "Nov 3, 2017 12:00:00 AM",
+            "progress": [{
+                "subProjectID": "1363",
+                "projectPhase": "PPV",
+                "openStatus": "Y",
+                "regateTime": "Feb 13, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1363",
+                "projectPhase": "MVBns",
+                "openStatus": "N",
+                "regateTime": "May 12, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1363",
+                "projectPhase": "MVBs",
+                "openStatus": "N",
+                "regateTime": "Jul 24, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1363",
+                "projectPhase": "SORP",
+                "openStatus": "N",
+                "regateTime": "Oct 23, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1363",
+                "projectPhase": "STC",
+                "openStatus": "N",
+                "regateTime": "Nov 3, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            }],
+            "VOCCount": 0,
+            "VECount": 0,
+            "previous": {
+                "previousDate": "",
+                "previousDFMEACount": 0,
+                "previousDFMECountRatio": 0,
+                "previousDFMEAGreenCount": 0
+            },
+            "next": {
+                "nextDFMEAGreenCount": 0,
+                "previousDate": "",
+                "nextDFMEACount": 0,
+                "nextDFMECountRatio": 0
+            },
+            "sourceCounts": "0/0",
+            "hotLevelCounts": 0,
+            "orgnlStatusCount": "0/0",
+            "LLCount": "0/0/0",
+            "DFSSCOUNT": 0,
+            "JDPCOUNT": 0
+        },
+        {
+            "pqmName": "甘维银Gan Weiyin",
+            "prjctId": 78878,
+            "SUB_PRJCT_ID": 541,
+            "timingName": "ALL",
+            "pqrrStatus": "W",
+            "prjctName": "E18-MY18",
+            "prjctChangeLevel": "MCM",
+            "prtsPrjctNo": "P1LL-S E18 2018,Y,2017-03-23",
+            "pqrrPpvDate": "Mar 23, 2017 12:00:00 AM",
+            "pqrrMvbnsDate": "Jun 5, 2017 12:00:00 AM",
+            "pqrrMvbsDate": "Aug 14, 2017 12:00:00 AM",
+            "pqrrSorpDate": "Oct 9, 2017 12:00:00 AM",
+            "pqrrStcDate": "Oct 16, 2017 12:00:00 AM",
+            "pqrrLtrDate": "Jan 8, 2018 12:00:00 AM",
+            "progress": [{
+                "subProjectID": "541",
+                "projectPhase": "PPV",
+                "openStatus": "Y",
+                "regateTime": "Mar 23, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "541",
+                "projectPhase": "MVBns",
+                "openStatus": "N",
+                "regateTime": "Jun 5, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "541",
+                "projectPhase": "MVBs",
+                "openStatus": "N",
+                "regateTime": "Aug 14, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "541",
+                "projectPhase": "SORP",
+                "openStatus": "N",
+                "regateTime": "Oct 9, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "541",
+                "projectPhase": "STC",
+                "openStatus": "N",
+                "regateTime": "Oct 16, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            }],
+            "VOCCount": 0,
+            "VECount": 0,
+            "previous": {
+                "previousDate": "",
+                "previousDFMEACount": 0,
+                "previousDFMECountRatio": 0,
+                "previousDFMEAGreenCount": 0
+            },
+            "next": {
+                "nextDFMEAGreenCount": 0,
+                "previousDate": "",
+                "nextDFMEACount": 0,
+                "nextDFMECountRatio": 0
+            },
+            "sourceCounts": "2/0",
+            "hotLevelCounts": 0,
+            "orgnlStatusCount": "2/0",
+            "LLCount": "0/0/0",
+            "DFSSCOUNT": 0,
+            "JDPCOUNT": 0
+        },
+        {
+            "pqmName": "张磊Zhang Lei",
+            "prjctId": 573147,
+            "SUB_PRJCT_ID": 1255,
+            "timingName": "ALL",
+            "pqrrStatus": "W",
+            "prjctName": "D2LC-MY18",
+            "prjctChangeLevel": "LCI 1",
+            "prtsPrjctNo": "D2JC-S 2018,Y,2016-12-13;D2LC-S 2018,Y,2016-12-13",
+            "pqrrPpvDate": "Dec 20, 2016 12:00:00 AM",
+            "pqrrMvbnsDate": "Mar 13, 2017 12:00:00 AM",
+            "pqrrMvbsDate": "Apr 27, 2017 12:00:00 AM",
+            "pqrrSorpDate": "Jun 9, 2017 12:00:00 AM",
+            "pqrrStcDate": "Jun 19, 2017 12:00:00 AM",
+            "progress": [{
+                "subProjectID": "1255",
+                "projectPhase": "PPV",
+                "openStatus": "Y",
+                "regateTime": "Dec 20, 2016 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1255",
+                "projectPhase": "MVBns",
+                "openStatus": "Y",
+                "regateTime": "Mar 13, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1255",
+                "projectPhase": "MVBs",
+                "openStatus": "N",
+                "regateTime": "Apr 27, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1255",
+                "projectPhase": "SORP",
+                "openStatus": "N",
+                "regateTime": "Jun 9, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            },
+            {
+                "subProjectID": "1255",
+                "projectPhase": "STC",
+                "openStatus": "N",
+                "regateTime": "Jun 19, 2017 12:00:00 AM",
+                "isCrntPhase": "N"
+            }],
+            "VOCCount": 0,
+            "VECount": 0,
+            "previous": {
+                "previousDate": "",
+                "previousDFMEACount": 0,
+                "previousDFMECountRatio": 0,
+                "previousDFMEAGreenCount": 0
+            },
+            "next": {
+                "nextDFMEAGreenCount": 0,
+                "previousDate": "",
+                "nextDFMEACount": 0,
+                "nextDFMECountRatio": 0
+            },
+            "sourceCounts": "0/0",
+            "hotLevelCounts": 0,
+            "orgnlStatusCount": "1/0",
+            "LLCount": "0/0/0",
+            "DFSSCOUNT": 0,
+            "JDPCOUNT": 0
+        }
+    ],
+    "pageNum": 1,
+    "pageSize": 10,
+    "pages": 2,
+    "size": 10
+}

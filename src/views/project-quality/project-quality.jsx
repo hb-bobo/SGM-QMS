@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import AppConfig from '@/AppConfig';
+// import AppConfig from '@/AppConfig';
 import { RouteWithSubRoutes } from '@/router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,6 +11,7 @@ import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import NewProjectOverviewItemList from './new-project-overview-item';
+import getProjectQualityList from 'static/getProjectQualityList.json';
 // import goBack from '@/mixin/goBack';
 // import mixins from '@/mixin/mixin';
 
@@ -37,7 +38,7 @@ class ProjectQuality extends React.Component {
         store: PropTypes.object
     }
     componentDidMount ()　{
-        fetch(AppConfig.API + '/getData', {
+        /*fetch(AppConfig.API + '/getData', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,7 +51,9 @@ class ProjectQuality extends React.Component {
         }).then((res) => {
             this.props.actions.fillListData(res.result)
             console.log(res.result)
-        })
+        })*/
+        this.props.actions.fillListData(getProjectQualityList.result)
+        
     }
     /*back*/
     goBack = () => {

@@ -1,9 +1,17 @@
 import * as React from 'react';
 import AppRouter from './router';
+import store from './store';
+// 各种Provider
+import { Provider } from 'react-redux';
+import { IntlProvider } from 'react-intl';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-// import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+
+import {addLocaleData} from 'react-intl';
+import zh from 'react-intl/locale-data/zh';
+import en from 'react-intl/locale-data/en';
+import AppConfig, { languagePkg } from './AppConfig';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-// import {cyan500} from 'material-ui/styles/colors';
+
 import './static/css/base.css';
 import './static/css/app.css';
 import './static/css/common.css';
@@ -14,14 +22,16 @@ const muiTheme = getMuiTheme({
     primary1Color: '#333333',
   }
 });
-
+addLocaleData([...en, ...zh]);
 class App extends React.Component{
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-        <div className="App">
-          <AppRouter/>
-        </div>
+          <IntlProvider locale={AppConfig.language} messages={languagePkg.en}>
+            <Provider store={store}>
+              <AppRouter/>
+            </Provider>
+          </IntlProvider>
       </MuiThemeProvider>
     );
   }

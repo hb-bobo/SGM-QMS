@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { RouteWithSubRoutes } from '@/router';
-
+/*import {
+    FormattedNumber,
+    FormattedPlural,
+} from 'react-intl';*/
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
