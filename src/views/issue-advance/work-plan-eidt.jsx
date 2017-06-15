@@ -4,7 +4,7 @@ import DatePicker from 'material-ui/DatePicker';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
-// import pathToJSON from '@/utils/object/stringToJSON';
+import pathToJSON from '@/utils/object/pathToJSON';
 /*
     planDesc         "描述"
     planFinishDate   "计划完成时间"
@@ -30,34 +30,19 @@ export class WorkPlanEdit extends React.Component {
         disableYearSelection: false,
         value: null,
         editData: {
-            planDesc: '11111',
-            planFinishDate: '',
+            planDesc: '2017-10-27',
+            planFinishDate: minDate,
             prblmId: '',
             prblmPhaseID: '',
             rspnsUser: '',
             workPlanID: '',
-            workPlanStatus: '',
+            workPlanStatus: 'Yes',
         }
     }
 
-    handleChangeMinDate = (event, date) => {
-        this.setState({
-        minDate: date,
-        });
-    };
-
-    handleChangeMaxDate = (event, date) => {
-        this.setState({
-        maxDate: date,
-        });
-    };
-    model = (key) => {
+    bind = (key) => {
         return (e) => {
-            // console.log(pathToJSON(key, e.target.value))
-            /*newData[statePath[1]]
-            editData[statePath[1]] = e.target.value
-            this.setState(({})[])
-            console.log()*/
+            this.setState(pathToJSON(key, e.target.value));
         }
     }
     handleChange = (event, index, value) => this.setState({value});
@@ -71,13 +56,13 @@ export class WorkPlanEdit extends React.Component {
                     </div>
                     <div className="flex-col-7">
                         <TextField
-                            hintText="MultiLine with rows: 2 and rowsMax: 4"
+                            hintText="hintText"
                             multiLine={true}
                             value={editData.planDesc}
-                            onChange={this.model('editData.planDesc')}
+                            onChange={this.bind('editData.planDesc')}
                             rows={3}
                             rowsMax={3}
-                        /><br />
+                        />
                     </div>
                 </div>
                 <div className="edit-item flex-row">
@@ -86,6 +71,8 @@ export class WorkPlanEdit extends React.Component {
                     </div>
                     <div className="flex-col-7">
                         <TextField
+                            value={editData.prblmPhaseID}
+                            onChange={this.bind('editData.prblmPhaseID')}
                             hintText="hintText"
                         />
                     </div>
@@ -96,7 +83,8 @@ export class WorkPlanEdit extends React.Component {
                     </div>
                     <div className="flex-col-7">
                         <TextField
-                            value={'11'}
+                            value={editData.rspnsUser}
+                            onChange={this.bind('editData.rspnsUser')}
                             hintText="hintText"
                         />
                     </div>
@@ -111,6 +99,7 @@ export class WorkPlanEdit extends React.Component {
                             autoOk={this.state.autoOk}
                             minDate={this.state.minDate}
                             maxDate={this.state.maxDate}
+                            defaultDate={minDate}
                             disableYearSelection={this.state.disableYearSelection}
                         />
                     </div>
@@ -126,6 +115,7 @@ export class WorkPlanEdit extends React.Component {
                             minDate={this.state.minDate}
                             maxDate={this.state.maxDate}
                             disableYearSelection={this.state.disableYearSelection}
+
                         />
                     </div>
                 </div>
@@ -135,8 +125,8 @@ export class WorkPlanEdit extends React.Component {
                     </div>
                     <div className="flex-col-7">
                         <SelectField
-                            value={this.state.value}
-                            onChange={this.handleChange}
+                            value={editData.workPlanStatus}
+                            onChange={this.bind('editData.workPlanStatus')}
                             hintText="hintText"
                         >
                             <MenuItem value={null} primaryText="" />
