@@ -58,7 +58,7 @@ class ProjectQuality extends React.Component {
     /*back*/
     goBack = () => {
         this.props.history.go(-1);
-        if (this.props.match.path === '/project-quality') {
+        if (this.props.match.path === '/manage/project-quality') {
             this.setState({
                 isIndex: true
             });

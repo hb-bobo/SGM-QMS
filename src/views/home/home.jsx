@@ -14,7 +14,10 @@ class HomePage extends React.Component{
             <Link to="/EQRHotIssue">EQR热点</Link>
           </RaisedButton>
           <RaisedButton>
-            <Link to="/project-quality">项目质量</Link>
+            <Link to="/manage/project-quality">项目质量</Link>
+          </RaisedButton>
+          <RaisedButton>
+            <Link to="/manage/quality-month-report">质量月报</Link>
           </RaisedButton>
         </div>
     );

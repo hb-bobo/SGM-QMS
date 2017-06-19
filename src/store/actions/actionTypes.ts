@@ -1,2 +1,5 @@
-export const DEL_ITEM = 'DEL_ITEM';
+
 export const FILL_LIST_DATA = 'FILL_LIST_DATA';
+export const CLEAR_LIST_DATA = 'CLEAR_LIST_DATA';
+export const UP_TEMPE_DATA = 'UP_TEMPE_DATA';
+export const CLEAR_TEMPE_DATA = 'CLEAR_TEMPE_DATA';

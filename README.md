@@ -9,6 +9,7 @@
 ├── /public/            # 公共文件
 │ ├── index.html        # 模板文件
 │ └── mainfest.json     # 模板文件配置
+├── /simulate-data/     # nodejs模拟数据交互
 ├── /src/               # 项目源码目录
 │ ├── /components/      # UI组件及UI相关方法
 │ ├── /router/          # 路由

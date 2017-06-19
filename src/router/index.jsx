@@ -9,7 +9,10 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {
   HomePage,
   Error404,
+  Manage,
+  QualityMonthReport,
   ProjectQuality,
+  IssueAdvance,
   EQRHotIssue
 } from '@/views/';
 /*import {
@@ -24,20 +27,43 @@ export const routes = [
     path: '/404',
     component: Error404
   },
-  { path: '/',
+  { 
+    path: '/',
+    exact: true,
     component: HomePage
   },
-  { path: '/project-quality',
-    component: ProjectQuality
+  {
+    path: '/manage',
+    component: Manage,
+    routes: [
+      {
+        path: '/manage/quality-month-report',
+        component: QualityMonthReport,
+      },
+      { 
+        path: '/manage/project-quality',
+        component: ProjectQuality
+      }
+    ]
   },
   { 
     path: '/issue-advance',
     exact: false,
-    component: require('@/views/issue-advance/common-advance').default,
+    component: IssueAdvance,
     routes: [
       {
-        path: '/issue-advance/work-plan-eidt',
-        component: require('@/views/issue-advance/work-plan-eidt').default,
+        path: '/issue-advance/PRTS',
+        component: require('@/views/issue-advance/PRTS-issue-advance').default,
+      },
+      {
+        name: 'work-plan-edit',
+        path: '/issue-advance/work-plan-edit/:id',
+        component: require('@/views/issue-advance/work-plan-edit').default,
+      },
+      {
+        name: 'work-plan-edit',
+        path: '/issue-advance/edit/:id',
+        component: require('@/views/issue-advance/edit').default,
       }
     ]
   },
@@ -61,9 +87,6 @@ export const routes = [
 export const RouteWithSubRoutes = (route) => {
   var isExact = route.exact || false;
   // if exact = true will replace homePafe
-  if (route.path === '/') {
-    isExact = true;
-  }
   return (
     <ReactCSSTransitionGroup
       transitionName="example"
@@ -77,6 +100,7 @@ export const RouteWithSubRoutes = (route) => {
         // pass the sub-routes down to keep nesting
           <route.component
             {...props}
+            parent={route.parent}
             routes={route.routes}
           />
         )}

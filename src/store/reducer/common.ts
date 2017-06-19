@@ -13,12 +13,13 @@ export default {
     },
     // 用 types 作key保证action唯一性
     mutations: {
-        [types.DEL_ITEM] (state: States, action: any) {
-            state.b = action
-        },
+        /*fill list-item data, listData usually is a Array<{}>*/
         [types.FILL_LIST_DATA] (state: States, action: any) {
             console.log(action)
             state.listData = action.payload
+        },
+        [types.UP_TEMPE_DATA] (state: States, action: any) {
+            state.tempData = action.payload
         }
     }
 }

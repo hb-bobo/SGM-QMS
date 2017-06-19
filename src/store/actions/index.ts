@@ -1,6 +1,8 @@
 import {
-  DEL_ITEM,
-  FILL_LIST_DATA
+  FILL_LIST_DATA,
+  CLEAR_LIST_DATA,
+  UP_TEMPE_DATA,
+  CLEAR_TEMPE_DATA
 } from './actionTypes';
 import AppConfig from '../../AppConfig';
 // action 格式
@@ -8,12 +10,7 @@ interface Action {
     type: string,
     payload: any
 }
-export const delItem: Function = function (payload: any): Action {
-    return {
-        type: DEL_ITEM,
-        payload: payload
-    }
-}
+
 export const fillListData: Function = function (payload: any): Action {
     return {
         type: FILL_LIST_DATA,
@@ -21,6 +18,25 @@ export const fillListData: Function = function (payload: any): Action {
     }
 }
 
+export const clearListData: Function = function (payload: any): Action {
+    return {
+        type: CLEAR_LIST_DATA,
+        payload: payload
+    }
+}
+
+export const upTempData: Function = function (payload: any): Action {
+    return {
+        type: UP_TEMPE_DATA,
+        payload: payload
+    }
+}
+export const clearTempData: Function = function (payload: any): Action {
+    return {
+        type: CLEAR_TEMPE_DATA,
+        payload: payload
+    }
+}
 export const getListData: Function = function (dispatch: Function): any  {
     var action = {
         type: FILL_LIST_DATA,

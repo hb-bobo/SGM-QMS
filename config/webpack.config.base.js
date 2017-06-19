@@ -1,6 +1,7 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
+const pxtorem = require('pxtorem');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -107,7 +108,7 @@ module.exports = {
           // https://github.com/facebookincubator/create-react-app/issues/1713
           /\.(js|jsx)(\?.*)?$/,
           /\.(ts|tsx)(\?.*)?$/,
-          /\.css$/,
+          /\.(css|less)$/,
           /\.json$/,
           /\.bmp$/,
           /\.gif$/,
@@ -130,6 +131,31 @@ module.exports = {
           name: 'static/media/[name].[hash:8].[ext]',
         },
       },
+      {
+        test: /\.less$/,
+        use: [
+          require.resolve('style-loader'),
+          require.resolve('css-loader'),
+          {
+            loader: require.resolve('postcss-loader'),
+            options: {
+              ident: 'postcss', // https://webpack.js.org/guides/migrating/#complex-options
+              plugins: () => [
+                autoprefixer({
+                  browsers: ['last 2 versions', 'Firefox ESR', '> 1%', 'ie >= 8', 'iOS >= 8', 'Android >= 4'],
+                }),
+                pxtorem({ rootValue: 100, propWhiteList: [] })
+              ],
+            },
+          },
+          {
+            loader: require.resolve('less-loader'),
+            options: {
+              modifyVars: { "@primary-color": "#1DA57A" },
+            },
+          },
+        ],
+      },
       // Compile .jsx?
        {
         test: /\.(js|jsx)$/,
@@ -143,13 +169,14 @@ module.exports = {
             loader: require.resolve('eslint-loader'),
           },
         ],
+        exclude: [paths.appStatic],
         include: paths.appSrc
       },
       // Compile .tsx?
       {
         test: /\.(ts|tsx)$/,
         include: paths.appSrc,
-        exclude: paths.appNodeModules,
+        exclude: [paths.appNodeModules],
         loader: require.resolve('ts-loader'),
       }
     ],

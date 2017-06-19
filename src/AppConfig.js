@@ -4,7 +4,7 @@ const isDev = process.env.NODE_ENV === 'development';
 const AppConfig = {
     isDev: isDev,
     API: isDev? 'local': '',
-    language: navigator.language.split('-')[0]
+    language: (window.navigator.language || window.navigator.browserLanguage).split('-')[0]
 }
 
 export const languagePkg = {

@@ -1,19 +1,25 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 // import { List, InputItem, WhiteSpace } from 'antd-mobile';
 // import { createForm } from 'rc-form';
-console.log(111)
-export class Advance extends React.Component {
+
+export class PRTSIssueAdvance extends React.Component {
   state = {
-    focused: false,
-    focused1: false,
+  }
+  static defaultProps = {
+    advanceData: {}
+  }
+  static propsType = {
+    advanceData: PropTypes.object
   }
   render() {
     return (
       <div>
-        推进页
+        PRTS
+        {this.props.advanceData.id}
       </div>
     );
   }
 }
 // const AdvanceWrap = createForm()(Advance);
-export default Advance
+export default PRTSIssueAdvance

@@ -1,6 +1,7 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
+const pxtorem = require('pxtorem');
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -122,7 +123,7 @@ module.exports = merge(baseWebpackConfig, {
                       }),
                     ],
                   },
-                },
+                }
               ],
             },
             extractTextPluginOptions

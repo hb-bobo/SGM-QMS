@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { delItem, fillListData } from '@/store/actions';
+import { fillListData } from '@/store/actions';
 // import store from '@/store';
 import { RouteWithSubRoutes } from '@/router';
 // import AppConfig from '@/AppConfig';
@@ -27,7 +27,6 @@ import data from 'static/data.json';
     // buildActionDispatcher
     (dispatch, ownProps) => ({
         actions: bindActionCreators({
-            delItem,
             fillListData
         }, dispatch)
     })

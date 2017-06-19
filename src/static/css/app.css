@@ -1,3 +1,9 @@
+/*引入 ant 会把html font-size设为50px; 再此设置与它抵消*/
+#root{
+    position: relative;
+    font-size: 0.36rem;
+}
+
 /*过度动画*/
 .example-enter {
   opacity: 0.01;
@@ -42,7 +48,7 @@
 }
 .item-top{
     padding: 1em 1.5em;
-    font-size: 0.8em;
+    font-size: 0.7em;
 }
 .item-top span{
     display: inline-block;

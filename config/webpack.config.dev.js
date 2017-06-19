@@ -1,6 +1,7 @@
 'use strict';
 
 const autoprefixer = require('autoprefixer');
+
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -90,7 +91,7 @@ module.exports = merge(baseWebpackConfig, {
       // In production, we use a plugin to extract that CSS to a file, but
       // in development "style" loader enables hot editing of CSS.
       {
-        test: /\.css$/,
+        test: /\.(css)$/,
         use: [
           require.resolve('style-loader'),
           {
@@ -116,7 +117,7 @@ module.exports = merge(baseWebpackConfig, {
                 }),
               ],
             },
-          },
+          }
         ],
       },
       // ** STOP ** Are you adding a new loader?
@@ -124,7 +125,7 @@ module.exports = merge(baseWebpackConfig, {
     ],
   },
   plugins: [
-    // Set NODE_ENV to development, In production, This will be an undefined
+    // Set NODE_ENV to development, In production, NODE_ENV will be production
     new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify('development')
     }),

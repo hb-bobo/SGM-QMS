@@ -22,7 +22,9 @@ import Scroller from '@/components/scroller';
     "reviewOp"               审批状态: 待审批
 */
 class ItemList extends React.Component {
-
+    state = {
+        advanceType: 'PRTS'
+    }
     /*返回详情内容*/
     details = (item) => {
         return (
@@ -101,7 +103,7 @@ class ItemList extends React.Component {
     /*包一层方便判断*/
     goAdvance = () => {
         if (typeof this.props.goAdvance === 'function') {
-            this.props.goAdvance('/issue-advance');
+            this.props.goAdvance('/issue-advance/' + this.state.advanceType);
         }
     }
     render () {
