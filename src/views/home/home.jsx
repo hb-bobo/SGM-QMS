@@ -17,7 +17,10 @@ class HomePage extends React.Component{
             <Link to="/manage/project-quality">项目质量</Link>
           </RaisedButton>
           <RaisedButton>
-            <Link to="/manage/quality-month-report">质量月报</Link>
+            <Link to="/manage/quality-month-report">质量月报(缩放版)</Link>
+          </RaisedButton>
+          <RaisedButton>
+            <Link to="/manage/quality-month-report1">质量月报(点击全屏缩放版)</Link>
           </RaisedButton>
         </div>
     );

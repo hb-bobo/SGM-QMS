@@ -1,90 +1,30 @@
 import * as React from 'react';
-import ReactEchartsCore from 'echarts-for-react/lib/core';
-// then import echarts modules those you have used manually.
-import echarts from 'echarts/lib/echarts';
-import 'echarts/lib/chart/line';
-import 'echarts/lib/component/tooltip';
+import EchartLine from './echart-line';
 
 class IndexResult extends React.Component {
     state = {
-        echartConfig: {},
-        width: '200px'
+        PRTS60Data: {},
+        EIRData: []
     }
     componentDidMount () {
-        this.setState({
-            width: '600px'
-        });
-       
+        setTimeout(() => {
+            this.setState({
+                PRTS60Data: [{"mnthlyTargetId":"82","kpiYear":2017,"kpiName":"PRTS60","patacTargetValue":"60","deptTargetValue":"60"}],
+                EIRData: [{"mnthlyTargetId":"84","kpiYear":2017,"kpiName":"EIR","patacTargetValue":"16","deptTargetValue":"16"}]
+            });
+        }, 3000)
     }
-    onChartReadyCallback (chart) {
-        chart.hideLoading();
-    }
-    clickHand () {
-
-    }
-
     render () {
-
-        
+        var chartData = [{"MONTH":5},{"COUNT":97,"MONTH":3},{"COUNT":95,"MONTH":2},{"COUNT":97,"MONTH":1}];
         return (
             <div>
-                <ReactEchartsCore
-                    echarts={echarts}
-                    option={options}
-                    style={{height: "300px", width: "100%"}}
-                    notMerge={true}
-                    lazyUpdate={true}
-                    theme={"theme_name"}
-                    onChartReady={this.onChartReadyCallback}
-                    onEvents={{
-                        'click': this.clickHand
-                    }} 
-                />
+                <EchartLine data={this.state.PRTS60Data} chartData={chartData}></EchartLine>
+                <EchartLine data={this.state.EIRData} chartData={[]}></EchartLine>
             </div>
         )
     }
     
 }
-var symbolSize = 20;
-var data = [[15, 0], [-50, 10], [-56.5, 20], [-46.5, 30], [-22.1, 40]];
 
-var options = {
-    title: {
-        text: 'Click to Add Points'
-    },
-    tooltip: {
-        formatter: function (params) {
-            var data = params.data || [0, 0];
-            return data[0].toFixed(2) + ', ' + data[1].toFixed(2);
-        }
-    },
-    grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '3%',
-        containLabel: true
-    },
-    xAxis: {
-        min: -60,
-        max: 20,
-        type: 'value',
-        axisLine: {onZero: false}
-    },
-    yAxis: {
-        min: 0,
-        max: 40,
-        type: 'value',
-        axisLine: {onZero: false}
-    },
-    series: [
-        {
-            id: 'a',
-            type: 'line',
-            smooth: true,
-            symbolSize: symbolSize,
-            data: data
-        }
-    ]
-}
 
 export default IndexResult;

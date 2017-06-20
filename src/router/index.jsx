@@ -11,6 +11,7 @@ import {
   Error404,
   Manage,
   QualityMonthReport,
+  QualityMonthReport1,
   ProjectQuality,
   IssueAdvance,
   EQRHotIssue
@@ -39,6 +40,10 @@ export const routes = [
       {
         path: '/manage/quality-month-report',
         component: QualityMonthReport,
+      },
+      {
+        path: '/manage/quality-month-report1',
+        component: QualityMonthReport1,
       },
       { 
         path: '/manage/project-quality',
