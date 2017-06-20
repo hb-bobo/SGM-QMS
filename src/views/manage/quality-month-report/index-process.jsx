@@ -9,8 +9,8 @@ class IndexProcess extends React.Component {
     render () {
         return (
             <div>
-                <EchartLine data={this.state.chartData}></EchartLine>
-                <EchartLine data={this.state.chartData}></EchartLine>
+                <EchartLine info={this.state.chartData}></EchartLine>
+                <EchartLine info={this.state.chartData}></EchartLine>
             </div>
         )
     }

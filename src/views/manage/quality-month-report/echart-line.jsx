@@ -7,26 +7,50 @@ import Zoom from '@/components/zoom';
 
 class EchartLine extends React.Component {
     state = {
-        option: options
+        option: JSON.parse(JSON.stringify(options)),
+        chart: null
     }
     componentDidMount () {
-        var data = this.props.data[0];
-        if (data) {
+       
+    }
+    shouldComponentUpdate (nextProps, nextState) {
+        
+        var infoData = nextProps.info[0];
+        var chartData = nextProps.chartData;
+        // 目标值
+        if (infoData) {
             for (let i = 0; i < 12; i++ ) {
-                options.series[0].data.push(data.patacTargetValue)
+                options.series[0].data.push(infoData.patacTargetValue)
             }
         } else {
             options.series[0].data = []
         }
+        // 实际值
+        if (Array.isArray(chartData) && chartData.length) {
+            chartData.forEach(function (item) {
+                if (typeof item.MONTH === 'number') {
+                    options.series[1].data[item.MONTH] = item.COUNT;
+                }
+            })
+        } else {
+            options.series[1].data = [];
+        }
+
         this.setState({
-            option: options
+            option: JSON.parse(JSON.stringify(options))
+        });
+
+        if (this.state.chart !== null) {
+            this.state.chart.hideLoading();
+        }
+
+        return true;
+    }
+    onChartReadyCallback = (chart) => {
+        this.setState({
+            chart: chart
         })
-    }
-    componentDidMount () {
-        
-    }
-    onChartReadyCallback (chart) {
-        chart.hideLoading();
+        chart.showLoading();
     }
     clickHand () {
     }
@@ -93,7 +117,7 @@ var options =  {
                 show: true
             }
         },
-        data: [1, 3]
+        data: []
     }],
     color: ["#c23531","#2f4554"]
 };
