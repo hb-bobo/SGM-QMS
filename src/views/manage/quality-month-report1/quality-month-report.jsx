@@ -5,8 +5,6 @@ import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import IndexResult from './index-result';
-import IndexProcess from './index-process';
-import Scroller from '@/components/scroller';
 class QualityMonthReport extends React.Component {
     state = {
         title: '质量月报',
@@ -50,14 +48,14 @@ class QualityMonthReport extends React.Component {
                     onChange={this.tabChange}
                 >
                     <Tab label="结果指标" value="结果指标">
-                        <Scroller autoSetHeight={true}>
-                            <IndexResult/>
-                        </Scroller>
+                        <IndexResult></IndexResult>
                     </Tab>
                     <Tab label="过程指标" value="过程指标">
-                        <Scroller autoSetHeight={true}>
-                            <IndexProcess/>
-                        </Scroller>
+                        <div>
+                            <p>
+                            过程指标
+                            </p>
+                        </div>
                     </Tab>
                 </Tabs>
             </div>

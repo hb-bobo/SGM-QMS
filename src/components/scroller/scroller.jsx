@@ -36,13 +36,13 @@ class Scroller extends React.Component {
     }
 
     render () {
-        var children = this.props.children || [];
+        var children = this.props.children;
         var containerHeight = this.state.containerHeight;
         return (
             <div ref="scroller" className="scroller-container" style={{height: parseInt(containerHeight, 10) + 'px'}}>
                 <div className="scroller">
                     {
-                        children.map((child) => child)
+                        children && React.Children.toArray(children).map((child) => child)
                     }
                 </div>
             </div>
