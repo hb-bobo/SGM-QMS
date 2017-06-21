@@ -103,7 +103,7 @@ class ItemList extends React.Component {
     /*包一层方便判断*/
     goAdvance = () => {
         if (typeof this.props.goAdvance === 'function') {
-            this.props.goAdvance('/issue-advance/' + this.state.advanceType);
+            this.props.goAdvance('/search/issue-advance/' + this.state.advanceType);
         }
     }
     render () {

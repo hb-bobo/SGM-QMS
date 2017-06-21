@@ -13,7 +13,7 @@ class IndexResult extends React.Component {
                 PRTS60_INFO: [{"mnthlyTargetId":"82","kpiYear":2017,"kpiName":"PRTS60","patacTargetValue":"60","deptTargetValue":"60"}],
                 EIR_INFO: [{"mnthlyTargetId":"84","kpiYear":2017,"kpiName":"EIR","patacTargetValue":"16","deptTargetValue":"16"}]
             });
-        }, 6000);
+        }, 2000);
         setTimeout(() => {
             this.setState({
                 PRTS60_DATA: [{"MONTH":5},{"COUNT":97,"MONTH":3},{"COUNT":95,"MONTH":2},{"COUNT":97,"MONTH":1}]

@@ -13,6 +13,8 @@ import {
   QualityMonthReport,
   QualityMonthReport1,
   ProjectQuality,
+
+  Search,
   IssueAdvance,
   EQRHotIssue
 } from '@/views/';
@@ -51,25 +53,31 @@ export const routes = [
       }
     ]
   },
-  { 
-    path: '/issue-advance',
-    exact: false,
-    component: IssueAdvance,
+  {
+    path: '/search',
+    component: Search,
     routes: [
-      {
-        path: '/issue-advance/PRTS',
-        component: require('@/views/issue-advance/PRTS-issue-advance').default,
-      },
-      {
-        name: 'work-plan-edit',
-        path: '/issue-advance/work-plan-edit/:id',
-        component: require('@/views/issue-advance/work-plan-edit').default,
-      },
-      {
-        name: 'work-plan-edit',
-        path: '/issue-advance/edit/:id',
-        component: require('@/views/issue-advance/edit').default,
-      }
+        { 
+          path: '/search/issue-advance',
+          exact: false,
+          component: IssueAdvance,
+          routes: [
+            {
+              path: '/search/issue-advance/PRTS',
+              component: require('@/views/search/issue-advance/PRTS-issue-advance').default,
+            },
+            {
+              name: 'work-plan-edit',
+              path: '/search/issue-advance/work-plan-edit/:id',
+              component: require('@/views/search/issue-advance/work-plan-edit').default,
+            },
+            {
+              name: 'work-plan-edit',
+              path: '/search/issue-advance/edit/:id',
+              component: require('@/views/search/issue-advance/edit').default,
+            }
+          ]
+        }
     ]
   },
   { path: '/EQRHotIssue',

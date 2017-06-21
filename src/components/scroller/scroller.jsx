@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import './scroller.css';
 import { getRemainingHeight } from '@/utils/dom';
+import { throttle } from '@/utils/tools';
 /**
  * scroll容器
  */
@@ -9,7 +10,8 @@ class Scroller extends React.Component {
     static defaultProps = {
         containerHeight: 100,
         autoSetHeight: false,
-        bottomHeight: 0 // 底部高。May have a menu at the bottom
+        bottomHeight: 0, // 底部高。May have a menu at the bottom,
+        scrollTop: 0
     }
     static propTypes = {
         containerHeight: PropTypes.number,
@@ -26,6 +28,12 @@ class Scroller extends React.Component {
         if (this.props.autoSetHeight) {
             this.setHeight();
         }
+        // 记录scrollTop 位置
+        this.refs.scroller.addEventListener('scroll', throttle(() => {
+            this.setState({
+                scrollTop: this.refs.scroller.scrollTop
+            });
+        }, 500));
     }
     /*scroller到底部剩余的高度*/
     setHeight () {

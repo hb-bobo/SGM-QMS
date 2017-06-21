@@ -83,6 +83,7 @@ module.exports = merge(baseWebpackConfig, {
       {
         test: /\.(js|jsx)$/,
         include: paths.appSrc,
+        exclude: [paths.appStatic],
         loader: require.resolve('babel-loader'),
         options: {
           plugins: [

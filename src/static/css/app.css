@@ -61,6 +61,32 @@
     padding: 1em 1em;
 }
 
+/*推进页*/
+.issue-advance .scroller {
+    background: #FFF;
+    color: #676767;
+}
+.advance-top,
+.issue-advance-item {
+    font-size: 14px;
+    padding: 0.5em 0.7em;
+    border-bottom: 1px  solid #CCC;
+}
+.issue-advance-item .right {
+    font-size: 13px;
+}
+.issue-advance-item-title {
+    font-size: 15px;
+    padding: 6px 0.7em;
+    border-bottom: 1px  solid #CCC;
+    background: #F8F7F7;
+}
+/*推进也-> 工作计划*/
+.work-plan-list .flex-row{
+    padding:0 0.7em;
+    font-size: 14px;
+}
+/*iconfont*/
 .icon {
     /* 通过设置 font-size 来改变图标大小 */
     width: 1em; height: 1em;
