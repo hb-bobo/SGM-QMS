@@ -35,8 +35,12 @@ export class IssueAdvance extends React.Component {
       })
   }
   componentWillUpdate (nextProps, nextState) {
+    console.log(this.state.isIndex, nextState.isIndex)
     // 当从edit页面返回 此页面的时候设置index为true, 并纠正title
-    if (this.state.isIndex === false && nextState.isIndex === false) {
+    if (this.state.isIndex === true && nextState.isIndex === true) {
+      return false;
+    }
+    if (nextState.isIndex === true) {
       this.setState({
         title: '问题推进页',
         isIndex: true
