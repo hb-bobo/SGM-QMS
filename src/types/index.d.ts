@@ -1,6 +1,13 @@
 export interface States {
   [key: string]: any
 }
+// action 格式
+export interface Action {
+    type: string,
+    payload: any
+}
+
+
 export interface Routes {
   path: string,
   component: any,

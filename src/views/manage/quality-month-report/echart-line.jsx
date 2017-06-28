@@ -91,7 +91,10 @@ var options =  {
         type: 'category',
         data: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
         axisLabel :{  
-            interval:0   
+            interval:0,
+            textStyle: {
+                fontStyle: 50
+            }
         } 
     }],
     yAxis: [{
@@ -99,7 +102,10 @@ var options =  {
         axisLabel: {
             show: true,
             interval: 'auto',
-            formatter: '{value} %'
+            formatter: '{value} %',
+            textStyle: {
+                fontStyle: 50
+            }
         },
         splitLine:{
             show:false

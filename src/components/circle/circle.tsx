@@ -10,6 +10,7 @@ const Circle = (props: CircleProps) => {
         'R': '#CC3366',
         'Y': '#CCCC66',
         'W': '#FFFFFF',
+        'D': '#FF0000',
         undefined: '#FFF'
     }
     var bgColor: string =  colors[props.value];

@@ -40,6 +40,9 @@ class ProjectProgress extends React.Component<{[key: string]: any}, any> {
             width = container.clientWidth;
         }
         this.setArrowWidth(width);
+        window.addEventListener('resize', () => {
+            this.setArrowWidth(container.clientWidth);
+        })
     }
     /**
      * set arrow width
@@ -68,10 +71,10 @@ class ProjectProgress extends React.Component<{[key: string]: any}, any> {
         var newPath: string = originalPath.map(function (coordinate: number[]) {
             return  String(coordinate[0] + x) + ',' + String(coordinate[1] + y);
         }).join(' ');
-
         return newPath;
     }
     render () {
+        
         var configs: Config[] = this.props.configs;
         var projectSchedules: any[] = this.props.projectSchedules; // 传入的数据
         return (
@@ -113,7 +116,7 @@ class ProjectProgress extends React.Component<{[key: string]: any}, any> {
                     })
                 }
                 {/*空的, 为了布局好看*/}
-                <div className="p-step flex-col-2 text-center"/>
+                <div className="p-step flex-col-2 text-center">&nbsp;&nbsp;</div>
             </div>
         )
     }

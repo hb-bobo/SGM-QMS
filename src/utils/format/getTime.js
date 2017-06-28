@@ -6,10 +6,10 @@ import fillZero from './fillZero';
  * @param {number}
  * @returns {string}
  *
- * getTime()
+ * getTime() get current date
  * // => '2016-01-01'
  * 
- * getTime('yyyy-MM-dd hh:mm:ss')
+ * getTime('yyyy-MM-dd hh:mm:ss') get current date
  * // => '2016-01-01 17:23:10'
  * 
  * getTime({

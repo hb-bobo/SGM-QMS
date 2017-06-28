@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 import applyMutations from '../middleware/applyMutations';
 import common from './common';
-// import pushItemList from './pushItemList';
+import issueAdvance from './issue-advance';
 
 const rootReducer = combineReducers(applyMutations({
     common,
-    // pushItemList
+    issueAdvance
 }));
 export default rootReducer;

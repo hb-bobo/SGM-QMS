@@ -1,10 +1,12 @@
 import * as React from 'react';
-//Redirect
+//Redirect Switch
 import {
   HashRouter as Router,
   Route
 } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+// import { CSSTransitionGroup } from 'react-transition-group';
+
 // views
 import {
   HomePage,
@@ -13,7 +15,6 @@ import {
   QualityMonthReport,
   QualityMonthReport1,
   ProjectQuality,
-
   Search,
   IssueAdvance,
   EQRHotIssue
@@ -80,7 +81,8 @@ export const routes = [
         }
     ]
   },
-  { path: '/EQRHotIssue',
+  { 
+    path: '/EQRHotIssue',
     component: EQRHotIssue,
     routes: [
       {
@@ -104,8 +106,7 @@ export const RouteWithSubRoutes = (route) => {
     <ReactCSSTransitionGroup
       transitionName="example"
       transitionEnterTimeout={300}
-      transitionLeaveTimeout={300}
-    >
+      transitionLeaveTimeout={300}>
       <Route
         path={route.path}
         exact={isExact}
@@ -122,14 +123,14 @@ export const RouteWithSubRoutes = (route) => {
   )
 }
 
-const AppRouter = () => (
+const AppRouter = (props) => (
   <Router>
     <div>
-        <div>
-          {routes.map((route, i) => (
-            <RouteWithSubRoutes  key={i} {...route}/>
-          ))}
-        </div>
+      {
+        routes.map((route, i) => (
+          <RouteWithSubRoutes  key={i} {...route}/>
+        ))
+      }
     </div>
   </Router>
 );

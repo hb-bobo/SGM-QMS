@@ -1,15 +1,14 @@
+
 import {
   FILL_LIST_DATA,
   CLEAR_LIST_DATA,
   UP_TEMPE_DATA,
-  CLEAR_TEMPE_DATA
+  CLEAR_TEMPE_DATA,
+  UP_WORK_PLAN_EDIT_DATA,
+  UP_WORK_PLAN_LIST_DATA
 } from './actionTypes';
 import AppConfig from '../../AppConfig';
-// action 格式
-interface Action {
-    type: string,
-    payload: any
-}
+import { Action } from '../../types';
 
 export const fillListData: Function = function (payload: any): Action {
     return {
@@ -37,6 +36,22 @@ export const clearTempData: Function = function (payload: any): Action {
         payload: payload
     }
 }
+
+// 工作计划编辑或者新增
+export const upWorkPlanEditData: Function = function (payload: any): Action {
+    return {
+        type: UP_WORK_PLAN_EDIT_DATA,
+        payload: payload
+    }
+}
+// up work plan all list data (include edit and new)
+export const upWorkPlanListData: Function = function (payload: any): Action {
+    return {
+        type: UP_WORK_PLAN_LIST_DATA,
+        payload: payload
+    }
+}
+
 export const getListData: Function = function (dispatch: Function): any  {
     var action = {
         type: FILL_LIST_DATA,

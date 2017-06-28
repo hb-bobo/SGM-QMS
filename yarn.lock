@@ -192,9 +192,9 @@ ansi-styles@^3.0.0:
   dependencies:
     color-convert "^1.0.0"
 
-antd-mobile@^1.2.0:
-  version "1.2.0"
-  resolved "http://registry.npm.taobao.org/antd-mobile/download/antd-mobile-1.2.0.tgz#3bbc2fe13bf7d9f9b1c7ee10cfd9ce2b90214d45"
+antd-mobile@^1.3.1:
+  version "1.3.1"
+  resolved "http://registry.npm.taobao.org/antd-mobile/download/antd-mobile-1.3.1.tgz#6cc6b919134a5da1b9bb1ddfab5261d57a8c9141"
   dependencies:
     array-tree-filter "~1.0.0"
     babel-runtime "6.x"
@@ -209,19 +209,19 @@ antd-mobile@^1.2.0:
     rc-collapse "~1.7.0"
     rc-dialog "~6.5.7"
     rc-drawer "~0.4.9"
-    rc-input-number "~3.4.13"
+    rc-input-number "~3.6.0"
     rc-notification "~2.0.0"
-    rc-slider "~7.0.1"
+    rc-slider "~8.1.2"
     rc-steps "~2.5.1"
     rc-swipeout "~1.3.0"
-    rc-table "~5.3.1"
+    rc-table "~5.4.0"
     rc-tabs "~8.0.0"
     rc-tooltip "~3.4.3"
     rc-touchable "~1.2.2"
     react-native-camera-roll-picker "~1.1.6"
     react-native-collapsible "^0.8.0"
     react-native-drawer-layout "~1.3.0"
-    react-native-menu "~0.20.1"
+    react-native-menu "~0.21.0"
     react-native-scrollable-tab-view "^0.7.2"
     rmc-cascader "^4.1.1"
     rmc-date-picker "^5.3.1"
@@ -2075,7 +2075,7 @@ dom-converter@~0.1:
   dependencies:
     utila "~0.3"
 
-dom-helpers@^3.2.0:
+dom-helpers@^3.2.0, dom-helpers@^3.2.1:
   version "3.2.1"
   resolved "http://registry.npm.taobao.org/dom-helpers/download/dom-helpers-3.2.1.tgz#3203e07fed217bd1f424b019735582fc37b2825a"
 
@@ -3952,7 +3952,7 @@ jsx-ast-utils@^1.3.4, jsx-ast-utils@^1.4.0:
   version "1.4.1"
   resolved "http://registry.npm.taobao.org/jsx-ast-utils/download/jsx-ast-utils-1.4.1.tgz#3867213e8dd79bf1e8f2300c0cfc1efb182c0df1"
 
-keycode@^2.1.8:
+keycode@^2.1.7, keycode@^2.1.8:
   version "2.1.9"
   resolved "http://registry.npm.taobao.org/keycode/download/keycode-2.1.9.tgz#964a23c54e4889405b4861a5c9f0480d45141dfa"
 
@@ -5356,9 +5356,9 @@ rc-hammerjs@^0.6.6, rc-hammerjs@~0.6.0:
     hammerjs "^2.0.8"
     prop-types "^15.5.9"
 
-rc-input-number@~3.4.13:
-  version "3.4.15"
-  resolved "http://registry.npm.taobao.org/rc-input-number/download/rc-input-number-3.4.15.tgz#2f904735400af083b9eeb60596a05e48b1fa8b8e"
+rc-input-number@~3.6.0:
+  version "3.6.0"
+  resolved "http://registry.npm.taobao.org/rc-input-number/download/rc-input-number-3.6.0.tgz#05eabedf14021b65d407049b9d2e22a6df94b82c"
   dependencies:
     babel-runtime "^6.23.0"
     classnames "^2.2.0"
@@ -5376,9 +5376,9 @@ rc-notification@~2.0.0:
     rc-animate "2.x"
     rc-util "4.x"
 
-rc-slider@~7.0.1:
-  version "7.0.8"
-  resolved "http://registry.npm.taobao.org/rc-slider/download/rc-slider-7.0.8.tgz#1bdd7cbfd8ec1b6418ba55e506888bbb50159556"
+rc-slider@~8.1.2:
+  version "8.1.3"
+  resolved "http://registry.npm.taobao.org/rc-slider/download/rc-slider-8.1.3.tgz#7a259385760dbdd7d0a1726f078ca40a47b94a97"
   dependencies:
     babel-runtime "6.x"
     classnames "^2.2.5"
@@ -5404,9 +5404,9 @@ rc-swipeout@~1.3.0:
     rc-hammerjs "^0.6.6"
     react-native-swipeout "~2.1.1"
 
-rc-table@~5.3.1:
-  version "5.3.3"
-  resolved "http://registry.npm.taobao.org/rc-table/download/rc-table-5.3.3.tgz#294fba128c8ecbab59a32eb4dbba7d5857327a16"
+rc-table@~5.4.0:
+  version "5.4.0"
+  resolved "http://registry.npm.taobao.org/rc-table/download/rc-table-5.4.0.tgz#8e8a60609e3522e2132e2ce17290f445141bbe33"
   dependencies:
     babel-runtime "^6.23.0"
     component-classes "^1.2.6"
@@ -5574,6 +5574,10 @@ react-mixin@^3.0.5:
     object-assign "^4.0.1"
     smart-mixin "^2.0.0"
 
+react-mobile-datepicker@^3.0.4:
+  version "3.0.4"
+  resolved "http://registry.npm.taobao.org/react-mobile-datepicker/download/react-mobile-datepicker-3.0.4.tgz#f9e003aa8008e3226be6d9c0ca373aa8ff1f14f3"
+
 react-native-camera-roll-picker@~1.1.6:
   version "1.1.9"
   resolved "http://registry.npm.taobao.org/react-native-camera-roll-picker/download/react-native-camera-roll-picker-1.1.9.tgz#99bad3a9c117ad79e67044c420ce463ee18f29d3"
@@ -5592,9 +5596,9 @@ react-native-drawer-layout@~1.3.0:
   dependencies:
     react-native-dismiss-keyboard "1.0.0"
 
-react-native-menu@~0.20.1:
-  version "0.20.2"
-  resolved "http://registry.npm.taobao.org/react-native-menu/download/react-native-menu-0.20.2.tgz#a1bec7a3d1660246561298c851f98728bc4a1305"
+react-native-menu@~0.21.0:
+  version "0.21.0"
+  resolved "http://registry.npm.taobao.org/react-native-menu/download/react-native-menu-0.21.0.tgz#ebc647862eb80ed00e2289397bf8b634b09b1e8b"
   dependencies:
     react-timer-mixin "^0.13.3"
 
@@ -5653,6 +5657,35 @@ react-sticky@^5.0.2:
   resolved "http://registry.npm.taobao.org/react-sticky/download/react-sticky-5.0.8.tgz#d5f85f96977f410081d792ab81886c622c5d8b14"
   dependencies:
     prop-types "^15.5.8"
+
+react-swipeable-views-core@^0.11.1:
+  version "0.11.1"
+  resolved "http://registry.npm.taobao.org/react-swipeable-views-core/download/react-swipeable-views-core-0.11.1.tgz#61d046799f90725bbf91a0eb3abcab805c774cac"
+  dependencies:
+    babel-runtime "^6.23.0"
+    warning "^3.0.0"
+
+react-swipeable-views-utils@^0.12.0:
+  version "0.12.0"
+  resolved "http://registry.npm.taobao.org/react-swipeable-views-utils/download/react-swipeable-views-utils-0.12.0.tgz#4ff11f20a8da0561f623876d9fd691116e1a6a03"
+  dependencies:
+    babel-runtime "^6.23.0"
+    fbjs "^0.8.4"
+    keycode "^2.1.7"
+    prop-types "^15.5.4"
+    react-event-listener "^0.4.5"
+    react-swipeable-views-core "^0.11.1"
+
+react-swipeable-views@^0.12.3:
+  version "0.12.3"
+  resolved "http://registry.npm.taobao.org/react-swipeable-views/download/react-swipeable-views-0.12.3.tgz#b0d3f417bcbcd06afda2f8437c15e8360a568744"
+  dependencies:
+    babel-runtime "^6.23.0"
+    dom-helpers "^3.2.1"
+    prop-types "^15.5.4"
+    react-swipeable-views-core "^0.11.1"
+    react-swipeable-views-utils "^0.12.0"
+    warning "^3.0.0"
 
 react-tap-event-plugin@^2.0.1:
   version "2.0.1"

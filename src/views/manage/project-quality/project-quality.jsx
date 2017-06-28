@@ -10,6 +10,7 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import {Tabs, Tab} from 'material-ui/Tabs';
+import SwipeableViews from 'react-swipeable-views';
 import NewProjectOverviewItemList from './new-project-overview-item';
 import getProjectQualityList from 'static/getProjectQualityList.json';
 // import goBack from '@/mixin/goBack';
@@ -30,7 +31,7 @@ class ProjectQuality extends React.Component {
     state = {
         title: '项目质量',
         isIndex: true, // 除了主页显示itemList 其他页面都消失,
-        tabValue: '新项目质量总览'
+        tabValue: 0
     }
     static contextTypes = {
         muiTheme: PropTypes.object,
@@ -103,24 +104,30 @@ class ProjectQuality extends React.Component {
                     value={this.state.tabValue}
                     onChange={this.tabChange}
                 >
-                    <Tab label="新项目质量总览" value="新项目质量总览">
+                    <Tab label="新项目质量总览" value={0}>
+                    </Tab>
+                    <Tab label="质量评审技术" value={1}>
+                    </Tab>
+                </Tabs>
+                <SwipeableViews
+                    index={this.state.tabValue}
+                    onChangeIndex={this.tabChange}
+                >
+                    <div>
                         {/*列表*/
                             this.state.isIndex? 
                                 <NewProjectOverviewItemList dataSource={this.props.listData} GoAdvance={this.goAdvance}/>
                                 : null
                         }
-                    </Tab>
-                    <Tab label="质量评审技术" value="质量评审技术">
-                        <div>
-                            <p>
-                            This is another example of a controllable tab. Remember, if you
-                            use controllable Tabs, you need to give all of your tabs values or else
-                            you wont be able to select them.
-                            </p>
-                        </div>
-                    </Tab>
-                </Tabs>
-                
+                    </div>
+                    <div>
+                        <p>
+                        This is another example of a controllable tab. Remember, if you
+                        use controllable Tabs, you need to give all of your tabs values or else
+                        you wont be able to select them.
+                        </p>
+                    </div>
+                </SwipeableViews>
                 {/*route*/}
                 {routes.map((route, i) => {
                     return(

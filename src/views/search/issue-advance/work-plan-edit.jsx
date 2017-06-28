@@ -1,7 +1,6 @@
 import * as React from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { upTempData } from '@/store/actions';
+import PropTypes from 'prop-types';
+// import store from '@/store';
 
 import TextField from 'material-ui/TextField';
 import DatePicker from 'material-ui/DatePicker';
@@ -10,6 +9,7 @@ import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import pathToJSON from '@/utils/object/pathToJSON';
 
+import getTime from '@/utils/format/getTime';
 /*
     planDesc         "描述"
     planFinishDate   "计划完成时间"
@@ -27,116 +27,136 @@ minDate.setHours(0, 0, 0, 0);
 maxDate.setFullYear(maxDate.getFullYear() + 1);
 maxDate.setHours(0, 0, 0, 0);
 
-
-@connect(
-    // mapStateToProps
-    (state) => ({tempData: state.common.tempData}),
-    // buildActionDispatcher
-    (dispatch, ownProps) => ({
-        actions: bindActionCreators({
-            upTempData
-        }, dispatch)
-    })
-)
 export class WorkPlanEdit extends React.Component {
-    state = {
-        minDate: minDate,
-        maxDate: maxDate,
-        autoOk: false,
-        disableYearSelection: false,
-        edit: {
-            planDesc: '2017-10-27',
-            planFinishDate: minDate,
-            prblmId: '',
-            prblmPhaseID: '',
-            rspnsUser: '',
-            workPlanID: '',
-            workPlanStatus: 'Yes'
-        }
+    static defaultProps = {
+        data: {}
     }
-    componentWillMount () {
-        this.props.parent.setIndex(false)
-        this.props.actions.upTempData({
-            planDesc: '2017-10-27',
-            planFinishDate: minDate,
-            prblmId: '',
-            prblmPhaseID: '',
-            rspnsUser: '',
-            workPlanID: '',
-            workPlanStatus: 'Yes',
-        });
-        this.setState({
-            edit: {
-                planDesc: 1
-            }
-        });
-        this.setState({
-            edit: {
-                prblmId: 2
-            }
-        });
-        console.log(11)
+    static propTypes = {
+        data: PropTypes.object
+    }
+    
+    state = {
+        planDesc: '',
+        planFinishDate: '',
+        prblmId: '',
+        prblmPhaseID: '',
+        rspnsUser: '',
+        workPlanID: '',
+        workPlanStatus: ''
     }
     componentDidMount () {
+        this.parent = this.props.parent;
+    }
+    componentWillReceiveProps (nextProps) {
+        if (nextProps.action === 'add') {
+            this.setState({
+                planDesc: '',
+                planFinishDate: '',
+                prblmId: '',
+                prblmPhaseID: '',
+                rspnsUser: '',
+                workPlanID: '',
+                workPlanStatus: ''
+            });
+        }
+        this.setState(nextProps.data);
         
+        // this.parent.setState({workPlanOpen: false});
+    }
+    save = () => {
+        this.parent.props.actions.upWorkPlanListData({
+            action: this.props.action,
+            value: this.state
+        });
+        this.parentStateChange();
+    }
+    cancel = () => {
+        this.parentStateChange();
+    }
+    parentStateChange () {
+        this.parent.setState({
+            workPlanOpen: false
+        });
+        this.parent.parent.setState({
+            isIndex: true
+        });
     }
     bind = (key) => {
         return (e) => {
-            console.log(pathToJSON(key, e.target.value))
             this.setState(pathToJSON(key, e.target.value));
-            this.setState({
-                editData: {
-                    
-                }
-            });
+            /*store.dispatch(upWorkPlanEditData({
+                action: 'change',
+                key: key,
+                value: e.target.value
+            }));*/
         }
     }
     DatePickerBind = (key) => {
         return (e, date) => {
-            this.setState(this.state.editData);
+            var newDate = getTime({
+                time: date,
+                format: 'yyyy-MM-dd'
+            });
+            console.log(newDate)
+            this.setState(pathToJSON(key, newDate));
+            /*store.dispatch(upWorkPlanEditData({
+                action: 'change',
+                key: key,
+                value: date
+            }));*/
+        }
+    }
+    selectBind = (key) => {
+        return (event, index, value) => {
+            this.setState(pathToJSON(key, value));
+            /*store.dispatch(upWorkPlanEditData({
+                action: 'change',
+                key: key,
+                value: value
+            }));*/
         }
     }
     render() {
-        var { tempData } = this.props;
-        console.log(tempData)
+        // var { data } = this.props;
         return (
-            <div className="work-plan-edit-from" style={editFromStyle}>
+            <div className="work-plan-edit-form" style={editFromStyle}>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="">工作描述:</label>
+                        <label htmlFor="planDesc">工作描述:</label>
                     </div>
                     <div className="flex-col-7">
                         <TextField
-                            hintText="hintText"
+                            name="planDesc"
                             multiLine={true}
-                            value={tempData.planDesc}
-                            onChange={this.bind('editData.planDesc')}
-                            rows={3}
+                            value={this.state.planDesc}
+                            onChange={this.bind('planDesc')}
+                            rows={1}
                             rowsMax={3}
                         />
                     </div>
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="">问题阶段:</label>
+                        <label htmlFor="prblmPhaseID">问题阶段:</label>
                     </div>
                     <div className="flex-col-7">
                         <TextField
-                            defaultValue={11111}
-                            onChange={this.bind('editData.prblmPhaseID')}
-                            hintText="hintText"
+                            name="prblmPhaseID"
+                            disabled={true}
+                            value={this.state.prblmPhaseID}
+                            onChange={this.bind('prblmPhaseID')}
                         />
                     </div>
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="">责任人:</label>
+                        <label htmlFor="rspnsUser">责任人:</label>
                     </div>
                     <div className="flex-col-7">
                         <TextField
-                            defaultValue={11111}
-                            onChange={this.bind('editData.rspnsUser')}
-                            hintText="hintText"
+                            name="rspnsUser"
+                            value={this.state.rspnsUser}
+                            onChange={this.bind('rspnsUser')}
                         />
                     </div>
                 </div>
@@ -146,13 +166,14 @@ export class WorkPlanEdit extends React.Component {
                     </div>
                     <div className="flex-col-7">
                         <DatePicker
-                            floatingLabelText="Ranged Date Picker"
-                            autoOk={this.state.autoOk}
-                            minDate={this.state.minDate}
-                            maxDate={this.state.maxDate}
-                            defaultDate={tempData.planFinishDate}
-                            disableYearSelection={this.state.disableYearSelection}
-                            onChange={this.DatePickerBind('editData.planFinishDate')}
+                            name="planFinishDate"
+                            floatingLabelText=""
+                            autoOk={true}
+                            cancelLabel="取消"
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            value={ this.state.planFinishDate ? new Date(this.state.planFinishDate) : null}
+                            onChange={this.DatePickerBind('planFinishDate')}
                         />
                     </div>
                 </div>
@@ -162,12 +183,13 @@ export class WorkPlanEdit extends React.Component {
                     </div>
                     <div className="flex-col-7">
                         <DatePicker
-                            floatingLabelText="Ranged Date Picker"
-                            autoOk={this.state.autoOk}
-                            minDate={this.state.minDate}
-                            maxDate={this.state.maxDate}
-                            disableYearSelection={this.state.disableYearSelection}
-
+                            name="planFinishDatea"
+                            floatingLabelText=""
+                            autoOk={true}
+                            cancelLabel="取消"
+                            minDate={minDate}
+                            maxDate={maxDate}
+                            value={ this.state.planFinishDate ? new Date(this.state.planFinishDate) : null}
                         />
                     </div>
                 </div>
@@ -177,21 +199,33 @@ export class WorkPlanEdit extends React.Component {
                     </div>
                     <div className="flex-col-7">
                         <SelectField
-                            onChange={this.bind('editData.workPlanStatus')}
-                            hintText="hintText"
+                            name="workPlanStatus"
+                            value={this.state.workPlanStatus}
+                            onChange={this.selectBind('workPlanStatus')}
+                            hintText=""
                         >
                             <MenuItem value={null} primaryText="" />
-                            <MenuItem value={false} primaryText="No" />
-                            <MenuItem value={true} primaryText="Yes" />
+                            <MenuItem value={'D'} primaryText="D" />
+                            <MenuItem value={'F'} primaryText="F" />
                         </SelectField>
                     </div>
                 </div>
-                <div className="flex-row">
+                <div className="flex-row btn">
                     <div className="flex-col-1 text-center">
-                        <RaisedButton>保存</RaisedButton>
+                        <RaisedButton fullWidth={true} onClick={this.save}>
+                            <svg className="icon" aria-hidden="true">
+                                <use xlinkHref="#icon-save"></use>
+                            </svg>
+                            保存
+                        </RaisedButton>
                     </div>
                     <div className="flex-col-1 text-center">
-                        <RaisedButton>取消</RaisedButton>
+                        <RaisedButton fullWidth={true} onClick={this.cancel}>
+                            <svg className="icon" aria-hidden="true">
+                                <use xlinkHref="#icon-cancel"></use>
+                            </svg>
+                            取消
+                        </RaisedButton>
                     </div>
                 </div>
             </div>

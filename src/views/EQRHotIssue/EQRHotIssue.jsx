@@ -7,7 +7,6 @@ import { fillListData } from '@/store/actions';
 // import store from '@/store';
 import { RouteWithSubRoutes } from '@/router';
 // import AppConfig from '@/AppConfig';
-
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';

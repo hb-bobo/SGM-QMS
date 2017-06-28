@@ -1,12 +1,11 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 class HomePage extends React.Component{
-
   render () {
      return (
-        <div className="fixed top-0 bottom-0 left-0 right-0 z1 bg-darken-3">
+        <div>
           <div>
             Home
           </div>
@@ -22,9 +21,49 @@ class HomePage extends React.Component{
          {/* <RaisedButton>
             <Link to="/manage/quality-month-report1">质量月报(点击全屏缩放版)</Link>
           </RaisedButton>*/}
+          <TodoList></TodoList>
         </div>
     );
   }
 }
+class TodoList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {items: ['hello', 'world', 'click', 'me']};
+    this.handleAdd = this.handleAdd.bind(this);
+  }
 
+  handleAdd() {
+    const newItems = this.state.items.concat([
+      prompt('Enter some text')
+    ]);
+    this.setState({items: newItems});
+  }
+
+  handleRemove(i) {
+    let newItems = this.state.items.slice();
+    newItems.splice(i, 1);
+    this.setState({items: newItems});
+  }
+
+  render() {
+    const items = this.state.items.map((item, i) => (
+      <div key={item} onClick={() => this.handleRemove(i)}>
+        {item}
+      </div>
+    ));
+
+    return (
+      <div>
+        <button onClick={this.handleAdd}>Add Item</button>
+        <ReactCSSTransitionGroup
+          transitionName="example"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}>
+          {items}
+        </ReactCSSTransitionGroup>
+      </div>
+    );
+  }
+}
 export default HomePage

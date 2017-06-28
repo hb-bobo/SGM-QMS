@@ -29,11 +29,14 @@ class Scroller extends React.Component {
             this.setHeight();
         }
         // 记录scrollTop 位置
-        this.refs.scroller.addEventListener('scroll', throttle(() => {
-            this.setState({
-                scrollTop: this.refs.scroller.scrollTop
-            });
-        }, 500));
+        if (this.refs.scroller) {
+            this.refs.scroller.addEventListener('scroll', throttle(() => {
+                this.setState({
+                    scrollTop: this.refs.scroller.scrollTop
+                });
+            }, 500));
+        }
+        
     }
     /*scroller到底部剩余的高度*/
     setHeight () {

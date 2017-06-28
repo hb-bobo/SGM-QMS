@@ -20,7 +20,19 @@
 
 .example-leave.example-leave-active {
   opacity: 0.01;
-  transition: opacity 300ms ease-in;
+  transition: opacity 500ms ease-in;
+}
+
+
+
+.component-out-leave,.component-out-leave-active{
+  display: none;
+}
+.component-out-enter-active, .component-out-leave-active {
+  transition: transform .2s ease;
+}
+.component-out-enter, .component-out-leave-active {
+  transform: translateX(-100%);
 }
 /*Dialog*/
 .details-list>li:not(:last-child) {
@@ -68,24 +80,73 @@
 }
 .advance-top,
 .issue-advance-item {
-    font-size: 14px;
+    font-size: 15px;
     padding: 0.5em 0.7em;
-    border-bottom: 1px  solid #CCC;
+    border-bottom: 1px  solid #EEEDED;
+}
+.advance-top{
+    padding: 0 0.7em;
 }
 .issue-advance-item .right {
-    font-size: 13px;
+    font-size: 14px;
 }
 .issue-advance-item-title {
     font-size: 15px;
     padding: 6px 0.7em;
-    border-bottom: 1px  solid #CCC;
+    border-bottom: 1px  solid #EEEDED;
     background: #F8F7F7;
 }
-/*推进也-> 工作计划*/
+
+/*热点上升*/
+.hot-up-form .flex-row{
+    padding:0 0.7em;
+}
+
+/*推进页-> 工作计划*/
 .work-plan-list .flex-row{
     padding:0 0.7em;
     font-size: 14px;
 }
+.work-plan-list .flex-row .right {
+    font-size: 13px;
+}
+.work-plan-list .btn {
+    border-top: 1px solid #EEEDED;
+}
+.work-plan-edit-form{
+    padding-left: 10px;
+    font-size: 15px;
+}
+.hot-up-form .btn>div,
+.work-plan-edit-form .btn>div {
+    padding: 0 2px;
+}
+.work-plan .icon-new{
+    width: 1.5em;
+    height: 1.5em;
+}
+.work-plan-list .plan-describe{
+    padding: 1.5em 0.7em;
+    border-bottom: 1px solid #EEEDED;
+}
+.plan-describe>div:first-child {
+    display: flex;
+}
+.plan-describe .left {
+    flex: 1;
+}
+.plan-describe .right {
+    flex: 4;
+}
+.work-plan-list .plan-info{
+    padding: 0.6em 0.7em;
+}
+.work-plan-list .plan-info>[class*="flex-col-"]{
+    padding: 0.1em 0;
+}
+
+
+
 /*iconfont*/
 .icon {
     /* 通过设置 font-size 来改变图标大小 */
@@ -97,4 +158,8 @@
     /* path 和 stroke 溢出 viewBox 部分在 IE 下会显示
         normalize.css 中也包含这行 */
     overflow: hidden;
+}
+.icon.icon-up{
+    width: 3.5em;
+    height: 3.5em;
 }

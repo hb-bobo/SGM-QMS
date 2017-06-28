@@ -117,7 +117,7 @@ class ItemList extends React.Component {
                                 <div className="flex-col-2 text-center">
                                     {item.currentStatus}
                                 </div>
-                                <div className="flex-col-13 item-title-center" onTouchTap={this.goAdvance}>
+                                <div className="flex-col-13 item-title-center" onClick={this.goAdvance}>
                                     <div className="flex-row">
                                         <span className="flex-col-1">项目名称:{item.projectName}</span>
                                         <span className="flex-col-1">评审时间:{item.reviewDates}</span>
@@ -137,7 +137,7 @@ class ItemList extends React.Component {
                                     </IconMenu>
                                 </div>
                             </div>
-                            <div className="item-content" onTouchTap={this.goAdvance}>
+                            <div className="item-content" onClick={this.goAdvance}>
                                 {item.problemDesc}
                             </div>
                         </List>

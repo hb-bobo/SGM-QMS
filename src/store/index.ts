@@ -1,6 +1,8 @@
-import { Store, createStore } from 'redux';
+import { Store, createStore } from 'redux'; // applyMiddleware
 import rootReducer from './reducer';
-var initialState: Object = {};
-var store: Store<any> = createStore(rootReducer, initialState);
+// var initialState: Object = {};
+var store: Store<any> = createStore(
+        rootReducer
+    );
 
 export default store

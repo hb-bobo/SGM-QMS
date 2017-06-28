@@ -8,9 +8,9 @@ const SpaceRowStyle = {
     backgroundColor: "#CCC"
 }
 const SpaceRow = (props) => {
-    Object.assign(SpaceRowStyle, props)
+    var style = Object.assign({}, SpaceRowStyle, props)
     return (
-        <div style={SpaceRowStyle}>
+        <div style={style}>
         </div>
     )
 }
