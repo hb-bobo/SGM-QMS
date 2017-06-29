@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/ui
+ui
 # testing
 /coverage
 
