@@ -198,7 +198,11 @@ export class WorkPlanEdit extends React.Component {
                         <label htmlFor="">状态:</label>
                     </div>
                     <div className="flex-col-7">
-                        <SelectField
+                        <select name="" id="">
+                            <option value=""></option>
+                            <option value="1">aaa</option>
+                        </select>
+                        {/*<SelectField
                             name="workPlanStatus"
                             value={this.state.workPlanStatus}
                             onChange={this.selectBind('workPlanStatus')}
@@ -207,7 +211,7 @@ export class WorkPlanEdit extends React.Component {
                             <MenuItem value={null} primaryText="" />
                             <MenuItem value={'D'} primaryText="D" />
                             <MenuItem value={'F'} primaryText="F" />
-                        </SelectField>
+                        </SelectField>*/}
                     </div>
                 </div>
                 <div className="flex-row btn">
