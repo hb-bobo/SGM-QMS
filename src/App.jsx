@@ -3,12 +3,12 @@ import AppRouter from './router';
 import store from './store';
 // 各种Provider
 import { Provider } from 'react-redux';
-// import { IntlProvider } from 'react-intl';
+import { IntlProvider } from 'react-intl';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {addLocaleData} from 'react-intl';
 import zh from 'react-intl/locale-data/zh';
 import en from 'react-intl/locale-data/en';
-// import AppConfig, { languagePkg } from './AppConfig';
+import AppConfig, { languagePkg } from './AppConfig';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import './static/css/base.css';
@@ -37,16 +37,16 @@ addLocaleData([...en, ...zh]);
 
 // use $store every where
 React.Component.prototype.$store = store;
-// <IntlProvider locale={AppConfig.language} messages={languagePkg.en}></IntlProvider>
+// 
 class App extends React.Component{
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-
             <Provider store={store}>
+              <IntlProvider locale={AppConfig.language} messages={languagePkg.en}>
                 <AppRouter/>
+              </IntlProvider>
             </Provider>
-          
       </MuiThemeProvider>
     );
   }
