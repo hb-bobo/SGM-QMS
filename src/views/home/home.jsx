@@ -1,13 +1,23 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import intl from './intl.json';
 class HomePage extends React.Component{
+  static contextTypes = {
+    language: PropTypes.string,
+    setLanguage: PropTypes.func
+  }
+  
   render () {
+    var l = this.context.language
      return (
         <div>
           <div>
             Home
+            {intl.pro[l]}
+            <button onClick={() => this.context.setLanguage('en')}>111111111</button>
           </div>
           <RaisedButton>
             <Link to="/manage/overview">项目质量</Link>

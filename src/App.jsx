@@ -1,13 +1,14 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import AppRouter from './router';
 import store from './store';
 // 各种Provider
 import { Provider } from 'react-redux';
-import { IntlProvider } from 'react-intl';
+// import { IntlProvider } from 'react-intl';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {addLocaleData} from 'react-intl';
-import zh from 'react-intl/locale-data/zh';
-import en from 'react-intl/locale-data/en';
+// import zh from 'react-intl/locale-data/zh';
+// import en from 'react-intl/locale-data/en';
 import AppConfig, { languagePkg } from './AppConfig';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -32,20 +33,32 @@ const muiTheme = getMuiTheme({
     textColor: "#000"
   }
 });
-console.log(muiTheme)
-addLocaleData([...en, ...zh]);
+
 
 // use $store every where
 React.Component.prototype.$store = store;
 // 
 class App extends React.Component{
+  static childContextTypes = {
+    language: PropTypes.string,
+    setLanguage: PropTypes.func
+  }
+  state = {
+    language: AppConfig.language
+  }
+  getChildContext() {
+    return {
+      language: this.state.language,
+      setLanguage : (language) => {
+        this.setState({language: language});
+      }
+    };
+  }
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
             <Provider store={store}>
-              <IntlProvider locale={AppConfig.language} messages={languagePkg.en}>
                 <AppRouter/>
-              </IntlProvider>
             </Provider>
       </MuiThemeProvider>
     );
