@@ -1,24 +1,49 @@
 import * as React from 'react';
+import PropTypes from 'prop-types';
 import getTwoPointDistance from './getTwoPointDistance';
-import './index.css'
+import './index.css';
 class TouchZoom extends React.Component {
+    static propTypes = {
+        zoomMode: PropTypes.oneOfType([
+            PropTypes.string,
+            PropTypes.array
+        ]),
+        maxWidth: PropTypes.number
+    }
+    static defaultProps = {
+        zoomMode: 'width',
+        maxWidth: 200,
+        minWidth: 100
+    }
     componentDidMount () {
         var zoom = this.refs.zoom;
+        var {
+            zoomMode,
+            maxWidth,
+            minWidth
+        } = this.props;
+        var modeWidth = (zoomMode === 'width') ||
+                        (Array.isArray(zoomMode) && zoomMode.includes('width'));
+        // var modeHeight = (zoomMode === 'height') ||
+        //                 (Array.isArray(zoomMode) && zoomMode.includes('height'));
         zoom.addEventListener('touchstart', (e) => {
             // 第一次点下去时的亮点距离
             var oldDis = getTwoPointDistance(e);
             var touchMove = function (e) {
                 // 新的的两点距离
                 var newDis = oldDis;
-                if (e.targetTouches[0]) {
+                if (e.targetTouches[1]) {
                    newDis = getTwoPointDistance(e);
-                   var width = (newDis / oldDis * parseInt(zoom.style.width, 10));
-                    if (width < 100) { 
-                        width = 100;
-                    } else if (width > 200) {
-                        width = 200;
-                    }
-                   zoom.style.width = width + '%';
+                   if (modeWidth) {
+                        var width = (newDis / oldDis * parseInt(zoom.style.width, 10));
+                        if (width < minWidth) { 
+                            width = minWidth;
+                        } else if (width > maxWidth) {
+                            width = maxWidth;
+                        }
+                        zoom.style.width = width + '%';
+                   }
+                   
                 }
             }
             var touchEnd = function (e) {

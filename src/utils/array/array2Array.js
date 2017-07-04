@@ -1,4 +1,4 @@
-import { isArray } from '../types'
+var isArray = Array.isArray;
 
 /**
   * 数组格式转换

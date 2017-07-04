@@ -2,14 +2,17 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 // import store from '@/store';
 
-import TextField from 'material-ui/TextField';
-import DatePicker from 'material-ui/DatePicker';
-import SelectField from 'material-ui/SelectField';
-import MenuItem from 'material-ui/MenuItem';
+// import TextField from 'material-ui/TextField';
+// import DatePicker from 'material-ui/DatePicker';
+// import SelectField from 'material-ui/SelectField';
+// import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import pathToJSON from '@/utils/object/pathToJSON';
-
-import getTime from '@/utils/format/getTime';
+// import getTime from '@/utils/format/getTime';
+import HInput from '@/components/form/h-input';
+import HSelect from '@/components/form/h-select';
+import HTextarea from '@/components/form/h-textarea';
+import HDate from '@/components/form/h-date';
 /*
     planDesc         "描述"
     planFinishDate   "计划完成时间"
@@ -20,19 +23,13 @@ import getTime from '@/utils/format/getTime';
     workPlanStatus   "状态"
 */
 
-const minDate = new Date();
-const maxDate = new Date();
-minDate.setFullYear(minDate.getFullYear() - 1);
-minDate.setHours(0, 0, 0, 0);
-maxDate.setFullYear(maxDate.getFullYear() + 1);
-maxDate.setHours(0, 0, 0, 0);
-
 export class WorkPlanEdit extends React.Component {
     static defaultProps = {
         data: {}
     }
     static propTypes = {
-        data: PropTypes.object
+        data: PropTypes.object,
+        parent: PropTypes.instanceOf(React.Component).isRequired
     }
     
     state = {
@@ -74,6 +71,7 @@ export class WorkPlanEdit extends React.Component {
         this.parentStateChange();
     }
     parentStateChange () {
+        // 改变父级的一些状态
         this.parent.setState({
             workPlanOpen: false
         });
@@ -91,48 +89,21 @@ export class WorkPlanEdit extends React.Component {
             }));*/
         }
     }
-    DatePickerBind = (key) => {
-        return (e, date) => {
-            var newDate = getTime({
-                time: date,
-                format: 'yyyy-MM-dd'
-            });
-            console.log(newDate)
-            this.setState(pathToJSON(key, newDate));
-            /*store.dispatch(upWorkPlanEditData({
-                action: 'change',
-                key: key,
-                value: date
-            }));*/
-        }
-    }
-    selectBind = (key) => {
-        return (event, index, value) => {
-            this.setState(pathToJSON(key, value));
-            /*store.dispatch(upWorkPlanEditData({
-                action: 'change',
-                key: key,
-                value: value
-            }));*/
-        }
-    }
     render() {
         // var { data } = this.props;
         return (
-            <div className="work-plan-edit-form" style={editFromStyle}>
+            <div className="work-plan-edit-form">
                 <div className="edit-item flex-row">
-                    <div className="flex-col-3">
+                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
                         <label htmlFor="planDesc">工作描述:</label>
                     </div>
                     <div className="flex-col-7">
-                        <TextField
-                            name="planDesc"
-                            multiLine={true}
+                        <HTextarea
+                            clear
                             value={this.state.planDesc}
                             onChange={this.bind('planDesc')}
-                            rows={1}
-                            rowsMax={3}
-                        />
+                        >
+                        </HTextarea>
                     </div>
                 </div>
                 <div className="edit-item flex-row">
@@ -140,12 +111,14 @@ export class WorkPlanEdit extends React.Component {
                         <label htmlFor="prblmPhaseID">问题阶段:</label>
                     </div>
                     <div className="flex-col-7">
-                        <TextField
-                            name="prblmPhaseID"
-                            disabled={true}
+                        <HInput
+                            clear
+                            type="text"
+                            disabled
                             value={this.state.prblmPhaseID}
                             onChange={this.bind('prblmPhaseID')}
-                        />
+                        >
+                        </HInput>
                     </div>
                 </div>
                 <div className="edit-item flex-row">
@@ -153,11 +126,13 @@ export class WorkPlanEdit extends React.Component {
                         <label htmlFor="rspnsUser">责任人:</label>
                     </div>
                     <div className="flex-col-7">
-                        <TextField
-                            name="rspnsUser"
+                        <HInput
+                            clear
+                            type="text"
                             value={this.state.rspnsUser}
                             onChange={this.bind('rspnsUser')}
-                        />
+                        >
+                        </HInput>
                     </div>
                 </div>
                 <div className="edit-item flex-row">
@@ -165,16 +140,13 @@ export class WorkPlanEdit extends React.Component {
                         <label htmlFor="">计划完成时间:</label>
                     </div>
                     <div className="flex-col-7">
-                        <DatePicker
-                            name="planFinishDate"
-                            floatingLabelText=""
-                            autoOk={true}
-                            cancelLabel="取消"
-                            minDate={minDate}
-                            maxDate={maxDate}
-                            value={ this.state.planFinishDate ? new Date(this.state.planFinishDate) : null}
-                            onChange={this.DatePickerBind('planFinishDate')}
-                        />
+                        <HDate
+                            clear
+                            type="date"
+                            value={this.state.planFinishDate}
+                            onChange={this.bind('planFinishDate')}
+                        >
+                        </HDate>
                     </div>
                 </div>
                 <div className="edit-item flex-row">
@@ -182,15 +154,13 @@ export class WorkPlanEdit extends React.Component {
                         <label htmlFor="">实际完成时间:</label>
                     </div>
                     <div className="flex-col-7">
-                        <DatePicker
-                            name="planFinishDatea"
-                            floatingLabelText=""
-                            autoOk={true}
-                            cancelLabel="取消"
-                            minDate={minDate}
-                            maxDate={maxDate}
-                            value={ this.state.planFinishDate ? new Date(this.state.planFinishDate) : null}
-                        />
+                        <HDate
+                            clear
+                            type="date"
+                            value={this.state.planFinishDate}
+                            onChange={this.bind('planFinishDate')}
+                        >
+                        </HDate>
                     </div>
                 </div>
                 <div className="edit-item flex-row">
@@ -198,20 +168,12 @@ export class WorkPlanEdit extends React.Component {
                         <label htmlFor="">状态:</label>
                     </div>
                     <div className="flex-col-7">
-                        <select name="" id="">
-                            <option value=""></option>
-                            <option value="1">aaa</option>
-                        </select>
-                        {/*<SelectField
-                            name="workPlanStatus"
+                        <HSelect
                             value={this.state.workPlanStatus}
-                            onChange={this.selectBind('workPlanStatus')}
-                            hintText=""
+                            options={[]}
+                            onChange={this.bind('workPlanStatus')}
                         >
-                            <MenuItem value={null} primaryText="" />
-                            <MenuItem value={'D'} primaryText="D" />
-                            <MenuItem value={'F'} primaryText="F" />
-                        </SelectField>*/}
+                        </HSelect>
                     </div>
                 </div>
                 <div className="flex-row btn">
@@ -237,9 +199,4 @@ export class WorkPlanEdit extends React.Component {
     }
 }
 
-var editFromStyle = {
-    position: 'absolute',
-    left: 0,
-    top: 0
-}
 export default WorkPlanEdit

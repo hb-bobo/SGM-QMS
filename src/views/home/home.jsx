@@ -10,23 +10,25 @@ class HomePage extends React.Component{
             Home
           </div>
           <RaisedButton>
-            <Link to="/EQRHotIssue">EQR热点</Link>
-          </RaisedButton>
-          <RaisedButton>
-            <Link to="/manage/project-quality">项目质量</Link>
+            <Link to="/manage/overview">项目质量</Link>
           </RaisedButton>
           <RaisedButton>
             <Link to="/manage/quality-month-report">质量月报</Link>
           </RaisedButton>
+          <RaisedButton>
+            <Link to="/todo">待办事项</Link>
+          </RaisedButton>
+          <RaisedButton>
+            <Link to="/test">test</Link>
+          </RaisedButton>
          {/* <RaisedButton>
             <Link to="/manage/quality-month-report1">质量月报(点击全屏缩放版)</Link>
           </RaisedButton>*/}
-          <TodoList></TodoList>
         </div>
     );
   }
 }
-class TodoList extends React.Component {
+export class TodoList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {items: ['hello', 'world', 'click', 'me']};

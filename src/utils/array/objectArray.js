@@ -1,9 +1,17 @@
-import { isObject } from '../types'
+
+var isObject = function (val) {
+  return Object.prototype.toString.call(val) === '[Object object]';
+}
+
+
 /**
+ * ['a'] -> [{key: 'a', value: 'a'}]
  * @param {array} [xx,xx] or [{},{}]
  * @param {object}  {'keyName':<string>,'valueName':<string>}
  * @return {array<object>}
 */
+
+
 var objectArray = function (
   arr,
   {
@@ -23,4 +31,5 @@ var objectArray = function (
     return arr
   }
 }
+
 export default objectArray

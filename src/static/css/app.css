@@ -1,7 +1,8 @@
 /*引入 ant 会把html font-size设为50px; 再此设置与它抵消*/
 #root{
     position: relative;
-    font-size: 0.36rem;
+    font-size: 1rem;
+    background-color: #FFF;
 }
 
 /*过度动画*/
@@ -45,9 +46,20 @@
 .details-item-right{
 
 }
-/*list*/
+/*公共list样式*/
 .list-more{
     padding: 0.4em 0;
+}
+.item .btn {
+    border-top: 1px solid #EEEDED;
+}
+.item>.item-body{
+    padding: 1em;
+    margin-top: 0.1em;
+    font-size: 0.8em;
+}
+.item-body>.flex-row {
+    padding: 3px 0;
 }
 /*item*/
 
@@ -59,8 +71,9 @@
     margin-top: 0.8em;
 }
 .item-top{
-    padding: 1em 1.5em;
-    font-size: 0.7em;
+    padding: 1em;
+    font-size: 0.8em;
+    border-bottom: 1px solid #EEEDED;
 }
 .item-top span{
     display: inline-block;
@@ -98,10 +111,13 @@
 }
 
 /*热点上升*/
+.work-plan-edit-form .flex-row,
 .hot-up-form .flex-row{
-    padding:0 0.7em;
+    margin-bottom: 10px;
 }
-
+.hot-up-form .justify {
+    width: 77px;
+}
 /*推进页-> 工作计划*/
 .work-plan-list .flex-row{
     padding:0 0.7em;
@@ -110,11 +126,10 @@
 .work-plan-list .flex-row .right {
     font-size: 13px;
 }
-.work-plan-list .btn {
-    border-top: 1px solid #EEEDED;
-}
-.work-plan-edit-form{
-    padding-left: 10px;
+
+.work-plan-edit-form,
+.hot-up-form{
+    padding:10px 10px 0;
     font-size: 15px;
 }
 .hot-up-form .btn>div,
@@ -145,8 +160,26 @@
     padding: 0.1em 0;
 }
 
-
-
+/*待办事项*/
+.gtasks-list .item-top .right {
+    max-width: 18em;
+}
+.review-time .review-time-edit{
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+    top: 0;
+    margin-left: 6px;
+    width: 20px;
+    height: 20px;
+}
+.review-time .review-time-edit .icon-edit1 {
+    width: 1.2em;
+    height: 1.2em;
+}
+.item-body .review-time{
+    position: relative;
+}
 /*iconfont*/
 .icon {
     /* 通过设置 font-size 来改变图标大小 */

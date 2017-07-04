@@ -2,11 +2,10 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 // import store from '@/store';
 
-// import SelectField from 'material-ui/SelectField';
-
 import RaisedButton from 'material-ui/RaisedButton';
 import pathToJSON from '@/utils/object/pathToJSON';
-
+import HSelect from '@/components/form/h-select';
+import HTextarea from '@/components/form/h-textarea';
 /*
     s
 */
@@ -16,7 +15,8 @@ export class HotUp extends React.Component {
         data: {}
     }
     static propTypes = {
-        data: PropTypes.object
+        data: PropTypes.object,
+        parent: PropTypes.instanceOf(React.Component).isRequired
     }
     
     state = {
@@ -28,7 +28,7 @@ export class HotUp extends React.Component {
         workPlanID: '',
         workPlanStatus: ''
     }
-    componentDidMount () {
+    componentWillMount () {
         this.parent = this.props.parent;
     }
     componentWillReceiveProps (nextProps) {
@@ -44,98 +44,87 @@ export class HotUp extends React.Component {
             });
         }
         this.setState(nextProps.data);
-        
-        // this.parent.setState({open: false});
     }
-    save = () => {
-        this.parent.props.actions.upWorkPlanListData({
+    submit = () => {
+        /*this.parent.props.actions.upWorkPlanListData({
             action: this.props.action,
             value: this.state
-        });
+        });*/
         this.parentStateChange();
     }
     cancel = () => {
         this.parentStateChange();
     }
+    // 改变父级的状态
     parentStateChange () {
         this.parent.setState({
-            hotUpOpen: false
-        });
-        this.parent.setState({
+            hotUpOpen: false,
             isIndex: true
         });
     }
     bind = (key) => {
         return (e) => {
             this.setState(pathToJSON(key, e.target.value));
-            /*store.dispatch(upWorkPlanEditData({
-                action: 'change',
-                key: key,
-                value: e.target.value
-            }));*/
-        }
-    }
-
-    selectBind = (key) => {
-        return (event, index, value) => {
-            this.setState(pathToJSON(key, value));
-            /*store.dispatch(upWorkPlanEditData({
-                action: 'change',
-                key: key,
-                value: value
-            }));*/
         }
     }
     render() {
         // var { data } = this.props;
+        var options = ['aa', 'xxxx', 'xvv']
         return (
             <div className="hot-up-form">
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="planDesc">评审等级:</label>
+                        <label htmlFor="planDesc" className="justify">评审等级:</label>
                     </div>
                     <div className="flex-col-7">
-                        <select name="" id="">
-                            <option value=""></option>
-                            <option value="1">aaa</option>
-                        </select>
+                        <HSelect
+                            defaultValue={'aa'}
+                            options={options}
+                            onChange={this.bind('planDesc')}
+                        >
+                        </HSelect>
                     </div>
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="prblmPhaseID">审批人:</label>
+                        <label htmlFor="prblmPhaseID" className="justify">审 批 人:</label>
                     </div>
                     <div className="flex-col-7">
-                        <select name="" id="">
-                            <option value=""></option>
-                            <option value="1">aaa</option>
-                        </select>
+                        <HSelect
+                            value={this.state.planDesc}
+                            onChange={this.bind('planDesc')}
+                        >
+                        </HSelect>
                     </div>
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="rspnsUser">操作:</label>
+                        <label htmlFor="rspnsUser" className="justify">操  作:</label>
                     </div>
                     <div className="flex-col-7">
-                        <select name="" id="">
-                            <option value=""></option>
-                            <option value="1">aaa</option>
-                        </select>
+                        <HSelect
+                            value={this.state.planDesc}
+                            onChange={this.bind('planDesc')}
+                        >
+                        </HSelect>
                     </div>
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="">状态:</label>
+                        <label htmlFor="" className="justify">上升原因:</label>
                     </div>
                     <div className="flex-col-7">
-                        <textarea name="" id="" cols="30" rows="10">
-
-                        </textarea>
+                        <HTextarea
+                            clear
+                            value={this.state.planDesc}
+                            onChange={this.bind('planDesc')}
+                        >
+                        </HTextarea>
                     </div>
                 </div>
                 <div className="flex-row btn">
                     <div className="flex-col-1 text-center">
-                        <RaisedButton fullWidth={true} onClick={this.save}>
+                        <RaisedButton fullWidth={true} onClick={this.submit}>
                             <svg className="icon" aria-hidden="true">
                                 <use xlinkHref="#icon-submit"></use>
                             </svg>
