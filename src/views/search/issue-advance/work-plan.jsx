@@ -21,12 +21,7 @@ import WorkPlanEdit from './work-plan-edit';
     workPlanID       "101644"
     workPlanStatus   "状态"
 */
-const minDate = new Date();
-const maxDate = new Date();
-minDate.setFullYear(minDate.getFullYear() - 1);
-minDate.setHours(0, 0, 0, 0);
-maxDate.setFullYear(maxDate.getFullYear() + 1);
-maxDate.setHours(0, 0, 0, 0);
+
 
 @connect(
     // mapStateToProps
@@ -43,6 +38,7 @@ class WorkPlan extends React.Component {
     static propTypes = {
         parent: PropTypes.object
     }
+    
     state = {
         workPlanOpen: false,
         workPlanAction: '',
@@ -198,7 +194,7 @@ class WorkPlan extends React.Component {
                 {/*工作计划弹出*/}
                 <Drawer 
                     width="100%" 
-                    containerStyle={{top: '48px'}} 
+                    containerStyle={{top: '48px', overflow: 'hidden'}} 
                     openSecondary={true} 
                     open={this.state.workPlanOpen} 
                 >

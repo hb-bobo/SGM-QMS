@@ -15,6 +15,8 @@ import WorkPlan from './work-plan';
 import IconUp from '@/components/icon/up';
 import SpaceRow from '@/components/space-row';
 import HotUp from './hot-up';
+import IssueUP from './issue-up';
+
 @connect(
     // mapStateToProps
     (state) => ({workPlanData: state.issueAdvance.workPlanData}),
@@ -61,7 +63,6 @@ export class IssueAdvance extends React.Component {
     });
   }
   componentWillUpdate (nextProps, nextState) {
-    
     // 当从edit页面返回 此页面的时候设置index为true, 并纠正title
     if (nextState.isIndex === true && this.state.isIndex !== true) {
       this.setState({
@@ -72,13 +73,24 @@ export class IssueAdvance extends React.Component {
     return true;
   }
 
-  hotUp = () => {
-    console.log(1)
+  goHotUp = () => {
     this.setState({
-      hotUpOpen: true
+      hotUpOpen: true,
+      title: '热点上升',
+      isIndex: false
     });
     return false
   }
+
+  goIssueUp = () => {
+    this.setState({
+      issueUPOpen: true,
+      title: '问题上升',
+      isIndex: false
+    });
+    return false
+  }
+
   render() {
     var routes = [];
     if (this.props.routes) {
@@ -108,10 +120,10 @@ export class IssueAdvance extends React.Component {
             </div>
             <SpaceRow height={50} width="1px" backgroundColor="#EEEDED"/>
             <div className="flex-col-4">
-              <span onClick={this.hotUp}>
+              <span onClick={this.goHotUp}>
                 <IconUp value="热点" style={{marginLeft: '10px'}} > </IconUp>
               </span>
-              <span>
+              <span onClick={this.goIssueUp}>
                 <IconUp value="问题" style={{marginLeft: '10px'}}> </IconUp>
               </span>
             </div>
@@ -121,7 +133,8 @@ export class IssueAdvance extends React.Component {
           <Drawer 
               width="100%" 
               containerStyle={{top: '48px'}} 
-              openSecondary={true} 
+              openSecondary={true}
+              parent={this}
               open={this.state.hotUpOpen} 
           >
               <HotUp data={{}} parent={this}/>
@@ -131,10 +144,11 @@ export class IssueAdvance extends React.Component {
           <Drawer 
               width="100%" 
               containerStyle={{top: '48px'}} 
-              openSecondary={true} 
+              openSecondary={true}
+              parent={this}
               open={this.state.issueUPOpen} 
           >
-              <HotUp data={{}} parent={this}/>
+              <IssueUP data={{}} parent={this}/>
           </Drawer>
 
           {/*推进页不同的区域 route*/}

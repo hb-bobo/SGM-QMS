@@ -5,7 +5,7 @@ import * as React from 'react';
  */
 const SpaceRowStyle = {
     height: "0.6em",
-    backgroundColor: "#CCC"
+    backgroundColor: "#EEEDED"
 }
 const SpaceRow = (props) => {
     var style = Object.assign({}, SpaceRowStyle, props)

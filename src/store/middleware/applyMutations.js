@@ -18,6 +18,7 @@ function createReducer (reducerData) {
 }
 
 /**
+ * 有了这个，可以像vuex 的mutations一样写reducer
  * @param {Object} reducers
  * reducers = {
  *     state: any,

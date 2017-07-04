@@ -12,13 +12,12 @@ import {
   HomePage,
   Error404,
   Manage,
-  QualityMonthReport,
-  QualityMonthReport1,
-  ProjectQuality,
+  Project,
   Search,
   IssueAdvance,
-  EQRHotIssue
+  Todo
 } from '@/views/';
+
 /*import {
   BasicInputExampleWrapper
 } from '@/views/page1';*/
@@ -37,20 +36,24 @@ export const routes = [
     component: HomePage
   },
   {
+    path: '/test',
+    component: require('@/views/home/home').TodoList
+  },
+  { 
+    path: '/project',
+    component: Project
+  },
+  {
     path: '/manage',
     component: Manage,
     routes: [
       {
         path: '/manage/quality-month-report',
-        component: QualityMonthReport,
+        component: require('@/views/manage/report').default,
       },
       {
-        path: '/manage/quality-month-report1',
-        component: QualityMonthReport1,
-      },
-      { 
-        path: '/manage/project-quality',
-        component: ProjectQuality
+        path: '/manage/overview',
+        component: require('@/views/manage/overview').default
       }
     ]
   },
@@ -65,35 +68,20 @@ export const routes = [
           routes: [
             {
               path: '/search/issue-advance/PRTS',
-              component: require('@/views/search/issue-advance/PRTS-issue-advance').default,
+              component: require('@/views/search/issue-advance/advanceType/PRTS-issue-advance').default,
             },
             {
               name: 'work-plan-edit',
               path: '/search/issue-advance/work-plan-edit/:id',
               component: require('@/views/search/issue-advance/work-plan-edit').default,
             },
-            {
-              name: 'work-plan-edit',
-              path: '/search/issue-advance/edit/:id',
-              component: require('@/views/search/issue-advance/edit').default,
-            }
           ]
         }
     ]
   },
-  { 
-    path: '/EQRHotIssue',
-    component: EQRHotIssue,
-    routes: [
-      {
-          path: '/EQRHotIssue/advance',
-          exact: false,
-          component: require('@/views/EQRHotIssue/advance').default
-      },
-      // { path: '/EQRHotIssue/Advance',
-      //   component: BasicInputExampleWrapper
-      // }
-    ]
+  {
+    path: '/todo',
+    component: Todo
   }
 ]
 
