@@ -11,7 +11,7 @@ import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
-import OverviewItemList from './overview-item';
+import NewProjectQuality from './newProjectQuality';
 import getProjectQualityList from 'static/getProjectQualityList.json';
 // import goBack from '@/mixin/goBack';
 // import mixins from '@/mixins/mixins';
@@ -116,7 +116,7 @@ class Overview extends React.Component {
                     <div>
                         {/*列表*/
                             this.state.isIndex? 
-                                <OverviewItemList dataSource={this.props.listData} GoAdvance={this.goAdvance}/>
+                                <NewProjectQuality dataSource={this.props.listData} GoAdvance={this.goAdvance}/>
                                 : null
                         }
                     </div>
