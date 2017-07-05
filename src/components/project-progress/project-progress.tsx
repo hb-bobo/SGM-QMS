@@ -78,7 +78,7 @@ class ProjectProgress extends React.Component<{[key: string]: any}, any> {
         var configs: Config[] = this.props.configs;
         var projectSchedules: any[] = this.props.projectSchedules; // 传入的数据
         return (
-            <div ref={(container) => {this.container = container}} className="p-progress flex-row">
+            <div ref={(container: any) => {this.container = container}} className="p-progress flex-row">
                 <svg className="p-line">
                     <line x1="0" y1="10" x2={this.state.maxWidth} y2="10" style={{stroke: '#FF9000', strokeWidth: 3}} />
                     <polygon 

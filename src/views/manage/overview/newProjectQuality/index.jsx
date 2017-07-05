@@ -9,7 +9,6 @@ import SpaceRow from '@/components/space-row';
 
 const NewProjectQuality = (props) => {
     var { dataSource, goAdvance } = props;
-    
     return (
         <Scroller autoSetHeight={true} >
             {dataSource.map((item, i) => {
