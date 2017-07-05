@@ -66,9 +66,9 @@ class Overview extends React.Component {
         }
     }
     /*调到操作页面*/
-    goAdvance = (path) => {
-        if (path) {
-            this.props.history.push(path);
+    goAdvance = (type) => {
+        if (type) {
+            this.props.history.push('/search/issue-advance/' + type);
             this.setState({
                 isIndex: false
             });
@@ -116,7 +116,7 @@ class Overview extends React.Component {
                     <div>
                         {/*列表*/
                             this.state.isIndex? 
-                                <NewProjectQuality dataSource={this.props.listData} GoAdvance={this.goAdvance}/>
+                                <NewProjectQuality dataSource={this.props.listData} goAdvance={this.goAdvance}/>
                                 : null
                         }
                     </div>

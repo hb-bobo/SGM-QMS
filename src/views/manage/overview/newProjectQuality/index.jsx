@@ -24,7 +24,7 @@ const NewProjectQuality = (props) => {
                                 <span>项目: </span>
                                 <span> {item.model}</span>
                             </div>
-                            <div className="flex-col-1" onClick={() => {goAdvance('')}}>
+                            <div className="flex-col-1" onClick={() => {goAdvance('PRTS')}}>
                                 <Circle value={item.qualityRisk}></Circle>
                             </div>
                         </div>
