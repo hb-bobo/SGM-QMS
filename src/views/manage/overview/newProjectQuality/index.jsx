@@ -6,8 +6,6 @@ import ProjectProgress from '@/components/project-progress';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-intl.setMsg(require('./locale'));
-console.log(intl)
 
 class NewProjectQuality extends React.Component {
     static defaultProps = {
@@ -17,8 +15,10 @@ class NewProjectQuality extends React.Component {
         dataSource: PropTypes.array,
         goAdvance: PropTypes.func.isRequired
     }
+
     render () {
         var { dataSource, goAdvance } = this.props;
+        intl.setMsg(require('./locale'));
         return (
             <Scroller autoSetHeight={true} >
                 {dataSource.map((item, i) => {
@@ -27,7 +27,7 @@ class NewProjectQuality extends React.Component {
                             <SpaceRow height="0.4em"/>
                             <div className="item-top flex-row">
                                 <div className="flex-col-4">
-                                    <span>平台: </span>
+                                    <span>{intl.get('platform')}平台: </span>
                                     <span> {item.platformProject}</span>
                                 </div>
                                 <div className="flex-col-5">

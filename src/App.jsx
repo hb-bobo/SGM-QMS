@@ -11,7 +11,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 // import en from 'react-intl/locale-data/en';
 import AppConfig from './AppConfig';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
-
+import intl from './components/intl';
 import './static/css/base.css';
 import './static/css/app.css';
 import './static/css/common.css';
@@ -33,11 +33,12 @@ const muiTheme = getMuiTheme({
     textColor: "#000"
   }
 });
-
+// 设置语言
+intl.setLanguage(AppConfig.language);
 
 // use $store every where
 React.Component.prototype.$store = store;
-// 
+
 class App extends React.Component{
   static childContextTypes = {
     language: PropTypes.string,
@@ -51,6 +52,7 @@ class App extends React.Component{
       language: this.state.language,
       setLanguage : (language) => {
         this.setState({language: language});
+        intl.setLanguage(language);
       }
     };
   }

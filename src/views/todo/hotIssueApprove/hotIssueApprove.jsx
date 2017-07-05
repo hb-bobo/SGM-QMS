@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
+import intl from '@/components/intl';
 
 @connect(
     // mapStateToProps
@@ -61,6 +62,7 @@ class HotIssueApprove extends React.Component {
     }
     render () {
         var { listData } = this.props;
+        intl.setMsg(require('./locale').default);
         return (
             <div className="gtasks-list">
                 {
@@ -79,7 +81,7 @@ class HotIssueApprove extends React.Component {
                                         </div>
                                         <div>
                                             <span className="left">
-                                            计划描述:
+                                            {intl.get('platform')}计划描述:
                                             </span>
                                             <span className="right">
                                                 {item.planDesc}
