@@ -6,6 +6,7 @@ const AppConfig = {
     language: (window.navigator.language || window.navigator.browserLanguage).split('-')[0]
 }
 
+
 export const languagePkg = {
     'zh': {
         menu: {

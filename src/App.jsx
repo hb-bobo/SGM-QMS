@@ -6,10 +6,10 @@ import store from './store';
 import { Provider } from 'react-redux';
 // import { IntlProvider } from 'react-intl';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import {addLocaleData} from 'react-intl';
+// import {addLocaleData} from 'react-intl';
 // import zh from 'react-intl/locale-data/zh';
 // import en from 'react-intl/locale-data/en';
-import AppConfig, { languagePkg } from './AppConfig';
+import AppConfig from './AppConfig';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import './static/css/base.css';
