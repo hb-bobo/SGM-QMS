@@ -15,7 +15,6 @@ export default {
     mutations: {
         /*fill list-item data, listData usually is a Array<{}>*/
         [types.FILL_LIST_DATA] (state: States, action: Action) {
-            console.log(action)
             state.listData = action.payload
         },
         [types.UP_TEMPE_DATA] (state: States, action: Action) {

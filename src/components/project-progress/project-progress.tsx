@@ -27,6 +27,9 @@ class ProjectProgress extends React.Component<{[key: string]: any}, any> {
         ],
         projectSchedules: []
     }
+    static contextTypes = {
+        language: PropTypes.string
+    }
     state = {
         maxWidth: 0
     }
@@ -77,6 +80,7 @@ class ProjectProgress extends React.Component<{[key: string]: any}, any> {
         
         var configs: Config[] = this.props.configs;
         var projectSchedules: any[] = this.props.projectSchedules; // 传入的数据
+        var dateFormat: string = this.context.language === 'zh' ? 'yyyy/MM/dd' : 'MM/dd/yyyy';
         return (
             <div ref={(container: any) => {this.container = container}} className="p-progress flex-row">
                 <svg className="p-line">
@@ -99,7 +103,7 @@ class ProjectProgress extends React.Component<{[key: string]: any}, any> {
                                     <span>
                                         {
                                             currentPhase.regateTime && 
-                                            getTime({time: currentPhase.regateTime, format: 'yyyy/MM/dd'})
+                                            getTime({time: currentPhase.regateTime, format: dateFormat})
                                         }
                                     </span>
                                 </div>

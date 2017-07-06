@@ -15,7 +15,7 @@ class NewProjectQuality extends React.Component {
         dataSource: PropTypes.array,
         goAdvance: PropTypes.func.isRequired
     }
-
+    
     render () {
         var { dataSource, goAdvance } = this.props;
         intl.setMsg(require('./locale'));
@@ -27,11 +27,11 @@ class NewProjectQuality extends React.Component {
                             <SpaceRow height="0.4em"/>
                             <div className="item-top flex-row">
                                 <div className="flex-col-4">
-                                    <span>{intl.get('platform')}平台: </span>
+                                    <span>{intl.get('platform')}: </span>
                                     <span> {item.platformProject}</span>
                                 </div>
                                 <div className="flex-col-5">
-                                    <span>项目: </span>
+                                    <span>{intl.get('project')}: </span>
                                     <span> {item.model}</span>
                                 </div>
                                 <div className="flex-col-1" onClick={() => {goAdvance('PRTS')}}>

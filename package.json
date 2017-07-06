@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@types/jest": "^19.2.4",
+    "@types/lodash": "^4.14.68",
     "@types/node": "^7.0.27",
     "@types/prop-types": "^15.5.1",
     "@types/react": "^15.0.26",
@@ -24,6 +25,7 @@
     "babel-polyfill": "^6.23.0",
     "echarts": "^3.6.2",
     "echarts-for-react": "^1.4.4",
+    "lodash": "^4.17.4",
     "material-ui": "^0.18.1",
     "prop-types": "^15.5.8",
     "react": "^15.6.1",

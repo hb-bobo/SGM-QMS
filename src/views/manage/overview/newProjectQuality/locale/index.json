@@ -1,8 +1,10 @@
 {
     "zh": {
-        "platform": "平台"
+        "platform": "平台",
+        "project": "项目"
     },
     "en": {
-        "platform": "platform"
+        "platform": "platform",
+        "project": "project"
     }
 }
