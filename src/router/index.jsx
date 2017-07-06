@@ -71,6 +71,10 @@ export const routes = [
               component: require('@/views/search/issue-advance/advanceType/PRTS-issue-advance').default,
             },
             {
+              path: '/search/issue-advance/QDCPIR',
+              component: require('@/views/search/issue-advance/advanceType/QDCPIR-issue-advance').default,
+            },
+            {
               name: 'work-plan-edit',
               path: '/search/issue-advance/work-plan-edit/:id',
               component: require('@/views/search/issue-advance/work-plan-edit').default,
