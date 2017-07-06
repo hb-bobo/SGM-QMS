@@ -54,7 +54,7 @@ class HotIssueApprove extends React.Component {
         this.setState({
             hotIssueEditOpen: true,
             hotIssueEditData: data,
-            title: '修改评审时间',
+            title: intl.get('QMS.ReviewTime'),
             isIndex: false
         });
         return false
@@ -73,7 +73,7 @@ class HotIssueApprove extends React.Component {
     }
     render () {
         var { listData } = this.props;
-        intl.setMsg(require('./locale').default);
+        // intl.setMsg(require('./locale').default);
         return (
             <div className="gtasks-list">
                 {
@@ -92,7 +92,7 @@ class HotIssueApprove extends React.Component {
                                         </div>
                                         <div>
                                             <span className="left">
-                                            {intl.get('platform')}计划描述:
+                                            {intl.get('QMS.WorkingPlanDescription')}:
                                             </span>
                                             <span className="right">
                                                 {item.planDesc}
@@ -107,13 +107,13 @@ class HotIssueApprove extends React.Component {
                                     <div className="flex-row">
                                         <div className="flex-col-1">
                                             <div>
-                                                <span>评审等级: </span>
+                                                <span>{intl.get('QMS.ReviewLevel')}: </span>
                                                 <span className="right">{item.rspnsUser}</span>
                                             </div>
                                         </div>
                                         <div className="flex-col-1">
                                             <div className="review-time">
-                                                <span>评审时间: </span>
+                                                <span>{intl.get('QMS.ReviewTime')}: </span>
                                                 <span>{item.planFinishDate}</span>
                                                 <span className="review-time-edit" onClick={() => this.edit(item)}>
                                                     <svg className="icon icon-edit1" aria-hidden="true">
@@ -126,13 +126,13 @@ class HotIssueApprove extends React.Component {
                                     <div className="flex-row">
                                         <div className="flex-col-1">
                                             <div>
-                                                <span>在库时间: </span>
+                                                <span>{intl.get('QMS.Age')}: </span>
                                                 <span className="right">{item.planFinishDate}</span>
                                             </div>
                                         </div>
                                         <div className="flex-col-1">
                                             <div>
-                                                <span>责 任 人: </span>
+                                                <span>{intl.get('QMS.Champion')}: </span>
                                                 <span className="right">{item.xx}</span>
                                             </div>
                                         </div>
@@ -141,13 +141,13 @@ class HotIssueApprove extends React.Component {
                                     <div className="flex-row">
                                         <div className="flex-col-1">
                                             <div>
-                                                <span>项目名称: </span>
+                                                <span>{intl.get('QMS.ProgramName')}: </span>
                                                 <span className="right">{item.planFinishDate}</span>
                                             </div>
                                         </div>
                                         <div className="flex-col-1">
                                             <div>
-                                                <span>责任部门: </span>
+                                                <span>{intl.get('QMS.Dept')}: </span>
                                                 <span className="right">{item.xx}</span>
                                             </div>
                                         </div>
@@ -155,13 +155,13 @@ class HotIssueApprove extends React.Component {
                                     <div className="flex-row">
                                         <div className="flex-col-1">
                                             <div>
-                                                <span>问题等级: </span>
+                                                <span>{intl.get('QMS.IssueSeverity')}: </span>
                                                 <span className="right">{item.planFinishDate}</span>
                                             </div>
                                         </div>
                                         <div className="flex-col-1">
                                             <div>
-                                                <span>问题阶段: </span>
+                                                <span>{intl.get('QMS.CurrentStep')}: </span>
                                                 <span className="right">{item.xx}</span>
                                             </div>
                                         </div>
@@ -169,7 +169,7 @@ class HotIssueApprove extends React.Component {
                                     <div className="flex-row">
                                         <div className="flex-col-1">
                                             <div>
-                                                <span>上升理由: </span>
+                                                <span>{intl.get('QMS.Reason')}: </span>
                                                 <span className="right">{item.planFinishDate}</span>
                                             </div>
                                         </div>
@@ -178,7 +178,7 @@ class HotIssueApprove extends React.Component {
                                 <div className="flex-row btn">
                                     <div className="flex-col-1">
                                         <FlatButton 
-                                            label="批准" 
+                                            label={intl.get('QMS.Approve')}
                                             fullWidth={true}
                                             labelStyle={{paddingLeft:'0'}}
                                             onClick={this.approve(1321312)}
@@ -192,7 +192,7 @@ class HotIssueApprove extends React.Component {
                                     <SpaceRow height={30} width="1px"/>
                                     <div className="flex-col-1">
                                         <FlatButton 
-                                            label="驳回" 
+                                            label={intl.get('QMS.Reject')}
                                             fullWidth={true}
                                             labelStyle={{paddingLeft:'0'}}
                                             onClick={this.reject(123123)}

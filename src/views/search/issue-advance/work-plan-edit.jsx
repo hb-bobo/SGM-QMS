@@ -13,6 +13,7 @@ import HInput from '@/components/form/h-input';
 import HSelect from '@/components/form/h-select';
 import HTextarea from '@/components/form/h-textarea';
 import HDate from '@/components/form/h-date';
+import intl from '@/components/intl';
 /*
     planDesc         "描述"
     planFinishDate   "计划完成时间"
@@ -90,12 +91,13 @@ export class WorkPlanEdit extends React.Component {
         }
     }
     render() {
+        intl.setMsg(require('@/static/i18n').default)
         // var { data } = this.props;
         return (
             <div className="work-plan-edit-form">
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="planDesc">工作描述:</label>
+                        <label htmlFor="planDesc">{intl.get('QMS.WorkingPlan')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HTextarea
@@ -108,7 +110,7 @@ export class WorkPlanEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="prblmPhaseID">问题阶段:</label>
+                        <label htmlFor="prblmPhaseID">{intl.get('QMS.Step')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -123,7 +125,7 @@ export class WorkPlanEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="rspnsUser">责任人:</label>
+                        <label htmlFor="rspnsUser">{intl.get('QMS.Champion')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -137,7 +139,7 @@ export class WorkPlanEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="">计划完成时间:</label>
+                        <label htmlFor="">{intl.get('QMS.ECD')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HDate
@@ -151,7 +153,7 @@ export class WorkPlanEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="">实际完成时间:</label>
+                        <label htmlFor="">{intl.get('QMS.ACD')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HDate
@@ -165,7 +167,7 @@ export class WorkPlanEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="">状态:</label>
+                        <label htmlFor="">{intl.get('QMS.Status')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HSelect
@@ -182,7 +184,7 @@ export class WorkPlanEdit extends React.Component {
                             <svg className="icon" aria-hidden="true">
                                 <use xlinkHref="#icon-save"></use>
                             </svg>
-                            保存
+                            {intl.get('QMS.Save')}
                         </RaisedButton>
                     </div>
                     <div className="flex-col-1 text-center">
@@ -190,7 +192,7 @@ export class WorkPlanEdit extends React.Component {
                             <svg className="icon" aria-hidden="true">
                                 <use xlinkHref="#icon-cancel"></use>
                             </svg>
-                            取消
+                            {intl.get('QMS.Cancel')}
                         </RaisedButton>
                     </div>
                 </div>

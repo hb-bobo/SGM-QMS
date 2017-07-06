@@ -7,6 +7,7 @@ import pathToJSON from '@/utils/object/pathToJSON';
 import HTextarea from '@/components/form/h-textarea';
 import HInput from '@/components/form/h-input';
 import HDate from '@/components/form/h-date';
+import intl from '@/components/intl';
 /*
     s
 */
@@ -75,7 +76,7 @@ class HotIssueEdit extends React.Component {
             <div className="hot-up-form">
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="planDesc" className="justify">问题编号:</label>
+                        <label htmlFor="planDesc" className="justify">{intl.get('QMS.IssueNo')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -90,7 +91,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="rspnsUser" className="justify">计划描述:</label>
+                        <label htmlFor="rspnsUser" className="justify">{intl.get('QMS.WorkingPlanDescription')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HTextarea
@@ -105,7 +106,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">问题状态:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.Status')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -120,7 +121,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">评审等级:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.ReviewLevel')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -135,7 +136,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">评审时间:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.ReviewTime')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HDate
@@ -149,7 +150,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">在库时间:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.Age')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -164,7 +165,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">责 任 人:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.Champion')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -179,7 +180,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">项目名称:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.ProgramName')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -194,7 +195,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">责任部门:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.Dept')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -209,7 +210,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">问题等级:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.IssueSeverity')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -224,7 +225,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">问题阶段:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.CurrentStep')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -239,7 +240,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">上升理由:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.Reason')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
@@ -258,7 +259,7 @@ class HotIssueEdit extends React.Component {
                             <svg className="icon" aria-hidden="true">
                                 <use xlinkHref="#icon-submit"></use>
                             </svg>
-                            提交
+                            {intl.get('QMS.Submit')}
                         </RaisedButton>
                     </div>
                     <div className="flex-col-1 text-center">
@@ -266,7 +267,7 @@ class HotIssueEdit extends React.Component {
                             <svg className="icon" aria-hidden="true">
                                 <use xlinkHref="#icon-cancel"></use>
                             </svg>
-                            取消
+                            {intl.get('QMS.Cancel')}
                         </RaisedButton>
                     </div>
                 </div>

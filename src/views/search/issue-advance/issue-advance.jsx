@@ -62,7 +62,6 @@ export class IssueAdvance extends React.Component {
        action: 'update',
        value: require('@/static/workPlan.json').result
     });
-    console.log(this.state.advType, intl.get('QMS.' + this.state.advType + 'Report'))
     this.setState({
       title: intl.get('QMS.' + this.state.advType + 'Report')
     });

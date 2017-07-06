@@ -8,11 +8,12 @@ import SwipeableViews from 'react-swipeable-views';
 import HotReview from './hotIssueApprove';
 
 import Scroller from '@/components/scroller';
+import intl from '@/components/intl';
 
 
 class Todo extends React.Component {
     state = {
-        title: '待办事项',
+        title: intl.get('QMS.todo'),
         isIndex: true, // 除了主页显示itemList 其他页面都消失,
         tabValue: 0
     }
@@ -30,7 +31,13 @@ class Todo extends React.Component {
             });
         }
     }
+    componentDidMount () {
+        this.setState({
+            title: intl.get('QMS.todo')
+        });
+  }
     render () {
+        intl.setMsg(require('@/static/i18n').default)
         return (
             <div>
                 {/*头部*/}
@@ -51,9 +58,9 @@ class Todo extends React.Component {
                     value={this.state.tabValue}
                     onChange={this.tabChange}
                 >
-                    <Tab label="热点评审审批" value={0}>
+                    <Tab label={intl.get('QMS.todo/hotIssueApprove')} value={0}>
                     </Tab>
-                    <Tab label="报警审批" value={1}>
+                    <Tab label={intl.get('QMS.todo/warning')} value={1}>
                     </Tab>
                 </Tabs>
                 
