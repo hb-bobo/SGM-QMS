@@ -16,6 +16,7 @@ import IconUp from '@/components/icon/up';
 import SpaceRow from '@/components/space-row';
 import HotUp from './hot-up';
 import IssueUP from './issue-up';
+import intl from '@/components/intl';
 
 @connect(
     // mapStateToProps
@@ -30,7 +31,7 @@ import IssueUP from './issue-up';
 export class IssueAdvance extends React.Component {
 
   state = {
-    title: this.props.advType + '问题推进页',
+    title: intl.get('QMS.' + this.props.advType + 'Report'),
     isIndex: true,
     hotUpOpen: false,
     issueUPOpen: false,
@@ -40,7 +41,7 @@ export class IssueAdvance extends React.Component {
   componentWillMount () {
     var advType =  /\w+$/.exec(this.props.location.pathname)[0];
     this.setState({
-      title: advType + '问题推进页',
+      title: intl.get('QMS.' + advType + 'Report'),
       advType: advType
     });
   }
@@ -61,12 +62,16 @@ export class IssueAdvance extends React.Component {
        action: 'update',
        value: require('@/static/workPlan.json').result
     });
+    console.log(this.state.advType, intl.get('QMS.' + this.state.advType + 'Report'))
+    this.setState({
+      title: intl.get('QMS.' + this.state.advType + 'Report')
+    });
   }
   componentWillUpdate (nextProps, nextState) {
     // 当从edit页面返回 此页面的时候设置index为true, 并纠正title
     if (nextState.isIndex === true && this.state.isIndex !== true) {
       this.setState({
-        title: this.state.advType + '问题推进页',
+        title: intl.get('QMS.' + this.state.advType + 'Report'),
         isIndex: true,
       });
     }
@@ -76,7 +81,7 @@ export class IssueAdvance extends React.Component {
   goHotUp = () => {
     this.setState({
       hotUpOpen: true,
-      title: '热点上升',
+      title: intl.get('HotEscalate'),
       isIndex: false
     });
     return false
@@ -85,13 +90,14 @@ export class IssueAdvance extends React.Component {
   goIssueUp = () => {
     this.setState({
       issueUPOpen: true,
-      title: '问题上升',
+      title: intl.get('IssueEscalate'),
       isIndex: false
     });
     return false
   }
 
   render() {
+    intl.setMsg([require('@/static/i18n').default, require('./locale')]);
     var routes = [];
     if (this.props.routes) {
         routes = this.props.routes;
@@ -115,7 +121,7 @@ export class IssueAdvance extends React.Component {
           {/*顶部*/}
           <div className={this.state.isIndex ? "advance-top flex-row" : "advance-top flex-row hide"}>
             <div className="flex-col-6">
-              <span>问题编号: </span>
+              <span>{intl.get('QMS.IssueNo')}: </span>
               <span style={{marginLeft: '12px', color: '#6AC4F6'}}>{advanceData.id}</span>
             </div>
             <SpaceRow height={50} width="1px" backgroundColor="#EEEDED"/>

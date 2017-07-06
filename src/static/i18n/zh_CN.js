@@ -107,6 +107,8 @@ export default {
         "DistributionOfIssuesImpactPQRR": "不满足PQRR要求问题分布情况",
         "LastWeek": "上周",
         "ThisWeek": "本周",
+        "Hot": "热点",
+        "Issues": "问题",
         "HotIssues": "热点问题",
         "Champion": "责任人",
         "Severity": "严重等级",

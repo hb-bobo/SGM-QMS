@@ -12,6 +12,7 @@ import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import Scroller from '@/components/scroller';
 import WorkPlanEdit from './work-plan-edit';
+import intl from '@/components/intl';
 /*
     planDesc         "描述"
     planFinishDate   "计划完成时间"
@@ -87,19 +88,20 @@ class WorkPlan extends React.Component {
     }
 
     render () {
+        intl.setMsg(require('@/static/i18n').default)
         var data = this.props.workPlanData;
         var { workPlanEditData } = this.props;
         return (
             <div>
                 <SpaceRow height={6} />
                 <div className="work-paln-title issue-advance-item-title">
-                <span>工作计划</span>
+                <span>{intl.get('QMS.WorkingPlan')}</span>
                 </div>
                 <div className="flex-row issue-advance-item">
                     <div className="flex-col-8">
-                        <span>阶段: </span>
+                        <span>>{intl.get('QMS.Step')}: </span>
                         <select name="" id="" style={{marginLeft: '8px'}}>
-                            <option value="">请选择</option>
+                            <option value="">{intl.get('QMS.Option')}</option>
                             <option value="1">阶段</option>
                         </select>
                     </div>
@@ -118,7 +120,7 @@ class WorkPlan extends React.Component {
                                         <div className="flex-row plan-describe">
                                             <div className="flex-col-9">
                                                 <span className="left">
-                                                计划描述:
+                                                {intl.get('QMS.WorkingPlanDescription')}:
                                                 </span>
                                                 <span className="right">
                                                     {item.planDesc}
@@ -131,13 +133,13 @@ class WorkPlan extends React.Component {
                                         <div className="flex-row plan-info">
                                             <div className="flex-col-1">
                                                 <div>
-                                                    <span>责 任 人 : </span>
+                                                    <span>{intl.get('QMS.Champion')}: </span>
                                                     <span className="right">{item.rspnsUser}</span>
                                                 </div>
                                             </div>
                                             <div className="flex-col-1">
                                                 <div>
-                                                    <span>问题阶段: </span>
+                                                    <span>{intl.get('QMS.CurrentStep')}: </span>
                                                     <span>{item.prblmPhaseID}</span>
                                                 </div>
                                             </div>
@@ -145,13 +147,13 @@ class WorkPlan extends React.Component {
                                         <div className="flex-row plan-info">
                                             <div className="flex-col-1">
                                                 <div>
-                                                    <span>计划完成时间: </span>
+                                                    <span>{intl.get('QMS.ECD')}: </span>
                                                     <span className="right">{item.planFinishDate}</span>
                                                 </div>
                                             </div>
                                             <div className="flex-col-1">
                                                 <div>
-                                                    <span>实际完成时间: </span>
+                                                    <span>{intl.get('QMS.ACD')}: </span>
                                                     <span className="right">{item.xx}</span>
                                                 </div>
                                             </div>
@@ -159,7 +161,7 @@ class WorkPlan extends React.Component {
                                         <div className="flex-row btn">
                                             <div className="flex-col-1">
                                                 <FlatButton 
-                                                    label="编辑" 
+                                                    label={intl.get('QMS.Edit')}
                                                     fullWidth={true}
                                                     labelStyle={{paddingLeft:'0'}}
                                                     onClick={() => this.workPlanDataEdit(item)}
@@ -173,7 +175,7 @@ class WorkPlan extends React.Component {
                                             <SpaceRow height={30} width="1px" backgroundColor="#EEEDED"/>
                                             <div className="flex-col-1">
                                                 <FlatButton 
-                                                    label="删除" 
+                                                    label={intl.get('QMS.Delete')}
                                                     fullWidth={true}
                                                     labelStyle={{paddingLeft:'0'}}
                                                     onClick={() => this.delItem(item.workPlanID)}

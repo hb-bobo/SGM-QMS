@@ -107,6 +107,8 @@ export default {
         "DistributionOfIssuesImpactPQRR": "Distribution of Issues Impact PQRR",
         "LastWeek": "Last Week",
         "ThisWeek": "This Week",
+        "Hot": "Intelligent",
+        "Issues": "Issues",
         "HotIssues": "Hot Issues",
         "Champion": "Champion",
         "Severity": "Severity",

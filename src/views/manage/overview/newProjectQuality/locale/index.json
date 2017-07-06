@@ -1,10 +1,12 @@
 {
     "zh": {
         "platform": "平台",
-        "project": "项目"
+        "project": "项目",
+        "projectQuality": "项目质量"
     },
     "en": {
         "platform": "platform",
-        "project": "project"
+        "project": "project",
+        "projectQuality": "Program Quality"
     }
 }

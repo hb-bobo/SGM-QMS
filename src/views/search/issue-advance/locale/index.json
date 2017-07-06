@@ -1,0 +1,12 @@
+{
+    "zh": {
+        "IssueEscalate": "问题上升",
+        "HotEscalate": "热点上升",
+        "IssueSeverity": "问题等级"
+    },
+    "en": {
+        "IssueEscalate": "Issue Escalate",
+        "HotEscalate": "Intelligent Escalate",
+        "IssueSeverity": "Issue Severity"
+    }
+}

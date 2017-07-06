@@ -13,6 +13,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import NewProjectQuality from './newProjectQuality';
 import getProjectQualityList from 'static/getProjectQualityList.json';
+import intl from '@/components/intl';
 // import goBack from '@/mixin/goBack';
 // import mixins from '@/mixins/mixins';
 
@@ -29,7 +30,8 @@ import getProjectQualityList from 'static/getProjectQualityList.json';
 // @mixins([goBack])
 class Overview extends React.Component {
     state = {
-        title: '项目质量',
+        title: '',
+        
         isIndex: true, // 除了主页显示itemList 其他页面都消失,
         tabValue: 0
     }
@@ -54,7 +56,9 @@ class Overview extends React.Component {
             console.log(res.result)
         })*/
         this.props.actions.fillListData(getProjectQualityList.result)
-        
+        this.setState({
+            title: intl.get('projectQuality')
+        });
     }
     /*back*/
     goBack = () => {
@@ -80,6 +84,7 @@ class Overview extends React.Component {
         });
     }
     render () {
+        intl.setMsg(require('@/static/i18n').default);
         var routes = [];
         if (this.props.routes) {
             routes = this.props.routes;
@@ -104,9 +109,9 @@ class Overview extends React.Component {
                     value={this.state.tabValue}
                     onChange={this.tabChange}
                 >
-                    <Tab label="新项目质量总览" value={0}>
+                    <Tab label={intl.get('QMS.manage/overview')} value={0}>
                     </Tab>
-                    <Tab label="质量评审技术" value={1}>
+                    <Tab label={intl.get('QMS.manage/aftermarket')} value={1}>
                     </Tab>
                 </Tabs>
                 <SwipeableViews

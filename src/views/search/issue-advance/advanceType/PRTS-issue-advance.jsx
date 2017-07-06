@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 // import { List, InputItem, WhiteSpace } from 'antd-mobile';
 // import { createForm } from 'rc-form';
 import SpaceRow from '@/components/space-row';
+import intl from '@/components/intl';
 
 export class PRTSIssueAdvance extends React.Component {
   state = {
@@ -14,11 +15,12 @@ export class PRTSIssueAdvance extends React.Component {
     advanceData: PropTypes.object
   }
   render() {
+    intl.setMsg([require('@/static/i18n').default, require('./locale')])
     return (
       <div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">问题描述: </label>
+            <label htmlFor="">{intl.get('QMS.IssueDescription')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span>
@@ -28,7 +30,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">项目名称: </label>
+            <label htmlFor="">{intl.get('QMS.ProgramName')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span> U25
@@ -37,7 +39,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">问题阶段: </label>
+            <label htmlFor="">{intl.get('QMS.CurrentStep')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span>
@@ -47,7 +49,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">责 任 人: </label>
+            <label htmlFor="">{intl.get('QMS.Champion')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span>
@@ -57,7 +59,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">风险状态: </label>
+            <label htmlFor="">{intl.get('QMS.RiskStatus')}: </label>
           </div>
           <div className="flex-col-10 right">
             <select name="" id="">
@@ -67,7 +69,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">协助诊断: </label>
+            <label htmlFor="">{intl.get('QMS.DiagnoseAssistance')}: </label>
           </div>
           <div className="flex-col-10 right">
             <a href="void()">3</a>
@@ -75,7 +77,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">问题等级: </label>
+            <label htmlFor="">{intl.get('IssueSeverity')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span>2</span>
@@ -84,7 +86,7 @@ export class PRTSIssueAdvance extends React.Component {
         <SpaceRow height={6} />
         <div className="issue-advance-item flex-row">
           <div className="flex-col-5">
-            <label htmlFor="">根本原因分析: </label>
+            <label htmlFor="">{intl.get('QMS.RootCauseAnalysis')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span>No enough space between beauty cover and CAC duct.No enough space between beauty cover and CAC duct.</span>
@@ -92,11 +94,11 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <SpaceRow height={6} />
         <div className="issue-advance-item-title">
-          <span>解决措施</span>
+          <span>{intl.get('QMS.Solution')}</span>
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">短期措施: </label>
+            <label htmlFor="">{intl.get('QMS.STSolution')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span></span>
@@ -104,7 +106,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-4">
-            <label htmlFor="">短期断点时间: </label>
+            <label htmlFor="">{intl.get('QMS.STSolutionBPDate')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span></span>
@@ -112,7 +114,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-4">
-            <label htmlFor="">短期断点阶段: </label>
+            <label htmlFor="">{intl.get('QMS.STSolutionBPPhase')}短期断点阶段: </label>
           </div>
           <div className="flex-col-10 right">
             <span></span>
@@ -120,7 +122,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">长期措施: </label>
+            <label htmlFor="">{intl.get('QMS.LTSolution')}: </label>
           </div>
           <div className="flex-col-10 right"> 
             <span>	W/H routing to be changed, and beauty cover to be modified.</span>
@@ -128,7 +130,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-4">
-            <label htmlFor="">计划断点时间: </label>
+            <label htmlFor="">{intl.get('QMS.PlannedBPDate')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span></span>
@@ -136,7 +138,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-4">
-            <label htmlFor="">计划断点阶段: </label>
+            <label htmlFor="">{intl.get('QMS.PlannedBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span></span>

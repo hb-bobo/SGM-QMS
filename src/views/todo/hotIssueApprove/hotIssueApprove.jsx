@@ -4,10 +4,12 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fillListData } from '@/store/actions';
 import FlatButton from 'material-ui/FlatButton';
+import Drawer from 'material-ui/Drawer';
 
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
+import HotIssueEdit from './edit';
 
 @connect(
     // mapStateToProps
@@ -28,7 +30,9 @@ class HotIssueApprove extends React.Component {
         goAdvance: PropTypes.func
     }
     state = {
-        list: []
+        hotIssueEditOpen: false,
+        list: [],
+        hotIssueEditData: {}
     }
     componentWillMount () {
        this.setState({
@@ -45,8 +49,15 @@ class HotIssueApprove extends React.Component {
         this.props.goAdvance('/search/issue-advance/' + advanceType);
     }
     // edit review time
-    edit (id) {
-        console.log(id)
+    edit (data) {
+        console.log(data)
+        this.setState({
+            hotIssueEditOpen: true,
+            hotIssueEditData: data,
+            title: '修改评审时间',
+            isIndex: false
+        });
+        return false
     }
     // Approved the hot review item
     approve (id) {
@@ -76,7 +87,7 @@ class HotIssueApprove extends React.Component {
                                                 style={{color: 'rgb(106, 196, 246)', marginBottom: '4px'}}
                                                 onClick={() => this.goAdvance('PRTS')}
                                             >
-                                                132324324
+                                               {item.prblmId}
                                             </span>
                                         </div>
                                         <div>
@@ -104,7 +115,7 @@ class HotIssueApprove extends React.Component {
                                             <div className="review-time">
                                                 <span>评审时间: </span>
                                                 <span>{item.planFinishDate}</span>
-                                                <span className="review-time-edit" onClick={() => this.edit(111111)}>
+                                                <span className="review-time-edit" onClick={() => this.edit(item)}>
                                                     <svg className="icon icon-edit1" aria-hidden="true">
                                                         <use xlinkHref="#icon-edit1"></use>
                                                     </svg>
@@ -197,6 +208,16 @@ class HotIssueApprove extends React.Component {
                         )
                     })
                 }
+                {/*edit弹出*/}
+                <Drawer 
+                    width="100%" 
+                    containerStyle={{top: '48px', overflow: 'hidden'}} 
+                    openSecondary={true}
+                    parent={this}
+                    open={this.state.hotIssueEditOpen} 
+                >
+                    <HotIssueEdit data={this.state.hotIssueEditData} parent={this}/>
+                </Drawer>
             </div>
         )
     }
