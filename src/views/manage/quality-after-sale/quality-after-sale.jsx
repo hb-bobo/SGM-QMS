@@ -1,9 +1,11 @@
 import * as React from 'react';
+import './index.css';
 // import { RouteWithSubRoutes } from '@/router';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import EchartGauge from '@/components/echarts/echart-gauge';
+import EchartPie from '@/components/echarts/echart-pie';
 import Scroller from '@/components/scroller';
 import intl from '@/components/intl';
 class QualityAfterSaleReport extends React.Component {
@@ -55,9 +57,16 @@ class QualityAfterSaleReport extends React.Component {
                 />
                 <Scroller autoSetHeight={true}>
                     {/*顶部*/}
-                    <div>
-                        <EchartGauge info={this.state.chartData} value={this.state.date50Value}></EchartGauge>
-                        <EchartGauge info={this.state.chartData} value={this.state.date100Value}></EchartGauge>
+                    <div className="chat1">
+                        <div className="chat1_piechat">
+                            <EchartPie info={this.state.chartData} value={this.state.date50Value}></EchartPie>
+                        </div>
+                        <div className="chat1_instrumentchat1">
+                            <EchartGauge info={this.state.chartData} value={this.state.date50Value}></EchartGauge>
+                        </div>
+                        <div className="chat1_instrumentchat2">
+                            <EchartGauge info={this.state.chartData} value={this.state.date100Value}></EchartGauge>
+                        </div>
                     </div>
                 </Scroller>
             </div>

@@ -1,0 +1,68 @@
+.chat1{
+	-moz-box-shadow:0px 0px 5px #f1f1f1, 0px 0px 5px #f1f1f1; 
+	-webkit-box-shadow:0px 0px 5px #f1f1f1, 0px 0px 5px #f1f1f1; 
+	box-shadow:0px 0px 5px #f1f1f1, 0px 0px 5px #f1f1f1;
+	margin: 20px 10px 10px 10px;
+	border-radius: 0.0px;
+	background: white;
+	height:180px;
+	position: relative;	
+	display: block;
+}
+
+.chat1_piechat{
+	position: absolute;
+	display: block;
+	width: 90px;
+	height: 90px;
+	top: 5px;
+	left: 50%;
+	margin-left: -45px;
+}
+
+.chat1_instrumentchat1{
+	position: absolute;
+	display: block;
+	width: 130px;
+	height: 130px;
+	left: 5px;
+	top: 25px;
+	/*margin-top: -50px;
+	margin-left: -70px;*/
+}
+
+.chat1_instrumentchat2{
+	position: absolute;
+	display: block;
+	width: 130px;
+	height: 130px;
+	right: 5px;
+	top: 25px;
+	/*margin-top: -50px;
+	margin-right: -70px;*/
+}
+
+.left_instrument_span{
+	position: absolute;
+	width: 140px;
+	height: 20px;
+	line-height: 20px;
+	font-size: 10px;
+	top: 150px;
+	text-align: center;
+	color: #333333;
+	opacity: 0.8;
+}
+
+.right_instrument_span{
+	position: absolute;
+	width: 140px;
+	height: 20px;
+	line-height: 20px;
+	font-size: 10px;
+	top: 150px;
+	right: 0px;
+	text-align: center;
+	color: #333333;
+	opacity: 0.8;
+}

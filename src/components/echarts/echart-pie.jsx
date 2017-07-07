@@ -2,26 +2,42 @@ import * as React from 'react';
 import ReactEchartsCore from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
 import PropTypes from 'prop-types';
-import 'echarts/lib/chart/gauge';
+import 'echarts/lib/chart/pie';
 // 缩放(暂时只开发了缩放宽度的功能)
 // import TouchZoom from '@/components/zoom';
 
-class EchartGauge extends React.Component {
+class EchartPie extends React.Component {
     static defaultProps = {
-        color: [[0.2,"#d2eee4"], [0.8,"#5bd0f9"], [1,"#60ed92"]],
-        value: 0,
-        height: "130px",
-        width: "130px",
-        themeName: "",
-        chartName: "结构成本节省率"
+        titleText: "1/4",
+        titleSubText: "Spills",
+        color: ["#e8807d","#dfdfdf"],
+        data:[
+            {
+                value:40,
+                itemStyle:{
+                    normal:{
+                        color:'#e8807d'
+                    }
+                }
+            },
+            {
+                value:120,
+                itemStyle:{
+                    normal:{
+                        color:'#dfdfdf'
+                    }
+                }
+            }
+        ],
+        height: "90px",
+        width: "90px"
     }
     static propTypes = {
-        color: PropTypes.array,
-        value: PropTypes.number,
+        data: PropTypes.array,
+        titleText: PropTypes.string,
+        titleSubText: PropTypes.string,
         height: PropTypes.string,
-        width: PropTypes.string,
-        themeName: PropTypes.string,
-        chartName: PropTypes.string
+        width: PropTypes.string
     }
 
     state = {
@@ -29,8 +45,8 @@ class EchartGauge extends React.Component {
         chart: null
     }
     componentWillMount () {
-        options.series[0].name = this.props.chartName;
-        options.series[0].axisLine.lineStyle.color = this.props.color;
+        options.title.text = this.props.titleText;
+        options.title.subtext = this.props.titleSubText;
         this.setState({
             option: JSON.parse(JSON.stringify(options))
         });
@@ -40,10 +56,19 @@ class EchartGauge extends React.Component {
     }
     shouldComponentUpdate (nextProps, nextState) {
         // 实际值
-        options.series[0].data = [{value: this.props.value}]
+        var chartData = nextProps.chartData;
+        if (Array.isArray(chartData) && chartData.length) {
+            chartData.forEach( (item,index) => {
+                var color = this.props.color[index];
+                if (item.color !== undefined) {
+                    color = item.color
+                }
+                options.series[0].data.push({value: item.value, itemStyle: {normal: {color: color}}});
+            })
+        }
 
         this.setState({
-            option: Object.assign({}, options)
+            option: options
         });
 
         if (this.state.chart !== null) {
@@ -85,33 +110,28 @@ class EchartGauge extends React.Component {
 }
 
 var options =  {
-    tooltip : {
-        show: false
-    },
-    series: [
-        {
-            name: "",
-            type: 'gauge',
-            radius: "100%",
-            startAngle: 220,
-            endAngle: -40,
-            min: 0,
-            max: 100,
-            axisLine: {
-                lineStyle: {width: 6, color: []}
-            },
-            axisLabel: {distance: -18,textStyle: {fontSize:8,fontFamily:"Arial"}},
-            axisTick: {splitNumber: 1,},
-            splitLine: {show: false},
-            detail: {
-                formatter:'{value}%',
-                textStyle: {fontSize: 18, fontWeight: "normal", fontFamily:"Arial"}
-            },
-            pointer: {
-                width:4
+    title: {
+		text: "",
+		subtext: "",
+		subtextStyle: {
+			fontSize: 14,
+			color: "#333333"
+		},
+		left: "center",
+		top: 30,
+		padding: 0
+	},
+	series: [{
+		name:'',
+        type:'pie',
+        radius: ['85%', '100%'],
+        labelLine: {
+            normal: {
+                show: false
             }
-        }
-    ]
+        },
+        data:[]
+	}]
 };
 
-export default EchartGauge;
+export default EchartPie;
