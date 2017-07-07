@@ -28,29 +28,19 @@ class EchartGauge extends React.Component {
         option: JSON.parse(JSON.stringify(options)),
         chart: null
     }
-    componentWillMount () {
+    componentWillReceiveProps (nextProps) {
+        // 为了新的引用
+        var options = Object.assign({}, this.state.option);
         options.series[0].name = this.props.chartName;
         options.series[0].axisLine.lineStyle.color = this.props.color;
-        this.setState({
-            option: JSON.parse(JSON.stringify(options))
-        });
-    }
-    componentDidMount () {
-       
-    }
-    shouldComponentUpdate (nextProps, nextState) {
         // 实际值
-        options.series[0].data = [{value: this.props.value}]
-
-        this.setState({
-            option: Object.assign({}, options)
-        });
-
+        options.series[0].data = [{value: nextProps.value}]
         if (this.state.chart !== null) {
             this.state.chart.hideLoading();
         }
-
-        return true;
+        this.setState({
+            option: Object.assign({}, options)
+        });
     }
     onChartReadyCallback = (chart) => {
         this.setState({
@@ -63,7 +53,6 @@ class EchartGauge extends React.Component {
         console.log(e)
     }
     render () {
-        console.log(this.state.option)
         return (
             <div>
                 <ReactEchartsCore

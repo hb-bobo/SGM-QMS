@@ -3,6 +3,7 @@ import ReactEchartsCore from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
 import PropTypes from 'prop-types';
 import 'echarts/lib/chart/pie';
+import 'echarts/lib/component/title';
 // 缩放(暂时只开发了缩放宽度的功能)
 // import TouchZoom from '@/components/zoom';
 
@@ -11,31 +12,13 @@ class EchartPie extends React.Component {
         titleText: "1/4",
         titleSubText: "Spills",
         color: ["#e8807d","#dfdfdf"],
-        data:[
-            {
-                value:40,
-                itemStyle:{
-                    normal:{
-                        color:'#e8807d'
-                    }
-                }
-            },
-            {
-                value:120,
-                itemStyle:{
-                    normal:{
-                        color:'#dfdfdf'
-                    }
-                }
-            }
-        ],
         height: "90px",
         width: "90px"
     }
     static propTypes = {
-        data: PropTypes.array,
         titleText: PropTypes.string,
         titleSubText: PropTypes.string,
+        color: PropTypes.array,
         height: PropTypes.string,
         width: PropTypes.string
     }
@@ -44,31 +27,25 @@ class EchartPie extends React.Component {
         option: JSON.parse(JSON.stringify(options)),
         chart: null
     }
-    componentWillMount () {
+    componentWillReceiveProps (nextProps) {
+        // 为了新的引用
+        var options = Object.assign({}, this.state.option);
         options.title.text = this.props.titleText;
         options.title.subtext = this.props.titleSubText;
-        this.setState({
-            option: JSON.parse(JSON.stringify(options))
-        });
-    }
-    componentDidMount () {
-       
-    }
-    shouldComponentUpdate (nextProps, nextState) {
         // 实际值
-        var chartData = nextProps.chartData;
+        var chartData = nextProps.info;
         if (Array.isArray(chartData) && chartData.length) {
             chartData.forEach( (item,index) => {
-                var color = this.props.color[index];
+                var color = this.props.color[index%2];
                 if (item.color !== undefined) {
                     color = item.color
                 }
-                options.series[0].data.push({value: item.value, itemStyle: {normal: {color: color}}});
+                options.series[0].data.push({value: item.value, name: "", itemStyle: {normal: {color: color}}});
             })
         }
 
         this.setState({
-            option: options
+            option: Object.assign({}, options)
         });
 
         if (this.state.chart !== null) {
