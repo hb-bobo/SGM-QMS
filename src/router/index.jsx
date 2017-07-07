@@ -52,6 +52,10 @@ export const routes = [
         component: require('@/views/manage/report').default,
       },
       {
+        path: '/manage/quality-after-sale',
+        component: require('@/views/manage/quality-after-sale').default,
+      },
+      {
         path: '/manage/overview',
         component: require('@/views/manage/overview').default
       }

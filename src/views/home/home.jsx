@@ -20,6 +20,9 @@ class HomePage extends React.Component{
             <Link to="/manage/overview">项目质量</Link>
           </RaisedButton>
           <RaisedButton>
+            <Link to="/manage/quality-after-sale">售后质量</Link>
+          </RaisedButton>
+          <RaisedButton>
             <Link to="/manage/quality-month-report">质量月报</Link>
           </RaisedButton>
           <RaisedButton>
