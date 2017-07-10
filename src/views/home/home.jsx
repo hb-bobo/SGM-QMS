@@ -29,6 +29,12 @@ class HomePage extends React.Component{
             <Link to="/todo">待办事项</Link>
           </RaisedButton>
           <RaisedButton>
+            <Link to="/search/assist">项目质量总览</Link>
+          </RaisedButton>
+          <RaisedButton>
+            <Link to="/project/verification">热点问题</Link>
+          </RaisedButton>
+          <RaisedButton>
             <Link to="/test">test</Link>
           </RaisedButton>
          {/* <RaisedButton>

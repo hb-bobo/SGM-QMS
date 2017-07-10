@@ -71,7 +71,6 @@ class HotIssueEdit extends React.Component {
     }
     render() {
         // var { data } = this.props;
-        var options = ['aa', 'xxxx', 'xvv']
         return (
             <div className="hot-up-form">
                 <div className="edit-item flex-row">

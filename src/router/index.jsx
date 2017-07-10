@@ -84,7 +84,21 @@ export const routes = [
               component: require('@/views/search/issue-advance/work-plan-edit').default,
             },
           ]
+        },
+        {
+          path: '/search/assist',
+          component: require('@/views/search/assist').default
         }
+    ]
+  },
+  {
+    path: '/project',
+    component: Project,
+    routes: [
+      {
+        path: '/project/verification',
+        component: require('@/views/project/verification').default
+      }
     ]
   },
   {

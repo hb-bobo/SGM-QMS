@@ -12,6 +12,7 @@ import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import NewProjectQuality from './newProjectQuality';
+import HotIssueReviewPlan from './hotIssueReviewPlan';
 import getProjectQualityList from 'static/getProjectQualityList.json';
 import intl from '@/components/intl';
 // import goBack from '@/mixin/goBack';
@@ -31,7 +32,7 @@ import intl from '@/components/intl';
 class Overview extends React.Component {
     state = {
         title: '',
-        
+        listData2: [],
         isIndex: true, // 除了主页显示itemList 其他页面都消失,
         tabValue: 0
     }
@@ -56,8 +57,20 @@ class Overview extends React.Component {
             console.log(res.result)
         })*/
         this.props.actions.fillListData(getProjectQualityList.result)
+        var listData2 = [{prblmNo:"222",currentStatus:"G",prblmDesc:"222",projectName:"222",reviewLevel:"222",prblmSeverity:1,dept:"222",stockDay:1,crntPhase:"222"}]
+
         this.setState({
-            title: intl.get('projectQuality')
+            title: intl.get('projectQuality'),
+            listData2: listData2
+        });
+    }
+    /* 评审计划查询刷新 */
+    selectHis = (value) => {
+        var listData = [{prblmNo:"1111",currentStatus:"G",prblmDesc:"1111",projectName:"11111",reviewLevel:"1111",prblmSeverity:1,dept:"1111",stockDay:1,crntPhase:"1111"},
+                                {prblmNo:"222",currentStatus:"G",prblmDesc:"222",projectName:"222",reviewLevel:"222",prblmSeverity:1,dept:"222",stockDay:1,crntPhase:"222"}]
+        console.log(value)
+        this.setState({
+            listData2: listData
         });
     }
     /*back*/
@@ -111,7 +124,7 @@ class Overview extends React.Component {
                 >
                     <Tab label={intl.get('QMS.manage/overview')} value={0}>
                     </Tab>
-                    <Tab label={intl.get('QMS.manage/aftermarket')} value={1}>
+                    <Tab label={intl.get('QMS.EQRProjectHotIssueReviewPlan')} value={1}>
                     </Tab>
                 </Tabs>
                 <SwipeableViews
@@ -126,11 +139,11 @@ class Overview extends React.Component {
                         }
                     </div>
                     <div>
-                        <p>
-                        This is another example of a controllable tab. Remember, if you
-                        use controllable Tabs, you need to give all of your tabs values or else
-                        you wont be able to select them.
-                        </p>
+                        {/*列表*/
+                            this.state.isIndex? 
+                                <HotIssueReviewPlan dataSource={this.state.listData2} selectHis={this.selectHis}/>
+                                : null
+                        }
                     </div>
                 </SwipeableViews>
                 {/*route*/}
