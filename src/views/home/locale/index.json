@@ -1,0 +1,10 @@
+{
+    "zh": {
+        "job": "职位",
+        "department": "部门"
+    },
+    "en": {
+        "job": "job",
+        "department": "department"
+    }
+}

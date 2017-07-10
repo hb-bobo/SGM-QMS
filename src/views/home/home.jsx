@@ -3,6 +3,10 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import RaisedButton from 'material-ui/RaisedButton';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import intl from '@/components/intl';
+import './index.css';
+import home_top from '@/static/images/home_top.jpg';
+import home_banner from '@/static/images/home_banner.jpg';
 class HomePage extends React.Component{
   static contextTypes = {
     language: PropTypes.string,
@@ -10,36 +14,66 @@ class HomePage extends React.Component{
   }
   
   render () {
+    intl.setMsg(require('./locale'));
      return (
-        <div>
-          <div>
-            Home
-            <button onClick={() => this.context.setLanguage('en')}>设置为英文</button>
+        <div className="home">
+          <div className="home-top">
+            <img src={home_top} alt="home_top"/>
           </div>
-          <RaisedButton>
-            <Link to="/manage/overview">项目质量</Link>
-          </RaisedButton>
-          <RaisedButton>
-            <Link to="/manage/quality-after-sale">售后质量</Link>
-          </RaisedButton>
-          <RaisedButton>
-            <Link to="/manage/quality-month-report">质量月报</Link>
-          </RaisedButton>
-          <RaisedButton>
-            <Link to="/todo">待办事项</Link>
-          </RaisedButton>
-          <RaisedButton>
-            <Link to="/search/assist">项目质量总览</Link>
-          </RaisedButton>
-          <RaisedButton>
-            <Link to="/project/verification">热点问题</Link>
-          </RaisedButton>
-          <RaisedButton>
-            <Link to="/test">test</Link>
-          </RaisedButton>
-         {/* <RaisedButton>
-            <Link to="/manage/quality-month-report1">质量月报(点击全屏缩放版)</Link>
-          </RaisedButton>*/}
+          <div className="home-banner">
+            <img src={home_banner} alt="home_banner"/>
+          </div>
+          <div className="home-info">
+            <div className="flex-row">
+              <div className="flex-col-8">
+                <div>
+                  <span>{intl.get('job')}: </span>
+                  <span>工程师</span>
+                </div>
+                <div>
+                  <span>{intl.get('department')}: </span>
+                  <span>EQDs</span>
+                </div>
+              </div>
+              <div className="flex-col-2">
+                <div className="icon-wrap">
+                  <svg className="icon info" aria-hidden="true">
+                    <use xlinkHref="#icon-geren"></use>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            home-info
+          </div>
+          <div className="home-menu">
+            <div>
+              <button onClick={() => this.context.setLanguage('en')}>设置为英文</button>
+            </div>
+            <RaisedButton>
+              <Link to="/manage/overview">项目质量</Link>
+            </RaisedButton>
+            <RaisedButton>
+              <Link to="/manage/quality-after-sale">售后质量</Link>
+            </RaisedButton>
+            <RaisedButton>
+              <Link to="/manage/quality-month-report">质量月报</Link>
+            </RaisedButton>
+            <RaisedButton>
+              <Link to="/todo">待办事项</Link>
+            </RaisedButton>
+            <RaisedButton>
+              <Link to="/search/assist">项目质量总览</Link>
+            </RaisedButton>
+            <RaisedButton>
+              <Link to="/project/verification">热点问题</Link>
+            </RaisedButton>
+            <RaisedButton>
+              <Link to="/test">test</Link>
+            </RaisedButton>
+          {/* <RaisedButton>
+              <Link to="/manage/quality-month-report1">质量月报(点击全屏缩放版)</Link>
+            </RaisedButton>*/}
+          </div>
         </div>
     );
   }

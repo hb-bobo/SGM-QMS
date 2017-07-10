@@ -1,0 +1,33 @@
+.home{
+    background: #F2F2F2;
+}
+.home .home-top{
+    height: 5.4vh;  
+}
+.home .home-banner{
+    height: 30vh;
+}
+.home .home-info,
+.home .home-menu{
+    background: #FFF;
+    border-radius: 4px;
+}
+
+.home .home-info{
+    height: 15vh;
+}
+.home .icon-wrap{
+    width: 5em;
+    height: 5.4em;
+    padding-top: 20%;
+    color: #FFF;
+    background: #706E6F;
+    text-align: center;
+}
+.home .home-info .info{
+    width: 3em;
+    height: 3em;
+}
+.home .home-menu{
+    height: 49.6vh;
+}
