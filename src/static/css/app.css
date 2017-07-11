@@ -1,4 +1,7 @@
-/*引入 ant 会把html font-size设为50px; 再此设置与它抵消*/
+/*
+ *path = 'src/static/css/index.css'
+ *引入 ant 会把html font-size设为50px; 再此设置与它抵消
+ */
 #root{
     position: relative;
     font-size: 1rem;
@@ -35,6 +38,8 @@
 .component-out-enter, .component-out-leave-active {
   transform: translateX(-100%);
 }
+
+
 /*Dialog*/
 .details-list>li:not(:last-child) {
     border-bottom: 1px solid #EDEDED;
