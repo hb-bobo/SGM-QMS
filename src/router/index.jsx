@@ -48,7 +48,7 @@ export const routes = [
     component: Manage,
     routes: [
       {
-        path: '/manage/quality-month-report',
+        path: '/manage/report',
         component: require('@/views/manage/report').default,
       },
       {

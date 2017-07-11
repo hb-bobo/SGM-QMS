@@ -31,9 +31,11 @@ class Scroller extends React.Component {
         // 记录scrollTop 位置
         if (this.refs.scroller) {
             this.refs.scroller.addEventListener('scroll', throttle(() => {
-                this.setState({
-                    scrollTop: this.refs.scroller.scrollTop
-                });
+                if (this.refs.scroller !== undefined) {
+                    this.setState({
+                        scrollTop: this.refs.scroller.scrollTop
+                    });
+                }
             }, 500));
         }
         

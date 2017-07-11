@@ -10,6 +10,9 @@ import EchartPie from '@/components/echarts/echart-pie';
 import EchartLine from '@/components/echarts/echart-line';
 import Scroller from '@/components/scroller';
 import intl from '@/components/intl';
+
+/*售后质量*/
+
 class QualityAfterSaleReport extends React.Component {
     state = {
         title: intl.get('QMS.aftermarket'),

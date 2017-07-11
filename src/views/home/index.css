@@ -4,10 +4,10 @@
 }
 
 .home .home-top{
-    height: 5.4vh;
+    height: 5.8vh;
 }
 .home .home-banner{
-    height: 30vh;
+    height: 34vh;
 }
 .home .home-top,
 .home .home-banner{
@@ -21,7 +21,7 @@
     background: #FFF;
     border-radius: 4px;
     padding: 0 20px;
-    
+    margin: 6px;
 }
 .home .home-top>img,
 .home .home-info> img{
@@ -29,7 +29,7 @@
     height: 100%;
 }
 .home .home-info{
-    height: 15vh;
+    height: 18vh;
 }
 .home .icon-wrap{
     width: 4.8em;
@@ -46,14 +46,18 @@
     height: 3em;
 }
 .home .home-menu{
-    height: 49.6vh;
+    padding: 10px 20px;
+    height: 38.6vh;
+}
+.home-menu .flex-row{
+    height: auto;
 }
 .home-menu-item{
     position: relative;
     display: inline-block;
     width: 4em;
     height: 4em;
-    padding-top: 10px;
+    padding-top: 14px;
     margin-left: 5px;
     margin-right: 5px;
     background: url(../../static/images/home_menu.png) center center no-repeat;
@@ -61,13 +65,9 @@
     text-align: center;
 }
 .home-menu-item .icon{
-/*    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);*/
     color: #FFF;
-    width: 2.8em;
-    height: 2.8em;
+    width: 2.5em;
+    height: 2.5em;
 }
 .home-menu-item span{
     margin-top: 2px;

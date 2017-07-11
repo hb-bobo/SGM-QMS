@@ -4,10 +4,11 @@ import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import intl from '@/components/intl';
 import MenuButton from './menu-button';
+import MoreMenu from './more.jsx';
 import './index.css';
 import home_top from '@/static/images/home_top.jpg';
 import home_banner from '@/static/images/home_banner.jpg';
-console.log(home_top)
+
 var homeTopBg = {
   backgroundImage:  `url(${home_top})`
 }
@@ -16,7 +17,58 @@ class HomePage extends React.Component{
     language: PropTypes.string,
     setLanguage: PropTypes.func
   }
-  
+  state = {
+    showMore: false
+  }
+  /*常用的菜单 element*/
+  commonMenu () {
+    return (
+      <div className="home-menu">
+        <div className="flex-row">
+          <div className="flex-col-1">
+            <Link to="/manage/overview">
+              <MenuButton iconName="project" text="项目质量"/>
+            </Link>
+          </div>
+          <div className="flex-col-1">
+            <Link to="/manage/quality-after-sale">
+              <MenuButton iconName="after-sale" text="售后质量"/>
+            </Link>
+          </div>
+          <div className="flex-col-1">
+            <Link to="/manage/report">
+              <MenuButton iconName="monthly" text="质量月报"/>
+            </Link>
+          </div>
+          <div className="flex-col-1">
+            <Link to="/">
+              <MenuButton iconName="notice" text="待定"/>
+            </Link>
+          </div>
+        </div>
+        <div className="flex-row">
+          <div className="flex-col-1">
+            <Link to="/todo">
+              <MenuButton iconName="msg" text="待办事项"/>
+            </Link>
+          </div>
+          <div className="flex-col-1">
+            <Link to="/">
+              <MenuButton iconName="department" text="待定"/>
+            </Link>
+          </div>
+          <div className="flex-col-1">
+            <Link to="/">
+              <MenuButton iconName="person" text="待定"/>
+            </Link>
+          </div>
+          <div className="flex-col-1" onClick={() => this.setState({showMore: true})}>
+              <MenuButton iconName="function" text="更多功能"/>
+          </div>
+        </div>
+      </div>
+    )
+  }
   render () {
     intl.setMsg(require('./locale'));
      return (
@@ -25,6 +77,7 @@ class HomePage extends React.Component{
           </div>
           <div className="home-banner" style={{backgroundImage: `url(${home_banner})`}}>
           </div>
+
           <div className="home-info">
             <div className="flex-row">
               <div className="flex-col-8">
@@ -45,53 +98,10 @@ class HomePage extends React.Component{
                 </div>
               </div>
             </div>
-            home-info
           </div>
-          <div className="home-menu">
-            <Link to="/manage/overview">
-              <MenuButton iconName="project" text="项目质量"/>
-            </Link>
-            <Link to="/manage/quality-after-sale">
-              <MenuButton iconName="after-sale" text="售后质量"/>
-            </Link>
-            <Link to="/manage/quality-month-report">
-              <MenuButton iconName="monthly" text="质量月报"/>
-            </Link>
-            <Link to="/todo">
-              <MenuButton iconName="msg" text="待办事项"/>
-            </Link>
-            <Link to="/project/overview">
-              <MenuButton iconName="project" text="项目质量总览"/>
-            </Link>
-
-            <Link to="/project/verification">
-              <MenuButton iconName="project" text="热点问题"/>
-            </Link>
-            <Link to="/test">
-              <MenuButton iconName="project" text="test"/>
-            </Link>
-            {/*<RaisedButton>
-              <Link to="/manage/overview">项目质量</Link>
-            </RaisedButton>
-            <RaisedButton>
-              <Link to="/manage/quality-after-sale">售后质量</Link>
-            </RaisedButton>
-            <RaisedButton>
-              <Link to="/manage/quality-month-report">质量月报</Link>
-            </RaisedButton>
-            <RaisedButton>
-              <Link to="/todo">待办事项</Link>
-            </RaisedButton>
-            <RaisedButton>
-              <Link to="/search/assist">项目质量总览</Link>
-            </RaisedButton>
-            <RaisedButton>
-              <Link to="/project/verification">热点问题</Link>
-            </RaisedButton>
-            <RaisedButton>
-              <Link to="/test">test</Link>
-            </RaisedButton>*/}
-          </div>
+          {
+            this.state.showMore ? <MoreMenu/> : this.commonMenu()
+          }
         </div>
     );
   }
