@@ -101,7 +101,7 @@ export class ReadacrossIssueAdvance extends React.Component {
           </div>
         </div>
         <div className="issue-advance-item flex-row">
-          <div className="flex-col-3">
+          <div className="flex-col-5">
             <label htmlFor="">{intl.get('QMS.STSolutionBPDate')}: </label>
           </div>
           <div className="flex-col-10 right"> 
@@ -109,7 +109,7 @@ export class ReadacrossIssueAdvance extends React.Component {
           </div>
         </div>
         <div className="issue-advance-item flex-row">
-          <div className="flex-col-3">
+          <div className="flex-col-5">
             <label htmlFor="">{intl.get('QMS.STSolutionBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right"> 
@@ -117,7 +117,7 @@ export class ReadacrossIssueAdvance extends React.Component {
           </div>
         </div>
         <div className="issue-advance-item flex-row">
-          <div className="flex-col-3">
+          <div className="flex-col-4">
             <label htmlFor="">{intl.get('QMS.LTSolution')}: </label>
           </div>
           <div className="flex-col-10 right"> 
@@ -125,7 +125,7 @@ export class ReadacrossIssueAdvance extends React.Component {
           </div>
         </div>
         <div className="issue-advance-item flex-row">
-          <div className="flex-col-3">
+          <div className="flex-col-4">
             <label htmlFor="">{intl.get('QMS.PlannedBPDate')}: </label>
           </div>
           <div className="flex-col-10 right"> 
@@ -133,7 +133,7 @@ export class ReadacrossIssueAdvance extends React.Component {
           </div>
         </div>
         <div className="issue-advance-item flex-row">
-          <div className="flex-col-3">
+          <div className="flex-col-4">
             <label htmlFor="">{intl.get('QMS.PlannedBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right"> 
@@ -141,7 +141,7 @@ export class ReadacrossIssueAdvance extends React.Component {
           </div>
         </div>
         <div className="issue-advance-item flex-row">
-          <div className="flex-col-3">
+          <div className="flex-col-4">
             <label htmlFor="">{intl.get('QMS.ActuralBPDate')}: </label>
           </div>
           <div className="flex-col-10 right"> 
@@ -149,7 +149,7 @@ export class ReadacrossIssueAdvance extends React.Component {
           </div>
         </div>
         <div className="issue-advance-item flex-row">
-          <div className="flex-col-3">
+          <div className="flex-col-4">
             <label htmlFor="">{intl.get('QMS.ActuralBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right"> 
