@@ -1,6 +1,44 @@
-.home{
+/*.home{
+    position: relative;
+    width: 100%;
+    height: 100%;
     background: #F2F2F2;
 }
+.home .home-top{
+    height: 5.4%;  
+}
+.home .home-banner{
+    height: 30%;
+}
+.home .home-info,
+.home .home-menu{
+    position: relative;
+    background: #FFF;
+    border-radius: 4px;
+}
+.home .home-top>img,
+.home .home-info> img{
+    width: 100%;
+    height: 100%;
+}
+.home .home-info{
+    height: 15%;
+}
+.home .icon-wrap{
+    width: 5em;
+    height: 5.4em;
+    padding-top: 20%;
+    color: #FFF;
+    background: #706E6F;
+    text-align: center;
+}
+.home .home-info .info{
+    width: 3em;
+    height: 3em;
+}
+.home .home-menu{
+    height: 49.6%;
+}*/
 .home .home-top{
     height: 5.4vh;  
 }
@@ -9,16 +47,21 @@
 }
 .home .home-info,
 .home .home-menu{
+    position: relative;
     background: #FFF;
     border-radius: 4px;
 }
-
+.home .home-top>img,
+.home .home-info> img{
+    width: 100%;
+    height: 100%;
+}
 .home .home-info{
     height: 15vh;
 }
 .home .icon-wrap{
-    width: 5em;
-    height: 5.4em;
+    width: 4.8em;
+    height: 4.8em;
     padding-top: 20%;
     color: #FFF;
     background: #706E6F;

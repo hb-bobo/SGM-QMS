@@ -16,7 +16,7 @@ class HomePage extends React.Component{
   render () {
     intl.setMsg(require('./locale'));
      return (
-        <div className="home">
+        <div className="home" style={{height: window.innerHeight}}>
           <div className="home-top">
             <img src={home_top} alt="home_top"/>
           </div>
