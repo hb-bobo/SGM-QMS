@@ -14,6 +14,7 @@ class AssistDetails extends React.Component {
     }
     
     render () {
+        intl.setMsg(require('@/static/i18n').default);
         var { dataSource } = this.props;
         return (
             <div>
@@ -24,23 +25,18 @@ class AssistDetails extends React.Component {
                                 <SpaceRow height="0.4em"/>
                                 <div className="item-top flex-row">
                                     <div className="flex-col-10">
-                                        <span style={{marginLeft: '12px', color: '#6AC4F6', fontSize: '20px'}}>{item.sourcePrblmNo}</span>
+                                        <span>{intl.get('QMS.IssueNo')}: </span>
+                                        <span> {item.sourcePrblmNo}</span>
                                     </div>
                                 </div>
                                 <div className="item-top flex-row">
-                                    <div className="flex-col-10">
-                                        <span style={{marginLeft: '12px', fontSize: '20px'}}>{item.prblmDesc}</span>
+                                    <div className="flex-col-5">
+                                        <span>{intl.get('QMS.Description')}: </span>
+                                        <span> {item.prblmDesc}</span>
                                     </div>
-                                </div>
-                                <SpaceRow height="0.1em"/>
-                                <div className="item-top flex-row">
                                     <div className="flex-col-5">
                                         <span>{intl.get('QMS.ProgramName')}: </span>
                                         <span> {item.prjctName}</span>
-                                    </div>
-                                    <div className="flex-col-5">
-                                        <span>{intl.get('QMS.CurrentStep')}: </span>
-                                        <span> {item.crntPhase}</span>
                                     </div>
                                 </div>
                                 <div className="item-top flex-row">
@@ -49,14 +45,18 @@ class AssistDetails extends React.Component {
                                         <span> {item.prblmSeverity}</span>
                                     </div>
                                     <div className="flex-col-5">
-                                        <span>{intl.get('QMS.Champion')}: </span>
-                                        <span> {item.crntRspnsUser}</span>
+                                        <span>{intl.get('QMS.CurrentStep')}: </span>
+                                        <span> {item.crntPhase}</span>
                                     </div>
                                 </div>
                                 <div className="item-top flex-row">
                                     <div className="flex-col-5">
                                         <span>{intl.get('QMS.Dept')}: </span>
                                         <span> {item.crntRspnsDept}</span>
+                                    </div>
+                                    <div className="flex-col-5">
+                                        <span>{intl.get('QMS.Champion')}: </span>
+                                        <span> {item.crntRspnsUser}</span>
                                     </div>
                                 </div>
                             </div>

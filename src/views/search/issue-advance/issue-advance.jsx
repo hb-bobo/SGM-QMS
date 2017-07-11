@@ -125,7 +125,7 @@ export class IssueAdvance extends React.Component {
             </div>
             <SpaceRow height={50} width="1px" backgroundColor="#EEEDED"/>
             <div className="flex-col-4">
-              <span onClick={this.goHotUp}>
+              <span onClick={this.goHotUp} style={{display: this.state.advType === 'VOC' ? "none" : "inline-block"}}>
                 <IconUp value="热点" style={{marginLeft: '10px'}} > </IconUp>
               </span>
               <span onClick={this.goIssueUp}>

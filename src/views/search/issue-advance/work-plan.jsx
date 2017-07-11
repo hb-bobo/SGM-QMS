@@ -99,7 +99,7 @@ class WorkPlan extends React.Component {
                 </div>
                 <div className="flex-row issue-advance-item">
                     <div className="flex-col-8">
-                        <span>>{intl.get('QMS.Step')}: </span>
+                        <span>{intl.get('QMS.Step')}: </span>
                         <select name="" id="" style={{marginLeft: '8px'}}>
                             <option value="">{intl.get('QMS.Option')}</option>
                             <option value="1">阶段</option>
