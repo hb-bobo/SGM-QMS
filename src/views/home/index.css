@@ -2,15 +2,18 @@
 .home{
     background: #F2F2F2;
 }
+
 .home .home-top{
     height: 5.4vh;
-    background: url(../../static/images/home_top.jpg) center center;
-    background-size: contain;
 }
 .home .home-banner{
     height: 30vh;
-    background: url(../../static/images/home_banner.jpg) center center;
-    background-size: contain;
+}
+.home .home-top,
+.home .home-banner{
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 .home .home-info,
 .home .home-menu{
@@ -18,6 +21,7 @@
     background: #FFF;
     border-radius: 4px;
     padding: 0 20px;
+    
 }
 .home .home-top>img,
 .home .home-info> img{

@@ -9,7 +9,7 @@ const MenuButton = (props) => {
 
     return (
         <div className="home-menu-item">
-            <svg className="icon" ariaHidden="true">
+            <svg className="icon">
                 <use xlinkHref={`#icon-${iconName}`}></use>
             </svg>
             <span className="text-center">

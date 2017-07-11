@@ -5,7 +5,12 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import intl from '@/components/intl';
 import MenuButton from './menu-button';
 import './index.css';
-
+import home_top from '@/static/images/home_top.jpg';
+import home_banner from '@/static/images/home_banner.jpg';
+console.log(home_top)
+var homeTopBg = {
+  backgroundImage:  `url(${home_top})`
+}
 class HomePage extends React.Component{
   static contextTypes = {
     language: PropTypes.string,
@@ -16,9 +21,9 @@ class HomePage extends React.Component{
     intl.setMsg(require('./locale'));
      return (
         <div className="home" style={{height: window.innerHeight}}>
-          <div className="home-top">
+          <div className="home-top" style={homeTopBg}>
           </div>
-          <div className="home-banner">
+          <div className="home-banner" style={{backgroundImage: `url(${home_banner})`}}>
           </div>
           <div className="home-info">
             <div className="flex-row">
@@ -47,13 +52,13 @@ class HomePage extends React.Component{
               <MenuButton iconName="project" text="项目质量"/>
             </Link>
             <Link to="/manage/quality-after-sale">
-              <MenuButton iconName="project" text="售后质量"/>
+              <MenuButton iconName="after-sale" text="售后质量"/>
             </Link>
             <Link to="/manage/quality-month-report">
-              <MenuButton iconName="project" text="质量月报"/>
+              <MenuButton iconName="monthly" text="质量月报"/>
             </Link>
             <Link to="/todo">
-              <MenuButton iconName="project" text="待办事项"/>
+              <MenuButton iconName="msg" text="待办事项"/>
             </Link>
             <Link to="/project/overview">
               <MenuButton iconName="project" text="项目质量总览"/>
@@ -85,9 +90,6 @@ class HomePage extends React.Component{
             </RaisedButton>
             <RaisedButton>
               <Link to="/test">test</Link>
-            </RaisedButton>*/}
-          {/* <RaisedButton>
-              <Link to="/manage/quality-month-report1">质量月报(点击全屏缩放版)</Link>
             </RaisedButton>*/}
           </div>
         </div>
