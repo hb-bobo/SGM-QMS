@@ -1,8 +1,12 @@
 {
     "zh": {
-        "IssueSeverity": "问题等级"
+        "IssueSeverity": "问题等级",
+        "ParentCurrentStep": "母问题阶段",
+        "ParentIssueNo": "母问题编号"
     },
     "en": {
-        "IssueSeverity": "Issue Severity"
+        "IssueSeverity": "Issue Severity",
+        "ParentCurrentStep": "Parent Current Step",
+        "ParentIssueNo": "Parent Issue No"
     }
 }

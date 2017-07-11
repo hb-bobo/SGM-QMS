@@ -34,7 +34,7 @@ class NewProjectQuality extends React.Component {
                                     <span>{intl.get('project')}: </span>
                                     <span> {item.model}</span>
                                 </div>
-                                <div className="flex-col-1" onClick={() => {goAdvance('PRTS')}}>
+                                <div className="flex-col-1" onClick={() => {goAdvance('EIR')}}>
                                     <Circle value={item.qualityRisk}></Circle>
                                 </div>
                             </div>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 // import { List, InputItem, WhiteSpace } from 'antd-mobile';
 // import { createForm } from 'rc-form';
 import SpaceRow from '@/components/space-row';
+import { Link } from 'react-router-dom';
 import intl from '@/components/intl';
 
 export class QDCPIRIssueAdvance extends React.Component {
@@ -63,7 +64,7 @@ export class QDCPIRIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.DiagnoseAssistance')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <a href="void()">3</a>
+            <Link to="/search/assist">0</Link>
           </div>
         </div>
         <div className="issue-advance-item flex-row">

@@ -23,7 +23,7 @@ import intl from '@/components/intl';
     })
 )
 // @mixins([goBack])
-class Assist extends React.Component {
+class Overview extends React.Component {
     state = {
         title: '',
         listData: [],
@@ -37,9 +37,9 @@ class Assist extends React.Component {
     }
     componentDidMount ()　{
         var listData = [{sourcePrblmNo:"222",prblmDesc:"222",prjctName:"222",crntRspnsUser:"222",prblmSeverity:1,crntRspnsDept:"222",crntPhase:"222"}]
-        console.log(intl)
+
         this.setState({
-            title: intl.get('Detail'),
+            title: intl.get('QMS.project/overview'),
             listData: listData
         });
     }
@@ -54,7 +54,7 @@ class Assist extends React.Component {
     }
     
     render () {
-        intl.setMsg([require('@/static/i18n').default,require('./locale')]);
+        intl.setMsg(require('@/static/i18n').default);
         var routes = [];
         if (this.props.routes) {
             routes = this.props.routes;
@@ -92,4 +92,4 @@ class Assist extends React.Component {
     }
 }
 
-export default Assist
+export default Overview

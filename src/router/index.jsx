@@ -79,6 +79,26 @@ export const routes = [
               component: require('@/views/search/issue-advance/advanceType/QDCPIR-issue-advance').default,
             },
             {
+              path: '/search/issue-advance/EIR',
+              component: require('@/views/search/issue-advance/advanceType/EIR-issue-advance').default,
+            },
+            {
+              path: '/search/issue-advance/SIL',
+              component: require('@/views/search/issue-advance/advanceType/SIL-issue-advance').default,
+            },
+            {
+              path: '/search/issue-advance/Readacross',
+              component: require('@/views/search/issue-advance/advanceType/Readacross-issue-advance').default,
+            },
+            {
+              path: '/search/issue-advance/VE',
+              component: require('@/views/search/issue-advance/advanceType/VE-issue-advance').default,
+            },
+            {
+              path: '/search/issue-advance/VOC',
+              component: require('@/views/search/issue-advance/advanceType/VOC-issue-advance').default,
+            },
+            {
               name: 'work-plan-edit',
               path: '/search/issue-advance/work-plan-edit/:id',
               component: require('@/views/search/issue-advance/work-plan-edit').default,
@@ -98,6 +118,10 @@ export const routes = [
       {
         path: '/project/verification',
         component: require('@/views/project/verification').default
+      },
+      {
+        path: '/project/overview',
+        component: require('@/views/project/overview').default
       }
     ]
   },

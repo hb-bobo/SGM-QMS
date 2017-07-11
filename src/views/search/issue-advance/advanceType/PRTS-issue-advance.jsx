@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 // import { List, InputItem, WhiteSpace } from 'antd-mobile';
 // import { createForm } from 'rc-form';
 import SpaceRow from '@/components/space-row';
+import { Link } from 'react-router-dom';
 import intl from '@/components/intl';
 
 export class PRTSIssueAdvance extends React.Component {
@@ -15,7 +16,7 @@ export class PRTSIssueAdvance extends React.Component {
     advanceData: PropTypes.object
   }
   render() {
-    intl.setMsg([require('@/static/i18n').default, require('./locale')])
+    intl.setMsg(require('@/static/i18n').default)
     return (
       <div>
         <div className="issue-advance-item flex-row">
@@ -72,7 +73,7 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.DiagnoseAssistance')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <a href="void()">3</a>
+            <Link to="/search/assist">0</Link>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
