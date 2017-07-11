@@ -69,7 +69,7 @@ class Todo extends React.Component {
                     onChangeIndex={this.tabChange}
                 > 
                     <Scroller autoSetHeight={true}>
-                        <HotReview goAdvance={this.goAdvance}/>
+                        <HotReview tabValue={this.state.tabValue} goAdvance={this.goAdvance}/>
                     </Scroller>
                     <Scroller autoSetHeight={true}>
                        <div>2222222222222222222222</div>

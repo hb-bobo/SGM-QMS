@@ -27,7 +27,8 @@ class HotIssueApprove extends React.Component {
     }
     static propTypes = {
         listData: PropTypes.array,
-        goAdvance: PropTypes.func
+        goAdvance: PropTypes.func.isRequired,
+        tabValue: PropTypes.number.isRequired
     }
     state = {
         hotIssueEditOpen: false,
@@ -72,8 +73,9 @@ class HotIssueApprove extends React.Component {
         }
     }
     render () {
-        var { listData } = this.props;
+        var { listData, tabValue } = this.props;
         // intl.setMsg(require('./locale').default);
+
         return (
             <div className="gtasks-list">
                 {
@@ -211,7 +213,7 @@ class HotIssueApprove extends React.Component {
                 {/*edit弹出*/}
                 <Drawer 
                     width="100%" 
-                    containerStyle={{top: '48px', overflow: 'hidden'}} 
+                    containerStyle={{top: '48px', overflow: 'hidden', display: tabValue === 0 ? 'block' : 'none' }} 
                     openSecondary={true}
                     parent={this}
                     open={this.state.hotIssueEditOpen} 
@@ -222,5 +224,5 @@ class HotIssueApprove extends React.Component {
         )
     }
 }
-
+ 
 export default HotIssueApprove;

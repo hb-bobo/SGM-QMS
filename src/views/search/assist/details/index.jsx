@@ -58,7 +58,7 @@ class AssistDetails extends React.Component {
                                         <span>{intl.get('QMS.Champion')}: </span>
                                         <span> {item.crntRspnsUser}</span>
                                     </div>
-                                </div>>
+                                </div>
                             </div>
                         )
                     })}
