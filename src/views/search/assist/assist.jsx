@@ -36,8 +36,8 @@ class Assist extends React.Component {
         store: PropTypes.object
     }
     componentDidMount ()　{
-        var listData = [{sourcePrblmNo:"222",prblmDesc:"222",prjctName:"222",crntRspnsUser:"222",prblmSeverity:1,crntRspnsDept:"222",crntPhase:"222"}]
-        console.log(intl)
+        var listData = [{sourcePrblmNo:"222",prblmDesc:"222",prjctName:"222",crntRspnsUser:"222",prblmSeverity:1,crntRspnsDept:"222",crntPhase:"222"},
+                        {sourcePrblmNo:"111",prblmDesc:"111",prjctName:"111",crntRspnsUser:"111",prblmSeverity:1,crntRspnsDept:"111",crntPhase:"111"}]
         this.setState({
             title: intl.get('Detail'),
             listData: listData
@@ -54,7 +54,7 @@ class Assist extends React.Component {
     }
     
     render () {
-        intl.setMsg([require('@/static/i18n').default,require('./locale')]);
+        intl.setMsg([require('@/static/i18n').default, require('./locale')])
         var routes = [];
         if (this.props.routes) {
             routes = this.props.routes;

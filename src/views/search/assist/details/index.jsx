@@ -14,7 +14,6 @@ class AssistDetails extends React.Component {
     }
     
     render () {
-        intl.setMsg(require('@/static/i18n').default);
         var { dataSource } = this.props;
         return (
             <div>
