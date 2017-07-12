@@ -3,5 +3,6 @@
     -webkit-overflow-scrolling: touch;
 }
 
-.scroller{
+.scroller-container .bottom-loading {
+    transform: translate(0, 100%)
 }

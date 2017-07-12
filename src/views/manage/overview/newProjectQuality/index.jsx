@@ -6,21 +6,34 @@ import ProjectProgress from '@/components/project-progress';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-
+import getProjectQualityList from '@/static/getProjectQualityList.json';
+console.log(getProjectQualityList)
 class NewProjectQuality extends React.Component {
-    static defaultProps = {
-        dataSource: []
-    }
+
     static propTypes = {
-        dataSource: PropTypes.array,
         goAdvance: PropTypes.func.isRequired
     }
+    state = {
+        dataSource: []
+    }
+    componentDidMount () {
+        // this.props.actions.fillListData(getProjectQualityList.result)
+        this.setState({
+            dataSource: getProjectQualityList.result
+        });
+    }
     
+    loadingMore = () => {
+        this.setState({
+            dataSource: getProjectQualityList.result.concat(this.state.dataSource)
+        });
+    }
     render () {
-        var { dataSource, goAdvance } = this.props;
+        var { goAdvance } = this.props;
+        var { dataSource } = this.state;
         intl.setMsg(require('./locale'));
         return (
-            <Scroller autoSetHeight={true} >
+            <Scroller autoSetHeight={true} loadingMore={this.loadingMore}>
                 {dataSource.map((item, i) => {
                     return (
                         <div key={i} >

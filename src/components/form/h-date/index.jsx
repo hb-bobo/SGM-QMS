@@ -40,7 +40,7 @@ class HDate extends React.Component {
         controllable: false
     }
 
-    componentWillMount () {console.log(1)
+    componentWillMount () {
         // 这代表可控
         if (this.props.onChange !== undefined && this.props.value !== undefined) {
             this.setState({

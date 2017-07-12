@@ -2,9 +2,9 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 // import AppConfig from '@/AppConfig';
 import { RouteWithSubRoutes } from '@/router';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { fillListData } from '@/store/actions';
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
+// import { fillListData } from '@/store/actions';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -13,21 +13,22 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import NewProjectQuality from './newProjectQuality';
 import HotIssueReviewPlan from './hotIssueReviewPlan';
-import getProjectQualityList from 'static/getProjectQualityList.json';
+
 import intl from '@/components/intl';
+// import { POST } from '@/plugins/fetch';
 // import goBack from '@/mixin/goBack';
 // import mixins from '@/mixins/mixins';
 
-@connect(
-    // mapStateToProps
-    (state) => (state.common),
-    // buildActionDispatcher
-    (dispatch, ownProps) => ({
-        actions: bindActionCreators({
-            fillListData
-        }, dispatch)
-    })
-)
+// @connect(
+//     // mapStateToProps
+//     (state) => (state.common),
+//     // buildActionDispatcher
+//     (dispatch, ownProps) => ({
+//         actions: bindActionCreators({
+//             fillListData
+//         }, dispatch)
+//     })
+// )
 // @mixins([goBack])
 class Overview extends React.Component {
     state = {
@@ -42,21 +43,22 @@ class Overview extends React.Component {
         store: PropTypes.object
     }
     componentDidMount ()　{
-        /*fetch(AppConfig.API + '/getData', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "path": "getProjectQualityList.json"
-            })
+        // AppConfig.API + '/getData'
+        /*fetch('http://10.6.96.200:8090/QMS/backlog/testA', {
+            method: 'GET',
+            // headers: {
+            //     'Content-Type': 'application/x-www-form-urlencoded'
+            // },
+            // body: JSON.stringify({
+            //     "path": "getProjectQualityList.json"
+            // })
         }).then((res) => {
             return res.json()
         }).then((res) => {
-            this.props.actions.fillListData(res.result)
-            console.log(res.result)
+            // this.props.actions.fillListData(res.result)
+            console.log(res)
         })*/
-        this.props.actions.fillListData(getProjectQualityList.result)
+        
         var listData2 = [{prblmNo:"222",currentStatus:"G",prblmDesc:"222",projectName:"222",reviewLevel:"222",prblmSeverity:1,dept:"222",stockDay:1,crntPhase:"222"}]
 
         this.setState({
@@ -134,7 +136,7 @@ class Overview extends React.Component {
                     <div>
                         {/*列表*/
                             this.state.isIndex? 
-                                <NewProjectQuality dataSource={this.props.listData} goAdvance={this.goAdvance}/>
+                                <NewProjectQuality goAdvance={this.goAdvance}/>
                                 : null
                         }
                     </div>

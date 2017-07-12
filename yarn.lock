@@ -152,6 +152,10 @@ align-text@^0.1.1, align-text@^0.1.3:
     longest "^1.0.1"
     repeat-string "^1.5.2"
 
+alloytouch@^0.2.5:
+  version "0.2.5"
+  resolved "http://registry.npm.taobao.org/alloytouch/download/alloytouch-0.2.5.tgz#33ea8bb7d39efdf8339e59dfa067df28bb385968"
+
 alphanum-sort@^1.0.1, alphanum-sort@^1.0.2:
   version "1.0.2"
   resolved "http://registry.npm.taobao.org/alphanum-sort/download/alphanum-sort-1.0.2.tgz#97a1119649b211ad33691d9f9f486a8ec9fbe0a3"
@@ -1860,6 +1864,10 @@ css-selector-tokenizer@^0.7.0:
 css-what@2.1:
   version "2.1.0"
   resolved "http://registry.npm.taobao.org/css-what/download/css-what-2.1.0.tgz#9467d032c38cfaefb9f2d79501253062f87fa1bd"
+
+css3transform@latest:
+  version "1.1.7"
+  resolved "http://registry.npm.taobao.org/css3transform/download/css3transform-1.1.7.tgz#768b44b2fbcd0ef7cbcbb4b5636d9221b6c52733"
 
 cssesc@^0.1.0:
   version "0.1.0"
@@ -4532,6 +4540,17 @@ object.omit@^2.0.0, object.omit@~2.0.0:
 obuf@^1.0.0, obuf@^1.1.1:
   version "1.1.1"
   resolved "http://registry.npm.taobao.org/obuf/download/obuf-1.1.1.tgz#104124b6c602c6796881a042541d36db43a5264e"
+
+omi-transform@^0.2.0:
+  version "0.2.0"
+  resolved "http://registry.npm.taobao.org/omi-transform/download/omi-transform-0.2.0.tgz#2b12546d6b2edddc48a8bc78415c02dc81705941"
+  dependencies:
+    css3transform latest
+    omi latest
+
+omi@latest:
+  version "1.7.4"
+  resolved "http://registry.npm.taobao.org/omi/download/omi-1.7.4.tgz#58d7b9345bcae4eb80e50f6294627dbe1733ab55"
 
 omit.js@~0.1.0:
   version "0.1.0"
