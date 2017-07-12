@@ -14,7 +14,10 @@ class NewProjectQuality extends React.Component {
         goAdvance: PropTypes.func.isRequired
     }
     state = {
-        dataSource: []
+        dataSource: [],
+        scrollConfig: {
+            downContent: 'Loading More'
+        }
     }
     componentDidMount () {
         // this.props.actions.fillListData(getProjectQualityList.result)
@@ -24,16 +27,27 @@ class NewProjectQuality extends React.Component {
     }
     
     loadingMore = () => {
+        if (this.state.scrollConfig.downContent === 'No More') {
+            return;
+        }
         this.setState({
-            dataSource: getProjectQualityList.result.concat(this.state.dataSource)
+            dataSource: getProjectQualityList.result.concat(this.state.dataSource),
+            scrollConfig: {
+                downContent: 'No More'
+            }
         });
+
     }
     render () {
         var { goAdvance } = this.props;
         var { dataSource } = this.state;
         intl.setMsg(require('./locale'));
         return (
-            <Scroller autoSetHeight={true} loadingMore={this.loadingMore}>
+            <Scroller
+                autoSetHeight={true}
+                onPullupLoading={this.loadingMore}
+                config={this.state.scrollConfig}
+            >
                 {dataSource.map((item, i) => {
                     return (
                         <div key={i} >

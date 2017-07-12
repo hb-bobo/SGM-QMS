@@ -15,28 +15,27 @@ class Scroller extends React.Component {
         autoSetHeight: false,
         bottomHeight: 0, // 底部高。May have a menu at the bottom,
         scrollTop: 0,
+        bounce: true,
         config: {
-            noMore: '已经到底了',
-            loadingMore: '查看更多'
+            downContent: 'Loading More'
         },
-        loadingMore: function () {}
+        donePulldown: 'done'
     }
     static propTypes = {
         containerHeight: PropTypes.number,
         autoSetHeight: PropTypes.bool,
         bottomHeight: PropTypes.number,
         config: PropTypes.object,
-        loadingMore: PropTypes.func
+        onScrollBottom: PropTypes.func,
+        onPullupLoading: PropTypes.func,
     }
     state = {
         first: true,
-        bottomText: ''
     }
     componentWillMount () {
         // 初始化containerHeight
         this.setState({
-            containerHeight: this.props.containerHeight,
-            bottomText: this.props.config.loadingMore
+            containerHeight: this.props.containerHeight
         });
         
     }
@@ -57,7 +56,7 @@ class Scroller extends React.Component {
 
     }
     componentDidUpdate () {
-        if (!this.state.first) {
+        if (!this.state.first || !this.props.bounce) {
             return false;
         }
         if (this.state.first) {
@@ -77,34 +76,49 @@ class Scroller extends React.Component {
             min: min, //不必需,运动属性的最小值
             max: max, //不必需,滚动属性的最大值
             // sensitivity: 1,//不必需,触摸区域的灵敏度，默认值为1，可以为负数
-            // factor: 1,//不必需,表示触摸位移与被运动属性映射关系，默认值是1
+            factor: 1,//不必需,表示触摸位移与被运动属性映射关系，默认值是1
             // step: 45,//用于校正到step的整数倍
             // bindSelf: false,
             initialValue: 0,
             change: function (value) {
+                // switch (status) {
+                //     case 'pulldownDone':
+                //         this.to(this.initialValue);
+                //         break;
+                //     case 'pullupDone':
+                //         this.to(this.min);
+                //         break;
+                // }
             }, 
             touchStart: function (ev, value) {
+                // 每次点击都重新计算scroll高度
                 min = _this.state.containerHeight - _this.refs.scroller.clientHeight;
                 if (min > max) {
                     min = max;
                 }
                 this.min = min;
-                // console.log(this.initialValue, value, 'touchStart')
             },
             touchMove: function (ev, value) {
-                // 到底了
+                // 上拉到底了
                 if (value < (this.min - 60)) {
-                    // _this.loadingMore();
+                    _this.onScrollBottom();
                 }
+                
             },
             touchEnd: function (ev, value) {
-                // console.log(this.initialValue, value, 'touchEnd')
-                // moveDom.call(this, ev, value);
-                if (value > 20) {
-                    // this.to(60);
-                    this.to(this.initialValue);
+                // 下拉最大值了，并松开了
+                if (value > 30) {
+                    this.to(30);
                     return false;
                 }
+
+                // 到底了，并松开了
+                if (value < this.min) {
+                    console.log('到底了，并松开了')
+                    this.to(this.min + -50);
+                    _this.onPullupLoading();
+                }
+                
             },
             tap: function (ev, value) {
             },
@@ -121,36 +135,45 @@ class Scroller extends React.Component {
     /*scroller到底部剩余的高度*/
     setHeight (alloyTouch) {
         var remainingHeight = getRemainingHeight(this.refs.scroller); // 计算剩余高
-        var containerHeight = remainingHeight - this.props.bottomHeight; // 实际剩余高
+        var containerHeight = remainingHeight - this.props.bottomHeight; // 容器实际剩余高
         this.setState({
             containerHeight: containerHeight
         });
     }
-    loadingMore = () => {
+    onScrollBottom = () => {
         /*this.setState({
             bottomText: this.props.config.noMore
         });*/
-        this.props.loadingMore();
+        this.props.onScrollBottom && this.props.onScrollBottom();
+    }
+    onPullupLoading = () => {
+        this.props.onPullupLoading && this.props.onPullupLoading();
     }
     render () {
         var children = this.props.children;
         var containerHeight = this.state.containerHeight;
+        var config = this.props.config;
         return (
             <div>
                 {/*<div ref="pull_refresh" style={{height: "100px", backgroundColor: '#000'}}>
-                    
+                    以后开发下拉刷新
                 </div>*/}
                 <div ref="scrollerContainer" className="scroller-container" style={{height: parseInt(containerHeight, 10) + 'px'}}>
                     <div ref="scroller" className="scroller">
                         {
                             children && React.Children.toArray(children).map((child) => child)
                         }
-                        {/*<div className="bottom-loading text-center">
-                            <span>{this.state.bottomText}</span>
-                        </div>*/}
-                        <div className="loading-more text-center" onClick={this.loadingMore}>
-                            <span>{this.state.bottomText}</span>
+                        <div className="bottom-loading text-center">
+                            <span>{config.downContent}</span>
                         </div>
+                        {
+                            this.props.loadingMore ? 
+                                <div className="loading-more text-center" onClick={this.loadingMore}>
+                                    <span>{config.downContent}</span>
+                                </div> :
+                                null
+                        }
+                        
                     </div>
                 </div>
             </div>
