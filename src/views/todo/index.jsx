@@ -6,6 +6,7 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 
 import HotReview from './hotIssueApprove';
+import WarningReview from './warningApprove';
 
 import Scroller from '@/components/scroller';
 import intl from '@/components/intl';
@@ -72,7 +73,7 @@ class Todo extends React.Component {
                         <HotReview tabValue={this.state.tabValue} goAdvance={this.goAdvance}/>
                     </Scroller>
                     <Scroller autoSetHeight={true}>
-                       <div>2222222222222222222222</div>
+                        <WarningReview tabValue={this.state.tabValue} goAdvance={this.goAdvance}/>
                     </Scroller>
                 </SwipeableViews>
                 
