@@ -5,7 +5,8 @@ import { getRemainingHeight } from '@/utils/dom';
 import { throttle } from '@/utils/tools';
 import AlloyTouch from 'alloytouch';
 import Transform from './transform.js';
-
+import IconLoading from '@/components/icon/loading';
+import IconArrow from '@/components/icon/arrow';
 /**
  * scroll容器
  */
@@ -17,7 +18,8 @@ class Scroller extends React.Component {
         scrollTop: 0,
         bounce: true,
         config: {
-            downContent: 'Loading More'
+            downContent: '',
+            upContent: ''
         },
         donePulldown: 'done'
     }
@@ -26,25 +28,34 @@ class Scroller extends React.Component {
         autoSetHeight: PropTypes.bool,
         bottomHeight: PropTypes.number,
         config: PropTypes.object,
-        onScrollBottom: PropTypes.func,
-        onPullupLoading: PropTypes.func,
+        onScrollBottom: PropTypes.func, // 上拉，会多次执行
+        onPullupLoading: PropTypes.func, // 上拉
+        onPulldownLoading: PropTypes.func, // 下拉
+        to: PropTypes.func // scroller 跳到的位置(目前是Y轴)
     }
     state = {
         first: true,
+        config: {},
+        pulldownStatus: 'default',
+        pullupStatus: 'default'
+    }
+    componentWillReceiveProps (nextProps, nextState) {
+        this.setState({
+            config: nextProps.config
+        });
     }
     componentWillMount () {
         // 初始化containerHeight
         this.setState({
-            containerHeight: this.props.containerHeight
+            containerHeight: this.props.containerHeight,
         });
-        
     }
     componentDidMount () {
         if (this.props.autoSetHeight) {
             this.setHeight();
         }
         // 记录scrollTop 位置
-        if (this.refs.scrollerContainer) {
+        if (this.refs.scrollerContainer && this.props.bounce === false) {
             this.refs.scrollerContainer.addEventListener('scroll', throttle(() => {
                 if (this.refs.scrollerContainer !== undefined) {
                     this.setState({
@@ -68,17 +79,13 @@ class Scroller extends React.Component {
             scroller,
             scrollerContainer
         } = this.refs; // 当前组件
-        var {
-            onScrollBottom,
-            
-        } = this.props; // 当前组件
 
         var { containerHeight } = this.state;
         var min = 0;
-        var max = 20;
-        var _this = this; 
+        var max = 0;
+        var _this = this; //当前组件
         Transform(scroller, true);
-        var at = new AlloyTouch({
+        var scrollerAt = new AlloyTouch({
             touch: scrollerContainer,//反馈触摸的dom
             vertical: true,//不必需，默认是true代表监听竖直方向touch
             target: scroller, //运动的对象
@@ -101,21 +108,32 @@ class Scroller extends React.Component {
                 this.min = min;
             },
             touchMove: function (ev, value) {
+                // 缓冲距离
+                var bufferVal = 20;
                 // 上拉到底了
-                if (value < (this.min - 60)) {
-                    _this.onScrollBottom();
+                if (value < (this.min - bufferVal)) {
+                    _this.setState({
+                        pullupStatus: value < (this.min - 25) ? 'ready' : 'default'
+                    });
+                    // _this.onScrollBottom();
+                    return;
+                }
+                // 下拉中
+                if (value > bufferVal) {
+                    _this.setState({
+                        pulldownStatus: value > 40 ? 'ready' : 'default'
+                    });
                 }
                 
             },
             touchEnd: function (ev, value) {
                 // 下拉最大值了，并松开了
-                if (value > 30) {
-                    this.to(30);
+                if (value > 40) {
+                    _this.onPulldownLoading();
                     return false;
                 }
-
-                // 到底了，并松开了
-                if (value < this.min) {
+                // 上拉到底了，并松开了 (- bottom-loading的高度)
+                if (value < (this.min - 26)) {
                     _this.onPullupLoading();
                 }
                 
@@ -127,9 +145,12 @@ class Scroller extends React.Component {
             animationEnd: function (value) {
             } //运动结束
         });
+        
         this.setState({
-            at: at
+            scrollerAt: scrollerAt,
+            pulldownStatus: 'loading-start'
         });
+        scrollerAt.to(41);
     }
     /*scroller到底部剩余的高度*/
     setHeight (alloyTouch) {
@@ -139,50 +160,130 @@ class Scroller extends React.Component {
             containerHeight: containerHeight
         });
     }
-    /*到底部了， 会执行多次*/
+    /*到底部了, 会执行多次*/
     onScrollBottom = () => {
-        /*this.setState({
-            bottomText: this.props.config.noMore
-        });*/
         this.props.onScrollBottom && this.props.onScrollBottom();
     }
     /*上拉加载*/
     onPullupLoading = () => {
+        var { scrollerAt } = this.state;
+        if (scrollerAt) {
+            this.setState({
+                pullupStatus: 'loading-start'
+            });
+        }
         this.props.onPullupLoading && this.props.onPullupLoading();
+        this.doneAll();
     }
     /*下拉加载*/
     onPulldownLoading = () => {
+        var { scrollerAt } = this.state;
+        if (scrollerAt) {
+            // 此时下拉到了一定位置并放开了手，可以加载数据了
+            // onPulldownLoading没有的话就表示不开启loading，at就会到0
+            // 30为 loding图标的高度
+            var val = this.props.onPulldownLoading ? 30 : 0;
+            scrollerAt.to(val);
+            this.setState({
+                pulldownStatus: 'loading-start'
+            });
+        }
         this.props.onPulldownLoading && this.props.onPulldownLoading();
+        this.doneAll();
     }
-    /*下拉加载完成*/
-    pulldownDone = () => {
-        this.pulldownDone
+    /*上拉完成*/
+    donePullup = () => {
+        var { scrollerAt } = this.state;
+        if (scrollerAt) {
+            this.setState({
+                pullupStatus: 'default'
+            });
+        }
+    }
+    /*下拉完成*/
+    donePulldown = () => {
+        var { scrollerAt } = this.state;
+        if (scrollerAt) {
+            scrollerAt.to(0);
+            this.setState({
+                pulldownStatus: 'default'
+            });
+        }
+    }
+    /*自动完成 超时时需要*/
+    doneAll = () => {
+        var { scrollerAt, pullupStatus, pulldownStatus } = this.state;
+        if (scrollerAt === undefined) {
+            return false;
+        }
+        window.clearTimeout(scrollerAt.timer);
+        scrollerAt.timer = window.setTimeout(() => {
+            if (pullupStatus !== 'default') { this.donePullup() }
+            if (pulldownStatus !== 'default') { this.donePulldown() }
+        }, 10000);
+    }
+    /**
+     * scroller to some where
+     * @param {string} y | x
+     * @param {number} scrollTop | scrollLeft
+     */
+    to = (key, value) => {
+        var { scrollerAt } = this.state;
+        if (!scrollerAt) {
+            return;
+        }
+        if (key === 'y') {
+            scrollerAt.to(value);
+        }
     }
     render () {
         var children = this.props.children;
         var containerHeight = this.state.containerHeight;
-        var config = this.props.config;
+        var { config, pulldownStatus, pullupStatus } = this.state;
         return (
             <div>
-                {/*<div ref="pull_refresh" style={{height: "100px", backgroundColor: '#000'}}>
-                    以后开发下拉刷新
-                </div>*/}
                 <div ref="scrollerContainer" className="scroller-container" style={{height: parseInt(containerHeight, 10) + 'px'}}>
                     <div ref="scroller" className="scroller">
-                        {
-                            children && React.Children.toArray(children).map((child) => child)
-                        }
-                        <div className="bottom-loading text-center">
-                            <span>{config.downContent}</span>
-                        </div>
-                        {
-                            this.props.loadingMore ? 
-                                <div className="loading-more text-center" onClick={this.loadingMore}>
-                                    <span>{config.downContent}</span>
+                        {/*下拉*/
+                            (this.state.scrollerAt && this.props.onPulldownLoading) ?
+                                <div className="top-loading text-center">
+                                    <span>
+                                        <IconLoading 
+                                            style={{width: 20, height: 20}}
+                                            show={pulldownStatus === 'loading-start' ? true: false}
+                                        />
+                                        <IconArrow
+                                            show={pulldownStatus === 'loading-start' ? false: true}
+                                            className={pulldownStatus === 'default' ? 'icon icon-arrow' : 'icon icon-arrow rotate'}
+                                        />
+                                    </span>
                                 </div> :
                                 null
                         }
-                        
+                        {
+                            children && React.Children.toArray(children).map((child) => child)
+                        }
+                        { /*上拉*/
+                            (this.state.scrollerAt && this.props.onPullupLoading && this.state.scrollerAt.min < -1) ? 
+                                <div className="bottom-loading text-center" onClick={this.props.onPullupLoading}>
+                                    <span>
+                                        {
+                                            config.upContent? 
+                                                config.upContent :
+                                                <IconLoading 
+                                                    style={{width: 20, height: 20}}
+                                                    show={pullupStatus === 'loading-start' ? true : false}
+                                                />
+                                        }
+                                        <IconArrow
+                                            show={(pullupStatus === 'loading-start' && config.upContent === '') ? false: true}
+                                            className={pullupStatus === 'default' ? 'icon icon-arrow rotate' : 'icon icon-arrow'}
+                                        />
+                                    </span>
+                                </div> :
+                                null
+
+                        }                        
                     </div>
                 </div>
             </div>

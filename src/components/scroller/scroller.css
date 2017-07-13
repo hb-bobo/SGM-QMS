@@ -2,7 +2,34 @@
     overflow: auto;
     -webkit-overflow-scrolling: touch;
 }
-
+.scroller{
+    position: relative
+}
 .scroller-container .bottom-loading {
     transform: translate(0, 0%);
+}
+.scroller-container .top-loading {
+    position: absolute;
+    top: -26px;
+    left: 0;
+    width: 100%;
+}
+.scroller-container .icon-arrow{
+    transform: rotate(0deg);
+    transition: transform linear 0.2s;
+}
+.scroller-container .icon-arrow.rotate{
+    transition: transform linear 0.2s;
+    transform: rotate(-180deg);
+}
+.scroller-container .icon-loading{
+    animation: loading 1.04s ease infinite;
+}
+@keyframes loading{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
 }

@@ -7,56 +7,64 @@ import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
 import getProjectQualityList from '@/static/getProjectQualityList.json';
-console.log(getProjectQualityList)
+
 class NewProjectQuality extends React.Component {
 
-    /*static propTypes = {
+    static propTypes = {
         goAdvance: PropTypes.func.isRequired
-    }*/
-    static contextTypes = {
-        router: PropTypes.object
     }
     state = {
         dataSource: [],
         scrollConfig: {
-            downContent: 'Loading More'
-        }
+            upContent: ''
+        },
+        done: false
     }
     componentDidMount () {
         // this.props.actions.fillListData(getProjectQualityList.result)
-        this.setState({
-            dataSource: getProjectQualityList.result
-        });
+        this.refresh();
     }
     
     loadingMore = () => {
-        if (this.state.scrollConfig.downContent === 'No More') {
+        if (this.state.scrollConfig.upContent === 'No More') {
+            this.refs.scroller.donePullup();
             return;
         }
-        this.setState({
-            dataSource: getProjectQualityList.result.concat(this.state.dataSource),
-            scrollConfig: {
-                downContent: 'No More'
-            }
-        });
+        setTimeout(() => {
+            this.setState({
+                dataSource: getProjectQualityList.result.concat(this.state.dataSource),
+                scrollConfig: {
+                    upContent: 'No More'
+                }
+            });
+            this.refs.scroller.donePullup();
+        }, 1000)
+        
 
     }
-    /**
-     * go 项目质量验证总览, 目前是只有热点问题
-     * path = /project/verification
-     */
-    goHotIssue = () => {
-        this.context.router.history.push('/project/verification')
-    } 
+    refresh = () => {
+        setTimeout(() => {
+            this.setState({
+                dataSource: getProjectQualityList.result,
+                scrollConfig: {
+                    upContent: ''
+                }
+            });
+            this.refs.scroller.donePulldown();
+        }, 1000)
+    }
+
     render () {
-        // var { goAdvance } = this.props;
+        var { goAdvance } = this.props;
         var { dataSource } = this.state;
         intl.setMsg(require('./locale'));
         return (
             <Scroller
                 autoSetHeight={true}
                 onPullupLoading={this.loadingMore}
+                onPulldownLoading={this.refresh}
                 config={this.state.scrollConfig}
+                ref="scroller"
             >
                 {dataSource.map((item, i) => {
                     return (
@@ -71,7 +79,7 @@ class NewProjectQuality extends React.Component {
                                     <span>{intl.get('project')}: </span>
                                     <span> {item.model}</span>
                                 </div>
-                                <div className="flex-col-1" onClick={() => {this.goHotIssue('EIR')}}>
+                                <div className="flex-col-1" onClick={() => {goAdvance('EIR')}}>
                                     <Circle value={item.qualityRisk}></Circle>
                                 </div>
                             </div>
