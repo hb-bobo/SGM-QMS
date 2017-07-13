@@ -64,35 +64,37 @@ class Scroller extends React.Component {
                 first: false
             });
         }
+        var {
+            scroller,
+            scrollerContainer
+        } = this.refs; // 当前组件
+        var {
+            onScrollBottom,
+            
+        } = this.props; // 当前组件
+
+        var { containerHeight } = this.state;
         var min = 0;
         var max = 20;
-        var _this = this;
-        Transform(this.refs.scroller, true);
+        var _this = this; 
+        Transform(scroller, true);
         var at = new AlloyTouch({
-            touch: this.refs.scrollerContainer,//反馈触摸的dom
+            touch: scrollerContainer,//反馈触摸的dom
             vertical: true,//不必需，默认是true代表监听竖直方向touch
-            target: this.refs.scroller, //运动的对象
+            target: scroller, //运动的对象
             property: "translateY",  //被运动的属性
             min: min, //不必需,运动属性的最小值
             max: max, //不必需,滚动属性的最大值
             // sensitivity: 1,//不必需,触摸区域的灵敏度，默认值为1，可以为负数
-            factor: 1,//不必需,表示触摸位移与被运动属性映射关系，默认值是1
+            // factor: 1,//不必需,表示触摸位移与被运动属性映射关系，默认值是1
             // step: 45,//用于校正到step的整数倍
             // bindSelf: false,
             initialValue: 0,
             change: function (value) {
-                // switch (status) {
-                //     case 'pulldownDone':
-                //         this.to(this.initialValue);
-                //         break;
-                //     case 'pullupDone':
-                //         this.to(this.min);
-                //         break;
-                // }
             }, 
             touchStart: function (ev, value) {
                 // 每次点击都重新计算scroll高度
-                min = _this.state.containerHeight - _this.refs.scroller.clientHeight;
+                min = (containerHeight - scroller.clientHeight) - 10;
                 if (min > max) {
                     min = max;
                 }
@@ -114,8 +116,6 @@ class Scroller extends React.Component {
 
                 // 到底了，并松开了
                 if (value < this.min) {
-                    console.log('到底了，并松开了')
-                    this.to(this.min + -50);
                     _this.onPullupLoading();
                 }
                 
@@ -123,7 +123,6 @@ class Scroller extends React.Component {
             tap: function (ev, value) {
             },
             pressMove: function (ev, value) {
-                
             },
             animationEnd: function (value) {
             } //运动结束
@@ -140,14 +139,24 @@ class Scroller extends React.Component {
             containerHeight: containerHeight
         });
     }
+    /*到底部了， 会执行多次*/
     onScrollBottom = () => {
         /*this.setState({
             bottomText: this.props.config.noMore
         });*/
         this.props.onScrollBottom && this.props.onScrollBottom();
     }
+    /*上拉加载*/
     onPullupLoading = () => {
         this.props.onPullupLoading && this.props.onPullupLoading();
+    }
+    /*下拉加载*/
+    onPulldownLoading = () => {
+        this.props.onPulldownLoading && this.props.onPulldownLoading();
+    }
+    /*下拉加载完成*/
+    pulldownDone = () => {
+        this.pulldownDone
     }
     render () {
         var children = this.props.children;

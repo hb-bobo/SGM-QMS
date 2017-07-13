@@ -10,8 +10,11 @@ import getProjectQualityList from '@/static/getProjectQualityList.json';
 console.log(getProjectQualityList)
 class NewProjectQuality extends React.Component {
 
-    static propTypes = {
+    /*static propTypes = {
         goAdvance: PropTypes.func.isRequired
+    }*/
+    static contextTypes = {
+        router: PropTypes.object
     }
     state = {
         dataSource: [],
@@ -38,8 +41,15 @@ class NewProjectQuality extends React.Component {
         });
 
     }
+    /**
+     * go 项目质量验证总览, 目前是只有热点问题
+     * path = /project/verification
+     */
+    goHotIssue = () => {
+        this.context.router.history.push('/project/verification')
+    } 
     render () {
-        var { goAdvance } = this.props;
+        // var { goAdvance } = this.props;
         var { dataSource } = this.state;
         intl.setMsg(require('./locale'));
         return (
@@ -61,7 +71,7 @@ class NewProjectQuality extends React.Component {
                                     <span>{intl.get('project')}: </span>
                                     <span> {item.model}</span>
                                 </div>
-                                <div className="flex-col-1" onClick={() => {goAdvance('EIR')}}>
+                                <div className="flex-col-1" onClick={() => {this.goHotIssue('EIR')}}>
                                     <Circle value={item.qualityRisk}></Circle>
                                 </div>
                             </div>

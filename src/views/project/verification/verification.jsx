@@ -10,8 +10,9 @@ import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import VerificationDetails from './details';
 import intl from '@/components/intl';
-// import goBack from '@/mixin/goBack';
-// import mixins from '@/mixins/mixins';
+
+
+/*项目质量验证总览*/
 
 @connect(
     // mapStateToProps
