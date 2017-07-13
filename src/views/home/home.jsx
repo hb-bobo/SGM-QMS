@@ -41,8 +41,8 @@ class HomePage extends React.Component{
             </Link>
           </div>
           <div className="flex-col-1">
-            <Link to="/">
-              <MenuButton iconName="notice" text="待定"/>
+            <Link to="/notice">
+              <MenuButton iconName="notice" text="通知中心"/>
             </Link>
           </div>
         </div>

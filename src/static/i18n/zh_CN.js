@@ -86,7 +86,7 @@ export default {
         "ProgramName": "项目名称",
         "IssueNo": "问题编号",
         "Description": "问题标题",
-        "SeverityLevel": "等级",
+        "SeverityLevel": "问题等级",
         "Status": "状态",
         "CurrentStep": "问题阶段",
         "Dept": "责任部门",

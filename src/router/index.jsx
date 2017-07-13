@@ -14,6 +14,7 @@ import {
   Manage,
   Project,
   Search,
+  Notice,
   IssueAdvance,
   Todo
 } from '@/views/';
@@ -124,6 +125,10 @@ export const routes = [
         component: require('@/views/project/overview').default
       }
     ]
+  },
+  {
+    path: '/notice',
+    component: Notice
   },
   {
     path: '/todo',
