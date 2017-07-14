@@ -1,9 +1,14 @@
 var http=require("http"),
     fs=require("fs");
 var qs = require('querystring');
+var url = require('url');
 
-var server=http.createServer(function(req,res){
+var server=http.createServer(function(req, res){
 
+    if (req.method.toUpperCase() == 'GET') {
+        var query = qs.parse(req.url);
+        send(res, query);
+    }
     if (req.url=='/getData' && req.method.toUpperCase() == 'POST') {
         var postData = "";
         /**
@@ -19,27 +24,32 @@ var server=http.createServer(function(req,res){
          */
         req.addListener("end", function () {
             // 拿body的参数
-            var query = qs.parse(postData);
-            var reqData = JSON.parse(postData);
-            var fileName = reqData.path;
-            var filePath = "./src/" + fileName;
-            res.writeHead(200,{"Content-Type":'text/plain'});
-            fs.exists(filePath, function(exists){
-                // 判断文件是否存在
-                if (exists) {
-                     fs.readFile(filePath, 'utf8', function(err,data){
-                        console.log((new Date()).toLocaleString() + "返回了(backFile): " + fileName);
-                        res.write(data);
-                        res.end();
-                    })  
-                } else {
-                    console.log('waring: ' + reqData.path + ' not exist')
-                }
-            })
-                     
+            send(res, JSON.parse(postData));   
         });
     }
 });
+
+var send = function (res, reqData) {
+    if (!reqData) {
+        console.log('参数有误');
+    }
+    var reqData = reqData;
+    var fileName = reqData.path;
+    var filePath = "./src/" + fileName;
+    res.writeHead(200,{"Content-Type":'text/plain'});
+    fs.exists(filePath, function(exists){
+        // 判断文件是否存在
+        if (exists) {
+                fs.readFile(filePath, 'utf8', function(err, data) {
+                console.log((new Date()).toLocaleString() + "返回了(backFile): " + fileName);
+                res.write(data);
+                res.end();
+            })  
+        } else {
+            console.log('waring: ' + reqData.path + ' not exist')
+        }
+    })
+}
 server.listen(8083,function(){
     console.log("server listening at http://localhost:8083")
 })

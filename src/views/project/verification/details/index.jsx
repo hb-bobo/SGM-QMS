@@ -17,10 +17,12 @@ class VerificationDetails extends React.Component {
     state = {
         selectReLvl: ""
     }
-    
+    selectChange = (ev) => {
+        this.props.selectReLvl(ev.target.value);
+    }   
     render () {
         intl.setMsg(require('@/static/i18n').default);
-        var { dataSource, selectReLvl } = this.props;
+        var { dataSource } = this.props;
         return (
             <div>
                 <div className="item-top flex-row">
@@ -28,7 +30,7 @@ class VerificationDetails extends React.Component {
                         <label htmlFor="">{intl.get('QMS.ReviewLevel')}:</label>
                     </div>
                     <div className="flex-col-2">                        
-                        <select ref="selectReLvl" onChange={() => {selectReLvl(this.refs.selectReLvl.value)}} style={{marginLeft: '8px'}}>
+                        <select onChange={this.selectChange} style={{marginLeft: '8px'}}>
                             <option value="">请选择</option>
                             <option value="1">EQR专题</option>
                             <option value="2">EQR常规</option>
@@ -39,65 +41,67 @@ class VerificationDetails extends React.Component {
                 <Scroller autoSetHeight={true} >
                     {dataSource.map((item, i) => {
                         return (
-                            <div key={i} >
+                            <div key={i} className="item">
                                 <SpaceRow height="0.4em"/>
                                 <div className="item-top flex-row">
                                     <div className="flex-col-9">
                                         <span>{intl.get('QMS.IssueNo')}: </span>
-                                        <span> {item.issueId}</span>
+                                        <span className="id-color"> {item.issueId}</span>
                                     </div>
                                     <div className="flex-col-1">
                                         <Circle value={item.status}></Circle>
                                     </div>
                                 </div>
-                                <div className="item-top flex-row">
-                                    <div className="flex-col-5">
-                                        <span>{intl.get('QMS.Description')}: </span>
-                                        <span> {item.description}</span>
+                                <div className="item-body">
+                                    <div className="flex-row">
+                                        <div className="flex-col-5">
+                                            <span>{intl.get('QMS.Description')}: </span>
+                                            <span> {item.description}</span>
+                                        </div>
+                                        <div className="flex-col-5">
+                                            <span>{intl.get('QMS.SeverityLevel')}: </span>
+                                            <span> {item.severity}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex-col-5">
-                                        <span>{intl.get('QMS.SeverityLevel')}: </span>
-                                        <span> {item.severity}</span>
+                                    <div className="flex-row">
+                                        <div className="flex-col-5">
+                                            <span>{intl.get('QMS.CurrentStep')}: </span>
+                                            <span> {item.step}</span>
+                                        </div>
+                                        <div className="flex-col-5">
+                                            <span>{intl.get('QMS.Dept')}: </span>
+                                            <span> {item.department}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="item-top flex-row">
-                                    <div className="flex-col-5">
-                                        <span>{intl.get('QMS.CurrentStep')}: </span>
-                                        <span> {item.step}</span>
+                                    <div className="flex-row">
+                                        <div className="flex-col-5">
+                                            <span>{intl.get('QMS.Champion')}: </span>
+                                            <span> {item.responsible}</span>
+                                        </div>
+                                        <div className="flex-col-5">
+                                            <span>{intl.get('QMS.ReviewLevel')}: </span>
+                                            <span> {item.hotLevel}</span>
+                                        </div>
                                     </div>
-                                    <div className="flex-col-5">
-                                        <span>{intl.get('QMS.Dept')}: </span>
-                                        <span> {item.department}</span>
+                                    <div className="flex-row">
+                                        <div className="flex-col-5">
+                                            <span>{intl.get('QMS.ReviewDate')}: </span>
+                                            <span> {item.reviewTime}</span>
+                                        </div>
+                                        <div className="flex-col-5">
+                                            <span>{intl.get('QMS.ApprovalStatus')}: </span>
+                                            <span> {item.reviewStatus}</span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="item-top flex-row">
-                                    <div className="flex-col-5">
-                                        <span>{intl.get('QMS.Champion')}: </span>
-                                        <span> {item.responsible}</span>
-                                    </div>
-                                    <div className="flex-col-5">
-                                        <span>{intl.get('QMS.ReviewLevel')}: </span>
-                                        <span> {item.hotLevel}</span>
-                                    </div>
-                                </div>
-                                <div className="item-top flex-row">
-                                    <div className="flex-col-5">
-                                        <span>{intl.get('QMS.ReviewDate')}: </span>
-                                        <span> {item.reviewTime}</span>
-                                    </div>
-                                    <div className="flex-col-5">
-                                        <span>{intl.get('QMS.ApprovalStatus')}: </span>
-                                        <span> {item.reviewStatus}</span>
-                                    </div>
-                                </div>
-                                <div className="item-top flex-row">
-                                    <div className="flex-col-5">
-                                        <span>{intl.get('QMS.Age')}: </span>
-                                        <span> {item.instockDay}</span>
-                                    </div>
-                                    <div className="flex-col-5">
-                                        <span>{intl.get('QMS.ProgramName')}: </span>
-                                        <span> {item.projectName}</span>
+                                    <div className="flex-row">
+                                        <div className="flex-col-5">
+                                            <span>{intl.get('QMS.Age')}: </span>
+                                            <span> {item.instockDay}</span>
+                                        </div>
+                                        <div className="flex-col-5">
+                                            <span>{intl.get('QMS.ProgramName')}: </span>
+                                            <span> {item.projectName}</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

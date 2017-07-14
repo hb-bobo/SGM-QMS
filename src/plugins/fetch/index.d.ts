@@ -10,4 +10,7 @@ declare namespace Fetch {
         type : string,
         url : string,
     }
+    interface Headers {
+        'Content-Type': string
+    }
 }

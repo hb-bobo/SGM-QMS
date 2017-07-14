@@ -1,10 +1,10 @@
 /// <reference path="./index.d.ts" />
-import AppConfig from '../../AppConfig';
+import AppConfig from '@/AppConfig';
+import querystring from '@/utils/tools/querystring';
 
 interface Opts {
-    data: any,
-    succee: Function,
-    error?: Function,
+    data: any, // 一层的Object, 不支持复杂嵌套
+    headers: Headers,
     timeout: number
 }
 
@@ -61,53 +61,99 @@ function _fetch(fetchPromise: Promise<any>, timeout: number)  {
     return abortablePromise;
 }
 
+var defaultHeaders: Headers = new Headers();
+defaultHeaders.append('Content-Type', 'application/json');
+
 /** POST方法
+ * @param {string} url
  * @param {Opts} see interface Opts
  * @return { void }
+ * @example
+ * 
+ *  POST('/getData', {
+ *      headers: {
+ *          'Content-Type': 'application/x-www-form-urlencoded'
+ *      },
+ *      data: {
+ *          "path": "getProjectQualityList.json"
+ *      },
+ *  })
+ *  .then((res) => {
+ *      // todo somthing
+ *  })
+ *  .catch((error) => {
+ *      // xxxx
+ *  })
  */
 export function POST (url: string, opts: Opts) {
-    var succee: Function = opts.succee;
-    _fetch(
-        fetch(AppConfig.API + url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            credentials: 'include',
-            body: opts.data
-        }),
-        opts.timeout || 15000
-    )
-    .then(checkStatus)
-    .then(parseJSON)
-    .then((res) => {
-        succee(res);
-    }).catch(error => {
-        if (error === 'timeout') {
-            alert(error)
-        } else if (opts.error) {
-            opts.error(error);
-        }
+    return new Promise(function (resolve: Function, reject?: Function) {
+        _fetch(
+            fetch(AppConfig.API + url, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: opts.headers || defaultHeaders,
+                credentials: 'include',
+                body: opts.data
+            }),
+            opts.timeout || 20000
+        )
+        .then(checkStatus)
+        .then(parseJSON)
+        .then((res) => {
+            resolve(res);
+        }).catch(error => {
+            if (error === 'timeout') {
+                alert(error)
+            } else if (reject) {
+                reject(error);
+            }
+        });
     });
 }
 
 /** GET方法
+ * @param {string}
  * @param {Opts} see interface Opts
  * @return { void }
+ * @example
+ * 
+ *  GET('/getData', {
+ *      headers: {
+ *          'Content-Type': 'application/x-www-form-urlencoded'
+ *      },
+ *      data: {
+ *          "path": "getProjectQualityList.json"
+ *      },
+ *  })
+ *  .then((res) => {
+ *      // todo somthing
+ *  })
+ *  .catch((error) => {
+ *      // xxxx
+ *  })
  */
+
 export function GET (url: string, opts: Opts) {
-    var succee: Function = opts.succee; 
-    fetch(AppConfig.API + url, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        credentials: 'include',
-        body: opts.data
-    })
-    .then(checkStatus)
-    .then(parseJSON)
-    .then((res) => {
-        succee(res)
-    })
+    return new Promise(function (resolve: Function, reject?: Function) {
+        _fetch(
+            fetch(AppConfig.API + url + '&' + querystring.stringify(opts.data), {
+                method: 'GET',
+                mode: 'no-cors',
+                headers: opts.headers || defaultHeaders,
+                credentials: 'include'
+            }),
+            opts.timeout || 20000
+        )
+        .then(checkStatus)
+        .then(parseJSON)
+        .then((res) => {
+            resolve(res);
+        }).catch(error => {
+            if (error === 'timeout') {
+                alert(error)
+            } else if (reject) {
+                reject(error);
+            }
+        });
+    });
 }

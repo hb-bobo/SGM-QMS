@@ -1,6 +1,6 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
-import { getTime } from '../../utils/format/';
+import { getTime } from '@/utils/format/';
 import './index.css';
 
 interface Config {

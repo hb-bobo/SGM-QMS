@@ -8,6 +8,7 @@ import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
 
+/*质量评审计划*/
 class HotIssueReviewPlan extends React.Component {
     static defaultProps = {
         dataSource: []
@@ -59,7 +60,7 @@ class HotIssueReviewPlan extends React.Component {
                                 <div className="flex-row item-top">
                                     <div className="flex-col-9">
                                         <span>{intl.get('QMS.IssueNo')}: </span>
-                                        <span> {item.prblmNo}</span>
+                                        <span className="id-color"> {item.prblmNo}</span>
                                     </div>
                                     <div className="flex-col-1">
                                         <Circle value={item.currentStatus}></Circle>

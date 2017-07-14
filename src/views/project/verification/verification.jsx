@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 // import AppConfig from '@/AppConfig';
-import { RouteWithSubRoutes } from '@/router';
+// import { RouteWithSubRoutes } from '@/router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -32,11 +32,11 @@ class Verification extends React.Component {
         tabValue: 0
     }
     static contextTypes = {
-        muiTheme: PropTypes.object,
         plugins: PropTypes.object,
-        store: PropTypes.object
+        // store: PropTypes.object
     }
     componentDidMount ()　{
+        console.log(this)
         var listData = [{issueId:"222",status:"W",description:"222",severity:"222",step:"222",hotLevel:1,responsible:"222",department:"222",reviewTime:"222",reviewStatus:"222",instockDay:"222",projectName:"222"}]
 
         this.setState({
@@ -65,10 +65,10 @@ class Verification extends React.Component {
     
     render () {
         intl.setMsg(require('@/static/i18n').default);
-        var routes = [];
-        if (this.props.routes) {
-            routes = this.props.routes;
-        }
+        // var routes = [];
+        // if (this.props.routes) {
+        //     routes = this.props.routes;
+        // }
         return (
             <div>
                 {/*头部*/}
@@ -92,11 +92,11 @@ class Verification extends React.Component {
                     }
                 </div>
                 {/*route*/}
-                {routes.map((route, i) => {
+                {/*{routes.map((route, i) => {
                     return(
                         <RouteWithSubRoutes key={i} {...route}/>
                     )
-                })}
+                })}*/}
             </div>
         )
     }

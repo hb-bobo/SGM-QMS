@@ -66,6 +66,9 @@
 .item-body>.flex-row {
     padding: 3px 0;
 }
+.id-color{
+    color: rgb(106, 196, 246);
+}
 /*item*/
 
 .item-title-center{

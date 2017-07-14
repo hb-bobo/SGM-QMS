@@ -6,19 +6,20 @@ import fillZero from './fillZero';
  * @param {number}
  * @returns {string}
  *
- * getTime() get current date
+ * dateFormat() get current date
  * // => '2016-01-01'
  * 
- * getTime('yyyy-MM-dd hh:mm:ss') get current date
+ * dateFormat('yyyy-MM-dd hh:mm:ss') get current date
  * // => '2016-01-01 17:23:10'
  * 
- * getTime({
+ * dateFormat({
  *  time: 1492664545,
- *  format: 'yyyy-MM-dd'
+ *  format: 'yyyy-MM-dd',
+ *  noZero: true
  * })
- * // => '2016-01-01'
+ * // => '2016-1-12'
  */
-function getTime (param) {
+function dateFormat (param) {
     var format = 'yyyy-MM-dd';
     var time = new Date();
     var noZero = false;
@@ -60,4 +61,4 @@ function getTime (param) {
     });
     return newTime
 }
-export default getTime;
+export default dateFormat;

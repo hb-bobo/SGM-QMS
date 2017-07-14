@@ -18,8 +18,8 @@ class Scroller extends React.Component {
         scrollTop: 0,
         bounce: true,
         config: {
-            downContent: '',
-            upContent: ''
+            downContent: '', // 下拉时显示的文字
+            upContent: '' // 上拉时显示的文字
         },
         donePulldown: 'done'
     }
@@ -28,9 +28,9 @@ class Scroller extends React.Component {
         autoSetHeight: PropTypes.bool,
         bottomHeight: PropTypes.number,
         config: PropTypes.object,
-        onScrollBottom: PropTypes.func, // 上拉，会多次执行
-        onPullupLoading: PropTypes.func, // 上拉
-        onPulldownLoading: PropTypes.func, // 下拉
+        onScrollBottom: PropTypes.func, // 上拉到底了，会多次执行
+        onPullupLoading: PropTypes.func, // 上拉到一定层度并放开时
+        onPulldownLoading: PropTypes.func, // 下拉到一定层度并放开时
         to: PropTypes.func // scroller 跳到的位置(目前是Y轴)
     }
     state = {
@@ -150,7 +150,8 @@ class Scroller extends React.Component {
             scrollerAt: scrollerAt,
             pulldownStatus: 'loading-start'
         });
-        scrollerAt.to(41);
+        // 有下拉方法，则初始化时自动刷新一下
+        if (this.props.onPulldownLoading) {scrollerAt.to(40)};
     }
     /*scroller到底部剩余的高度*/
     setHeight (alloyTouch) {
@@ -173,11 +174,12 @@ class Scroller extends React.Component {
             });
         }
         this.props.onPullupLoading && this.props.onPullupLoading();
-        this.doneAll();
+        this.autoDoneAll();
     }
     /*下拉加载*/
     onPulldownLoading = () => {
         var { scrollerAt } = this.state;
+        
         if (scrollerAt) {
             // 此时下拉到了一定位置并放开了手，可以加载数据了
             // onPulldownLoading没有的话就表示不开启loading，at就会到0
@@ -189,7 +191,7 @@ class Scroller extends React.Component {
             });
         }
         this.props.onPulldownLoading && this.props.onPulldownLoading();
-        this.doneAll();
+        this.autoDoneAll();
     }
     /*上拉完成*/
     donePullup = () => {
@@ -211,7 +213,7 @@ class Scroller extends React.Component {
         }
     }
     /*自动完成 超时时需要*/
-    doneAll = () => {
+    autoDoneAll = () => {
         var { scrollerAt, pullupStatus, pulldownStatus } = this.state;
         if (scrollerAt === undefined) {
             return false;

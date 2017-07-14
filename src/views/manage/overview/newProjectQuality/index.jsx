@@ -6,31 +6,50 @@ import ProjectProgress from '@/components/project-progress';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
+// import AppConfig from '@/AppConfig';
+// import { POST, GET } from '@/plugins/fetch';
 import getProjectQualityList from '@/static/getProjectQualityList.json';
 
-class NewProjectQuality extends React.Component {
+// 当请求进行中，组件却被卸载了。跟据此变量判断是否继续
+var isMounted = true;
 
-    static propTypes = {
-        goAdvance: PropTypes.func.isRequired
+/*新项目质量总览*/
+
+class NewProjectQuality extends React.Component {
+    static contextTypes = {		
+        router: PropTypes.object		
     }
     state = {
         dataSource: [],
         scrollConfig: {
             upContent: ''
         },
-        done: false
+        fetchStatus: true,
+        page: 1,
+        isMounted: true
     }
     componentDidMount () {
         // this.props.actions.fillListData(getProjectQualityList.result)
         this.refresh();
     }
-    
+    componentWillUnmount () {
+        isMounted = null
+    }
     loadingMore = () => {
+        // 防止多次触发
+        if (!this.state.fetchStatus) {
+            return;
+        }
+        this.setState({
+            fetchStatus: false
+        });
+
         if (this.state.scrollConfig.upContent === 'No More') {
             this.refs.scroller.donePullup();
             return;
         }
         setTimeout(() => {
+            if (isMounted === null) {return;}
             this.setState({
                 dataSource: getProjectQualityList.result.concat(this.state.dataSource),
                 scrollConfig: {
@@ -38,24 +57,55 @@ class NewProjectQuality extends React.Component {
                 }
             });
             this.refs.scroller.donePullup();
-        }, 1000)
-        
-
+        }, 10000);
     }
     refresh = () => {
+        // 防止多次刷新
+        if (!this.state.fetchStatus) {
+            return;
+        }
+        this.setState({
+            fetchStatus: false
+        });
+        // AppConfig.listConfig.count 每次加多少条
+        /*GET('/getData', {
+            data: {
+                "path": "getProjectQualityList.json"
+            },
+        })
+        .then((res) => {
+            if (isMounted === null) {return;}
+            this.setState({
+                dataSource: res.result,
+                scrollConfig: {
+                    upContent: ''
+                },
+                page: 1,
+                fetchStatus: true
+            });
+            this.refs.scroller.donePulldown();
+        })*/
         setTimeout(() => {
+            if (isMounted === false) {return;}
             this.setState({
                 dataSource: getProjectQualityList.result,
                 scrollConfig: {
                     upContent: ''
-                }
+                },
+                page: 1,
+                fetchStatus: true
             });
             this.refs.scroller.donePulldown();
         }, 1000)
     }
-
+    /**
+     * go 项目质量验证总览, 目前是只有热点问题
+     * path = /project/verification
+     */
+    goHotIssue = () => {
+        this.context.router.history.push('/project/verification')
+    } 
     render () {
-        var { goAdvance } = this.props;
         var { dataSource } = this.state;
         intl.setMsg(require('./locale'));
         return (
@@ -79,7 +129,7 @@ class NewProjectQuality extends React.Component {
                                     <span>{intl.get('project')}: </span>
                                     <span> {item.model}</span>
                                 </div>
-                                <div className="flex-col-1" onClick={() => {goAdvance('EIR')}}>
+                                <div className="flex-col-1" onClick={() => {this.goHotIssue()}}>
                                     <Circle value={item.qualityRisk}></Circle>
                                 </div>
                             </div>
@@ -89,7 +139,7 @@ class NewProjectQuality extends React.Component {
                         </div>
                     )
                 })}
-        </Scroller>
+            </Scroller>
         )
     }
 }

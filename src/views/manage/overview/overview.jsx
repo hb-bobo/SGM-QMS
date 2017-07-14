@@ -44,15 +44,17 @@ class Overview extends React.Component {
     }
     componentDidMount ()　{
         // AppConfig.API + '/getData'
-        /*fetch('http://10.6.96.200:8090/QMS/backlog/testA', {
-            method: 'GET',
-            // headers: {
-            //     'Content-Type': 'application/x-www-form-urlencoded'
-            // },
-            // body: JSON.stringify({
-            //     "path": "getProjectQualityList.json"
-            // })
+        /*fetch('http://10.6.96.211:8090/QMS/backlog/testA', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'id=' + JSON.stringify({
+                "id": "getProjectQualityList.json",
+                "ids": '22'
+            }),
         }).then((res) => {
+            console.log(res)
             return res.json()
         }).then((res) => {
             // this.props.actions.fillListData(res.result)
@@ -84,7 +86,7 @@ class Overview extends React.Component {
             });
         }
     }
-    /*调到操作页面*/
+    /*跳到推进页面*/
     goAdvance = (type) => {
         if (type) {
             this.props.history.push('/search/issue-advance/' + type);
@@ -136,7 +138,7 @@ class Overview extends React.Component {
                     <div>
                         {/*列表*/
                             this.state.isIndex? 
-                                <NewProjectQuality goAdvance={this.goAdvance}/>
+                                <NewProjectQuality/>
                                 : null
                         }
                     </div>

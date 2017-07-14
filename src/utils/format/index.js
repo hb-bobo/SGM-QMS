@@ -1,5 +1,5 @@
 import fillZero from './fillZero';
-import getTime from './getTime';
+import getTime from './dateFormat';
 export {
     fillZero,
     getTime
