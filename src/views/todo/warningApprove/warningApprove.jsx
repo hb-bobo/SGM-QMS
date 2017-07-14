@@ -64,7 +64,7 @@ class WarningApprove extends React.Component {
         }
     }
     render () {
-        var { listData, tabValue } = this.state;
+        var { listData } = this.state;
         intl.setMsg([require('@/static/i18n').default,require('./locale')]);
 
         return (
