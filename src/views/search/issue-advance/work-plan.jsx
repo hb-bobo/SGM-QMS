@@ -112,7 +112,7 @@ class WorkPlan extends React.Component {
                     </div>
                 </div>
                 <div className="work-plan-list">
-                    <Scroller containerHeight={500}>
+                    <Scroller containerHeight={500} bounce={false}>
                         {
                             data.map((item, i) => {
                                 return (

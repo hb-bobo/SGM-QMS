@@ -46,7 +46,7 @@ class VerificationDetails extends React.Component {
                                 <div className="item-top flex-row">
                                     <div className="flex-col-9">
                                         <span>{intl.get('QMS.IssueNo')}: </span>
-                                        <span className="id-color"> {item.issueId}</span>
+                                        <span className="issueNo"> {item.issueId}</span>
                                     </div>
                                     <div className="flex-col-1">
                                         <Circle value={item.status}></Circle>

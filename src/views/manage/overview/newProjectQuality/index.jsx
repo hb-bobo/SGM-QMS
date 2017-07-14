@@ -31,6 +31,7 @@ class NewProjectQuality extends React.Component {
     componentDidMount () {
         // this.props.actions.fillListData(getProjectQualityList.result)
         this.refresh();
+        console.log(getProjectQualityList.result)
     }
     componentWillUnmount () {
         isMounted = null
@@ -126,8 +127,15 @@ class NewProjectQuality extends React.Component {
                                     <span> {item.platformProject}</span>
                                 </div>
                                 <div className="flex-col-5">
-                                    <span>{intl.get('project')}: </span>
-                                    <span> {item.model}</span>
+                                    <div className="flex-row">
+                                        <div className="flex-col-2">
+                                            <span>{intl.get('project')}: </span>
+                                            <span> {item.model}</span>
+                                        </div>
+                                        <div className="flex-col-1" style={{marginLeft: '2px'}}>
+                                            <span> {item.timingName}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div className="flex-col-1" onClick={() => {this.goHotIssue()}}>
                                     <Circle value={item.qualityRisk}></Circle>

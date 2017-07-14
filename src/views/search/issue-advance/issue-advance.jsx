@@ -116,7 +116,7 @@ export class IssueAdvance extends React.Component {
                 </IconButton>
             }
         />
-        <Scroller autoSetHeight={true}>
+        <Scroller autoSetHeight={true} bounce={false}>
           {/*顶部*/}
           <div className={this.state.isIndex ? "advance-top flex-row" : "advance-top flex-row hide"}>
             <div className="flex-col-6">

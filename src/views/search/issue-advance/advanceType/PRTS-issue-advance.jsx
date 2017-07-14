@@ -86,7 +86,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <SpaceRow height={6} />
         <div className="issue-advance-item flex-row">
-          <div className="flex-col-5">
+          <div className="flex-col-4">
             <label htmlFor="">{intl.get('QMS.RootCauseAnalysis')}: </label>
           </div>
           <div className="flex-col-10 right">

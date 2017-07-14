@@ -1,5 +1,5 @@
 /*
- *path = 'src/static/css/index.css'
+ *path = 'src/static/css/app.css'
  *引入 ant 会把html font-size设为50px; 再此设置与它抵消
  */
 #root{
@@ -7,7 +7,26 @@
     font-size: 1rem;
     background-color: #FFF;
 }
-
+@media screen and (max-width: 340px) {
+    #root{
+        font-size: 0.85rem;
+    }
+}
+@media screen and (min-width: 340px) and (max-width: 400px) {
+    #root{
+        font-size: 1rem;
+    }
+}
+@media screen and (min-width: 400px) and (max-width: 750px) {
+    #root{
+        font-size: 1.1rem;
+    }
+}
+@media screen and (min-width: 750px) and (max-width: 1200px) {
+    #root{
+        font-size: 1.6rem;
+    }
+}
 /*过度动画*/
 .example-enter {
   opacity: 0.01;
@@ -67,7 +86,7 @@
     padding: 3px 0;
 }
 .item-top .issueNo{
-    margin-left: '5px';
+    margin-left: 5px;
     color: rgb(106, 196, 246);
 }
 /*item*/
@@ -102,7 +121,7 @@
 }
 .advance-top,
 .issue-advance-item {
-    font-size: 15px;
+    font-size: 0.82em;
     padding: 0.5em 0.7em;
     border-bottom: 1px  solid #EEEDED;
 }
@@ -110,10 +129,10 @@
     padding: 0 0.7em;
 }
 .issue-advance-item .right {
-    font-size: 14px;
+    font-size: 0.81em;
 }
 .issue-advance-item-title {
-    font-size: 15px;
+    font-size: 0.82em;
     padding: 6px 0.7em;
     border-bottom: 1px  solid #EEEDED;
     background: #F8F7F7;
@@ -130,10 +149,10 @@
 /*推进页-> 工作计划*/
 .work-plan-list .flex-row{
     padding:0 0.7em;
-    font-size: 14px;
+    font-size: 0.82em;
 }
 .work-plan-list .flex-row .right {
-    font-size: 13px;
+    font-size: 0.83em;
 }
 
 .work-plan-edit-form,

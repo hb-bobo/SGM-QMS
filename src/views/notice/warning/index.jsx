@@ -27,7 +27,7 @@ class Warning extends React.Component {
                                 <div className="flex-row item-top">
                                     <div className="flex-col-9" onClick={() => {goAdvance('EIR')}}>
                                         <span>{intl.get('QMS.IssueNo')}: </span>
-                                        <span style={{marginLeft: '5px', color: '#6AC4F6'}}> {item.prblmNo}</span>
+                                        <span className="issueNo"> {item.prblmNo}</span>
                                     </div>
                                     <div className="flex-col-1">
                                         <Circle value={item.state}></Circle>

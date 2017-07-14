@@ -12,7 +12,7 @@ import VerificationDetails from './details';
 import intl from '@/components/intl';
 
 
-/*项目质量验证总览*/
+/*项目质量验证总览 目前只有热点问题*/
 
 @connect(
     // mapStateToProps

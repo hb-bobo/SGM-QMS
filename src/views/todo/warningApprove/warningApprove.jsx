@@ -76,7 +76,7 @@ class WarningApprove extends React.Component {
                                 <div className="flex-row item-top">
                                     <div className="flex-col-9">
                                         <div>
-                                            <span 
+                                            <span
                                                 style={{color: 'rgb(106, 196, 246)', marginBottom: '4px'}}
                                                 onClick={() => this.goAdvance('PRTS')}
                                             >
