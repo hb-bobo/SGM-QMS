@@ -60,7 +60,7 @@ class HotIssueReviewPlan extends React.Component {
                                 <div className="flex-row item-top">
                                     <div className="flex-col-9">
                                         <span>{intl.get('QMS.IssueNo')}: </span>
-                                        <span className="id-color"> {item.prblmNo}</span>
+                                        <span className="issueNo"> {item.prblmNo}</span>
                                     </div>
                                     <div className="flex-col-1">
                                         <Circle value={item.currentStatus}></Circle>

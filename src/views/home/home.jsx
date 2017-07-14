@@ -42,7 +42,7 @@ class HomePage extends React.Component{
           </div>
           <div className="flex-col-1">
             <Link to="/notice">
-              <MenuButton iconName="notice" text="通知中心"/>
+              <MenuButton iconName="notice2" text="通知中心"/>
             </Link>
           </div>
         </div>
@@ -54,12 +54,12 @@ class HomePage extends React.Component{
           </div>
           <div className="flex-col-1">
             <Link to="/">
-              <MenuButton iconName="department" text="待定"/>
+              <MenuButton iconName="department" text="部门质量"/>
             </Link>
           </div>
           <div className="flex-col-1">
             <Link to="/">
-              <MenuButton iconName="person" text="待定"/>
+              <MenuButton iconName="person" text="EQR评审"/>
             </Link>
           </div>
           <div className="flex-col-1" onClick={() => this.setState({showMore: true})}>

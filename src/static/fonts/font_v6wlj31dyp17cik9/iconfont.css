@@ -1,10 +1,10 @@
 
 @font-face {font-family: "iconfont";
-  src: url('iconfont.eot?t=1499780962325'); /* IE9*/
-  src: url('iconfont.eot?t=1499780962325#iefix') format('embedded-opentype'), /* IE6-IE8 */
-  url('iconfont.woff?t=1499780962325') format('woff'), /* chrome, firefox */
-  url('iconfont.ttf?t=1499780962325') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('iconfont.svg?t=1499780962325#iconfont') format('svg'); /* iOS 4.1- */
+  src: url('iconfont.eot?t=1500025670596'); /* IE9*/
+  src: url('iconfont.eot?t=1500025670596#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('iconfont.woff?t=1500025670596') format('woff'), /* chrome, firefox */
+  url('iconfont.ttf?t=1500025670596') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1500025670596#iconfont') format('svg'); /* iOS 4.1- */
 }
 
 .iconfont {
@@ -48,6 +48,8 @@
 .icon-department:before { content: "\e69b"; }
 
 .icon-eye-close:before { content: "\e628"; }
+
+.icon-notice2:before { content: "\e75b"; }
 
 .icon-comiis_dunpai:before { content: "\e6b2"; }
 

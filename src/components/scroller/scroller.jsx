@@ -16,7 +16,7 @@ class Scroller extends React.Component {
         autoSetHeight: false,
         bottomHeight: 0, // 底部高。May have a menu at the bottom,
         scrollTop: 0,
-        bounce: true,
+        bounce: true, // 是否反弹，关掉是默认的scrollbar, 如果没有下拉上拉加载数据建议设为false
         config: {
             downContent: '', // 下拉时显示的文字
             upContent: '' // 上拉时显示的文字

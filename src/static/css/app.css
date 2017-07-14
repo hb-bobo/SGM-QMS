@@ -66,7 +66,8 @@
 .item-body>.flex-row {
     padding: 3px 0;
 }
-.id-color{
+.item-top .issueNo{
+    margin-left: '5px';
     color: rgb(106, 196, 246);
 }
 /*item*/

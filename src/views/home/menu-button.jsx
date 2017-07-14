@@ -9,10 +9,10 @@ const MenuButton = (props) => {
 
     return (
         <div className="home-menu-item">
-            <svg className="icon">
+            <svg className={`icon icon-${iconName}`}>
                 <use xlinkHref={`#icon-${iconName}`}></use>
             </svg>
-            <span className="text-center">
+            <span className="text-center" style={{marginTop: '14px'}}>
                 {text}
             </span>
         </div>

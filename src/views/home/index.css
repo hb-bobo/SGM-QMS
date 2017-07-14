@@ -51,6 +51,7 @@
 }
 .home-menu .flex-row{
     height: auto;
+    margin-bottom: 25px;
 }
 .home-menu-item{
     position: relative;
@@ -75,4 +76,15 @@
     font-size: 0.7em;
     width: 100%;
     white-space: nowrap;
+}
+/*部分图标得调整大小*/
+.home-menu-item .icon-notice2{
+    margin-top: 3px;
+    width: 2.3em;
+    height: 2.3em;
+}
+.home-menu-item .icon-monthly{
+    margin-top: 2px;
+    width: 2.2em;
+    height: 2.2em;
 }
