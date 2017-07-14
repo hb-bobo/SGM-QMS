@@ -51,7 +51,6 @@ class HotIssueApprove extends React.Component {
     }
     // edit review time
     edit (data) {
-        console.log(data)
         this.setState({
             hotIssueEditOpen: true,
             hotIssueEditData: data,

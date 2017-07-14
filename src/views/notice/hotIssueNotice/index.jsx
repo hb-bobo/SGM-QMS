@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import Scroller from '@/components/scroller';
 import Circle from '@/components/circle';
-import pathToJSON from '@/utils/object/pathToJSON';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
 
@@ -12,14 +11,7 @@ class HotIssueNotice extends React.Component {
         dataSource: []
     }
     static propTypes = {
-        dataSource: PropTypes.array,
-        selectHis: PropTypes.func.isRequired
-    }
-    
-    bind = (key) => {
-        return (e) => {
-            this.setState(pathToJSON(key, e.target.value));
-        }
+        dataSource: PropTypes.array
     }
     
     render () {
@@ -35,7 +27,7 @@ class HotIssueNotice extends React.Component {
                                 <div className="flex-row item-top">
                                     <div className="flex-col-9" onClick={() => {goAdvance('EIR')}}>
                                         <span>{intl.get('QMS.IssueNo')}: </span>
-                                        <span> {item.prblmNo}</span>
+                                        <span style={{marginLeft: '5px', color: '#6AC4F6'}}> {item.prblmNo}</span>
                                     </div>
                                     <div className="flex-col-1">
                                         <Circle value={item.state}></Circle>
