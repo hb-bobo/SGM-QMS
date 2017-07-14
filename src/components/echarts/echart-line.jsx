@@ -53,7 +53,6 @@ class EchartLine extends React.Component {
                 //添加区域颜色效果
                 if (areaStyleColor !== undefined && Array.isArray(areaStyleColor) && areaStyleColor.length) {
                     var color = areaStyleColor[index%areaStyleColor.length];
-                    console.log(color)
                     options.series[index+1].itemStyle = {normal: {color: color, areaStyle: {borderColor: color, borderWidth: 0}}};
                     options.series[index+1].areaStyle = {normal: {color: color}};
                     options.series[index+1].showSymbol = false;

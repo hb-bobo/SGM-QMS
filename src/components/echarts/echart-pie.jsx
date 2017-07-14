@@ -65,7 +65,6 @@ class EchartPie extends React.Component {
         console.log(e)
     }
     render () {
-        console.log(this.state.option)
         return (
             <div>
                 <ReactEchartsCore
