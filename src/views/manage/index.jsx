@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { RouteWithSubRoutes } from '@/router';
 
+/* 管理层 */
 const Manage = (props) => {
     var routes = [];
     if (props.routes) {

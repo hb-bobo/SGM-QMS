@@ -11,6 +11,8 @@ interface LocaleData {
 /**
  * 
  * first,set language
+ * then setMsg
+ * last get
  * 
  */
 class Intl {
@@ -26,26 +28,27 @@ class Intl {
         return get(this.msg, key);
     }
     // set 当前页的数据
-    setMsg (localeData: LocaleData | LocaleData[]): void {
-        // if localeData is a array, merge it
-        if (Array.isArray(localeData)) {
-            var newMsg: Msg = {};
-            localeData.forEach( (localeDataItem: LocaleData) => {
-                // 只提取一种语言
-                var tempMsg: Msg  = localeDataItem[this.language];
-                // 合并(key不能重复)
-                for (let key in tempMsg) {
-                    if (newMsg[key] === undefined || newMsg[key] === '') {
-                        newMsg[key] = tempMsg[key];
-                    } else {
-                        window.console.warn('localeData has repetitive key [localeData 有重复的key,最好是不要重复]')
-                    }
-                }
-            });
-            this.msg = newMsg;
+    setMsg (...localeData: LocaleData[]): void {
+
+        if (localeData.length === 1) {
+            this.msg = localeData[0][this.language];
             return;
         }
-        this.msg = localeData[this.language];
+        // if localeData is a array and length greater than 1, merge it
+        var newMsg: Msg = {};
+        localeData.forEach( (localeDataItem: LocaleData) => {
+            // 只提取一种语言
+            var tempMsg: Msg  = localeDataItem[this.language];
+            // 合并(key不能重复)
+            for (let key in tempMsg) {
+                if (newMsg[key] === undefined || newMsg[key] === '') {
+                    newMsg[key] = tempMsg[key];
+                } else {
+                    window.console.warn('localeData has repetitive key [localeData 有重复的key,最好是不要重复]')
+                }
+            }
+        });
+        this.msg = newMsg;
     }
     // 设置语言环境
     setLanguage (language: string): void {

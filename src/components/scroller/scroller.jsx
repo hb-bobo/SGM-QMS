@@ -7,6 +7,13 @@ import AlloyTouch from 'alloytouch';
 import Transform from './transform.js';
 import IconLoading from '@/components/icon/loading';
 import IconArrow from '@/components/icon/arrow';
+
+// 下拉时触发的点
+var triggerPulldownValue = 40;
+// 下拉触发后回弹到某点(loading-start时的位置)
+var downSpringback = 30;
+// 缓冲距离(下拉距离为1-20，距离太小，没必要触发pulldown)
+var bufferVal = 20;
 /**
  * scroll容器
  */
@@ -17,6 +24,7 @@ class Scroller extends React.Component {
         bottomHeight: 0, // 底部高。May have a menu at the bottom,
         scrollTop: 0,
         bounce: true, // 是否反弹，关掉是默认的scrollbar, 如果没有下拉上拉加载数据建议设为false
+        multiTrigger: false,
         config: {
             downContent: '', // 下拉时显示的文字
             upContent: '' // 上拉时显示的文字
@@ -66,10 +74,17 @@ class Scroller extends React.Component {
         }
 
     }
+    shouldComponentUpdate (nextProps, nextState) {
+        if (nextState.pulldownStatus === 'loading-start' && this.state.pulldownStatus === 'loading-start') {
+            return false;
+        }
+        return true;
+    }
     componentDidUpdate () {
         if (!this.state.first || !this.props.bounce) {
             return false;
         }
+        // 只执行一次
         if (this.state.first) {
             this.setState({
                 first: false
@@ -80,10 +95,12 @@ class Scroller extends React.Component {
             scrollerContainer
         } = this.refs; // 当前组件
 
-        var { containerHeight } = this.state;
+        var {
+            containerHeight
+        } = this.state;
         var min = 0;
         var max = 0;
-        var _this = this; //当前组件
+        var Scroller = this; //当前组件
         Transform(scroller, true);
         var scrollerAt = new AlloyTouch({
             touch: scrollerContainer,//反馈触摸的dom
@@ -108,33 +125,29 @@ class Scroller extends React.Component {
                 this.min = min;
             },
             touchMove: function (ev, value) {
-                // 缓冲距离
-                var bufferVal = 20;
                 // 上拉到底了
-                if (value < (this.min - bufferVal)) {
-                    _this.setState({
-                        pullupStatus: value < (this.min - 25) ? 'ready' : 'default'
+                if (value < (this.min - bufferVal) && Scroller.state.pullupStatus !== 'loading-start') {
+                    Scroller.setState({
+                        pullupStatus: value < (this.min - bufferVal) ? 'ready' : 'default'
                     });
-                    // _this.onScrollBottom();
                     return;
                 }
                 // 下拉中
-                if (value > bufferVal) {
-                    _this.setState({
-                        pulldownStatus: value > 40 ? 'ready' : 'default'
+                if (value > bufferVal && Scroller.state.pulldownStatus !== 'loading-start') {
+                    Scroller.setState({
+                        pulldownStatus: value > triggerPulldownValue ? 'ready' : 'default'
                     });
                 }
-                
             },
             touchEnd: function (ev, value) {
                 // 下拉最大值了，并松开了
-                if (value > 40) {
-                    _this.onPulldownLoading();
-                    return false;
+                if (value > triggerPulldownValue) {
+                    Scroller.onPulldownLoading();
+                    return false;              
                 }
-                // 上拉到底了，并松开了 (- bottom-loading的高度)
-                if (value < (this.min - 26)) {
-                    _this.onPullupLoading();
+                // 上拉到底了，并松开了 (bufferVal 大致= bottom-loading的高度)
+                if (value < (this.min - bufferVal)) {
+                    Scroller.onPullupLoading();
                 }
                 
             },
@@ -151,7 +164,7 @@ class Scroller extends React.Component {
             pulldownStatus: 'loading-start'
         });
         // 有下拉方法，则初始化时自动刷新一下
-        if (this.props.onPulldownLoading) {scrollerAt.to(40)};
+        if (this.props.onPulldownLoading) {scrollerAt.to(triggerPulldownValue)};
     }
     /*scroller到底部剩余的高度*/
     setHeight (alloyTouch) {
@@ -178,28 +191,35 @@ class Scroller extends React.Component {
     }
     /*下拉加载*/
     onPulldownLoading = () => {
-        var { scrollerAt } = this.state;
-        
+        var { scrollerAt, pulldownStatus } = this.state;
         if (scrollerAt) {
-            // 此时下拉到了一定位置并放开了手，可以加载数据了
-            // onPulldownLoading没有的话就表示不开启loading，at就会到0
-            // 30为 loding图标的高度
-            var val = this.props.onPulldownLoading ? 30 : 0;
-            scrollerAt.to(val);
+            // 下拉回弹
+            this.downSpringback();
+            //因为setState时异步， 所以判断pulldownStatus还在加载中就放到这，'loading-start'，就不执行
+            if (pulldownStatus === 'loading-start' && this.props.multiTrigger === false) {
+                // 下拉回弹
+                return false;
+            }
             this.setState({
                 pulldownStatus: 'loading-start'
             });
+            // 此时下拉到了一定位置并放开了手，可以加载数据了
+            this.props.onPulldownLoading && this.props.onPulldownLoading();
+            this.autoDoneAll();
         }
-        this.props.onPulldownLoading && this.props.onPulldownLoading();
-        this.autoDoneAll();
     }
     /*上拉完成*/
     donePullup = () => {
-        var { scrollerAt } = this.state;
+        var { scrollerAt, pullupStatus } = this.state;
         if (scrollerAt) {
+            // 本身时loading-start状态就不执行，避免频繁操作
+            if (pullupStatus === 'loading-start' && this.props.multiTrigger === false) {
+                return false;
+            }
             this.setState({
                 pullupStatus: 'default'
             });
+            window.clearTimeout(scrollerAt.timer);
         }
     }
     /*下拉完成*/
@@ -210,6 +230,7 @@ class Scroller extends React.Component {
             this.setState({
                 pulldownStatus: 'default'
             });
+            window.clearTimeout(scrollerAt.timer);
         }
     }
     /*自动完成 超时时需要*/
@@ -223,6 +244,15 @@ class Scroller extends React.Component {
             if (pullupStatus !== 'default') { this.donePullup() }
             if (pulldownStatus !== 'default') { this.donePulldown() }
         }, 10000);
+    }
+    /**
+     * 下拉回弹
+     */
+    downSpringback () {
+        // onPulldownLoading没有的话就表示不开启loading，at就会到0
+        // downSpringback为 loding图标的高度(回弹后得让loading图标可以看见就行)
+        var val = this.props.onPulldownLoading ? downSpringback : 0;
+        this.state.scrollerAt.to(val);
     }
     /**
      * scroller to some where

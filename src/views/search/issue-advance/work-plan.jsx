@@ -37,7 +37,7 @@ import intl from '@/components/intl';
 )
 class WorkPlan extends React.Component {
     static propTypes = {
-        parent: PropTypes.object
+        parent: PropTypes.instanceOf(React.Component).isRequired
     }
     
     state = {
@@ -50,6 +50,7 @@ class WorkPlan extends React.Component {
     }
     // 新增工作计划
     workPlanNewData = () => {
+        intl.setMsg(require('@/static/i18n').default, require('./locale'));
         this.setState({
             workPlanOpen: true,
             workPlanAction: 'add'
@@ -59,12 +60,13 @@ class WorkPlan extends React.Component {
             value: {}
         });
         this.parent.setState({
-            title: '新增工作计划',
+            title: intl.get('AddWorkPlan'),
             isIndex: false
         });
     }
     // 编辑工作计划
     workPlanDataEdit = (data) => {
+        intl.setMsg(require('@/static/i18n').default, require('./locale'));
         this.setState({
             workPlanOpen: true,
             workPlanAction: 'edit'
@@ -73,7 +75,7 @@ class WorkPlan extends React.Component {
             value: data
         });
         this.parent.setState({
-            title: '编辑工作计划',
+            title: intl.get('EditWorkPlan'),
             isIndex: false
         });
     }
@@ -130,34 +132,37 @@ class WorkPlan extends React.Component {
                                                 <Circle value={item.workPlanStatus}/>
                                             </div>
                                         </div>
-                                        <div className="flex-row plan-info">
-                                            <div className="flex-col-1">
-                                                <div>
-                                                    <span>{intl.get('QMS.Champion')}: </span>
-                                                    <span className="right">{item.rspnsUser}</span>
+                                        <div className="item-body">
+                                            <div className="flex-row plan-info">
+                                                <div className="flex-col-1">
+                                                    <div>
+                                                        <span>{intl.get('QMS.Champion')}: </span>
+                                                        <span className="right">{item.rspnsUser}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="flex-col-1">
+                                                    <div>
+                                                        <span>{intl.get('QMS.CurrentStep')}: </span>
+                                                        <span>{item.prblmPhaseID}</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="flex-col-1">
-                                                <div>
-                                                    <span>{intl.get('QMS.CurrentStep')}: </span>
-                                                    <span>{item.prblmPhaseID}</span>
+                                            <div className="flex-row plan-info">
+                                                <div className="flex-col-1">
+                                                    <div>
+                                                        <span>{intl.get('QMS.ECD')}: </span>
+                                                        <span className="right">{item.planFinishDate}</span>
+                                                    </div>
+                                                </div>
+                                                <div className="flex-col-1">
+                                                    <div>
+                                                        <span>{intl.get('QMS.ACD')}: </span>
+                                                        <span className="right">{item.xx}</span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex-row plan-info">
-                                            <div className="flex-col-1">
-                                                <div>
-                                                    <span>{intl.get('QMS.ECD')}: </span>
-                                                    <span className="right">{item.planFinishDate}</span>
-                                                </div>
-                                            </div>
-                                            <div className="flex-col-1">
-                                                <div>
-                                                    <span>{intl.get('QMS.ACD')}: </span>
-                                                    <span className="right">{item.xx}</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <SpaceRow height={1} />
                                         <div className="flex-row btn">
                                             <div className="flex-col-1">
                                                 <FlatButton 
@@ -202,24 +207,9 @@ class WorkPlan extends React.Component {
                 >
                     <WorkPlanEdit data={workPlanEditData} parent={this} action={this.state.workPlanAction}/>
                 </Drawer>
-                
-                {/*弹出层
-                    this.state.open?
-                    <Dialog
-                        actions={actions}
-                        modal={false}
-                        contentStyle={customContentStyle}
-                        open={this.state.open}
-                        onRequestClose={this.handleClose}
-                        autoScrollBodyContent={true}
-                        >
-                        {this.editView()}
-                    </Dialog>: null*/
-                }
             </div>
         )
     }
 }
-// const WorkPlanWrapper = createForm()(WorkPlan);
 
 export default WorkPlan;

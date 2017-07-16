@@ -5,8 +5,8 @@
         "projectQuality": "项目质量"
     },
     "en": {
-        "platform": "platform",
-        "project": "project",
+        "platform": "Platform",
+        "project": "Project",
         "projectQuality": "Program Quality"
     }
 }

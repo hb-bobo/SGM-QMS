@@ -65,7 +65,7 @@ class WarningApprove extends React.Component {
     }
     render () {
         var { listData } = this.state;
-        intl.setMsg([require('@/static/i18n').default,require('./locale')]);
+        intl.setMsg(require('@/static/i18n').default,require('./locale'));
 
         return (
             <div className="gtasks-list">
@@ -77,15 +77,16 @@ class WarningApprove extends React.Component {
                                     <div className="flex-col-9">
                                         <div>
                                             <span
-                                                style={{color: 'rgb(106, 196, 246)', marginBottom: '4px'}}
+                                                className="issueNo"
+                                                style={{marginLeft: 0}}
                                                 onClick={() => this.goAdvance('PRTS')}
                                             >
                                                {item.prblmNo}
                                             </span>
                                         </div>
-                                        <div>
+                                        <div style={{marginTop: '0.6em'}}>
                                             <span className="left">
-                                            {intl.get('QMS.WorkingPlanDescription')}:
+                                                {intl.get('QMS.WorkingPlanDescription')}:
                                             </span>
                                             <span className="right">
                                                 {item.problemDesc}

@@ -3,7 +3,7 @@ import { RouteWithSubRoutes } from '@/router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { upWorkPlanListData } from '@/store/actions';
-
+import './index.css';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
@@ -41,7 +41,6 @@ export class IssueAdvance extends React.Component {
   componentWillMount () {
     var advType =  /\w+$/.exec(this.props.location.pathname)[0];
     this.setState({
-      title: intl.get('QMS.' + advType + 'Report'),
       advType: advType
     });
   }
@@ -78,6 +77,7 @@ export class IssueAdvance extends React.Component {
   }
 
   goHotUp = () => {
+    intl.setMsg(require('@/static/i18n').default, require('./locale'));
     this.setState({
       hotUpOpen: true,
       title: intl.get('HotEscalate'),
@@ -87,6 +87,7 @@ export class IssueAdvance extends React.Component {
   }
 
   goIssueUp = () => {
+    intl.setMsg(require('@/static/i18n').default, require('./locale'));
     this.setState({
       issueUPOpen: true,
       title: intl.get('IssueEscalate'),
@@ -96,7 +97,7 @@ export class IssueAdvance extends React.Component {
   }
 
   render() {
-    intl.setMsg([require('@/static/i18n').default, require('./locale')]);
+    intl.setMsg(require('@/static/i18n').default, require('./locale'));
     var routes = [];
     if (this.props.routes) {
         routes = this.props.routes;
@@ -111,9 +112,9 @@ export class IssueAdvance extends React.Component {
             title={this.state.title}
             titleStyle={{textAlign: 'center'}}
             iconElementLeft={
-                <IconButton onClick={() => {this.props.history.go(-1)}}>
-                    <NavigationArrowBack color={'#FFF'}/>
-                </IconButton>
+              <IconButton onClick={() => {this.props.history.go(-1)}}>
+                  <NavigationArrowBack color={'#FFF'}/>
+              </IconButton>
             }
         />
         <Scroller autoSetHeight={true} bounce={false}>
@@ -121,7 +122,7 @@ export class IssueAdvance extends React.Component {
           <div className={this.state.isIndex ? "advance-top flex-row" : "advance-top flex-row hide"}>
             <div className="flex-col-6">
               <span>{intl.get('QMS.IssueNo')}: </span>
-              <span style={{marginLeft: '12px', color: '#6AC4F6'}}>{advanceData.id}</span>
+              <span style={{marginLeft: '1.4em', color: '#6AC4F6'}}>{advanceData.id}</span>
             </div>
             <SpaceRow height={50} width="1px" backgroundColor="#EEEDED"/>
             <div className="flex-col-4">

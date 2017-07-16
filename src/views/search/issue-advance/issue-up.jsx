@@ -7,6 +7,7 @@ import pathToJSON from '@/utils/object/pathToJSON';
 import HSelect from '@/components/form/h-select';
 import HTextarea from '@/components/form/h-textarea';
 import HInput from '@/components/form/h-input';
+import intl from '@/components/intl';
 /*
     s
 */
@@ -69,16 +70,17 @@ export class IssueUP extends React.Component {
         }
     }
     render() {
+        intl.setMsg(require('@/static/i18n').default)
         // var { data } = this.props;
         var options = ['aa', 'xxxx', 'xvv']
         return (
             <div className="hot-up-form">
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="planDesc" className="justify">等 级 :</label>
+                        <label htmlFor="planDesc" className="justify">{intl.get('QMS.Level')} :</label>
                     </div>
                     <div className="flex-col-7">
-                        <label><input name="lv" type="radio" value="" />总监 </label>
+                        <label><input name="lv" type="radio" value="" />{intl.get('QMS.Director')} </label>
                         <HInput
                             clear
                             type="text"
@@ -86,7 +88,7 @@ export class IssueUP extends React.Component {
                             options={options}
                             onChange={this.bind('planDesc')}
                         />
-                        <label><input name="lv" type="radio" value="" />高级经理 </label>
+                        <label><input name="lv" type="radio" value="" />{intl.get('QMS.SrMgr')} </label>
                         <HInput
                             clear
                             type="text"
@@ -94,7 +96,7 @@ export class IssueUP extends React.Component {
                             options={options}
                             onChange={this.bind('planDesc')}
                         />
-                        <label><input name="lv" type="radio" value="" />主管 </label>
+                        <label><input name="lv" type="radio" value="" />{intl.get('QMS.EGM')} </label>
                         <HInput
                             clear
                             type="text"
@@ -118,7 +120,7 @@ export class IssueUP extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">上升原因:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.Reason')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HTextarea
@@ -135,7 +137,7 @@ export class IssueUP extends React.Component {
                             <svg className="icon" aria-hidden="true">
                                 <use xlinkHref="#icon-submit"></use>
                             </svg>
-                            提交
+                            {intl.get('QMS.Submit')}
                         </RaisedButton>
                     </div>
                     <div className="flex-col-1 text-center">
@@ -143,7 +145,7 @@ export class IssueUP extends React.Component {
                             <svg className="icon" aria-hidden="true">
                                 <use xlinkHref="#icon-cancel"></use>
                             </svg>
-                            取消
+                            {intl.get('QMS.Cancel')}
                         </RaisedButton>
                     </div>
                 </div>

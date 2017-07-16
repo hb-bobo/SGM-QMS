@@ -27,7 +27,7 @@ class AssistDetails extends React.Component {
                                 <div className="item-top flex-row">
                                     <div className="flex-col-10">
                                         <span>{intl.get('QMS.IssueNo')}: </span>
-                                        <span style={{marginLeft: '5px', color: '#6AC4F6'}}> {item.sourcePrblmNo}</span>
+                                        <span className="issueNo"> {item.sourcePrblmNo}</span>
                                     </div>
                                 </div>
                                 <div className="item-top flex-row">

@@ -15,7 +15,7 @@ class Warning extends React.Component {
     }
     
     render () {
-        intl.setMsg([require('@/static/i18n').default,require('./locale')]);
+        intl.setMsg(require('@/static/i18n').default, require('./locale'));
         var { dataSource, goAdvance } = this.props;
         return (
             <div>

@@ -2,6 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import objectArray from '@/utils/array/objectArray';
 import '../style/common.css';
+
 var containerStyle = {
 }
 var selectStyle = {}
@@ -18,10 +19,12 @@ class HSelect extends React.Component {
         containerStyle: PropTypes.object, // 容器样式覆盖,也就是div
         inputStyle: PropTypes.object,
     }
-
+    static contextTypes = {
+        language: PropTypes.string
+    }
     state = {
         value: '',
-        controllable: false
+        controllable: false // 默认不可控
     }
 
     componentWillMount () {
@@ -60,6 +63,10 @@ class HSelect extends React.Component {
         });
         if (!this.state.controllable) {
             value = this.state.value;
+        }
+        // 为英语时
+        if (this.context.language === 'en') {
+            emptyText = 'Please Select';
         }
         // First empty
         optionsData.unshift({value: '', text: emptyText});

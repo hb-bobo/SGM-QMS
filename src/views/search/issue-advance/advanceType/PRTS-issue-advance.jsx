@@ -106,7 +106,7 @@ export class PRTSIssueAdvance extends React.Component {
           </div>
         </div>
         <div className="issue-advance-item flex-row">
-          <div className="flex-col-4">
+          <div className="flex-col-5">
             <label htmlFor="">{intl.get('QMS.STSolutionBPDate')}: </label>
           </div>
           <div className="flex-col-10 right">
@@ -114,8 +114,8 @@ export class PRTSIssueAdvance extends React.Component {
           </div>
         </div>
         <div className="issue-advance-item flex-row">
-          <div className="flex-col-4">
-            <label htmlFor="">{intl.get('QMS.STSolutionBPPhase')}短期断点阶段: </label>
+          <div className="flex-col-5">
+            <label htmlFor="">{intl.get('QMS.STSolutionBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span></span>

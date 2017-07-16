@@ -54,7 +54,7 @@ class Assist extends React.Component {
     }
     
     render () {
-        intl.setMsg([require('@/static/i18n').default, require('./locale')])
+        intl.setMsg(require('@/static/i18n').default, require('./locale'))
         var routes = [];
         if (this.props.routes) {
             routes = this.props.routes;

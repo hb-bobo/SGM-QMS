@@ -17,35 +17,28 @@ var isMounted = true;
 
 class NewProjectQuality extends React.Component {
     static contextTypes = {		
-        router: PropTypes.object		
+        router: PropTypes.object,
+        language: PropTypes.string	
     }
     state = {
         dataSource: [],
         scrollConfig: {
             upContent: ''
         },
-        fetchStatus: true,
         page: 1,
-        isMounted: true
     }
     componentDidMount () {
         // this.props.actions.fillListData(getProjectQualityList.result)
         this.refresh();
-        console.log(getProjectQualityList.result)
+        isMounted = true;
     }
     componentWillUnmount () {
         isMounted = null
     }
     loadingMore = () => {
-        // 防止多次触发
-        if (!this.state.fetchStatus) {
-            return;
-        }
-        this.setState({
-            fetchStatus: false
-        });
-
+    
         if (this.state.scrollConfig.upContent === 'No More') {
+            // 上拉结束
             this.refs.scroller.donePullup();
             return;
         }
@@ -55,19 +48,15 @@ class NewProjectQuality extends React.Component {
                 dataSource: getProjectQualityList.result.concat(this.state.dataSource),
                 scrollConfig: {
                     upContent: 'No More'
-                }
+                },
+                fetchStatus: true
             });
+            // 上拉结束
             this.refs.scroller.donePullup();
         }, 10000);
     }
     refresh = () => {
-        // 防止多次刷新
-        if (!this.state.fetchStatus) {
-            return;
-        }
-        this.setState({
-            fetchStatus: false
-        });
+
         // AppConfig.listConfig.count 每次加多少条
         /*GET('/getData', {
             data: {
@@ -84,10 +73,11 @@ class NewProjectQuality extends React.Component {
                 page: 1,
                 fetchStatus: true
             });
+            // 下拉结束
             this.refs.scroller.donePulldown();
         })*/
         setTimeout(() => {
-            if (isMounted === false) {return;}
+            if (isMounted === null) {return;}
             this.setState({
                 dataSource: getProjectQualityList.result,
                 scrollConfig: {
@@ -96,8 +86,9 @@ class NewProjectQuality extends React.Component {
                 page: 1,
                 fetchStatus: true
             });
+            // 下拉结束
             this.refs.scroller.donePulldown();
-        }, 1000)
+        }, 7000)
     }
     /**
      * go 项目质量验证总览, 目前是只有热点问题
@@ -109,6 +100,9 @@ class NewProjectQuality extends React.Component {
     render () {
         var { dataSource } = this.state;
         intl.setMsg(require('./locale'));
+        var { lang } = this.context;
+        // timingName的样式，中英文差距大
+        var timingNameStyle = lang === 'zh' ? {} : {float: 'right', marginRight: '8px'};
         return (
             <Scroller
                 autoSetHeight={true}
@@ -123,17 +117,17 @@ class NewProjectQuality extends React.Component {
                             <SpaceRow height="0.4em"/>
                             <div className="item-top flex-row">
                                 <div className="flex-col-4">
-                                    <span>{intl.get('platform')}: </span>
+                                    <span>{intl.get('platform')}:</span>
                                     <span> {item.platformProject}</span>
                                 </div>
                                 <div className="flex-col-5">
                                     <div className="flex-row">
-                                        <div className="flex-col-2">
-                                            <span>{intl.get('project')}: </span>
+                                        <div className={lang === 'zh' ? "flex-col-2" : 'flex-col-3'}>
+                                            <span>{intl.get('project')}:</span>
                                             <span> {item.model}</span>
                                         </div>
-                                        <div className="flex-col-1" style={{marginLeft: '2px'}}>
-                                            <span> {item.timingName}</span>
+                                        <div className="flex-col-1">
+                                            <span  style={timingNameStyle}> {item.timingName}</span>
                                         </div>
                                     </div>
                                 </div>

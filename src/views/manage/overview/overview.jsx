@@ -14,6 +14,7 @@ import SwipeableViews from 'react-swipeable-views';
 import NewProjectQuality from './newProjectQuality';
 import HotIssueReviewPlan from './hotIssueReviewPlan';
 
+import Label from '@/components/tabs/label';
 import intl from '@/components/intl';
 // import { POST } from '@/plugins/fetch';
 // import goBack from '@/mixin/goBack';
@@ -126,9 +127,9 @@ class Overview extends React.Component {
                     value={this.state.tabValue}
                     onChange={this.tabChange}
                 >
-                    <Tab label={intl.get('QMS.manage/overview')} value={0}>
+                    <Tab label={<Label value={intl.get('QMS.manage/overview')}/>} value={0}>
                     </Tab>
-                    <Tab label={intl.get('QMS.EQRProjectHotIssueReviewPlan')} value={1}>
+                    <Tab label={<Label value={intl.get('QMS.EQRProjectHotIssueReviewPlan')}/>} value={1}>
                     </Tab>
                 </Tabs>
                 <SwipeableViews

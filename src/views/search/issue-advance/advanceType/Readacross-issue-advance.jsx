@@ -15,7 +15,7 @@ export class ReadacrossIssueAdvance extends React.Component {
     advanceData: PropTypes.object
   }
   render() {
-    intl.setMsg([require('@/static/i18n').default, require('./locale')])
+    intl.setMsg(require('@/static/i18n').default, require('./locale'))
     return (
       <div>
         <div className="issue-advance-item flex-row">

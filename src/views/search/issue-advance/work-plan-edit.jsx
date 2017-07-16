@@ -1,11 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 // import store from '@/store';
-
-// import TextField from 'material-ui/TextField';
-// import DatePicker from 'material-ui/DatePicker';
-// import SelectField from 'material-ui/SelectField';
-// import MenuItem from 'material-ui/MenuItem';
 import RaisedButton from 'material-ui/RaisedButton';
 import pathToJSON from '@/utils/object/pathToJSON';
 // import getTime from '@/utils/format/getTime';
@@ -83,11 +78,6 @@ export class WorkPlanEdit extends React.Component {
     bind = (key) => {
         return (e) => {
             this.setState(pathToJSON(key, e.target.value));
-            /*store.dispatch(upWorkPlanEditData({
-                action: 'change',
-                key: key,
-                value: e.target.value
-            }));*/
         }
     }
     render() {
@@ -184,7 +174,7 @@ export class WorkPlanEdit extends React.Component {
                             <svg className="icon" aria-hidden="true">
                                 <use xlinkHref="#icon-save"></use>
                             </svg>
-                            {intl.get('QMS.Save')}
+                            {intl.get('QMS.Submit')}
                         </RaisedButton>
                     </div>
                     <div className="flex-col-1 text-center">

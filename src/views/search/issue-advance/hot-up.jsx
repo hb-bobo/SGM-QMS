@@ -6,6 +6,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import pathToJSON from '@/utils/object/pathToJSON';
 import HSelect from '@/components/form/h-select';
 import HTextarea from '@/components/form/h-textarea';
+import intl from '@/components/intl';
 /*
     s
 */
@@ -42,6 +43,7 @@ export class HotUp extends React.Component {
                 workPlanID: '',
                 workPlanStatus: ''
             });
+            return;
         }
         this.setState(nextProps.data);
     }
@@ -68,8 +70,9 @@ export class HotUp extends React.Component {
         }
     }
     render() {
-        // var { data } = this.props;
+        // var { data } = this.props;Reason
         var options = ['aa', 'xxxx', 'xvv']
+        intl.setMsg(require('@/static/i18n').default)
         return (
             <div className="hot-up-form">
                 <div className="edit-item flex-row">
@@ -111,7 +114,7 @@ export class HotUp extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">上升原因:</label>
+                        <label htmlFor="" className="justify">{intl.get('QMS.Reason')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HTextarea
@@ -128,7 +131,7 @@ export class HotUp extends React.Component {
                             <svg className="icon" aria-hidden="true">
                                 <use xlinkHref="#icon-submit"></use>
                             </svg>
-                            提交
+                            {intl.get('QMS.Submit')}
                         </RaisedButton>
                     </div>
                     <div className="flex-col-1 text-center">
@@ -136,7 +139,7 @@ export class HotUp extends React.Component {
                             <svg className="icon" aria-hidden="true">
                                 <use xlinkHref="#icon-cancel"></use>
                             </svg>
-                            取消
+                            {intl.get('QMS.Cancel')}
                         </RaisedButton>
                     </div>
                 </div>

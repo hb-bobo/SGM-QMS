@@ -85,15 +85,16 @@ class HotIssueApprove extends React.Component {
                                     <div className="flex-col-9">
                                         <div>
                                             <span 
-                                                style={{color: 'rgb(106, 196, 246)', marginBottom: '4px'}}
+                                                className="issueNo"
+                                                style={{marginLeft: 0}}
                                                 onClick={() => this.goAdvance('PRTS')}
                                             >
                                                {item.prblmId}
                                             </span>
                                         </div>
-                                        <div>
+                                        <div style={{marginTop: '0.6em'}}>
                                             <span className="left">
-                                            {intl.get('QMS.WorkingPlanDescription')}:
+                                                {intl.get('QMS.WorkingPlanDescription')}:
                                             </span>
                                             <span className="right">
                                                 {item.planDesc}

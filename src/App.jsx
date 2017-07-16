@@ -35,7 +35,7 @@ const muiTheme = getMuiTheme({
 });
 // 设置语言
 intl.setLanguage(AppConfig.language);
-
+intl.setLanguage('en');
 // use $store every where
 React.Component.prototype.$store = store;
 

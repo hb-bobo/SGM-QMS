@@ -78,7 +78,7 @@
     border-top: 1px solid #EEEDED;
 }
 .item>.item-body{
-    padding: 1em;
+    padding: 0.5em 1em;
     margin-top: 0.1em;
     font-size: 0.8em;
 }
@@ -89,7 +89,6 @@
     margin-left: 5px;
     color: rgb(106, 196, 246);
 }
-/*item*/
 
 .item-title-center{
     font-size: 0.8em;
@@ -99,98 +98,38 @@
     margin-top: 0.8em;
 }
 .item-top{
-    padding: 1em;
+    padding: 0.5em 1em;
     font-size: 0.8em;
     border-bottom: 1px solid #EEEDED;
 }
 .item-top span{
-    display: inline-block;
-    max-width: 7.5em;
     overflow:hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+.item-top span.left{
+    display: inline-block;
+    max-width: 8em;
+    white-space: normal;
+    vertical-align: top;
+}
+.item-top span.right{
+    display: inline-block;
+    white-space: normal;
+}
+.item-top [class*="flex-col-"]{
+    padding: 3px 0;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .item-project-progress{
     padding: 1em 1em;
 }
 
-/*推进页*/
-.issue-advance .scroller {
-    background: #FFF;
-    color: #676767;
-}
-.advance-top,
-.issue-advance-item {
-    font-size: 0.82em;
-    padding: 0.5em 0.7em;
-    border-bottom: 1px  solid #EEEDED;
-}
-.advance-top{
-    padding: 0 0.7em;
-}
-.issue-advance-item .right {
-    font-size: 0.81em;
-}
-.issue-advance-item-title {
-    font-size: 0.82em;
-    padding: 6px 0.7em;
-    border-bottom: 1px  solid #EEEDED;
-    background: #F8F7F7;
-}
-
-/*热点上升*/
-.work-plan-edit-form .flex-row,
-.hot-up-form .flex-row{
-    margin-bottom: 10px;
-}
-.hot-up-form .justify {
-    width: 77px;
-}
-/*推进页-> 工作计划*/
-.work-plan-list .flex-row{
-    padding:0 0.7em;
-    font-size: 0.82em;
-}
-.work-plan-list .flex-row .right {
-    font-size: 0.83em;
-}
-
-.work-plan-edit-form,
-.hot-up-form{
-    padding:10px 10px 0;
-    font-size: 15px;
-}
-.hot-up-form .btn>div,
-.work-plan-edit-form .btn>div {
-    padding: 0 2px;
-}
-.work-plan .icon-new{
-    width: 1.5em;
-    height: 1.5em;
-}
-.work-plan-list .plan-describe{
-    padding: 1.5em 0.7em;
-    border-bottom: 1px solid #EEEDED;
-}
-.plan-describe>div:first-child {
-    display: flex;
-}
-.plan-describe .left {
-    flex: 1;
-}
-.plan-describe .right {
-    flex: 4;
-}
-.work-plan-list .plan-info{
-    padding: 0.6em 0.7em;
-}
-.work-plan-list .plan-info>[class*="flex-col-"]{
-    padding: 0.1em 0;
-}
 
 /*待办事项*/
 .gtasks-list .item-top .right {
-    max-width: 18em;
+    max-width: 16em;
 }
 .review-time .review-time-edit{
     display: inline-block;
