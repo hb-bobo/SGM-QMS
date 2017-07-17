@@ -101,7 +101,7 @@
 }
 .item-top{
     padding: 0.5em 1em;
-    font-size: 0.8em;
+    font-size: 0.7em;
     border-bottom: 1px solid #EEEDED;
 }
 .item-top span{
@@ -131,7 +131,7 @@
 
 /*待办事项*/
 .gtasks-list .item-top .right {
-    max-width: 16em;
+    max-width: 27.5em;
 }
 .review-time .review-time-edit{
     display: inline-block;

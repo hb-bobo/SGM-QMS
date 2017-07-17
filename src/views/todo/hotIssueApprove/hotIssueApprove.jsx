@@ -104,9 +104,9 @@ class HotIssueApprove extends React.Component {
                                             </span>
                                         </div>
                                         <div style={{marginTop: '0.6em'}}>
-                                            <span className="left">
+                                           {/*  <span className="left">
                                                 {intl.get('QMS.WorkingPlanDescription')}:
-                                            </span>
+                                            </span> */}
                                             <span className="right">
                                                 {item.planDesc}
                                             </span>
