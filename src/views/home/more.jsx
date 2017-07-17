@@ -18,22 +18,22 @@ const MoreMenu = (props) => {
                 <div className="flex-row">
                     <div className="flex-col-1">
                         <Link to="/manage/overview">
-                            <MenuButton iconName="project" text="项目质量"/>
+                            <MenuButton iconName="project" text="项目质量" bgName="leftBottom"/>
                         </Link>
                     </div>
                     <div className="flex-col-1">
                         <Link to="/manage/quality-after-sale">
-                            <MenuButton iconName="after-sale" text="售后质量"/>
+                            <MenuButton iconName="after-sale" text="售后质量" bgName="leftBottom"/>
                         </Link>
                     </div>
                     <div className="flex-col-1">
                         <Link to="/manage/report">
-                            <MenuButton iconName="monthly" text="质量月报"/>
+                            <MenuButton iconName="monthly" text="质量月报" bgName="leftBottom"/>
                         </Link>
                     </div>
                     <div className="flex-col-1">
                         <Link to="/notice">
-                            <MenuButton iconName="notice2" text="通知中心"/>
+                            <MenuButton iconName="notice2" text="通知中心" bgName="leftBottom"/>
                         </Link>
                     </div>
                 </div>
@@ -64,7 +64,7 @@ const MoreMenu = (props) => {
                 <div className="flex-row">
                     <div className="flex-col-1">
                         <Link to="/project/overview">
-                            <MenuButton iconName="project" text="项目质量总览"/>
+                            <MenuButton iconName="project" text="项目质量总览" bgName="leftBottom"/>
                         </Link>
                     </div>
                     <div className="flex-col-1">
@@ -75,7 +75,7 @@ const MoreMenu = (props) => {
                     </div>
                     <div className="flex-col-1">
                         <Link to="/test">
-                            <MenuButton iconName="person" text="test"/>
+                            <MenuButton iconName="person" text="test" bgName="leftBottom"/>
                         </Link> 
                     </div>
                 </div>

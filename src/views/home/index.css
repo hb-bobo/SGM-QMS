@@ -63,9 +63,15 @@
     padding-top: 0.8em;
     margin-left: 5px;
     margin-right: 5px;
-    background: url(../../static/images/home_menu.png) center center no-repeat;
-    background-size: contain;
     text-align: center;
+}
+.home-menu-item.gb0 {
+    background: url(../../static/images/home_menu_0.png) center center no-repeat;
+    background-size: contain;
+}
+.home-menu-item.gb1 {
+    background: url(../../static/images/home_menu_1.png) center center no-repeat;
+    background-size: contain;
 }
 .home-menu-item .icon{
     color: #FFF;
@@ -81,7 +87,7 @@
 }
 /*部分图标得调整大小*/
 .home-menu-item .icon-msg{
-    margin-top: 3px;
+    margin-top: -1px;
     width: 1.7em;
     height: 2.3em;
 }
@@ -91,7 +97,7 @@
     height: 2.3em;
 }
 
-.home-menu-item .icon-function,
+
 .home-menu-item .icon-monthly{
     margin-top: 3px;
     width: 1.5em;
@@ -100,6 +106,12 @@
 
 .home-menu-item .icon-person,
 .home-menu-item .icon-department{
+    width: 1.5em;
+    height: 2.2em;
+}
+.home-menu-item .icon-department,
+.home-menu-item .icon-function{
+    margin-top: -1px;
     width: 1.5em;
     height: 2.2em;
 }
