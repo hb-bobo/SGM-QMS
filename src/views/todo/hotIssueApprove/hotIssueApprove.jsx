@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fillListData } from '@/store/actions';
 import FlatButton from 'material-ui/FlatButton';
-import Drawer from 'material-ui/Drawer';
+// import Drawer from 'material-ui/Drawer';
 
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
@@ -27,7 +27,7 @@ class HotIssueApprove extends React.Component {
     }
     static propTypes = {
         listData: PropTypes.array,
-        goAdvance: PropTypes.func.isRequired,
+        parent: PropTypes.instanceOf(React.Component).isRequired,
     }
     state = {
         hotIssueEditOpen: false,
@@ -41,21 +41,32 @@ class HotIssueApprove extends React.Component {
     }
     
     componentDidMount () {
+        var {parent} = this.props;
         var data = require('@/static/workPlan.json').result
-        this.$store.dispatch(fillListData(data))
+        this.$store.dispatch(fillListData(data));
+        // 设置父级弹出的内容
+        parent.setDrawerChildren(
+            <HotIssueEdit 
+                data={this.state.hotIssueEditData}
+                tabValue={parent.tabValue}
+                parent={this}
+            />
+        )
     }
     // Go to Advance page
     goAdvance = (advanceType) => {
-        this.props.goAdvance('/search/issue-advance/' + advanceType);
+        this.props.parent.goAdvance('/search/issue-advance/' + advanceType);
     }
     // edit review time
     edit (data) {
-        console.log(1111)
         this.setState({
             hotIssueEditData: data,
             hotIssueEditOpen: true,
             title: intl.get('QMS.ReviewTime'),
             isIndex: false
+        });
+        this.props.parent.setState({
+            hotIssueEditOpen: true,
         });
         return false;
     }
@@ -210,19 +221,6 @@ class HotIssueApprove extends React.Component {
                         )
                     })
                 }
-
-                <Drawer
-                    width="100%"
-                    containerStyle={{top: '48px', overflow: 'hidden', display: this.state.tabValue === 0 ? 'block' : 'none' }} 
-                    openSecondary={true}
-                    open={true}
-                >
-                    <HotIssueEdit 
-                        data={this.state.hotIssueEditData}
-                        tabValue={this.props.tabValue}
-                        parent={this}
-                    />
-                </Drawer>
             </div>
         )
     }

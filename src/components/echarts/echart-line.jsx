@@ -124,7 +124,6 @@ class EchartLine extends React.Component {
                     style={this.props.style}
                     echarts={echarts}
                     option={this.state.option}
-                    style={{height: "300px", width: "100%"}}
                     notMerge={true}
                     lazyUpdate={true}
                     theme={"theme_name"}

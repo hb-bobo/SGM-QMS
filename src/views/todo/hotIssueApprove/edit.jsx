@@ -58,9 +58,9 @@ class HotIssueEdit extends React.Component {
     cancel = () => {
         this.parentStateChange();
     }
-    // 改变父级的状态
+    // 改变父父级的状态(因为hotIssueEditOpen挂在父父级的state里)
     parentStateChange () {
-        this.parent.setState({
+        this.parent.props.parent.setState({
             hotIssueEditOpen: false,
             isIndex: true
         });
