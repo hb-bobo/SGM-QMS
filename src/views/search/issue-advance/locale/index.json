@@ -4,13 +4,15 @@
         "HotEscalate": "热点上升",
         "IssueSeverity": "问题等级",
         "AddWorkPlan": "新增工作计划",
-        "EditWorkPlan": "编辑工作计划"
+        "EditWorkPlan": "编辑工作计划",
+        "AppoveSeverity": "评审等级"
     },
     "en": {
         "IssueEscalate": "Issue Escalate",
         "HotEscalate": "Intelligent Escalate",
         "IssueSeverity": "Issue Severity",
         "AddWorkPlan": "Add Work Plan",
-        "EditWorkPlan": "Edit Work Plan"
+        "EditWorkPlan": "Edit Work Plan",
+        "AppoveSeverity": "Appove Severity"
     }
 }
