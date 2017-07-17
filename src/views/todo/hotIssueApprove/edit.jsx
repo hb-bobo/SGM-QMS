@@ -91,7 +91,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="rspnsUser" className="justify">{intl.get('QMS.WorkingPlanDescription')}:</label>
+                        <label htmlFor="rspnsUser" className="">{intl.get('QMS.WorkingPlanDescription')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HTextarea
@@ -210,7 +210,7 @@ class HotIssueEdit extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">{intl.get('QMS.IssueSeverity')}:</label>
+                        <label htmlFor="" className="">{intl.get('QMS.IssueSeverity')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HInput
