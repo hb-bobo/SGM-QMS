@@ -58,12 +58,12 @@ class QualityMonthReport extends React.Component {
                     onChange={this.tabChange}
                 >
                     <Tab label={intl.get('QMS.ResultIndex')} value={intl.get('QMS.ResultIndex')}>
-                        <Scroller autoSetHeight={true}>
+                        <Scroller autoSetHeight={true} bounce={false}>
                             <ResultIndex/>
                         </Scroller>
                     </Tab>
                     <Tab label={intl.get('QMS.ProcessIndex')} value={intl.get('QMS.ProcessIndex')}>
-                        <Scroller autoSetHeight={true}>
+                        <Scroller autoSetHeight={true} bounce={false}>
                             <ProcessIndex/>
                         </Scroller>
                     </Tab>

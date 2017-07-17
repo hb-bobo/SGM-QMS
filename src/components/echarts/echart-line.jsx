@@ -10,11 +10,16 @@ import 'echarts/lib/component/legend';
 
 class EchartLine extends React.Component {
     static defaultProps = {
+        style: {
+            height: "300px",
+            width: "100%"
+        },
         yFormat: "{value} %",
         legend: true,
         series: ["COUNT"]
     }
     static propTypes = {
+        style: PropTypes.object,
         yFormat: PropTypes.string,
         legend: PropTypes.bool,
         series: PropTypes.array
@@ -53,7 +58,7 @@ class EchartLine extends React.Component {
         //     options.series[1].name = 'Actual';
         // }
 
-        var infoData = nextProps.info[0];
+        var infoData = nextProps.info && nextProps.info[0];
         var chartData = nextProps.chartData;
         // 目标值
         if (infoData && infoData.patacTargetValue) {
@@ -116,9 +121,9 @@ class EchartLine extends React.Component {
             <div>
                 
                 <ReactEchartsCore
+                    style={this.props.style}
                     echarts={echarts}
                     option={this.state.option}
-                    style={{height: "300px", width: "100%"}}
                     notMerge={true}
                     lazyUpdate={true}
                     theme={"theme_name"}

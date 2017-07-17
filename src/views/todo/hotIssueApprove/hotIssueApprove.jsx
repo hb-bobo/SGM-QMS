@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { fillListData } from '@/store/actions';
 import FlatButton from 'material-ui/FlatButton';
-import Drawer from 'material-ui/Drawer';
+// import Drawer from 'material-ui/Drawer';
 
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
@@ -27,8 +27,7 @@ class HotIssueApprove extends React.Component {
     }
     static propTypes = {
         listData: PropTypes.array,
-        goAdvance: PropTypes.func.isRequired,
-        tabValue: PropTypes.number.isRequired
+        parent: PropTypes.instanceOf(React.Component).isRequired,
     }
     state = {
         hotIssueEditOpen: false,
@@ -42,22 +41,34 @@ class HotIssueApprove extends React.Component {
     }
     
     componentDidMount () {
+        var {parent} = this.props;
         var data = require('@/static/workPlan.json').result
-        this.$store.dispatch(fillListData(data))
+        this.$store.dispatch(fillListData(data));
+        // 设置父级弹出的内容
+        parent.setDrawerChildren(
+            <HotIssueEdit 
+                data={this.state.hotIssueEditData}
+                tabValue={parent.tabValue}
+                parent={this}
+            />
+        )
     }
     // Go to Advance page
     goAdvance = (advanceType) => {
-        this.props.goAdvance('/search/issue-advance/' + advanceType);
+        this.props.parent.goAdvance('/search/issue-advance/' + advanceType);
     }
     // edit review time
     edit (data) {
         this.setState({
-            hotIssueEditOpen: true,
             hotIssueEditData: data,
+            hotIssueEditOpen: true,
             title: intl.get('QMS.ReviewTime'),
             isIndex: false
         });
-        return false
+        this.props.parent.setState({
+            hotIssueEditOpen: true,
+        });
+        return false;
     }
     // Approved the hot review item
     approve (id) {
@@ -72,10 +83,10 @@ class HotIssueApprove extends React.Component {
         }
     }
     render () {
-        var { listData, tabValue } = this.props;
+        var { listData } = this.props;
         // intl.setMsg(require('./locale').default);
 
-        return (
+        return (    
             <div className="gtasks-list">
                 {
                     listData.map((item, i) => {
@@ -89,7 +100,7 @@ class HotIssueApprove extends React.Component {
                                                 style={{marginLeft: 0}}
                                                 onClick={() => this.goAdvance('PRTS')}
                                             >
-                                               {item.prblmId}
+                                            {item.prblmId}
                                             </span>
                                         </div>
                                         <div style={{marginTop: '0.6em'}}>
@@ -210,16 +221,6 @@ class HotIssueApprove extends React.Component {
                         )
                     })
                 }
-                {/*edit弹出*/}
-                <Drawer 
-                    width="100%" 
-                    containerStyle={{top: '48px', overflow: 'hidden', display: tabValue === 0 ? 'block' : 'none' }} 
-                    openSecondary={true}
-                    parent={this}
-                    open={this.state.hotIssueEditOpen} 
-                >
-                    <HotIssueEdit data={this.state.hotIssueEditData} parent={this}/>
-                </Drawer>
             </div>
         )
     }

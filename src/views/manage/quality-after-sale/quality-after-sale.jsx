@@ -60,7 +60,7 @@ class QualityAfterSaleReport extends React.Component {
                             {"TOTALCOUNT":11,"HOTCOUNT":1,"MONTH":5},
                             {"TOTALCOUNT":12,"HOTCOUNT":1,"MONTH":6}]
             });
-        }, 500);
+        }, 0);
     }
     render () {
         intl.setMsg(require('@/static/i18n').default)
@@ -79,7 +79,11 @@ class QualityAfterSaleReport extends React.Component {
                         <span style={{display: 'inline-block', width: '2.6em'}}></span>
                     }   
                 />
-                <Scroller autoSetHeight={true}>
+                <Scroller
+                    autoSetHeight={true}
+                    bottomHeight={-15}
+                    bounce={false}
+                >
                     {/*顶部*/}
                     <div className="chat1">
                         <div className="chat1_piechat">
@@ -102,12 +106,17 @@ class QualityAfterSaleReport extends React.Component {
                             areaStyleColor={this.state.areaStyleColor}
                             yFormat={this.state.areaYFormat}
                             legend={false}
-                        ></EchartLine>
+                            style={{height: "200px",  width: "100%"}}
+                        />
                     </div>
 
                     <Accordion defaultActiveKey="-1" className="chart-list">
                         <Accordion.Panel header="MY16 12MIS IPTV">
-                            <EchartLine info={this.state.MY16_IPTV_INFO} chartData={this.state.MY16_IPTV_DATA}></EchartLine>
+                            <EchartLine 
+                                info={this.state.MY16_IPTV_INFO}
+                                chartData={this.state.MY16_IPTV_DATA}
+                                
+                            />
                         </Accordion.Panel>
                         <Accordion.Panel header="MY16 12MIS CPV">
                             <EchartLine info={this.state.MY16_CPV_INFO} chartData={this.state.MY16_CPV_DATA}></EchartLine>

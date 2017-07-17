@@ -25,8 +25,7 @@ class WarningApprove extends React.Component {
     }
     static propTypes = {
         listData: PropTypes.array,
-        goAdvance: PropTypes.func.isRequired,
-        tabValue: PropTypes.number.isRequired
+        goAdvance: PropTypes.func.isRequired
     }
     state = {
         listData: [],
