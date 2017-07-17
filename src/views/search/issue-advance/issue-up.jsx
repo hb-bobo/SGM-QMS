@@ -108,7 +108,7 @@ export class IssueUP extends React.Component {
                 </div>
                 <div className="edit-item flex-row">
                     <div className="flex-col-3">
-                        <label htmlFor="rspnsUser" className="justify">操  作:</label>
+                        <label htmlFor="rspnsUser" className="justify">{intl.get('QMS.Action')}:</label>
                     </div>
                     <div className="flex-col-7">
                         <HSelect

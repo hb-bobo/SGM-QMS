@@ -19,22 +19,44 @@ class EchartLine extends React.Component {
         series: ["COUNT"]
     }
     static propTypes = {
+        style: PropTypes.object,
         yFormat: PropTypes.string,
         legend: PropTypes.bool,
-        series: PropTypes.array,
-        style: PropTypes.object,
+        series: PropTypes.array
     }
-
+    static contextTypes = {
+        language: PropTypes.string
+    }
     state = {
         option: JSON.parse(JSON.stringify(options)),
         chart: null
     }
+    componentWillMount() {
+        // 英文切换系列
+        if(this.context.language === 'en'){
+            options.legend.data = ['Target', 'Actual'];
+            options.series[0].name = 'Target';
+            options.series[1].name = 'Actual';
+        }
+
+        this.setState({
+            option: JSON.parse(JSON.stringify(options))
+        });
+    }
     componentWillReceiveProps (nextProps) {
+        
         // 为了新的引用
         var options = Object.assign({}, this.state.option);
         options.yAxis[0].axisLabel.formatter = this.props.yFormat;
         options.xAxis[0].boundaryGap = false;
         options.legend.show = this.props.legend;
+
+        // 英文切换系列
+        // if(this.context.language === 'en'){
+        //     options.legend.data = ['Target', 'Actual'];
+        //     options.series[0].name = 'Target';
+        //     options.series[1].name = 'Actual';
+        // }
 
         var infoData = nextProps.info && nextProps.info[0];
         var chartData = nextProps.chartData;
@@ -99,9 +121,10 @@ class EchartLine extends React.Component {
             <div>
                 
                 <ReactEchartsCore
+                    style={this.props.style}
                     echarts={echarts}
                     option={this.state.option}
-                    style={this.props.style}
+                    style={{height: "300px", width: "100%"}}
                     notMerge={true}
                     lazyUpdate={true}
                     theme={"theme_name"}
@@ -115,7 +138,6 @@ class EchartLine extends React.Component {
     }
     
 }
-
 var options =  {
     tooltip : {
         trigger: 'axis'

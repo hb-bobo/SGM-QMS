@@ -16,7 +16,7 @@ export class PRTSIssueAdvance extends React.Component {
     advanceData: PropTypes.object
   }
   render() {
-    intl.setMsg(require('@/static/i18n').default)
+    intl.setMsg(require('@/static/i18n').default, require('./locale'))
     return (
       <div>
         <div className="issue-advance-item flex-row">
