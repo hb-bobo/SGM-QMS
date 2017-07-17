@@ -57,22 +57,23 @@ class HotIssueReviewPlan extends React.Component {
                         return (
                             <div key={i} className="item">
                                 <SpaceRow height="0.4em"/>
-                                <div className="flex-row item-body">
-                                    <div className="flex-col-9">
-                                        <div>
-                                            <span>{intl.get('QMS.IssueNo')}: </span>
-                                            <span className="issueNo">{item.prblmNo}</span>
-                                        </div>
-                                        <div style={{marginTop: '0.6em'}}>
-                                            <span>{intl.get('QMS.Description')}: </span>
-                                            <span>{item.prblmDesc}</span>
-                                        </div>
-                                    </div>
-                                    <div className="flex-col-1">
-                                        <Circle value={item.currentStatus}></Circle>
-                                    </div>
-                                </div>
+                                
                                 <div className="item-body">
+                                    <div className="flex-row">
+                                        <div className="flex-col-9">
+                                            <div>
+                                                <span>{intl.get('QMS.IssueNo')}: </span>
+                                                <span className="issueNo">{item.prblmNo}</span>
+                                            </div>
+                                            <div style={{marginTop: '0.6em'}}>
+                                                <span>{intl.get('QMS.Description')}: </span>
+                                                <span>{item.prblmDesc}</span>
+                                            </div>
+                                        </div>
+                                        <div className="flex-col-1">
+                                            <Circle value={item.currentStatus}></Circle>
+                                        </div>
+                                    </div>
                                     <div className="flex-row">
                                         <div className="flex-col-5">
                                             <span>{intl.get('QMS.ProgramName')}: </span>

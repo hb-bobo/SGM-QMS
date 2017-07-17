@@ -13,6 +13,7 @@ const MoreMenu = (props) => {
         <div className="home-menu">
             <Scroller
                 autoSetHeight={true}
+                bottomHeight={10}
                 bounce={false}
             >
                 <div className="flex-row">

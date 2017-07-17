@@ -8,6 +8,7 @@ import HTextarea from '@/components/form/h-textarea';
 import HInput from '@/components/form/h-input';
 import HDate from '@/components/form/h-date';
 import intl from '@/components/intl';
+import Scroller from '@/components/scroller';
 /*
     s
 */
@@ -31,7 +32,6 @@ class HotIssueEdit extends React.Component {
         workPlanStatus: ''
     }
     componentWillMount () {
-        console.log(this)
         this.parent = this.props.parent;
     }
     componentWillReceiveProps (nextProps) {
@@ -73,205 +73,207 @@ class HotIssueEdit extends React.Component {
     render() {
         // var { data } = this.props;
         return (
-            <div className="hot-up-form">
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="planDesc" className="justify">{intl.get('QMS.IssueNo')}:</label>
+            <Scroller autoSetHeight={true} bounce={false}>
+                <div className="hot-up-form">
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
+                            <label htmlFor="planDesc" className="justify">{intl.get('QMS.IssueNo')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HInput
+                                clear
+                                type="text"
+                                disabled
+                                value={this.state.prblmId}
+                                onChange={this.bind('prblmId')}
+                            >
+                            </HInput>
+                        </div>
                     </div>
-                    <div className="flex-col-7">
-                        <HInput
-                            clear
-                            type="text"
-                            disabled
-                            value={this.state.prblmId}
-                            onChange={this.bind('prblmId')}
-                        >
-                        </HInput>
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3">
+                            <label htmlFor="rspnsUser" className="">{intl.get('QMS.WorkingPlanDescription')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HTextarea
+                                clear
+                                type="text"
+                                disabled
+                                value={this.state.planDesc}
+                                onChange={this.bind('planDesc')}
+                            >
+                            </HTextarea>
+                        </div>
+                    </div>
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
+                            <label htmlFor="" className="justify">{intl.get('QMS.Status')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HInput
+                                clear
+                                type="text"
+                                disabled
+                                value={this.state.workPlanStatus}
+                                onChange={this.bind('workPlanStatus')}
+                            >
+                            </HInput>
+                        </div>
+                    </div>
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
+                            <label htmlFor="" className="justify">{intl.get('QMS.ReviewLevel')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HInput
+                                clear
+                                type="text"
+                                disabled
+                                value={this.state.rspnsUser}
+                                onChange={this.bind('rspnsUser')}
+                            >
+                            </HInput>
+                        </div>
+                    </div>
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
+                            <label htmlFor="" className="justify">{intl.get('QMS.ReviewTime')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HDate
+                                clear
+                                type="date"
+                                value={this.state.planFinishDate}
+                                onChange={this.bind('planFinishDate')}
+                            >
+                            </HDate>
+                        </div>
+                    </div>
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
+                            <label htmlFor="" className="justify">{intl.get('QMS.Age')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HInput
+                                clear
+                                type="text"
+                                disabled
+                                value={this.state.planFinishDate}
+                                onChange={this.bind('planFinishDate')}
+                            >
+                            </HInput>
+                        </div>
+                    </div>
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
+                            <label htmlFor="" className="justify">{intl.get('QMS.Champion')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HInput
+                                clear
+                                type="text"
+                                disabled
+                                value={this.state.xx}
+                                onChange={this.bind('xx')}
+                            >
+                            </HInput>
+                        </div>
+                    </div>
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
+                            <label htmlFor="" className="justify">{intl.get('QMS.ProgramName')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HInput
+                                clear
+                                type="text"
+                                disabled
+                                value={this.state.xx}
+                                onChange={this.bind('xx')}
+                            >
+                            </HInput>
+                        </div>
+                    </div>
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
+                            <label htmlFor="" className="justify">{intl.get('QMS.Dept')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HInput
+                                clear
+                                type="text"
+                                disabled
+                                value={this.state.xx}
+                                onChange={this.bind('xx')}
+                            >
+                            </HInput>
+                        </div>
+                    </div>
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
+                            <label htmlFor="" className="">{intl.get('QMS.IssueSeverity')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HInput
+                                clear
+                                type="text"
+                                disabled
+                                value={this.state.xx}
+                                onChange={this.bind('xx')}
+                            >
+                            </HInput>
+                        </div>
+                    </div>
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
+                            <label htmlFor="" className="justify">{intl.get('QMS.CurrentStep')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HInput
+                                clear
+                                type="text"
+                                disabled
+                                value={this.state.xx}
+                                onChange={this.bind('xx')}
+                            >
+                            </HInput>
+                        </div>
+                    </div>
+                    <div className="edit-item flex-row">
+                        <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
+                            <label htmlFor="" className="justify">{intl.get('QMS.Reason')}:</label>
+                        </div>
+                        <div className="flex-col-7">
+                            <HInput
+                                clear
+                                type="text"
+                                disabled
+                                value={this.state.xx}
+                                onChange={this.bind('xx')}
+                            >
+                            </HInput>
+                        </div>
+                    </div>
+                    <div className="flex-row btn">
+                        <div className="flex-col-1 text-center">
+                            <RaisedButton fullWidth={true} onClick={this.submit}>
+                                <svg className="icon" aria-hidden="true">
+                                    <use xlinkHref="#icon-submit"></use>
+                                </svg>
+                                {intl.get('QMS.Submit')}
+                            </RaisedButton>
+                        </div>
+                        <div className="flex-col-1 text-center">
+                            <RaisedButton fullWidth={true} onClick={this.cancel}>
+                                <svg className="icon" aria-hidden="true">
+                                    <use xlinkHref="#icon-cancel"></use>
+                                </svg>
+                                {intl.get('QMS.Cancel')}
+                            </RaisedButton>
+                        </div>
                     </div>
                 </div>
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3">
-                        <label htmlFor="rspnsUser" className="">{intl.get('QMS.WorkingPlanDescription')}:</label>
-                    </div>
-                    <div className="flex-col-7">
-                        <HTextarea
-                            clear
-                            type="text"
-                            disabled
-                            value={this.state.planDesc}
-                            onChange={this.bind('planDesc')}
-                        >
-                        </HTextarea>
-                    </div>
-                </div>
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">{intl.get('QMS.Status')}:</label>
-                    </div>
-                    <div className="flex-col-7">
-                        <HInput
-                            clear
-                            type="text"
-                            disabled
-                            value={this.state.workPlanStatus}
-                            onChange={this.bind('workPlanStatus')}
-                        >
-                        </HInput>
-                    </div>
-                </div>
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">{intl.get('QMS.ReviewLevel')}:</label>
-                    </div>
-                    <div className="flex-col-7">
-                        <HInput
-                            clear
-                            type="text"
-                            disabled
-                            value={this.state.rspnsUser}
-                            onChange={this.bind('rspnsUser')}
-                        >
-                        </HInput>
-                    </div>
-                </div>
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">{intl.get('QMS.ReviewTime')}:</label>
-                    </div>
-                    <div className="flex-col-7">
-                        <HDate
-                            clear
-                            type="date"
-                            value={this.state.planFinishDate}
-                            onChange={this.bind('planFinishDate')}
-                        >
-                        </HDate>
-                    </div>
-                </div>
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">{intl.get('QMS.Age')}:</label>
-                    </div>
-                    <div className="flex-col-7">
-                        <HInput
-                            clear
-                            type="text"
-                            disabled
-                            value={this.state.planFinishDate}
-                            onChange={this.bind('planFinishDate')}
-                        >
-                        </HInput>
-                    </div>
-                </div>
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">{intl.get('QMS.Champion')}:</label>
-                    </div>
-                    <div className="flex-col-7">
-                        <HInput
-                            clear
-                            type="text"
-                            disabled
-                            value={this.state.xx}
-                            onChange={this.bind('xx')}
-                        >
-                        </HInput>
-                    </div>
-                </div>
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">{intl.get('QMS.ProgramName')}:</label>
-                    </div>
-                    <div className="flex-col-7">
-                        <HInput
-                            clear
-                            type="text"
-                            disabled
-                            value={this.state.xx}
-                            onChange={this.bind('xx')}
-                        >
-                        </HInput>
-                    </div>
-                </div>
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">{intl.get('QMS.Dept')}:</label>
-                    </div>
-                    <div className="flex-col-7">
-                        <HInput
-                            clear
-                            type="text"
-                            disabled
-                            value={this.state.xx}
-                            onChange={this.bind('xx')}
-                        >
-                        </HInput>
-                    </div>
-                </div>
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="">{intl.get('QMS.IssueSeverity')}:</label>
-                    </div>
-                    <div className="flex-col-7">
-                        <HInput
-                            clear
-                            type="text"
-                            disabled
-                            value={this.state.xx}
-                            onChange={this.bind('xx')}
-                        >
-                        </HInput>
-                    </div>
-                </div>
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">{intl.get('QMS.CurrentStep')}:</label>
-                    </div>
-                    <div className="flex-col-7">
-                        <HInput
-                            clear
-                            type="text"
-                            disabled
-                            value={this.state.xx}
-                            onChange={this.bind('xx')}
-                        >
-                        </HInput>
-                    </div>
-                </div>
-                <div className="edit-item flex-row">
-                    <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
-                        <label htmlFor="" className="justify">{intl.get('QMS.Reason')}:</label>
-                    </div>
-                    <div className="flex-col-7">
-                        <HInput
-                            clear
-                            type="text"
-                            disabled
-                            value={this.state.xx}
-                            onChange={this.bind('xx')}
-                        >
-                        </HInput>
-                    </div>
-                </div>
-                <div className="flex-row btn">
-                    <div className="flex-col-1 text-center">
-                        <RaisedButton fullWidth={true} onClick={this.submit}>
-                            <svg className="icon" aria-hidden="true">
-                                <use xlinkHref="#icon-submit"></use>
-                            </svg>
-                            {intl.get('QMS.Submit')}
-                        </RaisedButton>
-                    </div>
-                    <div className="flex-col-1 text-center">
-                        <RaisedButton fullWidth={true} onClick={this.cancel}>
-                            <svg className="icon" aria-hidden="true">
-                                <use xlinkHref="#icon-cancel"></use>
-                            </svg>
-                            {intl.get('QMS.Cancel')}
-                        </RaisedButton>
-                    </div>
-                </div>
-            </div>
+            </Scroller>
         );
     }
 }

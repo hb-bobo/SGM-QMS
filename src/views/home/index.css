@@ -75,7 +75,7 @@
 }
 .home-menu-item .icon{
     color: #FFF;
-    width: 2.0em;
+    width: 1.9em;
     height: 2.5em;
 }
 .home-menu-item span{
@@ -113,5 +113,10 @@
 .home-menu-item .icon-function{
     margin-top: -1px;
     width: 1.5em;
+    height: 2.2em;
+}
+.home-menu-item .icon-after-sale{
+    margin-top: 1px;
+    width: 1.8em;
     height: 2.2em;
 }
