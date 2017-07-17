@@ -24,7 +24,7 @@ class HotIssueNotice extends React.Component {
                         return (
                             <div key={i} className="item">
                                 <SpaceRow height="0.4em"/>
-                                <div className="item-top flex-row ">
+                                <div className="item-top flex-row">
                                     <div className="flex-col-9">
                                         <div onClick={() => {goAdvance('EIR')}}>
                                             <span className="issueNo"> {item.prblmNo}</span>
