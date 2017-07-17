@@ -84,9 +84,9 @@ class WarningApprove extends React.Component {
                                             </span>
                                         </div>
                                         <div style={{marginTop: '0.6em'}}>
-                                            <span className="left">
+                                            {/*TODO 放 问题标题  <span className="left">
                                                 {intl.get('QMS.WorkingPlanDescription')}:
-                                            </span>
+                                            </span> */}
                                             <span className="right">
                                                 {item.problemDesc}
                                             </span>
