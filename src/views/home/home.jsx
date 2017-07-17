@@ -81,7 +81,7 @@ class HomePage extends React.Component{
           <div className="home-info">
             <div className="flex-row">
               <div className="flex-col-8">
-                <div style={{paddingBottom: '10px'}}>
+                <div style={{paddingBottom: '10px', marginBottom: '10px'}}>
                   <span>{intl.get('job')}: </span>
                   <span>工程师</span>
                 </div>
@@ -91,7 +91,7 @@ class HomePage extends React.Component{
                 </div>
               </div>
               <div className="flex-col-2">
-                <div className="icon-wrap" onClick={() => this.context.setLanguage('en')}>
+                <div className="icon-wrap" onClick={() => this.context.setLanguage('zh')}>
                   <svg className="icon info" aria-hidden="true">
                     <use xlinkHref="#icon-geren"></use>
                   </svg>

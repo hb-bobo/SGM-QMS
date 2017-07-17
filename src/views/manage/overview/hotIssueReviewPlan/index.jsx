@@ -33,9 +33,9 @@ class HotIssueReviewPlan extends React.Component {
         var { dataSource, selectHis } = this.props;
         return (
             <div>
-                <div className="flex-row" style={{padding: "6px 12px"}}>
+                <div className="item-body flex-row" style={{padding: "6px 12px", fontSize: "0.8em"}}>
                     <div className="flex-col-1">
-                        <label htmlFor="">{intl.get('QMS.HistorySearch')}:</label>
+                        <span>{intl.get('QMS.HistorySearch')}:</span>
                     </div>
                     <div className="flex-col-2">
                         <HDate
@@ -57,22 +57,22 @@ class HotIssueReviewPlan extends React.Component {
                         return (
                             <div key={i} className="item">
                                 <SpaceRow height="0.4em"/>
-                                <div className="flex-row item-top">
+                                <div className="flex-row item-body">
                                     <div className="flex-col-9">
-                                        <span>{intl.get('QMS.IssueNo')}: </span>
-                                        <span className="issueNo"> {item.prblmNo}</span>
+                                        <div>
+                                            <span>{intl.get('QMS.IssueNo')}: </span>
+                                            <span className="issueNo">{item.prblmNo}</span>
+                                        </div>
+                                        <div style={{marginTop: '0.6em'}}>
+                                            <span>{intl.get('QMS.Description')}: </span>
+                                            <span>{item.prblmDesc}</span>
+                                        </div>
                                     </div>
                                     <div className="flex-col-1">
                                         <Circle value={item.currentStatus}></Circle>
                                     </div>
                                 </div>
                                 <div className="item-body">
-                                    <div className="flex-row">
-                                        <div className="flex-col-10">
-                                            <span>{intl.get('QMS.Description')}: </span>
-                                            <span> {item.prblmDesc}</span>
-                                        </div>
-                                    </div>
                                     <div className="flex-row">
                                         <div className="flex-col-5">
                                             <span>{intl.get('QMS.ProgramName')}: </span>

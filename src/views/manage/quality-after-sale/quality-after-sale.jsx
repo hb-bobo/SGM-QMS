@@ -105,7 +105,7 @@ class QualityAfterSaleReport extends React.Component {
                         ></EchartLine>
                     </div>
 
-                    <Accordion defaultActiveKey="0" className="chart-list">
+                    <Accordion defaultActiveKey="-1" className="chart-list">
                         <Accordion.Panel header="MY16 12MIS IPTV">
                             <EchartLine info={this.state.MY16_IPTV_INFO} chartData={this.state.MY16_IPTV_DATA}></EchartLine>
                         </Accordion.Panel>

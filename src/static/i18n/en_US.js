@@ -89,6 +89,7 @@ export default {
         "SeverityLevel": "Severity",
         "Status": "Status",
         "CurrentStep": "Current Step",
+        "CurrentIssueStep": "Current Step",
         "Dept": "Dept.",
         "Age": "Age",
         "FailureMileage": "Failure Mileage",

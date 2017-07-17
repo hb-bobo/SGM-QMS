@@ -89,6 +89,7 @@ export default {
         "SeverityLevel": "问题等级",
         "Status": "状态",
         "CurrentStep": "问题阶段",
+        "CurrentIssueStep": "当前阶段",
         "Dept": "责任部门",
         "Age": "在库时间",
         "FailureMileage": "失效里程",

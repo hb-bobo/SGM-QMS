@@ -29,6 +29,7 @@
     height: 100%;
 }
 .home .home-info{
+    font-size: 0.7em;
     height: 18vh;
 }
 .home .icon-wrap{
@@ -57,7 +58,7 @@
 .home-menu-item{
     position: relative;
     display: inline-block;
-    width: 4em;
+    width: 3em;
     height: 4em;
     padding-top: 0.8em;
     margin-left: 5px;
@@ -68,7 +69,7 @@
 }
 .home-menu-item .icon{
     color: #FFF;
-    width: 2.5em;
+    width: 2.0em;
     height: 2.5em;
 }
 .home-menu-item span{
@@ -79,21 +80,26 @@
     white-space: nowrap;
 }
 /*部分图标得调整大小*/
+.home-menu-item .icon-msg{
+    margin-top: 3px;
+    width: 1.7em;
+    height: 2.3em;
+}
 .home-menu-item .icon-notice2{
     margin-top: 3px;
-    width: 2.3em;
+    width: 1.5em;
     height: 2.3em;
 }
 
 .home-menu-item .icon-function,
 .home-menu-item .icon-monthly{
     margin-top: 3px;
-    width: 2.2em;
+    width: 1.5em;
     height: 2.2em;
 }
 
 .home-menu-item .icon-person,
 .home-menu-item .icon-department{
-    width: 2.2em;
+    width: 1.5em;
     height: 2.2em;
 }

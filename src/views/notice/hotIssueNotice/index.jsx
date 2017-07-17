@@ -24,22 +24,20 @@ class HotIssueNotice extends React.Component {
                         return (
                             <div key={i} className="item">
                                 <SpaceRow height="0.4em"/>
-                                <div className="flex-row item-top">
-                                    <div className="flex-col-9" onClick={() => {goAdvance('EIR')}}>
-                                        <span>{intl.get('QMS.IssueNo')}: </span>
-                                        <span className="issueNo"> {item.prblmNo}</span>
+                                <div className="item-body flex-row ">
+                                    <div className="flex-col-9">
+                                        <div onClick={() => {goAdvance('EIR')}}>
+                                            <span className="issueNo"> {item.prblmNo}</span>
+                                        </div>
+                                        <div style={{marginTop: '0.6em'}}>
+                                            <span> {item.problemDesc}</span>
+                                        </div>
                                     </div>
                                     <div className="flex-col-1">
                                         <Circle value={item.state}></Circle>
                                     </div>
                                 </div>
                                 <div className="item-body">
-                                    <div className="flex-row">
-                                        <div className="flex-col-10">
-                                            <span>{intl.get('QMS.Description')}: </span>
-                                            <span> {item.problemDesc}</span>
-                                        </div>
-                                    </div>
                                     <div className="flex-row">
                                         <div className="flex-col-5">
                                             <span>{intl.get('QMS.ReviewTime')}: </span>
