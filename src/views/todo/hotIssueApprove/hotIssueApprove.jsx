@@ -42,7 +42,7 @@ class HotIssueApprove extends React.Component {
     
     componentDidMount () {
         var {parent} = this.props;
-        var data = require('@/static/workPlan.json').result
+        var data = require('@/static/workPlan.json').result;
         this.$store.dispatch(fillListData(data));
         // 设置父级弹出的内容
         parent.setDrawerChildren(
@@ -104,7 +104,7 @@ class HotIssueApprove extends React.Component {
                                             </span>
                                         </div>
                                         <div style={{marginTop: '0.6em'}}>
-                                           {/*  <span className="left">
+                                           {/*TODO 放 问题标题 ?  <span className="left">
                                                 {intl.get('QMS.WorkingPlanDescription')}:
                                             </span> */}
                                             <span className="right">
