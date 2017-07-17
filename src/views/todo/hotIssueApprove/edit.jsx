@@ -31,6 +31,7 @@ class HotIssueEdit extends React.Component {
         workPlanStatus: ''
     }
     componentWillMount () {
+        console.log(this)
         this.parent = this.props.parent;
     }
     componentWillReceiveProps (nextProps) {

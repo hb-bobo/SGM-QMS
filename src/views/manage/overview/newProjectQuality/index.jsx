@@ -53,7 +53,7 @@ class NewProjectQuality extends React.Component {
             });
             // 上拉结束
             this.refs.scroller.donePullup();
-        }, 10000);
+        }, 500);
     }
     refresh = () => {
 
@@ -88,7 +88,7 @@ class NewProjectQuality extends React.Component {
             });
             // 下拉结束
             this.refs.scroller.donePulldown();
-        }, 7000)
+        }, 500)
     }
     /**
      * go 项目质量验证总览, 目前是只有热点问题

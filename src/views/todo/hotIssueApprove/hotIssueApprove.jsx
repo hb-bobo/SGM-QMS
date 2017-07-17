@@ -28,7 +28,6 @@ class HotIssueApprove extends React.Component {
     static propTypes = {
         listData: PropTypes.array,
         goAdvance: PropTypes.func.isRequired,
-        tabValue: PropTypes.number.isRequired
     }
     state = {
         hotIssueEditOpen: false,
@@ -51,13 +50,14 @@ class HotIssueApprove extends React.Component {
     }
     // edit review time
     edit (data) {
+        console.log(1111)
         this.setState({
-            hotIssueEditOpen: true,
             hotIssueEditData: data,
+            hotIssueEditOpen: true,
             title: intl.get('QMS.ReviewTime'),
             isIndex: false
         });
-        return false
+        return false;
     }
     // Approved the hot review item
     approve (id) {
@@ -72,10 +72,10 @@ class HotIssueApprove extends React.Component {
         }
     }
     render () {
-        var { listData, tabValue } = this.props;
+        var { listData } = this.props;
         // intl.setMsg(require('./locale').default);
 
-        return (
+        return (    
             <div className="gtasks-list">
                 {
                     listData.map((item, i) => {
@@ -89,7 +89,7 @@ class HotIssueApprove extends React.Component {
                                                 style={{marginLeft: 0}}
                                                 onClick={() => this.goAdvance('PRTS')}
                                             >
-                                               {item.prblmId}
+                                            {item.prblmId}
                                             </span>
                                         </div>
                                         <div style={{marginTop: '0.6em'}}>
@@ -210,15 +210,18 @@ class HotIssueApprove extends React.Component {
                         )
                     })
                 }
-                {/*edit弹出*/}
-                <Drawer 
-                    width="100%" 
-                    containerStyle={{top: '48px', overflow: 'hidden', display: tabValue === 0 ? 'block' : 'none' }} 
+
+                <Drawer
+                    width="100%"
+                    containerStyle={{top: '48px', overflow: 'hidden', display: this.state.tabValue === 0 ? 'block' : 'none' }} 
                     openSecondary={true}
-                    parent={this}
-                    open={this.state.hotIssueEditOpen} 
+                    open={true}
                 >
-                    <HotIssueEdit data={this.state.hotIssueEditData} parent={this}/>
+                    <HotIssueEdit 
+                        data={this.state.hotIssueEditData}
+                        tabValue={this.props.tabValue}
+                        parent={this}
+                    />
                 </Drawer>
             </div>
         )
