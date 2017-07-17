@@ -120,7 +120,7 @@ class WarningApprove extends React.Component {
                                         </div>
                                         <div className="flex-col-1">
                                             <div>
-                                                <span>{intl.get('QMS.CurrentStep')}: </span>
+                                                <span>{intl.get('QMS.CurrentIssueStep')}: </span>
                                                 <span className="right">{item.crntPhase}</span>
                                             </div>
                                         </div>
@@ -129,7 +129,7 @@ class WarningApprove extends React.Component {
                                     <div className="flex-row">
                                         <div className="flex-col-1">
                                             <div>
-                                                <span>{intl.get('IssueLevel')}: </span>
+                                                <span>{intl.get('QMS.SeverityLevel')}: </span>
                                                 <span className="right">{item.problemSevertiy}</span>
                                             </div>
                                         </div>

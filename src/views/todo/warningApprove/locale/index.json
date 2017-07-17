@@ -1,12 +1,10 @@
 {
     "zh": {
         "ApplyLevel": "上升级别",
-        "ApplyUser": "上升人员",
-        "IssueLevel": "问题等级"
+        "ApplyUser": "上升人员"
     },
     "en": {
         "ApplyLevel": "Apply Severtiy",
-        "ApplyUser": "Apply User",
-        "IssueLevel": "Issue Severtiy"
+        "ApplyUser": "Apply User"
     }
 }

@@ -78,7 +78,7 @@ export class PRTSIssueAdvance extends React.Component {
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">{intl.get('IssueSeverity')}: </label>
+            <label htmlFor="">{intl.get('QMS.SeverityLevel')}: </label>
           </div>
           <div className="flex-col-10 right">
             <span>2</span>

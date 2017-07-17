@@ -168,7 +168,7 @@ class HotIssueApprove extends React.Component {
                                     <div className="flex-row">
                                         <div className="flex-col-1">
                                             <div>
-                                                <span>{intl.get('QMS.IssueSeverity')}: </span>
+                                                <span>{intl.get('QMS.SeverityLevel')}: </span>
                                                 <span className="right">{item.planFinishDate}</span>
                                             </div>
                                         </div>
