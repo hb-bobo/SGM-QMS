@@ -146,7 +146,7 @@ var options =  {
         data:['目标值','实际值'],
         right: 10
     },
-    grid: {top:30, left: 45, right: 5, bottom: 40},
+    grid: {top:30, left: 45, right: 30, bottom: 40},
     xAxis: [{
         type: 'category',
         data: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
