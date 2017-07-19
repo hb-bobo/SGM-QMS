@@ -1,14 +1,16 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { getListData } from '@/store/actions';
 import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import intl from '@/components/intl';
+import { POST } from '@/plugins/fetch';
 import MenuButton from './menu-button';
 import MoreMenu from './more.jsx';
 import './index.css';
 import home_top from '@/static/images/home_top.jpg';
 import home_banner from '@/static/images/home_banner.jpg';
-import { POST } from '@/plugins/fetch';
+
 // 10.6.96.190:8090
 var homeTopBg = {
   backgroundImage:  `url(${home_top})`
@@ -17,13 +19,18 @@ class HomePage extends React.Component{
   static contextTypes = {
     language: PropTypes.string,
     setLanguage: PropTypes.func,
-    router: PropTypes.object
+    router: PropTypes.object,
+    store: PropTypes.object
   }
   state = {
     showMore: false
   }
   componentWillMount () {
+    console.log(this)
     var Home = this;
+    this.$store.dispatch(getListData({
+      a:1
+    }));
     // 取用户名
     document.addEventListener('plusready', function () {
       var fhname = window.NativeObj.getUserName()

@@ -149,11 +149,14 @@ export function POST (url: string, opts: Opts) {
  *  })
  */
 
-export function GET (url: string, {
-    headers = defaultHeaders,
-    data = {},
-    timeout = 20000
-} = {} ) {
+export function GET (url: string, opts: Opts) {
+    // 不传给默认
+    var {
+        headers = defaultHeaders,
+        data = {},
+        timeout = 20000
+    } = opts || {data: {}};
+
     var reqUrl: string = AppConfig.API + url + '?' + querystring.stringify(data); 
     var reqOpts: RequestInit = {
         method: 'GET',

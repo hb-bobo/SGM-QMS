@@ -19,6 +19,9 @@ export default {
         },
         [types.UP_TEMPE_DATA] (state: States, action: Action) {
             state.tempData = action.payload
+        },
+        [types.UP_WORK_PLAN_LIST_DATA] (state: States, action: Action) {
+            console.log(action)
         }
     }
 }

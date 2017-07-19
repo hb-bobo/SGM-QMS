@@ -154,5 +154,5 @@ class NewProjectQuality extends React.Component {
         )
     }
 }
-
+console.log(NewProjectQuality)
 export default NewProjectQuality

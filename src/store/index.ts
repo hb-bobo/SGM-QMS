@@ -1,9 +1,10 @@
-import { Store, createStore } from 'redux'; // applyMiddleware
+import { Store, createStore, applyMiddleware } from 'redux'; // applyMiddleware
+import thunkMiddleware from 'redux-thunk';
 import rootReducer from './reducer';
 // var initialState: Object = {};
-
-var store: Store<any> = createStore(
-        rootReducer
-    );
+let createStoreWithMiddleware = applyMiddleware(
+  thunkMiddleware
+)(createStore)
+var store: Store<any> = createStoreWithMiddleware(rootReducer);
 
 export default store

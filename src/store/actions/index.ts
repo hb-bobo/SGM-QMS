@@ -7,7 +7,7 @@ import {
   UP_WORK_PLAN_EDIT_DATA,
   UP_WORK_PLAN_LIST_DATA
 } from './actionTypes';
-import AppConfig from '../../AppConfig';
+// import AppConfig from '../../AppConfig';
 import { Action } from '../../types';
 
 export const fillListData: Function = function (payload: any): Action {
@@ -51,24 +51,12 @@ export const upWorkPlanListData: Function = function (payload: any): Action {
         payload: payload
     }
 }
-
-export const getListData: Function = function (dispatch: Function): any  {
-    var action = {
-        type: FILL_LIST_DATA,
-        payload: null
+/*异步action*/
+export const getListData: Function = function (payload: any): any  {
+    return function (dispatch: Function) {
+        dispatch({
+            type: UP_WORK_PLAN_LIST_DATA,
+            payload: payload
+        });
     }
-    fetch(AppConfig.API + '/getData', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                'path': 'data.json'
-            })
-        }).then((res) => {
-            return res.json()
-        }).then((res) => {
-            action.payload = res.EQRHotIssue.issueList
-            dispatch(action)
-        })
 }
