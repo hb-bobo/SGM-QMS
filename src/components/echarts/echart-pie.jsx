@@ -9,18 +9,20 @@ import 'echarts/lib/component/title';
 
 class EchartPie extends React.Component {
     static defaultProps = {
-        titleText: "1/4",
+        titleText: "0/0",
         titleSubText: "Spills",
         color: ["#e8807d","#dfdfdf"],
         height: "90px",
-        width: "90px"
+        width: "90px",
+        info: [{}, {}]
     }
     static propTypes = {
         titleText: PropTypes.string,
         titleSubText: PropTypes.string,
         color: PropTypes.array,
         height: PropTypes.string,
-        width: PropTypes.string
+        width: PropTypes.string,
+        info: PropTypes.array
     }
 
     state = {
@@ -28,20 +30,26 @@ class EchartPie extends React.Component {
         chart: null
     }
     componentWillReceiveProps (nextProps) {
+        var { titleSubText, color } = nextProps;
+        // 传进来的值
+        var chartData = nextProps.info;
         // 为了新的引用
         var options = Object.assign({}, this.state.option);
-        options.title.text = this.props.titleText;
-        options.title.subtext = this.props.titleSubText;
-        // 实际值
-        var chartData = nextProps.info;
+        
+        options.title.subtext = titleSubText;
+        options.title.text = (chartData[0].value || '') + '/' + (chartData[1].value || '');
+        options.color = color;
+        // 初始化data
+        options.series[0].data = [];
         if (Array.isArray(chartData) && chartData.length) {
-            chartData.forEach( (item,index) => {
-                var color = this.props.color[index%2];
-                if (item.color !== undefined) {
-                    color = item.color
-                }
-                options.series[0].data.push({value: item.value, name: "", itemStyle: {normal: {color: color}}});
-            })
+            var data = []
+            chartData.forEach((item, index) => {
+                data.push({
+                    value: item.value,
+                    name: ''
+                });
+            });
+            options.series[0].data = data;
         }
 
         this.setState({
@@ -65,7 +73,6 @@ class EchartPie extends React.Component {
         console.log(e)
     }
     render () {
-        console.log('11')
         return (
             <div>
                 <ReactEchartsCore

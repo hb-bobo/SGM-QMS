@@ -9,7 +9,6 @@ import SwipeableViews from 'react-swipeable-views';
 import HotReview from './hotIssueApprove';
 import WarningReview from './warningApprove';
 
-import Scroller from '@/components/scroller';
 import intl from '@/components/intl';
 
 
@@ -82,12 +81,13 @@ class Todo extends React.Component {
                     index={this.state.tabValue}
                     onChangeIndex={this.tabChange}
                 > 
-                    <Scroller autoSetHeight={true} >
+                    <div>
                         <HotReview ref="HotReview"  parent={this}/>
-                    </Scroller>
-                    <Scroller autoSetHeight={true} >
+                    </div>
+                    <div>
                         <WarningReview  goAdvance={this.goAdvance}/>
-                    </Scroller>
+                    </div>
+                        
                 </SwipeableViews>
                 {/*HotReview edit弹出,因为SwipeableViews 有transform 属性，导致子级的Position:fixed失效，所以放到SwipeableViews外层*/
                     <Drawer

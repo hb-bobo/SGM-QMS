@@ -8,17 +8,57 @@ import MoreMenu from './more.jsx';
 import './index.css';
 import home_top from '@/static/images/home_top.jpg';
 import home_banner from '@/static/images/home_banner.jpg';
-
+import { POST } from '@/plugins/fetch';
+// 10.6.96.190:8090
 var homeTopBg = {
   backgroundImage:  `url(${home_top})`
 }
 class HomePage extends React.Component{
   static contextTypes = {
     language: PropTypes.string,
-    setLanguage: PropTypes.func
+    setLanguage: PropTypes.func,
+    router: PropTypes.object
   }
   state = {
     showMore: false
+  }
+  componentWillMount () {
+    var Home = this;
+    // 取用户名
+    document.addEventListener('plusready', function () {
+      var fhname = window.NativeObj.getUserName()
+      if (!fhname) {
+        alert('获取用户名失败')
+      }
+      if (
+        fhname === null ||
+        fhname === undefined ||
+        fhname === '') {
+        window.location.href = 'views/error/403.html'
+      } else {
+        /* window.$ajax({
+          type: 'POST',
+          url: 'enter.do',
+          data: 'userName=' + fhname,
+          success: function (data) {
+            if (!data.success) {
+              window.location.href = 'views/error/403.html'
+            }
+          }
+        }); */
+        
+        POST('enter.do', {
+            data: 'userName=' + fhname,
+        })
+        .then((res) => {
+          if (!res.success) {
+            Home.context.router.history.push('/404');
+          }
+        })
+      }
+    }, false);
+  }
+  componentDidMount () {
   }
   /*常用的菜单 element*/
   commonMenu () {

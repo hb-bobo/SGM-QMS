@@ -1,13 +1,13 @@
 import * as React from 'react';
 
-class Error404 extends React.Component{
+class Error403 extends React.Component{
   render() {
     return (
       <div className="text-center">
-        <h2>404</h2>
+        <h2>403</h2>
       </div>
     );
   }
 }
 
-export default Error404;
+export default Error403;

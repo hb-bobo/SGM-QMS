@@ -1,11 +1,13 @@
-// 是否开发环境
+// 是否开发环境 (locale 去 package.json改代理ip)
 const isDev = process.env.NODE_ENV === 'development';
+const BASE_URL = window.location.origin + window.location.pathname.replace(/\w+\.(html|jsp)/, '');
+
 const AppConfig = {
     isDev: isDev,
-    API: isDev? 'local': window.location.origin + window.location.pathname.replace(/\w+\.(html|jsp)/, ''),
+    API: isDev? BASE_URL + 'local/QMS': BASE_URL,
     language: (window.navigator.language || window.navigator.browserLanguage).split('-')[0],
     listConfig: {
-        count: 0 // 每个list每次加载多少条数据
+        count: 10 // 每个list每次加载多少条数据
     }
 }
 

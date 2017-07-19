@@ -20,6 +20,7 @@ import intl from '@/components/intl';
 // import goBack from '@/mixin/goBack';
 // import mixins from '@/mixins/mixins';
 
+/* 项目质量总览 */
 // @connect(
 //     // mapStateToProps
 //     (state) => (state.common),
@@ -62,22 +63,11 @@ class Overview extends React.Component {
             console.log(res)
         })*/
         
-        var listData2 = [{prblmNo:"222",currentStatus:"G",prblmDesc:"222",projectName:"222",reviewLevel:"222",prblmSeverity:1,dept:"222",stockDay:1,crntPhase:"222"}]
-
         this.setState({
             title: intl.get('projectQuality'),
-            listData2: listData2
         });
     }
-    /* 评审计划查询刷新 */
-    selectHis = (value) => {
-        var listData = [{prblmNo:"1111",currentStatus:"G",prblmDesc:"1111",projectName:"11111",reviewLevel:"1111",prblmSeverity:1,dept:"1111",stockDay:1,crntPhase:"1111"},
-                                {prblmNo:"222",currentStatus:"G",prblmDesc:"222",projectName:"222",reviewLevel:"222",prblmSeverity:1,dept:"222",stockDay:1,crntPhase:"222"}]
-        console.log(value)
-        this.setState({
-            listData2: listData
-        });
-    }
+    
     /*back*/
     goBack = () => {
         this.props.history.go(-1);
@@ -88,9 +78,9 @@ class Overview extends React.Component {
         }
     }
     /*跳到推进页面*/
-    goAdvance = (type) => {
+    goAdvance = (type, id) => {
         if (type) {
-            this.props.history.push('/search/issue-advance/' + type);
+            this.props.history.push('/search/issue-advance/' + type + '?id');
             this.setState({
                 isIndex: false
             });
@@ -146,7 +136,7 @@ class Overview extends React.Component {
                     <div>
                         {/*列表*/
                             this.state.isIndex? 
-                                <HotIssueReviewPlan dataSource={this.state.listData2} selectHis={this.selectHis}/>
+                                <HotIssueReviewPlan/>
                                 : null
                         }
                     </div>

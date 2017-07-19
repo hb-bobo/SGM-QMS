@@ -3,9 +3,11 @@ import AppConfig from '@/AppConfig';
 import querystring from '@/utils/tools/querystring';
 
 interface Opts {
-    data: any, // 一层的Object, 不支持复杂嵌套
-    headers: Headers,
-    timeout: number
+    method?: 'POST' | 'GET',
+    mode?: 'no-cors' | 'cors',
+    data: any, 
+    headers?: Headers,
+    timeout?: number
 }
 
 interface StatusError extends Error {
@@ -23,7 +25,8 @@ function checkStatus(response: Response) {
   } else {
     var error: StatusError = new Error(response.statusText)
     error.response = response
-    throw error
+    console.warn('response:' + error);
+    return response;
   }
 }
 /** 
@@ -31,10 +34,10 @@ function checkStatus(response: Response) {
  * @param {Response}
  */
 function parseJSON(response: Response) {
-  return response.json()
+    return response.json()
 }
 
-/* 给fetch包装一个fetch */
+/* 给fetch包装一个fetch, 增加超时功能 */
 function _fetch(fetchPromise: Promise<any>, timeout: number)  {
     var abortFn: Function;
 
@@ -62,14 +65,13 @@ function _fetch(fetchPromise: Promise<any>, timeout: number)  {
 }
 
 var defaultHeaders: Headers = new Headers();
-defaultHeaders.append('Content-Type', 'application/json');
+defaultHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
 
 /** POST方法
  * @param {string} url
  * @param {Opts} see interface Opts
  * @return { void }
  * @example
- * 
  *  POST('/getData', {
  *      headers: {
  *          'Content-Type': 'application/x-www-form-urlencoded'
@@ -84,17 +86,31 @@ defaultHeaders.append('Content-Type', 'application/json');
  *  .catch((error) => {
  *      // xxxx
  *  })
+ *  转换字符为formData格式
+ *  querystring.stringify({
+ *      "path": "getProjectQualityList.json"
+ *  })   =   "path=getProjectQualityList.json&xxx=xxx"
  */
 export function POST (url: string, opts: Opts) {
+    var reqUrl: string = AppConfig.API + url; 
+    var reqOpts: RequestInit = {
+        method: 'POST',
+        mode: 'cors',
+        headers: opts.headers || defaultHeaders,
+        credentials: 'include',
+        body: null
+    }
+
+    if (reqOpts.headers.get('Content-Type') === 'application/x-www-form-urlencoded') {
+        // 转换字符为formData格式
+        reqOpts.body = querystring.stringify(opts.data);
+    } else {
+        reqOpts.body = JSON.stringify(opts.data);
+    }
+
     return new Promise(function (resolve: Function, reject?: Function) {
         _fetch(
-            fetch(AppConfig.API + url, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: opts.headers || defaultHeaders,
-                credentials: 'include',
-                body: opts.data
-            }),
+            fetch(reqUrl, reqOpts),
             opts.timeout || 20000
         )
         .then(checkStatus)
@@ -116,7 +132,7 @@ export function POST (url: string, opts: Opts) {
  * @param {Opts} see interface Opts
  * @return { void }
  * @example
- * 
+ *  
  *  GET('/getData', {
  *      headers: {
  *          'Content-Type': 'application/x-www-form-urlencoded'
@@ -133,17 +149,20 @@ export function POST (url: string, opts: Opts) {
  *  })
  */
 
-export function GET (url: string, opts: Opts) {
+export function GET (url: string, {
+    headers = defaultHeaders,
+    data = {},
+    timeout = 20000
+} = {} ) {
+    var reqUrl: string = AppConfig.API + url + '?' + querystring.stringify(data); 
+    var reqOpts: RequestInit = {
+        method: 'GET',
+        mode: 'cors',
+        headers: headers,
+        credentials: 'include'
+    }
     return new Promise(function (resolve: Function, reject?: Function) {
-        _fetch(
-            fetch(AppConfig.API + url + '&' + querystring.stringify(opts.data), {
-                method: 'GET',
-                mode: 'no-cors',
-                headers: opts.headers || defaultHeaders,
-                credentials: 'include'
-            }),
-            opts.timeout || 20000
-        )
+        _fetch(fetch(reqUrl, reqOpts), timeout)
         .then(checkStatus)
         .then(parseJSON)
         .then((res) => {

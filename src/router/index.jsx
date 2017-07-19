@@ -11,6 +11,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import {
   HomePage,
   Error404,
+  Error403,
   Manage,
   Project,
   Search,
@@ -30,6 +31,10 @@ export const routes = [
   {
     path: '/404',
     component: Error404
+  },
+  {
+    path: '/403',
+    component: Error403
   },
   { 
     path: '/',
@@ -153,7 +158,6 @@ export const RouteWithSubRoutes = (route) => {
         // pass the sub-routes down to keep nesting
           <route.component
             {...props}
-            parent={route.parent}
             routes={route.routes}
           />
         )}

@@ -10,7 +10,7 @@ import EchartPie from '@/components/echarts/echart-pie';
 import EchartLine from '@/components/echarts/echart-line';
 import Scroller from '@/components/scroller';
 import intl from '@/components/intl';
-
+import { GET } from '@/plugins/fetch';
 /*售后质量*/
 
 class QualityAfterSaleReport extends React.Component {
@@ -18,8 +18,8 @@ class QualityAfterSaleReport extends React.Component {
         title: intl.get('QMS.aftermarket'),
         isIndex: true,
         chartData: {},
-        date50Value: 0,
-        date100Value: 0,
+        chart60Value: 0,
+        chart95Value: 0,
         AREA_DATA: [],
         MY16_IPTV_INFO: [],
         MY16_IPTV_DATA: [],
@@ -47,11 +47,34 @@ class QualityAfterSaleReport extends React.Component {
         this.setState({
             title: intl.get('QMS.aftermarket')
         });
-        setTimeout(() => {
+        //pie图  {"count":5,"spillKpi":"11","success":true}
+        /* GET('/newProjectQuality/pcgetSpillCount')
+        .then((res) => {
+            if (res.success === true) {
+                // 
+                this.setState({
+                    pieData: [{value: res.count},{value: res.spillKpi}],
+                });
+            }
+        }); */
+        
+        /*仪表盘左 {"queryTwoCount":20,"queryCount":38,"queryOneCount":14,"success":true}*/
+        GET('/newProjectQuality/pcqueryCount')
+        .then((res) => {
+            if (res.success === true) {
+                this.setState({
+                    chart60Value: Math.round(res.queryOneCount / res.queryCount * 100),
+                    chart95Value: Math.round(res.queryTwoCount / res.queryCount * 100),
+                });
+            }
+        });
+
+
+         setTimeout(() => {
             this.setState({
-                pieData: [{value: 40},{value: 120}],
-                date50Value: 50,
-                date100Value: 100,
+                pieData: [{value: 5},{value: 11}],
+                chart60Value: 50,
+                chart95Value: 100,
                 MY16_IPTV_INFO: [{"mnthlyTargetId":"82","kpiYear":2017,"kpiName":"PRTS60","patacTargetValue":"60","deptTargetValue":"60"}],
                 MY16_IPTV_DATA: [{"MONTH":5},{"COUNT":97,"MONTH":3},{"COUNT":95,"MONTH":2},{"COUNT":97,"MONTH":1}],
                 AREA_DATA: [{"TOTALCOUNT":3,"HOTCOUNT":2,"MONTH":1},
@@ -60,7 +83,7 @@ class QualityAfterSaleReport extends React.Component {
                             {"TOTALCOUNT":11,"HOTCOUNT":1,"MONTH":5},
                             {"TOTALCOUNT":12,"HOTCOUNT":1,"MONTH":6}]
             });
-        }, 0);
+        }, 300); 
     }
     render () {
         intl.setMsg(require('@/static/i18n').default)
@@ -90,13 +113,19 @@ class QualityAfterSaleReport extends React.Component {
                             <EchartPie info={this.state.pieData}></EchartPie>
                         </div>
                         <div className="chat1_instrumentchat1">
-                            <EchartGauge info={this.state.chartData} value={this.state.date50Value}></EchartGauge>
+                            <EchartGauge
+                                value={this.state.chart60Value}
+                                lineStyleColor={[[0.5,"red"], [0.6,"#5bd0f9"], [1,"#60ed92"]]}
+                            />
                         </div>
                         <div className="chat1_instrumentchat2">
-                            <EchartGauge info={this.state.chartData} value={this.state.date100Value}></EchartGauge>
+                            <EchartGauge
+                                value={this.state.chart95Value}
+                                lineStyleColor={[[0.8,"red"], [0.95,"#5bd0f9"], [1,"#60ed92"]]}
+                            />
                         </div>
-                        <span className="left_instrument_span">在库时间&lt;50天问题比例</span>
-					    <span className="right_instrument_span">在库时间&gt;100天问题比例</span>
+                        <span className="left_instrument_span">售后问题在库时间比例60%</span>
+					    <span className="right_instrument_span">售后问题在库时间比例95%</span>
                     </div>
                     
                     <div>
@@ -115,7 +144,6 @@ class QualityAfterSaleReport extends React.Component {
                             <EchartLine 
                                 info={this.state.MY16_IPTV_INFO}
                                 chartData={this.state.MY16_IPTV_DATA}
-                                
                             />
                         </Accordion.Panel>
                         <Accordion.Panel header="MY16 12MIS CPV">

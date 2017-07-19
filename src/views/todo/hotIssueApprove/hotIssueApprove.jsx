@@ -9,8 +9,18 @@ import FlatButton from 'material-ui/FlatButton';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
+import Scroller from '@/components/scroller';
 import HotIssueEdit from './edit';
+import { POST } from '@/plugins/fetch';
+import AppConfig from '@/AppConfig';
+var isMounted = null;
 
+/*  //TODO //hotLevel
+    1: EQR专题
+    2：EQR常规
+    3: 项目热点
+    4：售后EQR专题
+    */
 @connect(
     // mapStateToProps
     (state) => ({listData: state.common.listData}),
@@ -31,19 +41,26 @@ class HotIssueApprove extends React.Component {
     }
     state = {
         hotIssueEditOpen: false,
-        list: [],
-        hotIssueEditData: {}
+        listData: [],
+        hotIssueEditData: {},
+        pageNumber: 1, // 第几页
+        scrollConfig: {
+            upContent: ''
+        }
     }
     componentWillMount () {
        this.setState({
-            list: this.$store.getState().common.listData
+            listData: this.$store.getState().common.listData
        });
     }
     
     componentDidMount () {
         var {parent} = this.props;
-        var data = require('@/static/workPlan.json').result;
-        this.$store.dispatch(fillListData(data));
+        // var data = require('./data.json').data;
+        isMounted = true;
+        this.refresh('down');
+        /* Fetch API cannot load http://10.6.96.190:8090/QMS/backlog/PchotIssueApprove. The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'. Origin 'http://localhost:3000' is therefore not allowed access. */
+
         // 设置父级弹出的内容
         parent.setDrawerChildren(
             <HotIssueEdit 
@@ -52,6 +69,94 @@ class HotIssueApprove extends React.Component {
                 parent={this}
             />
         )
+    }
+    componentWillUnmount () {
+        isMounted = null
+    }
+    loadingMore = () => {
+    
+        if (this.state.scrollConfig.upContent === 'No More') {
+            // 上拉结束
+            this.refs.scroller.donePullup();
+            return;
+        }
+        this.refresh('up');
+        /* setTimeout(() => {
+            if (isMounted === null) {return;}
+            this.setState({
+                dataSource: getProjectQualityList.result.concat(this.state.dataSource),
+                scrollConfig: {
+                    upContent: 'No More'
+                },
+                fetchStatus: true
+            });
+            
+        }, 500); */
+    }
+    /**
+     * @param {'up' | 'down'} 上拉还是下拉
+     */
+    refresh = (action) => {
+
+        if (action === 'down') {
+            this.setState({
+                pageNumber: 1,
+                scrollConfig: {
+                    upContent: ''
+                }
+            });
+        }
+        // AppConfig.listConfig.count 每次加多少条
+        POST('/backlog/PchotIssueApprove', {
+            data: {
+                "empId": "P0892",
+                "pageSize": AppConfig.listConfig.count,
+                "pageNumber": this.state.pageNumber,
+                "positNum": 'A3010274'
+            },
+        })
+        .then((res) => {
+            if (isMounted === null) {return;}
+            
+            if (res.success === true) {
+                var listData;
+                
+                // 刷新直接赋值，加载更多要保留原来的数据
+                // 下拉结束
+                if (action === 'down') {
+                    this.refs.scroller.donePulldown();
+                    listData = res.data;
+                } else if (action === 'up') {
+                    // 上拉结束
+                    this.refs.scroller.donePullup();
+                    listData = this.state.listData.concat(res.data);
+                }
+                this.setState({
+                    listData: listData,
+                    pageNumber: this.state.pageNumber + 1,
+                });
+                if (res.data.length < AppConfig.listConfig.count) {
+                    this.setState({
+                        scrollConfig: {
+                            upContent: 'No More'
+                        }
+                    });
+                }
+            }
+            
+        });   
+        /* setTimeout(() => {
+            if (isMounted === null) {return;}
+            this.setState({
+                dataSource: getProjectQualityList.result,
+                scrollConfig: {
+                    upContent: ''
+                },
+                page: 1,
+            });
+            // 下拉结束
+            this.refs.scroller.donePulldown();
+        }, 500) */
     }
     // Go to Advance page
     goAdvance = (advanceType) => {
@@ -83,145 +188,154 @@ class HotIssueApprove extends React.Component {
         }
     }
     render () {
-        var { listData } = this.props;
+        var { listData } = this.state;
+
         // intl.setMsg(require('./locale').default);
 
-        return (    
-            <div className="gtasks-list">
-                {
-                    listData.map((item, i) => {
-                        return (
-                            <div className="item" key={i}>
-                                <div className="flex-row item-top">
-                                    <div className="flex-col-9">
-                                        <div>
-                                            <span 
-                                                className="issueNo"
-                                                style={{marginLeft: 0}}
-                                                onClick={() => this.goAdvance('PRTS')}
-                                            >
-                                            {item.prblmId}
-                                            </span>
-                                        </div>
-                                        <div style={{marginTop: '0.6em'}}>
-                                           {/*TODO 放 问题标题 ?  <span className="left">
-                                                {intl.get('QMS.WorkingPlanDescription')}:
-                                            </span> */}
-                                            <span className="right">
-                                                {item.planDesc}
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="flex-col-1">
-                                        <Circle value={item.workPlanStatus}/>
-                                    </div>
-                                </div>
-                                <div className="item-body">
-                                    <div className="flex-row">
-                                        <div className="flex-col-1">
+        return (
+            <Scroller 
+                autoSetHeight={true}
+                onPullupLoading={this.loadingMore}
+                onPulldownLoading={() => this.refresh('down')}
+                config={this.state.scrollConfig}
+                ref="scroller"
+            >
+                <div className="gtasks-list">
+                    {
+                        listData.map((item, i) => {
+                            return (
+                                <div className="item" key={i}>
+                                    <div className="flex-row item-top">
+                                        <div className="flex-col-9">
                                             <div>
-                                                <span>{intl.get('QMS.ReviewLevel')}: </span>
-                                                <span className="right">{item.rspnsUser}</span>
+                                                <span 
+                                                    className="issueNo"
+                                                    style={{marginLeft: 0}}
+                                                    onClick={() => this.goAdvance(item.source, item.prblmNo)}
+                                                >
+                                                {item.prblmNo}
+                                                </span>
                                             </div>
-                                        </div>
-                                        <div className="flex-col-1">
-                                            <div className="review-time">
-                                                <span>{intl.get('QMS.ReviewTime')}: </span>
-                                                <span>{item.planFinishDate}</span>
-                                                <span className="review-time-edit" onClick={() => this.edit(item)}>
-                                                    <svg className="icon icon-edit1" aria-hidden="true">
-                                                        <use xlinkHref="#icon-edit1"></use>
-                                                    </svg>
+                                            <div style={{marginTop: '0.6em'}}>
+                                            {/*TODO 放 问题标题 ?  <span className="left">
+                                                    {intl.get('QMS.WorkingPlanDescription')}:
+                                                </span> */}
+                                                <span className="right">
+                                                    {item.problemDesc}
                                                 </span>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="flex-row">
                                         <div className="flex-col-1">
-                                            <div>
-                                                <span>{intl.get('QMS.Age')}: </span>
-                                                <span className="right">{item.planFinishDate}</span>
-                                            </div>
-                                        </div>
-                                        <div className="flex-col-1">
-                                            <div>
-                                                <span>{intl.get('QMS.Champion')}: </span>
-                                                <span className="right">{item.xx}</span>
-                                            </div>
+                                            <Circle value={item.state}/>
                                         </div>
                                     </div>
+                                    <div className="item-body">
+                                        <div className="flex-row">
+                                            <div className="flex-col-1">
+                                                <div>{/* 评审级别 */}
+                                                    <span>{intl.get('QMS.ReviewLevel')}: </span>
+                                                    <span className="right">{item.hotLevel}</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex-col-1">
+                                                <div className="review-time">
+                                                    <span>{intl.get('QMS.ReviewTime')}: </span>
+                                                    <span>{item.reviewTime}</span>
+                                                    <span className="review-time-edit" onClick={() => this.edit(item)}>
+                                                        <svg className="icon icon-edit1" aria-hidden="true">
+                                                            <use xlinkHref="#icon-edit1"></use>
+                                                        </svg>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex-row">
+                                            <div className="flex-col-1">
+                                                <div>
+                                                    <span>{intl.get('QMS.Age')}: </span>
+                                                    <span className="right">{item.stockDay}</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex-col-1">
+                                                <div>
+                                                    <span>{intl.get('QMS.Champion')}: </span>
+                                                    <span className="right">{item.pspnsUser}</span>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    <div className="flex-row">
-                                        <div className="flex-col-1">
-                                            <div>
-                                                <span>{intl.get('QMS.ProgramName')}: </span>
-                                                <span className="right">{item.planFinishDate}</span>
+                                        <div className="flex-row">
+                                            <div className="flex-col-1">
+                                                <div>
+                                                    <span>{intl.get('QMS.ProgramName')}: </span>
+                                                    <span className="right">{item.projectName}</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex-col-1">
+                                                <div>
+                                                    <span>{intl.get('QMS.Dept')}: </span>
+                                                    <span className="right">{item.pspnsDept}</span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div className="flex-col-1">
-                                            <div>
-                                                <span>{intl.get('QMS.Dept')}: </span>
-                                                <span className="right">{item.xx}</span>
+                                        <div className="flex-row">
+                                            <div className="flex-col-1">
+                                                <div>
+                                                    <span>{intl.get('QMS.SeverityLevel')}: </span>
+                                                    <span className="right">{item.problemSevertiy}</span>
+                                                </div>
+                                            </div>
+                                            <div className="flex-col-1">
+                                                <div>
+                                                    <span>{intl.get('QMS.CurrentStep')}: </span>
+                                                    <span className="right">{item.crntPhase}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex-row">
+                                            <div className="flex-col-1">
+                                                <div>
+                                                    <span>{intl.get('QMS.Reason')}: </span>
+                                                    <span className="right">{item.upgradeReason}</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="flex-row">
+                                    <div className="flex-row btn">
                                         <div className="flex-col-1">
-                                            <div>
-                                                <span>{intl.get('QMS.SeverityLevel')}: </span>
-                                                <span className="right">{item.planFinishDate}</span>
-                                            </div>
+                                            <FlatButton 
+                                                label={intl.get('QMS.Approve')}
+                                                fullWidth={true}
+                                                labelStyle={{paddingLeft:'0'}}
+                                                onClick={this.approve(1321312)}
+                                            >
+                                                <svg className="icon" aria-hidden="true">
+                                                    <use xlinkHref="#icon-pass"></use>
+                                                </svg>
+                                            </FlatButton>
+                                            
                                         </div>
+                                        <SpaceRow height={30} width="1px"/>
                                         <div className="flex-col-1">
-                                            <div>
-                                                <span>{intl.get('QMS.CurrentStep')}: </span>
-                                                <span className="right">{item.xx}</span>
-                                            </div>
+                                            <FlatButton 
+                                                label={intl.get('QMS.Reject')}
+                                                fullWidth={true}
+                                                labelStyle={{paddingLeft:'0'}}
+                                                onClick={this.reject(123123)}
+                                            >
+                                                <svg className="icon" aria-hidden="true">
+                                                    <use xlinkHref="#icon-reject"></use>
+                                                </svg>
+                                            </FlatButton>
                                         </div>
                                     </div>
-                                    <div className="flex-row">
-                                        <div className="flex-col-1">
-                                            <div>
-                                                <span>{intl.get('QMS.Reason')}: </span>
-                                                <span className="right">{item.planFinishDate}</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <SpaceRow height={6} width="100%"/>
                                 </div>
-                                <div className="flex-row btn">
-                                    <div className="flex-col-1">
-                                        <FlatButton 
-                                            label={intl.get('QMS.Approve')}
-                                            fullWidth={true}
-                                            labelStyle={{paddingLeft:'0'}}
-                                            onClick={this.approve(1321312)}
-                                        >
-                                            <svg className="icon" aria-hidden="true">
-                                                <use xlinkHref="#icon-pass"></use>
-                                            </svg>
-                                        </FlatButton>
-                                        
-                                    </div>
-                                    <SpaceRow height={30} width="1px"/>
-                                    <div className="flex-col-1">
-                                        <FlatButton 
-                                            label={intl.get('QMS.Reject')}
-                                            fullWidth={true}
-                                            labelStyle={{paddingLeft:'0'}}
-                                            onClick={this.reject(123123)}
-                                        >
-                                            <svg className="icon" aria-hidden="true">
-                                                <use xlinkHref="#icon-reject"></use>
-                                            </svg>
-                                        </FlatButton>
-                                    </div>
-                                </div>
-                                <SpaceRow height={6} width="100%"/>
-                            </div>
-                        )
-                    })
-                }
-            </div>
+                            )
+                        })
+                    }
+                </div>
+            </Scroller>
         )
     }
 }

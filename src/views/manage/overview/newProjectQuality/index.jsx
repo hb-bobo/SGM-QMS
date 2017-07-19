@@ -6,8 +6,8 @@ import ProjectProgress from '@/components/project-progress';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-// import AppConfig from '@/AppConfig';
-// import { POST, GET } from '@/plugins/fetch';
+import AppConfig from '@/AppConfig';
+import { POST } from '@/plugins/fetch';
 import getProjectQualityList from '@/static/getProjectQualityList.json';
 
 // 当请求进行中，组件却被卸载了。跟据此变量判断是否继续
@@ -21,15 +21,15 @@ class NewProjectQuality extends React.Component {
         language: PropTypes.string	
     }
     state = {
-        dataSource: [],
+        listData: [],
         scrollConfig: {
             upContent: ''
         },
-        page: 1,
+        pageNumber: 1,
     }
     componentDidMount () {
         // this.props.actions.fillListData(getProjectQualityList.result)
-        this.refresh();
+        this.refresh('down');
         isMounted = true;
     }
     componentWillUnmount () {
@@ -42,53 +42,62 @@ class NewProjectQuality extends React.Component {
             this.refs.scroller.donePullup();
             return;
         }
-        setTimeout(() => {
-            if (isMounted === null) {return;}
-            this.setState({
-                dataSource: getProjectQualityList.result.concat(this.state.dataSource),
-                scrollConfig: {
-                    upContent: 'No More'
-                },
-                fetchStatus: true
-            });
-            // 上拉结束
-            this.refs.scroller.donePullup();
-        }, 500);
+        this.refresh('up');
     }
-    refresh = () => {
-
+    /**
+     * @param {'up' | 'down'} 上拉还是下拉
+     */
+    refresh = (action) => {
+        
+        if (action === 'down') {
+            this.setState({
+                pageNumber: 1,
+                scrollConfig: {
+                    upContent: ''
+                }
+            });
+        }
         // AppConfig.listConfig.count 每次加多少条
-        /*GET('/getData', {
+        POST('/newProjectQuality/PchotIssueNotice', {
             data: {
-                "path": "getProjectQualityList.json"
+                "empId": "P0892",
+                "pageSize": AppConfig.listConfig.count,
+                "pageNumber": this.state.pageNumber,
+                "positNum": 'A3010274'
             },
         })
         .then((res) => {
             if (isMounted === null) {return;}
-            this.setState({
-                dataSource: res.result,
-                scrollConfig: {
-                    upContent: ''
-                },
-                page: 1,
-                fetchStatus: true
-            });
-            // 下拉结束
-            this.refs.scroller.donePulldown();
-        })*/
-        setTimeout(() => {
-            if (isMounted === null) {return;}
-            this.setState({
-                dataSource: getProjectQualityList.result,
-                scrollConfig: {
-                    upContent: ''
-                },
-                page: 1,
-                fetchStatus: true
-            });
-            // 下拉结束
-            this.refs.scroller.donePulldown();
-        }, 500)
+            
+            if (res.success === true) {
+                var listData;
+                
+                // 刷新直接赋值，加载更多要保留原来的数据
+                // 下拉结束
+                if (action === 'down') {
+                    this.refs.scroller.donePulldown();
+                    listData = res.data;
+                } else if (action === 'up') {
+                    // 上拉结束
+                    console.log('上啦结束')
+                    this.refs.scroller.donePullup();
+                    listData = this.state.listData.concat(res.data);
+                }
+                this.setState({
+                    listData: listData,
+                    pageNumber: this.state.pageNumber + 1,
+                });
+                // 最后的数据
+                if (res.data.length < AppConfig.listConfig.count) {
+                    this.setState({
+                        scrollConfig: {
+                            upContent: 'No More'
+                        }
+                    });
+                }
+            }
+            
+        });
     }
     /**
      * go 项目质量验证总览, 目前是只有热点问题
@@ -98,7 +107,7 @@ class NewProjectQuality extends React.Component {
         this.context.router.history.push('/project/verification')
     } 
     render () {
-        var { dataSource } = this.state;
+        var { listData } = this.state;
         intl.setMsg(require('./locale'));
         var { lang } = this.context;
         // timingName的样式，中英文差距大
@@ -107,11 +116,11 @@ class NewProjectQuality extends React.Component {
             <Scroller
                 autoSetHeight={true}
                 onPullupLoading={this.loadingMore}
-                onPulldownLoading={this.refresh}
+                onPulldownLoading={() => this.refresh('down')}
                 config={this.state.scrollConfig}
                 ref="scroller"
             >
-                {dataSource.map((item, i) => {
+                {listData.map((item, i) => {
                     return (
                         <div key={i} >
                             <SpaceRow height="0.4em"/>

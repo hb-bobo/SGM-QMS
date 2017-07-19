@@ -8,7 +8,7 @@ import 'echarts/lib/chart/gauge';
 
 class EchartGauge extends React.Component {
     static defaultProps = {
-        color: [[0.2,"#d2eee4"], [0.8,"#5bd0f9"], [1,"#60ed92"]],
+        lineStyleColor: [[0.2,"red"], [0.8,"#5bd0f9"], [1,"#60ed92"]],
         value: 0,
         height: "130px",
         width: "130px",
@@ -16,7 +16,7 @@ class EchartGauge extends React.Component {
         chartName: "结构成本节省率"
     }
     static propTypes = {
-        color: PropTypes.array,
+        lineStyleColor: PropTypes.array,
         value: PropTypes.number,
         height: PropTypes.string,
         width: PropTypes.string,
@@ -32,7 +32,7 @@ class EchartGauge extends React.Component {
         // 为了新的引用
         var options = Object.assign({}, this.state.option);
         options.series[0].name = this.props.chartName;
-        options.series[0].axisLine.lineStyle.color = this.props.color;
+        options.series[0].axisLine.lineStyle.color = this.props.lineStyleColor;
         // 实际值
         options.series[0].data = [{value: nextProps.value}]
         if (this.state.chart !== null) {
