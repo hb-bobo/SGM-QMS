@@ -33,12 +33,11 @@ var isMounted = null;
 )
 class HotIssueApprove extends React.Component {
     static defaultProps = {
-        listData: []
     }
     static propTypes = {
-        listData: PropTypes.array,
         parent: PropTypes.instanceOf(React.Component).isRequired,
     }
+    a = 1;
     state = {
         hotIssueEditOpen: false,
         listData: [],
@@ -49,9 +48,7 @@ class HotIssueApprove extends React.Component {
         }
     }
     componentWillMount () {
-       this.setState({
-            listData: this.$store.getState().common.listData
-       });
+
     }
     
     componentDidMount () {
@@ -189,7 +186,7 @@ class HotIssueApprove extends React.Component {
     }
     render () {
         var { listData } = this.state;
-
+        console.log(listData)
         // intl.setMsg(require('./locale').default);
 
         return (

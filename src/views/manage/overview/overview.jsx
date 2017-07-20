@@ -17,8 +17,8 @@ import HotIssueReviewPlan from './hotIssueReviewPlan';
 import Label from '@/components/tabs/label';
 import intl from '@/components/intl';
 // import { POST } from '@/plugins/fetch';
-// import goBack from '@/mixin/goBack';
-// import mixins from '@/mixins/mixins';
+// import goBacka from '@/mixins//mountedStatus';
+// import mixins from '@/decorator/mixins/';
 
 /* 项目质量总览 */
 // @connect(
@@ -31,7 +31,7 @@ import intl from '@/components/intl';
 //         }, dispatch)
 //     })
 // )
-// @mixins([goBack])
+
 class Overview extends React.Component {
     state = {
         title: '',
@@ -45,6 +45,7 @@ class Overview extends React.Component {
         store: PropTypes.object
     }
     componentDidMount ()　{
+        console.log(this)
         // AppConfig.API + '/getData'
         /*fetch('http://10.6.96.211:8090/QMS/backlog/testA', {
             method: 'POST',
