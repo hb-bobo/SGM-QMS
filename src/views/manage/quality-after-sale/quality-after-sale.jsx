@@ -17,21 +17,17 @@ class QualityAfterSaleReport extends React.Component {
     state = {
         title: intl.get('QMS.aftermarket'),
         isIndex: true,
-        chartData: {},
         chart60Value: 0,
         chart95Value: 0,
-        AREA_DATA: [],
-        MY16_IPTV_INFO: [],
-        MY16_IPTV_DATA: [],
-        MY16_CPV_INFO: [],
-        MY16_CPV_DATA: [],
-        MY15_IPTV_INFO: [],
-        MY15_IPTV_DATA: [],
-        MY15_CPV_INFO: [],
-        MY15_CPV_DATA: [],
-        areaSeries: ["TOTALCOUNT","HOTCOUNT"],
-        areaYFormat: "{value}",
-        areaStyleColor: ["#2d3650","#e04a46"]
+        totalData: [], // 区域图
+        IPTV12_YEAR: "MY",
+        IPTV24_YEAR: "MY",
+        CPV12_YEAR: "MY",
+        CPV24_YEAR: "MY",
+        IPTV12_DATA: [],
+        IPTV24_DATA: [],
+        CPV12_DATA: [],
+        CPV24_DATA: [],
     }
 
     /*back*/
@@ -47,6 +43,8 @@ class QualityAfterSaleReport extends React.Component {
         this.setState({
             title: intl.get('QMS.aftermarket')
         });
+
+        
         //pie图  {"count":5,"spillKpi":"11","success":true}
         /* GET('/newProjectQuality/pcgetSpillCount')
         .then((res) => {
@@ -69,21 +67,154 @@ class QualityAfterSaleReport extends React.Component {
             }
         });
 
+        /* 4个线图 */
+        GET('/newProjectQuality/pcqueryTarget')
+        .then((res) => {
+            if (res.success === true) {
+                var data = res.data;
+                this.setState({
+                    IPTV12_DATA: handleLineData(data.iptvTwelve),
+                    IPTV24_DATA: handleLineData(data.iptvTwentyFour),
+                    CPV12_DATA: handleLineData(data.cpvTwelve),
+                    CPV24_DATA: handleLineData(data.cpvTwentyFour)
+                });
+                // 怕后台不返数据给我, 所以做个判断
+                if (
+                    data.iptvTwelve[0] !== undefined &&
+                    data.iptvTwentyFour[0] !== undefined &&
+                    data.cpvTwelve[0] !== undefined &&
+                    data.cpvTwentyFour[0] !== undefined
+                ) {
+                    this.setState({
+                        IPTV12_YEAR: data.iptvTwelve[0].year,
+                        IPTV24_YEAR: data.iptvTwentyFour[0].year,
+                        CPV12_YEAR: data.cpvTwelve[0].year,
+                        CPV24_YEAR: data.cpvTwentyFour[0].year,
+                    });
+                }
+            }
+            
+        });
 
-         setTimeout(() => {
+        
+        /* 区域线图 */
+        // var data = {"problemHotCount":2,"totalCount":[{"TOTALCOUNT":3,"HOTCOUNT":2,"MONTH":1},{"TOTALCOUNT":5,"HOTCOUNT":1,"MONTH":2},{"TOTALCOUNT":7,"HOTCOUNT":0,"MONTH":3},{"TOTALCOUNT":11,"HOTCOUNT":1,"MONTH":5},{"TOTALCOUNT":12,"HOTCOUNT":1,"MONTH":6}],"problemTotalCount":14,"success":true}
+
+        GET('/newProjectQuality/mGetAftersaleProblemList')
+        .then((res) => {
+            if (res.success === true) {
+                this.setState({
+                    totalData: handleAreaLineData(res.totalCount)
+                });
+            }
+        });
+        /**
+         * 处理line chart 数据
+         * @param {array}
+         * @return {array} series
+         */
+        var handleLineData = function (resData) {
+            var LineSeries = [
+                {
+                    name: "目标值",
+                    type: "line",
+                    data: []
+                },
+                {
+                    name: "实际值",
+                    type: "line",
+                    label: {
+                        normal: {
+                            show: true
+                        }
+                    },
+                    data: []
+                }
+            ];
+            // 目标值都是一样，取target
+            if (resData[0] !== undefined) {
+                var item = resData[0];
+                for (let i = 0; i < 12; i++) {
+                    LineSeries[0].data.push(item.target)
+                }
+            }
+            // 先把12个月填控
+            for (let i = 0; i < 12; i++) {
+                LineSeries[1].data.push('')
+            }
+            Array.isArray(resData) && resData.forEach(function (item, i) {
+                //把month可能只有一个
+                LineSeries[1].data[item.month - 1] = item.actual
+            });
+            return LineSeries;
+        }
+        /**
+         * 处理区域线图 数据
+         * @param {array}
+         * @return {array} series
+         */
+        var handleAreaLineData = function (resData) {
+            var linStyle = {
+                normal: {
+                    opacity: 0
+                }
+            }
+            var LineSeries = [
+                {
+                    name: "Hot Issues",
+                    type: "line",
+                    stack: '总量',
+                    areaStyle: {
+                        normal: {
+                            color: 'rgb(219, 40, 36)'
+                        }
+                    },
+                    lineStyle: linStyle,
+                    data: []
+                },
+                {
+                    name: "Open Issues",
+                    type: "line",
+                    stack: '总量',
+                    areaStyle: {
+                        normal: {
+                            color: 'yellow'
+                        }
+                    },
+                    lineStyle: linStyle,
+                    data: []
+                }
+            ];
+            // 先把12个月填控
+            for (let i = 0; i < 12; i++) {
+                LineSeries[0].data.push('');
+                LineSeries[1].data.push('');
+            }
+            Array.isArray(resData) && resData.forEach(function (item, i) {
+                //把month可能只有一个，且分开
+                var month = item.MONTH - 1;
+                LineSeries[0].data[month] = item.HOTCOUNT
+                LineSeries[1].data[month] = item.TOTALCOUNT
+            });
+            return LineSeries;
+        }
+        /* setTimeout(() => {
+            var data = require('./data.json').data;
             this.setState({
                 pieData: [{value: 5},{value: 11}],
                 chart60Value: 50,
                 chart95Value: 100,
-                MY16_IPTV_INFO: [{"mnthlyTargetId":"82","kpiYear":2017,"kpiName":"PRTS60","patacTargetValue":"60","deptTargetValue":"60"}],
-                MY16_IPTV_DATA: [{"MONTH":5},{"COUNT":97,"MONTH":3},{"COUNT":95,"MONTH":2},{"COUNT":97,"MONTH":1}],
-                AREA_DATA: [{"TOTALCOUNT":3,"HOTCOUNT":2,"MONTH":1},
+                MY16_12MIS_IPTV_DATAL: data.iptvTwelve,
+                MY15_24MIS_IPTV_DATAL: data.iptvTwentyFour,
+                MY16_12MIS_CPV_DATAL: data.cpvTwelve,
+                MY15_24MIS_CPV_DATAL: data.cpvTwentyFour,
+                totalData: [{"TOTALCOUNT":3,"HOTCOUNT":2,"MONTH":1},
                             {"TOTALCOUNT":5,"HOTCOUNT":1,"MONTH":2},
                             {"TOTALCOUNT":7,"HOTCOUNT":0,"MONTH":3},
                             {"TOTALCOUNT":11,"HOTCOUNT":1,"MONTH":5},
                             {"TOTALCOUNT":12,"HOTCOUNT":1,"MONTH":6}]
             });
-        }, 300); 
+        }, 300);  */
     }
     render () {
         intl.setMsg(require('@/static/i18n').default)
@@ -115,13 +246,13 @@ class QualityAfterSaleReport extends React.Component {
                         <div className="chat1_instrumentchat1">
                             <EchartGauge
                                 value={this.state.chart60Value}
-                                lineStyleColor={[[0.5,"red"], [0.6,"#5bd0f9"], [1,"#60ed92"]]}
+                                lineStyleColor={ [[0.5,"red"], [0.6,"#5bd0f9"], [1,"#60ed92"]] }
                             />
                         </div>
                         <div className="chat1_instrumentchat2">
                             <EchartGauge
                                 value={this.state.chart95Value}
-                                lineStyleColor={[[0.8,"red"], [0.95,"#5bd0f9"], [1,"#60ed92"]]}
+                                lineStyleColor={ [[0.8,"red"], [0.95,"#5bd0f9"], [1,"#60ed92"]] }
                             />
                         </div>
                         <span className="left_instrument_span">售后问题在库时间比例60%</span>
@@ -129,33 +260,42 @@ class QualityAfterSaleReport extends React.Component {
                     </div>
                     
                     <div>
-                        <EchartLine chartData={this.state.AREA_DATA}
-                            info={[]}
-                            series={this.state.areaSeries}
-                            areaStyleColor={this.state.areaStyleColor}
-                            yFormat={this.state.areaYFormat}
-                            legend={false}
+                         <EchartLine
+                            series={this.state.totalData}
+                            color={ ['rgb(219, 40, 36)', 'yellow'] }
+                            yFormat="{value}"
+                            showLegend={false}
+                            legendData={ ['Hot Issues', 'Open Issues'] }
                             style={{height: "200px",  width: "100%"}}
-                        />
+                        /> 
                     </div>
 
                     <Accordion defaultActiveKey="-1" className="chart-list">
-                        <Accordion.Panel header="MY16 12MIS IPTV">
-                            <EchartLine 
-                                info={this.state.MY16_IPTV_INFO}
-                                chartData={this.state.MY16_IPTV_DATA}
+                        <Accordion.Panel header={`${this.state.IPTV12_YEAR} 12MIS IPTV`}>
+                            <EchartLine
+                                series={this.state.IPTV12_DATA}
+                                
                             />
                         </Accordion.Panel>
-                        <Accordion.Panel header="MY16 12MIS CPV">
-                            <EchartLine info={this.state.MY16_CPV_INFO} chartData={this.state.MY16_CPV_DATA}></EchartLine>
+                        <Accordion.Panel header={`${this.state.IPTV24_YEAR} 24MIS IPTV`}>
+                             <EchartLine 
+                                series={this.state.IPTV24_DATA}
+                                
+                            /> 
                         </Accordion.Panel>
-                        <Accordion.Panel header="MY15 12MIS IPTV">
-                            <EchartLine info={this.state.MY15_IPTV_INFO} chartData={this.state.MY15_IPTV_DATA}></EchartLine>
+                        <Accordion.Panel header={`${this.state.CPV12_YEAR} 12MIS CPV`}>
+                             <EchartLine 
+                                series={this.state.CPV12_DATA}
+                                
+                            /> 
                         </Accordion.Panel>
-                        <Accordion.Panel header="MY15 12MIS CPV">
-                            <EchartLine info={this.state.MY15_IPTV_INFO} chartData={this.state.MY15_CPV_DATA}></EchartLine>
+                        <Accordion.Panel header={`${this.state.CPV24_YEAR} 24MIS CPV`}>
+                             <EchartLine 
+                                series={this.state.CPV24_DATA}
+                                
+                            /> 
                         </Accordion.Panel>
-                    </Accordion>
+                    </Accordion>  
                 </Scroller>
             </div>
         )

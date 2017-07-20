@@ -121,8 +121,9 @@ class HotIssueReviewPlan extends React.Component {
         this.setState({
             listData: listData
         });
+        this.refs.scroller.to('y', 50);
         this.refresh('down');
-        this.refs.scroller.to(40);
+        
     }
     render () {
         intl.setMsg(require('@/static/i18n').default);

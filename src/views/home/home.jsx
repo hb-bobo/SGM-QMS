@@ -64,6 +64,12 @@ class HomePage extends React.Component{
         })
       }
     }, false);
+
+    // 设置必要字段到cookie
+    var positNum = 'A3010274';
+    var empId = "P0892";
+    document.cookie = `positNum=${positNum};`;
+    document.cookie = `empId=${empId};`;
   }
   componentDidMount () {
   }
@@ -138,7 +144,7 @@ class HomePage extends React.Component{
                 </div>
               </div>
               <div className="flex-col-2">
-                <div className="icon-wrap" onClick={() => this.context.setLanguage('zh')}>
+                <div className="icon-wrap" onClick={() => this.context.setLanguage('en')}>
                   <svg className="icon info" aria-hidden="true">
                     <use xlinkHref="#icon-geren"></use>
                   </svg>

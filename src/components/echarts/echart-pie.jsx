@@ -37,8 +37,11 @@ class EchartPie extends React.Component {
         var options = Object.assign({}, this.state.option);
         
         options.title.subtext = titleSubText;
-        options.title.text = (chartData[0].value || '') + '/' + (chartData[1].value || '');
         options.color = color;
+        
+        if (chartData[0].value !== undefined && chartData[1].value !== undefined) {
+            options.title.text = (chartData[0].value || '') + '/' + (chartData[1].value || '');
+        }
         // 初始化data
         options.series[0].data = [];
         if (Array.isArray(chartData) && chartData.length) {

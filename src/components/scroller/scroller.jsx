@@ -115,16 +115,6 @@ class Scroller extends React.Component {
             // bindSelf: false,
             initialValue: 0,
             change: function (value) {
-            }, 
-            touchStart: function (ev, value) {
-                // 每次点击都重新计算scroll高度
-                min = (containerHeight - scroller.clientHeight) - 10;
-                if (min > max) {
-                    min = max;
-                }
-                this.min = min;
-            },
-            touchMove: function (ev, value) {
                 // 上拉到底了
                 if (value < (this.min - bufferVal) && Scroller.state.pullupStatus !== 'loading-start') {
                     Scroller.setState({
@@ -138,6 +128,17 @@ class Scroller extends React.Component {
                         pulldownStatus: value > triggerPulldownValue ? 'ready' : 'default'
                     });
                 }
+            }, 
+            touchStart: function (ev, value) {
+                // 每次点击都重新计算scroll高度
+                min = (containerHeight - scroller.clientHeight) - 10;
+                if (min > max) {
+                    min = max;
+                }
+                this.min = min;
+            },
+            touchMove: function (ev, value) {
+                
             },
             touchEnd: function (ev, value) {
                 // 下拉最大值了，并松开了
@@ -266,6 +267,9 @@ class Scroller extends React.Component {
         }
         if (key === 'y') {
             scrollerAt.to(value);
+            this.setState({
+                pulldownStatus: 'loading-start'
+            });
         }
     }
     render () {

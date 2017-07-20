@@ -8,7 +8,7 @@ import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
 import AppConfig from '@/AppConfig';
 import { POST } from '@/plugins/fetch';
-import getProjectQualityList from '@/static/getProjectQualityList.json';
+// import getProjectQualityList from '@/static/getProjectQualityList.json';
 
 // 当请求进行中，组件却被卸载了。跟据此变量判断是否继续
 var isMounted = true;
@@ -154,5 +154,5 @@ class NewProjectQuality extends React.Component {
         )
     }
 }
-console.log(NewProjectQuality)
+
 export default NewProjectQuality
