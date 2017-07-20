@@ -5,15 +5,14 @@ import { connect } from 'react-redux';
 import { fillListData } from '@/store/actions';
 import FlatButton from 'material-ui/FlatButton';
 // import Drawer from 'material-ui/Drawer';
-
+import mixins from '@/decorator/mixins';
+import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
 import Scroller from '@/components/scroller';
 import HotIssueEdit from './edit';
-import { POST } from '@/plugins/fetch';
-import AppConfig from '@/AppConfig';
-var isMounted = null;
+
 
 /*  //TODO //hotLevel
     1: EQR专题
@@ -31,31 +30,24 @@ var isMounted = null;
         }, dispatch)
     })
 )
+@mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
 class HotIssueApprove extends React.Component {
     static defaultProps = {
+        getListDataAPI: '/backlog/PchotIssueApprove'
     }
     static propTypes = {
+        getListDataAPI: PropTypes.string.isRequired,
         parent: PropTypes.instanceOf(React.Component).isRequired,
     }
-    a = 1;
     state = {
         hotIssueEditOpen: false,
-        listData: [],
         hotIssueEditData: {},
-        pageNumber: 1, // 第几页
-        scrollConfig: {
-            upContent: ''
-        }
     }
-    componentWillMount () {
-
-    }
-    
     componentDidMount () {
+        console.log(this)
         var {parent} = this.props;
         // var data = require('./data.json').data;
-        isMounted = true;
-        this.refresh('down');
+        this.getListData('down');
         /* Fetch API cannot load http://10.6.96.190:8090/QMS/backlog/PchotIssueApprove. The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'. Origin 'http://localhost:3000' is therefore not allowed access. */
 
         // 设置父级弹出的内容
@@ -66,95 +58,7 @@ class HotIssueApprove extends React.Component {
                 parent={this}
             />
         )
-    }
-    componentWillUnmount () {
-        isMounted = null
-    }
-    loadingMore = () => {
-    
-        if (this.state.scrollConfig.upContent === 'No More') {
-            // 上拉结束
-            this.refs.scroller.donePullup();
-            return;
-        }
-        this.refresh('up');
-        /* setTimeout(() => {
-            if (isMounted === null) {return;}
-            this.setState({
-                dataSource: getProjectQualityList.result.concat(this.state.dataSource),
-                scrollConfig: {
-                    upContent: 'No More'
-                },
-                fetchStatus: true
-            });
-            
-        }, 500); */
-    }
-    /**
-     * @param {'up' | 'down'} 上拉还是下拉
-     */
-    refresh = (action) => {
-
-        if (action === 'down') {
-            this.setState({
-                pageNumber: 1,
-                scrollConfig: {
-                    upContent: ''
-                }
-            });
-        }
-        // AppConfig.listConfig.count 每次加多少条
-        POST('/backlog/PchotIssueApprove', {
-            data: {
-                "empId": "P0892",
-                "pageSize": AppConfig.listConfig.count,
-                "pageNumber": this.state.pageNumber,
-                "positNum": 'A3010274'
-            },
-        })
-        .then((res) => {
-            if (isMounted === null) {return;}
-            
-            if (res.success === true) {
-                var listData;
-                
-                // 刷新直接赋值，加载更多要保留原来的数据
-                // 下拉结束
-                if (action === 'down') {
-                    this.refs.scroller.donePulldown();
-                    listData = res.data;
-                } else if (action === 'up') {
-                    // 上拉结束
-                    this.refs.scroller.donePullup();
-                    listData = this.state.listData.concat(res.data);
-                }
-                this.setState({
-                    listData: listData,
-                    pageNumber: this.state.pageNumber + 1,
-                });
-                if (res.data.length < AppConfig.listConfig.count) {
-                    this.setState({
-                        scrollConfig: {
-                            upContent: 'No More'
-                        }
-                    });
-                }
-            }
-            
-        });   
-        /* setTimeout(() => {
-            if (isMounted === null) {return;}
-            this.setState({
-                dataSource: getProjectQualityList.result,
-                scrollConfig: {
-                    upContent: ''
-                },
-                page: 1,
-            });
-            // 下拉结束
-            this.refs.scroller.donePulldown();
-        }, 500) */
-    }
+    }    
     // Go to Advance page
     goAdvance = (advanceType) => {
         this.props.parent.goAdvance('/search/issue-advance/' + advanceType);
@@ -193,7 +97,7 @@ class HotIssueApprove extends React.Component {
             <Scroller 
                 autoSetHeight={true}
                 onPullupLoading={this.loadingMore}
-                onPulldownLoading={() => this.refresh('down')}
+                onPulldownLoading={() => this.getListData('down')}
                 config={this.state.scrollConfig}
                 ref="scroller"
             >
