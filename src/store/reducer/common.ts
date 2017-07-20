@@ -4,24 +4,18 @@ import { Action } from '../../types';
 export default {
     state: {
         isLast: false,
-        // 所有list
-        listData: [],
-        // 可见数据(当前数据)
-        tempListData: [],
-        // 临时数据
-        tempData: {}
     },
     // 用 types 作key保证action唯一性
     mutations: {
-        /*fill list-item data, listData usually is a Array<{}>*/
+        /* 填充 fill list-item data, listData usually is a Array<{}>*/
         [types.FILL_LIST_DATA] (state: States, action: Action) {
-            state.listData = action.payload
+            var payload = action.payload;
+            state[payload.name + 'listData'] = payload.listData;
         },
+        /* 更新(push) */
         [types.UP_TEMPE_DATA] (state: States, action: Action) {
-            state.tempData = action.payload
-        },
-        [types.UP_WORK_PLAN_LIST_DATA] (state: States, action: Action) {
-            console.log(action)
+            var payload = action.payload;
+            state[payload.name + 'listData'] = payload.listData;
         }
     }
 }
