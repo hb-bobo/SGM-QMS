@@ -15,7 +15,7 @@ import intl from '@/components/intl';
 @mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
 class NewProjectQuality extends React.Component {
     static defaultProps = {
-        getListDataAPI: '/backlog/PcpromptNoticeApporve',	
+        getListDataAPI: '/ProjectQuality/mGetNewProjectList',	
     }
     static propTypes = {
         getListDataAPI: PropTypes.string.isRequired
@@ -40,7 +40,7 @@ class NewProjectQuality extends React.Component {
         this.context.router.history.push('/project/verification')
     } 
     render () {
-        var { listData } = this.state;
+        var { listData } = this.state;console.log(this.state)
         intl.setMsg(require('./locale'));
         var { lang } = this.context;
         // timingName的样式，中英文差距大
