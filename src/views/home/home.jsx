@@ -26,7 +26,6 @@ class HomePage extends React.Component{
     showMore: false
   }
   componentWillMount () {
-    console.log(this)
     var Home = this;
     this.$store.dispatch(getListData({
       a:1

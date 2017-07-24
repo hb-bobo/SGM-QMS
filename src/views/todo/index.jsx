@@ -1,4 +1,11 @@
 import * as React from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { 
+    upTempData,
+    clearTempData
+} from '@/store/actions';
+
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
@@ -11,7 +18,17 @@ import WarningReview from './warningApprove';
 
 import intl from '@/components/intl';
 
-
+@connect(
+    // mapStateToProps
+    (state) => ({tempData: state.common.tempData}),
+    // buildActionDispatcher
+    (dispatch, ownProps) => ({
+        actions: bindActionCreators({
+            upTempData,
+            clearTempData
+        }, dispatch)
+    })
+)
 class Todo extends React.Component {
     state = {
         title: intl.get('QMS.todo'),

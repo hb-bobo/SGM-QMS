@@ -1,18 +1,23 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { fillListData } from '@/store/actions';
+
+// import { bindActionCreators } from 'redux';
+// import { connect } from 'react-redux';
+// import { fillListData } from '@/store/actions';
+
+import mixins from '@/decorator/mixins';
+import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
+
 import FlatButton from 'material-ui/FlatButton';
 
 import Scroller from '@/components/scroller';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-import { POST } from '@/plugins/fetch';
-import AppConfig from '@/AppConfig';
+// import { POST } from '@/plugins/fetch';
+// import AppConfig from '@/AppConfig';
 
-var isMounted = null;
+
 //TODO 上升级别
 /*  
     0: 工程师
@@ -20,129 +25,35 @@ var isMounted = null;
     2： 高级经理
     3： 总监
 */
-@connect(
-    // mapStateToProps
-    (state) => ({listData: state.common.listData}),
-    // buildActionDispatcher
-    (dispatch, ownProps) => ({
-        actions: bindActionCreators({
-            fillListData,
-        }, dispatch)
-    })
-)
+// @connect(
+//     // mapStateToProps
+//     (state) => ({listData: state.common.listData}),
+//     // buildActionDispatcher
+//     (dispatch, ownProps) => ({
+//         actions: bindActionCreators({
+//             fillListData,
+//         }, dispatch)
+//     })
+// )
+@mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
 class WarningApprove extends React.Component {
     static defaultProps = {
-        listData: []
+        getListDataAPI: '/toDo/mPromptNoticeApporve'
     }
     static propTypes = {
-        listData: PropTypes.array,
+        getListDataAPI: PropTypes.string.isRequired,
         goAdvance: PropTypes.func.isRequired
     }
     state = {
-        listData: [],
-        pageNumber: 1, // 第几页
-        scrollConfig: {
-            upContent: ''
-        }
     }
 
     componentDidMount () {
-        isMounted = true;
         // var listData = [{prblmNo:"222",problemDesc:"222",state:"W",promotion:1,problemSevertiy:1,stockDay:11,projectName:"222",name:"222",crntPhase:"222"},
         //                 {prblmNo:"111",problemDesc:"111",state:"G",promotion:2,problemSevertiy:2,stockDay:22,projectName:"111",name:"111",crntPhase:"111"}]
         this.setState({
             title: intl.get('Detail')
         });
-        this.refresh('down');
-    }
-    componentWillUnmount () {
-        isMounted = null
-    }
-    loadingMore = () => {
-    
-        if (this.state.scrollConfig.upContent === 'No More') {
-            // 上拉结束
-            this.refs.scroller.donePullup();
-            return;
-        }
-        this.refresh('up');
-        /* setTimeout(() => {
-            if (isMounted === null) {return;}
-            this.setState({
-                dataSource: getProjectQualityList.result.concat(this.state.dataSource),
-                scrollConfig: {
-                    upContent: 'No More'
-                },
-                fetchStatus: true
-            });
-            
-        }, 500); */
-    }
-    /**
-     * @param {'up' | 'down'} 上拉还是下拉
-     */
-    refresh = (action) => {
-        if (action === 'down') {
-            this.setState({
-                pageNumber: 1,
-                scrollConfig: {
-                    upContent: ''
-                }
-            });
-        }
-        // AppConfig.listConfig.count 每次加多少条
-        POST('/backlog/PcpromptNoticeApporve', {
-            data: {
-                "empId": "P0892",
-                "pageSize": AppConfig.listConfig.count,
-                "pageNumber": this.state.pageNumber,
-                "positNum": 'A3010274'
-            },
-        })
-        .then((res) => {
-            if (isMounted === null) {return;}
-            
-            if (res.success === true) {
-                var listData;
-                console.log(action)
-                // 刷新直接赋值，加载更多要保留原来的数据
-                // 下拉结束
-                if (action === 'down') {
-                    
-                    this.refs.scroller.donePulldown();
-                    listData = res.data;
-                } else if (action === 'up') {
-                    // 上拉结束
-                    this.refs.scroller.donePullup();
-                    listData = this.state.listData.concat(res.data);
-                }
-                 console.log(listData)
-                this.setState({
-                    listData: listData,
-                    pageNumber: this.state.pageNumber + 1,
-                });
-                if (res.data.length < AppConfig.listConfig.count) {
-                    this.setState({
-                        scrollConfig: {
-                            upContent: 'No More'
-                        }
-                    });
-                }
-            }
-            
-        });   
-        /* setTimeout(() => {
-            if (isMounted === null) {return;}
-            this.setState({
-                dataSource: getProjectQualityList.result,
-                scrollConfig: {
-                    upContent: ''
-                },
-                page: 1,
-            });
-            // 下拉结束
-            this.refs.scroller.donePulldown();
-        }, 500) */
+        this.getListData('down');
     }
     // Go to Advance page
     goAdvance = (advanceType) => {
@@ -163,12 +74,11 @@ class WarningApprove extends React.Component {
     render () {
         var { listData } = this.state;
         intl.setMsg(require('@/static/i18n').default,require('./locale'));
-        console.log(listData)
         return (
             <Scroller
                 autoSetHeight={true}
-                onPullupLoading={this.loadingMore}
-                onPulldownLoading={() => this.refresh('down')}
+                onPullupLoading={() => this.loadingMore()}
+                onPulldownLoading={() => this.getListData('down')}
                 config={this.state.scrollConfig}
                 ref="scroller"
             >

@@ -1,6 +1,8 @@
 import * as React from 'react';
 import EchartLine from '@/components/echarts/echart-line';
 import { Accordion } from 'antd-mobile';
+
+/* 质量月报->过程指标 */
 class ProcessIndex extends React.Component {
     state = {
         chartData: {}

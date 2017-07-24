@@ -46,14 +46,16 @@ class HDate extends React.Component {
             this.setState({
                 controllable: true
             });
-        } else {
+        }
+    }
+    componentWillReceiveProps (nextProps) {
+         if (!this.state.controllable) {
             // 不可控用defaultValue
             this.setState({
-                value: this.props.defaultValue
+                value: nextProps.defaultValue
             });
         }
     }
-
     handleChange = (e) => {
         var value = e.target.value;
         var showClear = false;

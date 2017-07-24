@@ -30,16 +30,19 @@ class HInput extends React.Component {
         controllable: false
     }
 
-    componentWillMount () {
+    componentDidMount () {
         // 这代表可控
         if (this.props.onChange !== undefined && this.props.value !== undefined) {
             this.setState({
                 controllable: true
             });
-        } else {
+        }
+    }
+    componentWillReceiveProps (nextProps) {
+         if (!this.state.controllable) {
             // 不可控用defaultValue
             this.setState({
-                value: this.props.defaultValue
+                value: nextProps.defaultValue
             });
         }
     }
@@ -81,7 +84,7 @@ class HInput extends React.Component {
             value,
             disabled
         } = this.props;
-        // uncontrollable use defaultValu,  defaultValu set in componentWillMount()
+        // uncontrollable use defaultValu,  defaultValue set in componentWillMount()
         if (!this.state.controllable) {
             value = this.state.value;
         }

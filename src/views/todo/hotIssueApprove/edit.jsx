@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-// import store from '@/store';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import pathToJSON from '@/utils/object/pathToJSON';
@@ -23,31 +22,16 @@ class HotIssueEdit extends React.Component {
     }
     
     state = {
-        planDesc: '',
-        planFinishDate: '',
-        prblmId: '',
-        prblmPhaseID: '',
-        rspnsUser: '',
-        workPlanID: '',
-        workPlanStatus: ''
+        reviewTime: ''
     }
     componentWillMount () {
         this.parent = this.props.parent;
+        // 绑定store响应
+        this.$store.subscribe(() => {
+            this.setState(this.$store.getState().common.tempData);
+        });
     }
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.action === 'add') {
-            this.setState({
-                planDesc: '',
-                planFinishDate: '',
-                prblmId: '',
-                prblmPhaseID: '',
-                rspnsUser: '',
-                workPlanID: '',
-                workPlanStatus: ''
-            });
-        }
-        this.setState(nextProps.data);
-    }
+
     submit = () => {
         /*this.parent.props.actions.upWorkPlanListData({
             action: this.props.action,
@@ -71,7 +55,7 @@ class HotIssueEdit extends React.Component {
         }
     }
     render() {
-        // var { data } = this.props;
+        var data = this.state;
         return (
             <Scroller autoSetHeight={true} bounce={false}>
                 <div className="hot-up-form">
@@ -81,11 +65,9 @@ class HotIssueEdit extends React.Component {
                         </div>
                         <div className="flex-col-7">
                             <HInput
-                                clear
                                 type="text"
                                 disabled
-                                value={this.state.prblmId}
-                                onChange={this.bind('prblmId')}
+                                defaultValue={data.prblmNo}
                             >
                             </HInput>
                         </div>
@@ -96,11 +78,9 @@ class HotIssueEdit extends React.Component {
                         </div>
                         <div className="flex-col-7">
                             <HTextarea
-                                clear
                                 type="text"
                                 disabled
-                                value={this.state.planDesc}
-                                onChange={this.bind('planDesc')}
+                                defaultValue={data.problemDesc}
                             >
                             </HTextarea>
                         </div>
@@ -111,11 +91,9 @@ class HotIssueEdit extends React.Component {
                         </div>
                         <div className="flex-col-7">
                             <HInput
-                                clear
                                 type="text"
                                 disabled
-                                value={this.state.workPlanStatus}
-                                onChange={this.bind('workPlanStatus')}
+                                defaultValue={data.state}
                             >
                             </HInput>
                         </div>
@@ -126,11 +104,9 @@ class HotIssueEdit extends React.Component {
                         </div>
                         <div className="flex-col-7">
                             <HInput
-                                clear
                                 type="text"
                                 disabled
-                                value={this.state.rspnsUser}
-                                onChange={this.bind('rspnsUser')}
+                                defaultValue={data.hotLevel}
                             >
                             </HInput>
                         </div>
@@ -143,8 +119,8 @@ class HotIssueEdit extends React.Component {
                             <HDate
                                 clear
                                 type="date"
-                                value={this.state.planFinishDate}
-                                onChange={this.bind('planFinishDate')}
+                                value={data.reviewTime}
+                                onChange={this.bind('reviewTime')}
                             >
                             </HDate>
                         </div>
@@ -155,11 +131,9 @@ class HotIssueEdit extends React.Component {
                         </div>
                         <div className="flex-col-7">
                             <HInput
-                                clear
                                 type="text"
                                 disabled
-                                value={this.state.planFinishDate}
-                                onChange={this.bind('planFinishDate')}
+                                defaultValue={data.stockDay}
                             >
                             </HInput>
                         </div>
@@ -170,11 +144,9 @@ class HotIssueEdit extends React.Component {
                         </div>
                         <div className="flex-col-7">
                             <HInput
-                                clear
                                 type="text"
                                 disabled
-                                value={this.state.xx}
-                                onChange={this.bind('xx')}
+                                defaultValue={data.pspnsUser}
                             >
                             </HInput>
                         </div>
@@ -188,8 +160,7 @@ class HotIssueEdit extends React.Component {
                                 clear
                                 type="text"
                                 disabled
-                                value={this.state.xx}
-                                onChange={this.bind('xx')}
+                                defaultValue={data.projectName}
                             >
                             </HInput>
                         </div>
@@ -200,11 +171,9 @@ class HotIssueEdit extends React.Component {
                         </div>
                         <div className="flex-col-7">
                             <HInput
-                                clear
                                 type="text"
                                 disabled
-                                value={this.state.xx}
-                                onChange={this.bind('xx')}
+                                defaultValue={data.pspnsDept}
                             >
                             </HInput>
                         </div>
@@ -215,11 +184,9 @@ class HotIssueEdit extends React.Component {
                         </div>
                         <div className="flex-col-7">
                             <HInput
-                                clear
                                 type="text"
                                 disabled
-                                value={this.state.xx}
-                                onChange={this.bind('xx')}
+                                defaultValue={data.problemSevertiy}
                             >
                             </HInput>
                         </div>
@@ -230,11 +197,9 @@ class HotIssueEdit extends React.Component {
                         </div>
                         <div className="flex-col-7">
                             <HInput
-                                clear
                                 type="text"
                                 disabled
-                                value={this.state.xx}
-                                onChange={this.bind('xx')}
+                                defaultValue={data.crntPhase}
                             >
                             </HInput>
                         </div>
@@ -245,11 +210,9 @@ class HotIssueEdit extends React.Component {
                         </div>
                         <div className="flex-col-7">
                             <HInput
-                                clear
                                 type="text"
                                 disabled
-                                value={this.state.xx}
-                                onChange={this.bind('xx')}
+                                defaultValue={data.upgradeReason}
                             >
                             </HInput>
                         </div>

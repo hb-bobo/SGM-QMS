@@ -1,30 +1,18 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 // import AppConfig from '@/AppConfig';
-import { RouteWithSubRoutes } from '@/router';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+// import { RouteWithSubRoutes } from '@/router';
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import AssistDetails from './details';
 import intl from '@/components/intl';
-// import goBack from '@/mixin/goBack';
-// import mixins from '@/mixins/mixins';
 
+/*EQR热点评审 */
 
-/*project->overview项目质量总览 */
-@connect(
-    // mapStateToProps
-    (state) => (state.common),
-    // buildActionDispatcher
-    (dispatch, ownProps) => ({
-        actions: bindActionCreators({
-        }, dispatch)
-    })
-)
-// @mixins([goBack])
 class Overview extends React.Component {
     state = {
         title: '',
@@ -36,13 +24,10 @@ class Overview extends React.Component {
         plugins: PropTypes.object,
         store: PropTypes.object
     }
+    state = {
+        
+    }
     componentDidMount ()　{
-        var listData = [{sourcePrblmNo:"222",prblmDesc:"222",prjctName:"222",crntRspnsUser:"222",prblmSeverity:1,crntRspnsDept:"222",crntPhase:"222"}]
-
-        this.setState({
-            title: intl.get('QMS.project/overview'),
-            listData: listData
-        });
     }
     /*back*/
     goBack = () => {

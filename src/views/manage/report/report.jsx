@@ -8,6 +8,8 @@ import ResultIndex from './result-index/result-index';
 import ProcessIndex from './process-index/process-index';
 import Scroller from '@/components/scroller';
 import intl from '@/components/intl';
+
+/* 质量月报 */
 class QualityMonthReport extends React.Component {
     state = {
         title: intl.get('QMS.manage/report'),

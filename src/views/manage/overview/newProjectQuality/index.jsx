@@ -1,104 +1,37 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import mixins from '@/decorator/mixins';
+import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
 import Scroller from '@/components/scroller';
 import ProjectProgress from '@/components/project-progress';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-import AppConfig from '@/AppConfig';
-import { POST } from '@/plugins/fetch';
-// import getProjectQualityList from '@/static/getProjectQualityList.json';
-
-// 当请求进行中，组件却被卸载了。跟据此变量判断是否继续
-var isMounted = true;
+// import AppConfig from '@/AppConfig';
+// import { POST } from '@/plugins/fetch';
 
 /*新项目质量总览*/
-
+@mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
 class NewProjectQuality extends React.Component {
-    static contextTypes = {		
+    static defaultProps = {
+        getListDataAPI: '/backlog/PcpromptNoticeApporve',	
+    }
+    static propTypes = {
+        getListDataAPI: PropTypes.string.isRequired
+    }
+    static contextTypes = {	
         router: PropTypes.object,
         language: PropTypes.string	
     }
+    
     state = {
-        listData: [],
-        scrollConfig: {
-            upContent: ''
-        },
-        pageNumber: 1,
     }
     componentDidMount () {
         // this.props.actions.fillListData(getProjectQualityList.result)
-        this.refresh('down');
-        isMounted = true;
+        this.getListData('down');
     }
-    componentWillUnmount () {
-        isMounted = null
-    }
-    loadingMore = () => {
-    
-        if (this.state.scrollConfig.upContent === 'No More') {
-            // 上拉结束
-            this.refs.scroller.donePullup();
-            return;
-        }
-        this.refresh('up');
-    }
-    /**
-     * @param {'up' | 'down'} 上拉还是下拉
-     */
-    refresh = (action) => {
-        
-        if (action === 'down') {
-            this.setState({
-                pageNumber: 1,
-                scrollConfig: {
-                    upContent: ''
-                }
-            });
-        }
-        // AppConfig.listConfig.count 每次加多少条
-        POST('/newProjectQuality/PchotIssueNotice', {
-            data: {
-                "empId": "P0892",
-                "pageSize": AppConfig.listConfig.count,
-                "pageNumber": this.state.pageNumber,
-                "positNum": 'A3010274'
-            },
-        })
-        .then((res) => {
-            if (isMounted === null) {return;}
-            
-            if (res.success === true) {
-                var listData;
-                
-                // 刷新直接赋值，加载更多要保留原来的数据
-                // 下拉结束
-                if (action === 'down') {
-                    this.refs.scroller.donePulldown();
-                    listData = res.data;
-                } else if (action === 'up') {
-                    // 上拉结束
-                    console.log('上啦结束')
-                    this.refs.scroller.donePullup();
-                    listData = this.state.listData.concat(res.data);
-                }
-                this.setState({
-                    listData: listData,
-                    pageNumber: this.state.pageNumber + 1,
-                });
-                // 最后的数据
-                if (res.data.length < AppConfig.listConfig.count) {
-                    this.setState({
-                        scrollConfig: {
-                            upContent: 'No More'
-                        }
-                    });
-                }
-            }
-            
-        });
-    }
+
     /**
      * go 项目质量验证总览, 目前是只有热点问题
      * path = /project/verification
@@ -115,8 +48,8 @@ class NewProjectQuality extends React.Component {
         return (
             <Scroller
                 autoSetHeight={true}
-                onPullupLoading={this.loadingMore}
-                onPulldownLoading={() => this.refresh('down')}
+                onPullupLoading={() => this.loadingMore()}
+                onPulldownLoading={() => this.getListData('down')}
                 config={this.state.scrollConfig}
                 ref="scroller"
             >

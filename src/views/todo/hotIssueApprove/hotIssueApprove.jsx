@@ -1,12 +1,20 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { fillListData } from '@/store/actions';
+// import { bindActionCreators } from 'redux';
+// import { connect } from 'react-redux';
+import { 
+    upTempData,
+    clearTempData
+} from '@/store/actions';
 import FlatButton from 'material-ui/FlatButton';
 // import Drawer from 'material-ui/Drawer';
 import mixins from '@/decorator/mixins';
-import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
+import {
+    componentWillMount,
+    componentWillUnmount,
+    getListData,
+    loadingMore
+} from '@/mixins/';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
@@ -20,20 +28,21 @@ import HotIssueEdit from './edit';
     3: 项目热点
     4：售后EQR专题
     */
-@connect(
-    // mapStateToProps
-    (state) => ({listData: state.common.listData}),
-    // buildActionDispatcher
-    (dispatch, ownProps) => ({
-        actions: bindActionCreators({
-            fillListData,
-        }, dispatch)
-    })
-)
+// @connect(
+//     // mapStateToProps
+//     (state) => ({tempData: state.common.tempData}),
+//     // buildActionDispatcher
+//     (dispatch, ownProps) => ({
+//         actions: bindActionCreators({
+//             upTempData,
+//             clearTempData
+//         }, dispatch)
+//     })
+// )
 @mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
 class HotIssueApprove extends React.Component {
     static defaultProps = {
-        getListDataAPI: '/backlog/PchotIssueApprove'
+        getListDataAPI: '/toDo/mHotIssueApprove'
     }
     static propTypes = {
         getListDataAPI: PropTypes.string.isRequired,
@@ -44,7 +53,6 @@ class HotIssueApprove extends React.Component {
         hotIssueEditData: {},
     }
     componentDidMount () {
-        console.log(this)
         var {parent} = this.props;
         // var data = require('./data.json').data;
         this.getListData('down');
@@ -53,20 +61,23 @@ class HotIssueApprove extends React.Component {
         // 设置父级弹出的内容
         parent.setDrawerChildren(
             <HotIssueEdit 
-                data={this.state.hotIssueEditData}
+                data={this.$store.getState().common.tempData}
                 tabValue={parent.tabValue}
                 parent={this}
             />
         )
-    }    
+    }
+    componentWillUnmount () {
+        this.$store.dispatch(clearTempData()); 
+    }
     // Go to Advance page
     goAdvance = (advanceType) => {
         this.props.parent.goAdvance('/search/issue-advance/' + advanceType);
     }
     // edit review time
     edit (data) {
+        this.$store.dispatch(upTempData(data));
         this.setState({
-            hotIssueEditData: data,
             hotIssueEditOpen: true,
             title: intl.get('QMS.ReviewTime'),
             isIndex: false
@@ -90,13 +101,12 @@ class HotIssueApprove extends React.Component {
     }
     render () {
         var { listData } = this.state;
-        console.log(listData)
         // intl.setMsg(require('./locale').default);
 
         return (
             <Scroller 
                 autoSetHeight={true}
-                onPullupLoading={this.loadingMore}
+                onPullupLoading={() => this.loadingMore()}
                 onPulldownLoading={() => this.getListData('down')}
                 config={this.state.scrollConfig}
                 ref="scroller"
@@ -118,7 +128,7 @@ class HotIssueApprove extends React.Component {
                                                 </span>
                                             </div>
                                             <div style={{marginTop: '0.6em'}}>
-                                            {/*TODO 放 问题标题 ?  <span className="left">
+                                            {/*放 问题标题 ?  <span className="left">
                                                     {intl.get('QMS.WorkingPlanDescription')}:
                                                 </span> */}
                                                 <span className="right">

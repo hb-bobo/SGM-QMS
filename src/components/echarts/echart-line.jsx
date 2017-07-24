@@ -18,23 +18,7 @@ class EchartLine extends React.Component {
         legendData: ['目标值','实际值'],
         showLegend: true,
         color: ['#EC2121', '#4e7fac'], // line color
-        series: [
-            {
-                name: "目标值",
-                type: "line",
-                data: []
-            },
-            {
-                name: "实际值",
-                type: "line",
-                label: {
-                    normal: {
-                        show: true
-                    }
-                },
-                data: []
-            }
-        ],
+        series: [],
     }
     static propTypes = {
         style: PropTypes.object,
@@ -60,7 +44,6 @@ class EchartLine extends React.Component {
             legendData,
             showLegend,
             color,
-
         } = this.props;
         // set chart opts, 一般这里的值只用初始化设置一次
         options.yAxis[0].axisLabel.formatter = yFormat;
@@ -107,11 +90,12 @@ class EchartLine extends React.Component {
         var {
             series
         } = this.props;
-        if (series.length === 0) {
-            return false;
-        }
+        
         // 这是需从后台拿的值，取数据后一般就是改 series
-        options.series = series;
+        if (series.length !== 0) {
+            options.series = series;
+        }
+
         return (
             <div>
                 <ReactEchartsCore

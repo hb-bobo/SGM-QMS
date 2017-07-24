@@ -1,12 +1,14 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import mixins from '@/decorator/mixins';
+import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
 import Scroller from '@/components/scroller';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-import { POST } from '@/plugins/fetch';
-import AppConfig from '@/AppConfig';
+// import { POST } from '@/plugins/fetch';
+// import AppConfig from '@/AppConfig';
 
 /*  //TODO //hotLevel  评审级别
     1: EQR专题
@@ -14,90 +16,19 @@ import AppConfig from '@/AppConfig';
     3: 项目热点
     4：售后EQR专题
     */
-var isMounted = null;
+@mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
 class HotIssueNotice extends React.Component {
     static defaultProps = {
+        getListDataAPI: '/notice/mHotIssueNotice'
     }
     static propTypes = {
+        getListDataAPI: PropTypes.string.isRequired,
         goAdvance: PropTypes.func.isRequired
     }
     state = {
-        listData: [],
-        pageNumber: 1, // 第几页
-        scrollConfig: {
-            upContent: ''
-        }
     }
     componentDidMount () {
-        isMounted = true;
-        this.refresh('down');
-    }
-    componentWillUnmount () {
-        isMounted = null
-    }
-    loadingMore = () => {
-    
-        if (this.state.scrollConfig.upContent === 'No More') {
-            // 上拉结束
-            this.refs.scroller.donePullup();
-            return;
-        }
-        this.refresh('up');
-    }
-    /**
-     * @param {'up' | 'down'} 上拉还是下拉
-     */
-    refresh = (action) => {
-        
-        if (action === 'down') {
-            this.setState({
-                pageNumber: 1,
-                scrollConfig: {
-                    upContent: ''
-                }
-            });
-        }
-        // AppConfig.listConfig.count 每次加多少条
-        POST('/backlog/PchotIssueNotice', {
-            data: {
-                "empId": "P0892",
-                "pageSize": AppConfig.listConfig.count,
-                "pageNumber": this.state.pageNumber,
-                "positNum": 'A3010274'
-            },
-        })
-        .then((res) => {
-            if (isMounted === null) {return;}
-            
-            if (res.success === true) {
-                var listData;
-                
-                // 刷新直接赋值，加载更多要保留原来的数据
-                // 下拉结束
-                if (action === 'down') {
-                    this.refs.scroller.donePulldown();
-                    listData = res.data;
-                } else if (action === 'up') {
-                    // 上拉结束
-                    console.log('上啦结束')
-                    this.refs.scroller.donePullup();
-                    listData = this.state.listData.concat(res.data);
-                }
-                this.setState({
-                    listData: listData,
-                    pageNumber: this.state.pageNumber + 1,
-                });
-                // 最后的数据
-                if (res.data.length < AppConfig.listConfig.count) {
-                    this.setState({
-                        scrollConfig: {
-                            upContent: 'No More'
-                        }
-                    });
-                }
-            }
-            
-        });
+        this.getListData('down');
     }
     render () {
         intl.setMsg(require('@/static/i18n').default);
@@ -107,8 +38,8 @@ class HotIssueNotice extends React.Component {
             <div>
                 <Scroller 
                     autoSetHeight={true}
-                    onPullupLoading={this.loadingMore}
-                    onPulldownLoading={() => this.refresh('down')}
+                    onPullupLoading={() => this.loadingMore()}
+                    onPulldownLoading={() => this.getListData('down')}
                     config={this.state.scrollConfig}
                     ref="scroller"
                 >

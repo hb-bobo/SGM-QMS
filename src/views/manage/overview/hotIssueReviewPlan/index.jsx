@@ -1,17 +1,17 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
+import mixins from '@/decorator/mixins';
+import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
 import Scroller from '@/components/scroller';
 import HDate from '@/components/form/h-date';
 import pathToJSON from '@/utils/object/pathToJSON';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-import AppConfig from '@/AppConfig';
-import { POST } from '@/plugins/fetch';
 import dateFormat from '@/utils/format/dateFormat';
-
-var isMounted = null;
+// import AppConfig from '@/AppConfig';
+// import { POST } from '@/plugins/fetch';
 
 /* currentStatus 是中文
     白 W
@@ -21,93 +21,27 @@ var isMounted = null;
     黑 B
 */
 /*质量评审计划*/
+@mixins(
+    componentWillMount,
+    componentWillUnmount,
+    getListData,
+    loadingMore
+)
 class HotIssueReviewPlan extends React.Component {
     static defaultProps = {
+        getListDataAPI: '/ProjectQuality/mQueryCompanyQuailtyList'
     }
     static propTypes = {
+        getListDataAPI: PropTypes.string.isRequired,
     }
     static contextTypes = {		
         store: PropTypes.object
     }
     state = {
-        time: dateFormat(),
-        listData: [],
-        scrollConfig: {
-            upContent: ''
-        },
-        pageNumber: 1,
+        time: dateFormat()
     }
     componentDidMount () {
-        isMounted = true;
-        this.refresh('down');
-    }
-    componentWillUnmount () {
-        isMounted = null
-    }
-    loadingMore = () => {
-    
-        if (this.state.scrollConfig.upContent === 'No More') {
-            // 上拉结束
-            this.refs.scroller.donePullup();
-            return;
-        }
-        this.refresh('up');
-    }
-    /**
-     * @param {'up' | 'down'} 上拉还是下拉
-     */
-    refresh = (action) => {
-        
-        if (action === 'down') {
-            this.setState({
-                pageNumber: 1,
-                scrollConfig: {
-                    upContent: ''
-                }
-            });
-        }
-        // AppConfig.listConfig.count 每次加多少条
-        POST('/newProjectQuality/pcqueryCompanyQuailtyList', {
-            data: {
-                "empId": "P0892",
-                "pageSize": AppConfig.listConfig.count,
-                "pageNumber": this.state.pageNumber,
-                "positNum": 'A3010274',
-                "time" : this.state.time
-            },
-        })
-        .then((res) => {
-            if (isMounted === null) {return;}
-            
-            if (res.success === true) {
-                var listData;
-                
-                // 刷新直接赋值，加载更多要保留原来的数据
-                // 下拉结束
-                if (action === 'down') {
-                    this.refs.scroller.donePulldown();
-                    listData = res.data;
-                } else if (action === 'up') {
-                    // 上拉结束
-                    console.log('上啦结束')
-                    this.refs.scroller.donePullup();
-                    listData = this.state.listData.concat(res.data);
-                }
-                this.setState({
-                    listData: listData,
-                    pageNumber: this.state.pageNumber + 1,
-                });
-                // 最后的数据
-                if (res.data.length < AppConfig.listConfig.count) {
-                    this.setState({
-                        scrollConfig: {
-                            upContent: 'No More'
-                        }
-                    });
-                }
-            }
-            
-        });
+        this.getListData('down', ['time']);
     }
     bind = (key) => {
         return (e) => {
@@ -122,7 +56,7 @@ class HotIssueReviewPlan extends React.Component {
             listData: listData
         });
         this.refs.scroller.to('y', 50);
-        this.refresh('down');
+        this.getListData('down', ['time']);
         
     }
     render () {
@@ -151,8 +85,8 @@ class HotIssueReviewPlan extends React.Component {
 
                 <Scroller 
                     autoSetHeight={true}
-                    onPullupLoading={this.loadingMore}
-                    onPulldownLoading={() => this.refresh('down')}
+                    onPullupLoading={() => this.loadingMore()}
+                    onPulldownLoading={() => this.getListData('down', ['time'])}
                     config={this.state.scrollConfig}
                     ref="scroller"
                 >

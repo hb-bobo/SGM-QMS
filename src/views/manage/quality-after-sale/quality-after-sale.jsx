@@ -11,6 +11,7 @@ import EchartLine from '@/components/echarts/echart-line';
 import Scroller from '@/components/scroller';
 import intl from '@/components/intl';
 import { GET } from '@/plugins/fetch';
+
 /*售后质量*/
 
 class QualityAfterSaleReport extends React.Component {
@@ -46,7 +47,7 @@ class QualityAfterSaleReport extends React.Component {
 
         
         //pie图  {"count":5,"spillKpi":"11","success":true}
-        /* GET('/newProjectQuality/pcgetSpillCount')
+         GET('/ProjectQuality/mGetSpillCount')
         .then((res) => {
             if (res.success === true) {
                 // 
@@ -54,10 +55,10 @@ class QualityAfterSaleReport extends React.Component {
                     pieData: [{value: res.count},{value: res.spillKpi}],
                 });
             }
-        }); */
+        }); 
         
         /*仪表盘左 {"queryTwoCount":20,"queryCount":38,"queryOneCount":14,"success":true}*/
-        GET('/newProjectQuality/pcqueryCount')
+        GET('/ProjectQuality/mQueryCount')
         .then((res) => {
             if (res.success === true) {
                 this.setState({
@@ -68,7 +69,7 @@ class QualityAfterSaleReport extends React.Component {
         });
 
         /* 4个线图 */
-        GET('/newProjectQuality/pcqueryTarget')
+        GET('/ProjectQuality/mQueryTarget')
         .then((res) => {
             if (res.success === true) {
                 var data = res.data;
@@ -100,7 +101,7 @@ class QualityAfterSaleReport extends React.Component {
         /* 区域线图 */
         // var data = {"problemHotCount":2,"totalCount":[{"TOTALCOUNT":3,"HOTCOUNT":2,"MONTH":1},{"TOTALCOUNT":5,"HOTCOUNT":1,"MONTH":2},{"TOTALCOUNT":7,"HOTCOUNT":0,"MONTH":3},{"TOTALCOUNT":11,"HOTCOUNT":1,"MONTH":5},{"TOTALCOUNT":12,"HOTCOUNT":1,"MONTH":6}],"problemTotalCount":14,"success":true}
 
-        GET('/newProjectQuality/mGetAftersaleProblemList')
+        GET('/ProjectQuality/mGetAftersaleProblemList')
         .then((res) => {
             if (res.success === true) {
                 this.setState({
@@ -108,96 +109,7 @@ class QualityAfterSaleReport extends React.Component {
                 });
             }
         });
-        /**
-         * 处理line chart 数据
-         * @param {array}
-         * @return {array} series
-         */
-        var handleLineData = function (resData) {
-            var LineSeries = [
-                {
-                    name: "目标值",
-                    type: "line",
-                    data: []
-                },
-                {
-                    name: "实际值",
-                    type: "line",
-                    label: {
-                        normal: {
-                            show: true
-                        }
-                    },
-                    data: []
-                }
-            ];
-            // 目标值都是一样，取target
-            if (resData[0] !== undefined) {
-                var item = resData[0];
-                for (let i = 0; i < 12; i++) {
-                    LineSeries[0].data.push(item.target)
-                }
-            }
-            // 先把12个月填控
-            for (let i = 0; i < 12; i++) {
-                LineSeries[1].data.push('')
-            }
-            Array.isArray(resData) && resData.forEach(function (item, i) {
-                //把month可能只有一个
-                LineSeries[1].data[item.month - 1] = item.actual
-            });
-            return LineSeries;
-        }
-        /**
-         * 处理区域线图 数据
-         * @param {array}
-         * @return {array} series
-         */
-        var handleAreaLineData = function (resData) {
-            var linStyle = {
-                normal: {
-                    opacity: 0
-                }
-            }
-            var LineSeries = [
-                {
-                    name: "Hot Issues",
-                    type: "line",
-                    stack: '总量',
-                    areaStyle: {
-                        normal: {
-                            color: 'rgb(219, 40, 36)'
-                        }
-                    },
-                    lineStyle: linStyle,
-                    data: []
-                },
-                {
-                    name: "Open Issues",
-                    type: "line",
-                    stack: '总量',
-                    areaStyle: {
-                        normal: {
-                            color: 'yellow'
-                        }
-                    },
-                    lineStyle: linStyle,
-                    data: []
-                }
-            ];
-            // 先把12个月填控
-            for (let i = 0; i < 12; i++) {
-                LineSeries[0].data.push('');
-                LineSeries[1].data.push('');
-            }
-            Array.isArray(resData) && resData.forEach(function (item, i) {
-                //把month可能只有一个，且分开
-                var month = item.MONTH - 1;
-                LineSeries[0].data[month] = item.HOTCOUNT
-                LineSeries[1].data[month] = item.TOTALCOUNT
-            });
-            return LineSeries;
-        }
+        
         /* setTimeout(() => {
             var data = require('./data.json').data;
             this.setState({
@@ -274,7 +186,6 @@ class QualityAfterSaleReport extends React.Component {
                         <Accordion.Panel header={`${this.state.IPTV12_YEAR} 12MIS IPTV`}>
                             <EchartLine
                                 series={this.state.IPTV12_DATA}
-                                
                             />
                         </Accordion.Panel>
                         <Accordion.Panel header={`${this.state.IPTV24_YEAR} 24MIS IPTV`}>
@@ -303,4 +214,94 @@ class QualityAfterSaleReport extends React.Component {
     
 }
 
+/**
+ * 处理line chart 数据
+ * @param {array}
+ * @return {array} series
+ */
+var handleLineData = function (resData) {
+    var LineSeries = [
+        {
+            name: "目标值",
+            type: "line",
+            data: []
+        },
+        {
+            name: "实际值",
+            type: "line",
+            label: {
+                normal: {
+                    show: true
+                }
+            },
+            data: []
+        }
+    ];
+    // 目标值都是一样，取target
+    if (resData[0] !== undefined) {
+        var item = resData[0];
+        for (let i = 0; i < 12; i++) {
+            LineSeries[0].data.push(item.target)
+        }
+    }
+    // 先把12个月填控
+    for (let i = 0; i < 12; i++) {
+        LineSeries[1].data.push('')
+    }
+    Array.isArray(resData) && resData.forEach(function (item, i) {
+        //把month可能只有一个
+        LineSeries[1].data[item.month - 1] = item.actual
+    });
+    return LineSeries;
+}
+/**
+ * 处理区域线图 数据
+ * @param {array}
+ * @return {array} series
+ */
+var handleAreaLineData = function (resData) {
+    var linStyle = {
+        normal: {
+            opacity: 0
+        }
+    }
+    var LineSeries = [
+        {
+            name: "Hot Issues",
+            type: "line",
+            stack: '总量',
+            areaStyle: {
+                normal: {
+                    color: 'rgb(219, 40, 36)'
+                }
+            },
+            lineStyle: linStyle,
+            data: []
+        },
+        {
+            name: "Open Issues",
+            type: "line",
+            stack: '总量',
+            areaStyle: {
+                normal: {
+                    color: 'yellow'
+                }
+            },
+            lineStyle: linStyle,
+            data: []
+        }
+    ];
+    // 先把12个月填控
+    for (let i = 0; i < 12; i++) {
+        LineSeries[0].data.push('');
+        LineSeries[1].data.push('');
+    }
+    Array.isArray(resData) && resData.forEach(function (item, i) {
+        //把month可能只有一个，且分开
+        var month = item.MONTH - 1;
+        LineSeries[0].data[month] = item.HOTCOUNT
+        LineSeries[1].data[month] = item.TOTALCOUNT
+    });
+    return LineSeries;
+}
 export default QualityAfterSaleReport;

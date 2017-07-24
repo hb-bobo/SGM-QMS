@@ -45,25 +45,6 @@ class Overview extends React.Component {
         store: PropTypes.object
     }
     componentDidMount ()　{
-        console.log(this)
-        // AppConfig.API + '/getData'
-        /*fetch('http://10.6.96.211:8090/QMS/backlog/testA', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'id=' + JSON.stringify({
-                "id": "getProjectQualityList.json",
-                "ids": '22'
-            }),
-        }).then((res) => {
-            console.log(res)
-            return res.json()
-        }).then((res) => {
-            // this.props.actions.fillListData(res.result)
-            console.log(res)
-        })*/
-        
         this.setState({
             title: intl.get('projectQuality'),
         });
