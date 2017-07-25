@@ -61,7 +61,7 @@ class Verification extends React.Component {
                 <div>
                     {/*列表*/
                         this.state.isIndex? 
-                            <HotIssue dataSource={this.state.listData} selectReLvl={this.selectReLvl}/>
+                            <HotIssue parent={this}/>
                             : null
                     }
                 </div>

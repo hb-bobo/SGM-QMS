@@ -12,10 +12,11 @@ var subProjectId = null;
 @mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
 class HotIssue extends React.Component {
     static defaultProps = {
-        getListDataAPI: '/ProjectQuality/mListHotIssue',	
+        getListDataAPI: '/ProjectQuality/mListHotIssue',
     }
     static propTypes = {
-        getListDataAPI: PropTypes.string.isRequired
+        getListDataAPI: PropTypes.string.isRequired,
+        parent: PropTypes.instanof(React.Component)
     }
     static contextTypes = {
         router: PropTypes.object
@@ -28,6 +29,9 @@ class HotIssue extends React.Component {
         this.getListData('down', {
             subProjectId: subProjectId,
             hotLevel: 0
+        });
+        this.props.parent.setState({
+            title: intl.get('QMS.HotIssues')
         });
     }
     /* 评审级别查询刷新 */
@@ -70,7 +74,12 @@ class HotIssue extends React.Component {
                                 <div className="item-top flex-row">
                                     <div className="flex-col-9">
                                         <span>{intl.get('QMS.IssueNo')}: </span>
-                                        <span className="issueNo"> {item.issueId}</span>
+                                        <span
+                                            className="issueNo"
+                                            onClick={() => {goAdvance(item.source, item.prblmNo)}}
+                                        >
+                                            {item.issueId}
+                                        </span>
                                     </div>
                                     <div className="flex-col-1">
                                         <Circle value={item.status}></Circle>
