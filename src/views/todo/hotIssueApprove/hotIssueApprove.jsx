@@ -71,8 +71,8 @@ class HotIssueApprove extends React.Component {
         this.$store.dispatch(clearTempData()); 
     }
     // Go to Advance page
-    goAdvance = (advanceType) => {
-        this.props.parent.goAdvance('/search/issue-advance/' + advanceType);
+    goAdvance = (advanceType,id) => {
+        this.props.parent.goAdvance('/search/issue-advance/' + advanceType + `?id=${id}`);
     }
     // edit review time
     edit (data) {
@@ -122,7 +122,7 @@ class HotIssueApprove extends React.Component {
                                                 <span 
                                                     className="issueNo"
                                                     style={{marginLeft: 0}}
-                                                    onClick={() => this.goAdvance(item.source, item.prblmNo)}
+                                                    onClick={() => this.goAdvance(item.source, item.problemId)}
                                                 >
                                                 {item.prblmNo}
                                                 </span>

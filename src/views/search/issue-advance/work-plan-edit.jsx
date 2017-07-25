@@ -9,6 +9,7 @@ import HSelect from '@/components/form/h-select';
 import HTextarea from '@/components/form/h-textarea';
 import HDate from '@/components/form/h-date';
 import intl from '@/components/intl';
+import { POST } from '@/plugins/fetch';
 /*
     planDesc         "描述"
     planFinishDate   "计划完成时间"
@@ -31,6 +32,7 @@ export class WorkPlanEdit extends React.Component {
     state = {
         planDesc: '',
         planFinishDate: '',
+        pwActlFinishDate: '',
         prblmId: '',
         prblmPhaseID: '',
         rspnsUser: '',
@@ -45,6 +47,7 @@ export class WorkPlanEdit extends React.Component {
             this.setState({
                 planDesc: '',
                 planFinishDate: '',
+                pwActlFinishDate: '',
                 prblmId: '',
                 prblmPhaseID: '',
                 rspnsUser: '',
@@ -57,11 +60,24 @@ export class WorkPlanEdit extends React.Component {
         // this.parent.setState({workPlanOpen: false});
     }
     save = () => {
-        this.parent.props.actions.upWorkPlanListData({
-            action: this.props.action,
-            value: this.state
-        });
-        this.parentStateChange();
+        var url = ''
+        if(this.props.action === 'add'){
+            url = '/mproblem/createWorkPlan';
+        }else if(this.props.action === 'edit'){
+            url = '/mproblem/updateWorkPlan';
+        }
+        console.log(url,this.props.data)
+        POST(url, {
+        data: this.props.data
+        }).then((res) => {
+            if (res.success === true) {
+                this.parent.props.actions.upWorkPlanListData({
+                    action: this.props.action,
+                    value: this.state
+                });
+                this.parentStateChange();
+            }
+        })
     }
     cancel = () => {
         this.parentStateChange();
@@ -82,6 +98,7 @@ export class WorkPlanEdit extends React.Component {
     }
     render() {
         intl.setMsg(require('@/static/i18n').default)
+        var prblmPhaseID = this.props.action === 'add' ? this.props.parent.parent.state.issueData.crntPhase : this.state.prblmPhaseID;
         // var { data } = this.props;
         return (
             <div className="work-plan-edit-form">
@@ -107,7 +124,7 @@ export class WorkPlanEdit extends React.Component {
                             clear
                             type="text"
                             disabled
-                            value={this.state.prblmPhaseID}
+                            value={prblmPhaseID}
                             onChange={this.bind('prblmPhaseID')}
                         >
                         </HInput>
@@ -149,8 +166,8 @@ export class WorkPlanEdit extends React.Component {
                         <HDate
                             clear
                             type="date"
-                            value={this.state.planFinishDate}
-                            onChange={this.bind('planFinishDate')}
+                            value={this.state.pwActlFinishDate}
+                            onChange={this.bind('pwActlFinishDate')}
                         >
                         </HDate>
                     </div>
@@ -162,7 +179,7 @@ export class WorkPlanEdit extends React.Component {
                     <div className="flex-col-7">
                         <HSelect
                             value={this.state.workPlanStatus}
-                            options={[]}
+                            options={[{value:"D",text:"延迟"},{value:"F",text:"已完成"}]}
                             onChange={this.bind('workPlanStatus')}
                         >
                         </HSelect>

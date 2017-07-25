@@ -15,8 +15,12 @@ export class EIRIssueAdvance extends React.Component {
   static propsType = {
     advanceData: PropTypes.object
   }
+  componentDidMount () {
+    console.log(this.props.parent)
+  }
   render() {
-    intl.setMsg(require('@/static/i18n').default)
+    intl.setMsg(require('@/static/i18n').default);
+    var issueData = this.props.parent.state.issueData;
     return (
       <div>
         <div className="issue-advance-item flex-row">
@@ -25,7 +29,7 @@ export class EIRIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              手动变速箱分离轴承-泄漏 Manual transmission clutch releasing bearing - Leaks
+              {issueData.prblmDesc}
             </span>
           </div>
         </div>
@@ -35,7 +39,7 @@ export class EIRIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              Complete-Complete W/O Action
+              {issueData.crntPhase}
             </span>
           </div>
         </div>
@@ -45,7 +49,7 @@ export class EIRIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              石海琳Shi Hailin
+              {issueData.crntRspnsUser}
             </span>
           </div>
         </div>
@@ -55,10 +59,10 @@ export class EIRIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <select name="" id="">
-              <option value="1">白色</option>
-              <option value="1">黄色</option>
-              <option value="1">红色</option>
-              <option value="1">绿色</option>
+              <option value="w">白色</option>
+              <option value="Y">黄色</option>
+              <option value="R">红色</option>
+              <option value="G">绿色</option>
             </select>
           </div>
         </div>

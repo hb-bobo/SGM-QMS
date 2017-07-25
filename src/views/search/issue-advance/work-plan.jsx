@@ -12,6 +12,8 @@ import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import Scroller from '@/components/scroller';
 import WorkPlanEdit from './work-plan-edit';
+import { POST } from '@/plugins/fetch';
+import querystring from '@/utils/tools/querystring';
 import intl from '@/components/intl';
 /*
     planDesc         "描述"
@@ -43,10 +45,29 @@ class WorkPlan extends React.Component {
     state = {
         workPlanOpen: false,
         workPlanAction: '',
+        workPlan: [],
+        allWorkPlan: [],
+        phase : [],
+        pageNumber: 1,
+        filter: ''
     }
 
     componentDidMount () {
         this.parent = this.props.parent;
+        POST('/mproblem/getWorkPlan', {
+        data: {
+            id: this.props.prblmId,
+            page: this.state.pageNumber
+        }
+        }).then((res) => {
+            if (res.success === true) {
+                this.setState({
+                    allWorkPlan : res.workplan,
+                    phase : res.phase,
+                    pageNumber : this.state.pageNumber+1
+                });
+            }
+        })
     }
     // 新增工作计划
     workPlanNewData = () => {
@@ -89,10 +110,26 @@ class WorkPlan extends React.Component {
         }
     }
 
+    changeFilter = (ev) => {
+        this.setState({
+            filter: ev.target.value
+        });
+    }
+
     render () {
         intl.setMsg(require('@/static/i18n').default)
-        var data = this.props.workPlanData;
+        var allData = this.state.allWorkPlan;
+        var phase = this.state.phase;
+        var data = allData.filter((item)=>{
+            if(this.state.filter === ''){
+                return item;
+            }else if(item.prblmPhaseID === this.state.filter){
+                return item;
+            }
+        })
+        console.log(data)
         var { workPlanEditData } = this.props;
+
         return (
             <div>
                 <SpaceRow height={6} />
@@ -102,9 +139,13 @@ class WorkPlan extends React.Component {
                 <div className="flex-row issue-advance-item">
                     <div className="flex-col-8">
                         <span>{intl.get('QMS.Step')}: </span>
-                        <select name="" id="" style={{marginLeft: '8px'}}>
+                        <select name="" id="" style={{marginLeft: '8px'}} onChange={this.changeFilter}>
                             <option value="">{intl.get('QMS.Option')}</option>
-                            <option value="1">阶段</option>
+                            {phase.map((item, i) => {
+                                return (
+                                    <option key={i} value={item.prblmPhaseID}>{item.prblmPhaseID}</option>
+                                )
+                            })}
                         </select>
                     </div>
                     <div className="flex-col-2">
@@ -114,7 +155,7 @@ class WorkPlan extends React.Component {
                     </div>
                 </div>
                 <div className="work-plan-list">
-                    <Scroller containerHeight={500} bounce={false}>
+                    <Scroller containerHeight={500} bounce={true}>
                         {
                             data.map((item, i) => {
                                 return (
