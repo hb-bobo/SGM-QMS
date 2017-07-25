@@ -11,12 +11,13 @@ import Drawer from 'material-ui/Drawer';
 // import { WingBlank, Button, Icon } from 'antd-mobile';
 import Scroller from '@/components/scroller';
 import WorkPlan from './work-plan';
-// import { POST } from '@/plugins/fetch';
+import { POST } from '@/plugins/fetch';
 import IconUp from '@/components/icon/up';
 import SpaceRow from '@/components/space-row';
 import HotUp from './hot-up';
 import IssueUP from './issue-up';
 import intl from '@/components/intl';
+import querystring from '@/utils/tools/querystring';
 
 @connect(
     // mapStateToProps
@@ -35,7 +36,7 @@ export class IssueAdvance extends React.Component {
     isIndex: true,
     hotUpOpen: false,
     issueUPOpen: false,
-    data: {}
+    issueData: {},
   }
 
   componentWillMount () {
@@ -46,21 +47,27 @@ export class IssueAdvance extends React.Component {
   }
 
   componentDidMount () {
-    /*POST('/getData',{
-      data: JSON.stringify({
-          "path": "workPlan.json"
-      }),
-      succee: (res) => {
-        this.props.actions.upWorkPlanListData({
-          action: 'update',
-          value: res.result
-        });
+    var id = querystring.parse(this.props.location.search).id;
+    POST('/mproblem/mPrtsDetail', {
+      data: {
+        id: id
       }
-    });*/
-    this.props.actions.upWorkPlanListData({
-       action: 'update',
-       value: require('@/static/workPlan.json').result
-    });
+    }).then((res) => {
+        if (res.success === true) {
+          console.log(res.data)
+          this.setState({
+            issueData : res.data
+          });
+          this.props.actions.upWorkPlanListData({
+            action: 'update',
+            value: res.workplan
+          });
+        }
+    })
+    // this.props.actions.upWorkPlanListData({
+    //   action: 'update',
+    //   value: require('@/static/workPlan.json').result
+    // });
     this.setState({
       title: intl.get('QMS.' + this.state.advType + 'Report')
     });
@@ -102,9 +109,6 @@ export class IssueAdvance extends React.Component {
     if (this.props.routes) {
         routes = this.props.routes;
     }
-    var advanceData = {
-      id: 1111
-    };
     return (
       <div className="issue-advance">
         {/*头部*/}
@@ -122,7 +126,7 @@ export class IssueAdvance extends React.Component {
           <div className={this.state.isIndex ? "advance-top flex-row" : "advance-top flex-row hide"}>
             <div className="flex-col-6">
               <span>{intl.get('QMS.IssueNo')}: </span>
-              <span style={{marginLeft: '1.4em', color: '#6AC4F6'}}>{advanceData.id}</span>
+              <span style={{marginLeft: '1.4em', color: '#6AC4F6'}}>{this.state.issueData.sourcePrblmNo}</span>
             </div>
             <SpaceRow height={50} width="1px" backgroundColor="#EEEDED"/>
             <div className="flex-col-4">
@@ -166,7 +170,7 @@ export class IssueAdvance extends React.Component {
           })}
           {/*工作计划*/}
           <div className="work-plan">
-            <WorkPlan workPlanData={this.props.workPlanData} parent={this}/>
+            <WorkPlan prblmId={querystring.parse(this.props.location.search).id} parent={this}/>
           </div>
         </Scroller>
       </div>

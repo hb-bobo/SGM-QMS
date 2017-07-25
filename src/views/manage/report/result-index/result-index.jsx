@@ -155,7 +155,7 @@ class ResultIndex extends React.Component {
                         />
                     </Accordion.Panel>
                     <Accordion.Panel header="Aftersales issue(95%)" className="chart-item">
-                        <EchartLinec
+                        <EchartLine
                             series={state.AftersalesIssue95_DATA}
                         />
                     </Accordion.Panel>

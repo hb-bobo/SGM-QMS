@@ -158,6 +158,7 @@ export const RouteWithSubRoutes = (route) => {
         // pass the sub-routes down to keep nesting
           <route.component
             {...props}
+            parent={route.parent}
             routes={route.routes}
           />
         )}

@@ -16,6 +16,7 @@ export class PRTSIssueAdvance extends React.Component {
     advanceData: PropTypes.object
   }
   render() {
+    var issueData = this.props.parent.state.issueData;
     intl.setMsg(require('@/static/i18n').default, require('./locale'))
     return (
       <div>
@@ -25,7 +26,7 @@ export class PRTSIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              HARNESS ASM-ECM & ENG WRG , ENG Comparpment - ENG harness to camshaft sensor interfere with CAC hose.
+              {issueData.prblmDesc}
             </span>
           </div>
         </div>
@@ -34,7 +35,8 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.ProgramName')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span> U25
+            <span>
+              {issueData.programCode}
             </span>
           </div>
         </div>
@@ -44,7 +46,7 @@ export class PRTSIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              Feedback
+              {issueData.crntPhase}
             </span>
           </div>
         </div>
@@ -54,7 +56,7 @@ export class PRTSIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              欧阳
+              {issueData.crntRspnsUser}
             </span>
           </div>
         </div>
@@ -63,8 +65,11 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RiskStatus')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <select name="" id="">
-              <option value="1">白色</option>
+            <select name="" id="" value={issueData.prblmStatus}>
+              <option value="w">白色</option>
+              <option value="Y">黄色</option>
+              <option value="R">红色</option>
+              <option value="G">绿色</option>
             </select>
           </div>
         </div>
@@ -73,7 +78,9 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.DiagnoseAssistance')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <Link to="/search/assist">0</Link>
+            <Link to="/search/assist">
+              {issueData.assistDiagnoseNum}
+            </Link>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -81,7 +88,9 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.SeverityLevel')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span>2</span>
+            <span>
+              {issueData.prblmSeverity}
+            </span>
           </div>
         </div>
         <SpaceRow height={6} />
@@ -90,7 +99,9 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RootCauseAnalysis')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span>No enough space between beauty cover and CAC duct.No enough space between beauty cover and CAC duct.</span>
+            <span>
+              {issueData.rcLastCommnt}
+            </span>
           </div>
         </div>
         <SpaceRow height={6} />
@@ -102,7 +113,9 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.STSolution')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span></span>
+            <span>
+              {issueData.stSolut}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -110,7 +123,9 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.STSolutionBPDate')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span></span>
+            <span>
+              {issueData.stBreakDate}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -118,7 +133,9 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.STSolutionBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span></span>
+            <span>
+              {issueData.stBreakPhase}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -126,7 +143,9 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.LTSolution')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span>	W/H routing to be changed, and beauty cover to be modified.</span>
+            <span>
+              {issueData.ltSolut}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -134,7 +153,9 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.PlannedBPDate')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span></span>
+            <span>
+              {issueData.ltPlanBreakDate}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -142,7 +163,9 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.PlannedBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span></span>
+            <span>
+              {issueData.ltPlanBreakPhase}
+            </span>
           </div>
         </div>
       </div>
