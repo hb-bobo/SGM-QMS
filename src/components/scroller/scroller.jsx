@@ -36,6 +36,7 @@ class Scroller extends React.Component {
         autoSetHeight: PropTypes.bool,
         bottomHeight: PropTypes.number,
         config: PropTypes.object,
+        bounce: PropTypes.bool,
         onScrollBottom: PropTypes.func, // 上拉到底了，会多次执行
         onPullupLoading: PropTypes.func, // 上拉到一定层度并放开时
         onPulldownLoading: PropTypes.func, // 下拉到一定层度并放开时
@@ -75,7 +76,10 @@ class Scroller extends React.Component {
 
     }
     shouldComponentUpdate (nextProps, nextState) {
-        if (nextState.pulldownStatus === 'loading-start' && this.state.pulldownStatus === 'loading-start') {
+        if (this.props.bounce === true
+            && this.props.onPullupLoading !== undefined
+            && nextState.pulldownStatus === 'loading-start'
+            && this.state.pulldownStatus === 'loading-start') {
             return false;
         }
         return true;

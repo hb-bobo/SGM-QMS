@@ -16,7 +16,10 @@ export class QDCPIRIssueAdvance extends React.Component {
     advanceData: PropTypes.object
   }
   render() {
-    intl.setMsg(require('@/static/i18n').default, require('./locale'))
+    intl.setMsg(require('@/static/i18n').default);
+    var issueData = this.props.parent.state.issueData;
+    var pc = this.props.parent.state.pc;
+    
     return (
       <div>
         <div className="issue-advance-item flex-row">
@@ -25,7 +28,7 @@ export class QDCPIRIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              HARNESS ASM-ECM & ENG WRG , ENG Comparpment - ENG harness to camshaft sensor interfere with CAC hose.
+              {issueData.prblmDesc}
             </span>
           </div>
         </div>
@@ -35,7 +38,7 @@ export class QDCPIRIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              Feedback
+              {issueData.crntPhase}
             </span>
           </div>
         </div>
@@ -45,7 +48,7 @@ export class QDCPIRIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              欧阳
+              {issueData.crntRspnsUser}
             </span>
           </div>
         </div>
@@ -54,8 +57,11 @@ export class QDCPIRIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RiskStatus')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <select name="" id="">
-              <option value="1">白色</option>
+            <select name="" id="" value={issueData.estimatePrblmStatus}>
+              <option value="w">白色</option>
+              <option value="Y">黄色</option>
+              <option value="R">红色</option>
+              <option value="G">绿色</option>
             </select>
           </div>
         </div>
@@ -64,15 +70,19 @@ export class QDCPIRIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.DiagnoseAssistance')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <Link to="/search/assist">0</Link>
+            <Link to={"/search/assist?id="+issueData.prblmId}>
+              {issueData.assistDiagnoseNum}
+            </Link>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">{intl.get('IssueSeverity')}: </label>
+            <label htmlFor="">{intl.get('QMS.SeverityLevel')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span>2</span>
+            <span>
+              {issueData.prblmSeverity}
+            </span>
           </div>
         </div>
         <SpaceRow height={6} />
@@ -81,43 +91,39 @@ export class QDCPIRIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RootCauseAnalysis')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span>No enough space between beauty cover and CAC duct.No enough space between beauty cover and CAC duct.</span>
+            <span>
+              {issueData.rcAnalysis}
+            </span>
           </div>
         </div>
         <SpaceRow height={6} />
         <div className="issue-advance-item-title">
           <span>{intl.get('QMS.Containment')}</span>
         </div>
-        <div className="issue-advance-item flex-row">
+         <div className="issue-advance-item flex-row">
           <div className="flex-col-3">
-            <label htmlFor="">{intl.get('QMS.STSolution')}: </label>
+            <label htmlFor="">{intl.get('QMS.Containment')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span></span>
-          </div>
-        </div>
-        <div className="issue-advance-item flex-row">
-          <div className="flex-col-3">
-            <label htmlFor="">{intl.get('QMS.LTSolution')}: </label>
-          </div>
-          <div className="flex-col-10 right"> 
-            <span>	W/H routing to be changed, and beauty cover to be modified.</span>
+            <span>
+              {pc.cntnmentMsr}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
           <div className="flex-col-1">
             <div>
               <span>{intl.get('QMS.ECD')}: </span>
-              <span className="right"></span>
+              <span className="right">{pc.planFinishDate}</span>
             </div>
           </div>
           <div className="flex-col-1">
             <div>
               <span>{intl.get('QMS.ACD')}: </span>
-              <span className="right"></span>
+              <span className="right">{pc.actlFinishDate}</span>
             </div>
           </div>
-        </div>
+        </div> 
       </div>
     );
   }

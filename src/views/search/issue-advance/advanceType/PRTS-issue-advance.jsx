@@ -65,7 +65,7 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RiskStatus')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <select name="" id="" value={issueData.prblmStatus}>
+            <select name="" id="" value={issueData.estimatePrblmStatus}>
               <option value="w">白色</option>
               <option value="Y">黄色</option>
               <option value="R">红色</option>
@@ -78,7 +78,7 @@ export class PRTSIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.DiagnoseAssistance')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <Link to="/search/assist">
+            <Link to={"/search/assist?id="+issueData.prblmId}>
               {issueData.assistDiagnoseNum}
             </Link>
           </div>

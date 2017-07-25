@@ -16,6 +16,7 @@ export class VOCIssueAdvance extends React.Component {
   }
   render() {
     intl.setMsg(require('@/static/i18n').default)
+    var issueData = this.props.parent.state.issueData;
     return (
       <div>
         <div className="issue-advance-item flex-row">
@@ -24,7 +25,7 @@ export class VOCIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              前雾灯光亮度不足,需增加雾灯亮度
+              {issueData.prblmDesc}
             </span>
           </div>
         </div>
@@ -34,7 +35,7 @@ export class VOCIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              Complete-Complete W/O Action
+              {issueData.crntPhase}
             </span>
           </div>
         </div>
@@ -44,7 +45,7 @@ export class VOCIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              石海琳Shi Hailin
+              {issueData.crntRspnsUser}
             </span>
           </div>
         </div>
@@ -53,11 +54,11 @@ export class VOCIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RiskStatus')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <select name="" id="">
-              <option value="1">白色</option>
-              <option value="1">黄色</option>
-              <option value="1">红色</option>
-              <option value="1">绿色</option>
+            <select name="" id="" value={issueData.estimatePrblmStatus}>
+              <option value="w">白色</option>
+              <option value="Y">黄色</option>
+              <option value="R">红色</option>
+              <option value="G">绿色</option>
             </select>
           </div>
         </div>

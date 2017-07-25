@@ -6,8 +6,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import pathToJSON from '@/utils/object/pathToJSON';
 import HSelect from '@/components/form/h-select';
 import HTextarea from '@/components/form/h-textarea';
-import HInput from '@/components/form/h-input';
 import intl from '@/components/intl';
+import { POST } from '@/plugins/fetch';
+import array2Array from '@/utils/array/array2Array';
 /*
     s
 */
@@ -22,37 +23,66 @@ export class IssueUP extends React.Component {
     }
     
     state = {
-        planDesc: '',
-        planFinishDate: '',
-        prblmId: '',
-        prblmPhaseID: '',
-        rspnsUser: '',
-        workPlanID: '',
-        workPlanStatus: ''
+        directors: [],
+        seniorMgrs: [],
+        majors: [],
+        targetLevel: '',
+        prblmUpgradeOp: '',
+        upgradeReason: '',
+        directorID: '',
+        seniorMgrID: '',
+        majorID: ''
     }
     componentWillMount () {
         this.parent = this.props.parent;
-    }
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.action === 'add') {
-            this.setState({
-                planDesc: '',
-                planFinishDate: '',
-                prblmId: '',
-                prblmPhaseID: '',
-                rspnsUser: '',
-                workPlanID: '',
-                workPlanStatus: ''
-            });
+        POST('/mproblem/findByPosit', {
+        data: {
+            id: this.parent.state.issueData.prblmId
         }
-        this.setState(nextProps.data);
+        }).then((res) => {
+            if (res.success === true) {
+                var directors = [];
+                var seniorMgrs = [];
+                var majors = [];
+                // console.log(array2Array({data: res.result,format: ["text","value"],originaFormat:["NAME","EMP_ID"]}))
+                if(res.result || res.result.zj){
+                    directors = array2Array({data: res.result.zj,format: ["text","value"],originaFormat:["NAME","EMP_ID"]});
+                }
+                if(res.result || res.result.jl){
+                    seniorMgrs = array2Array({data: res.result.jl,format: ["text","value"],originaFormat:["NAME","EMP_ID"]});
+                }
+                if(res.result || res.result.zg){
+                    majors = array2Array({data: res.result.zg,format: ["text","value"],originaFormat:["NAME","EMP_ID"]});
+                }
+                this.setState({
+                    directors: directors,
+                    seniorMgrs: seniorMgrs,
+                    majors: majors
+                });
+            }
+        })
     }
     submit = () => {
-        /*this.parent.props.actions.upWorkPlanListData({
-            action: this.props.action,
-            value: this.state
-        });*/
-        this.parentStateChange();
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        POST('/mproblem/createUpgradeLog', {
+        headers: headers,
+        data: {
+            prblmId: this.parent.state.issueData.prblmId,
+            targetLevel: this.state.targetLevel,
+            prblmUpgradeOp: this.state.prblmUpgradeOp,
+            upgradeReason: this.state.upgradeReason,
+            directorID: this.state.directorID,
+            seniorMgrID: this.state.seniorMgrID,
+            majorID: this.state.majorID
+        }
+        }).then((res) => {
+            if (res.success === true) {
+                this.parentStateChange();
+            }else{
+                alert("操作失败");
+            }
+        })
     }
     cancel = () => {
         this.parentStateChange();
@@ -72,7 +102,6 @@ export class IssueUP extends React.Component {
     render() {
         intl.setMsg(require('@/static/i18n').default)
         // var { data } = this.props;
-        var options = ['aa', 'xxxx', 'xvv']
         return (
             <div className="hot-up-form">
                 <div className="edit-item flex-row">
@@ -80,30 +109,27 @@ export class IssueUP extends React.Component {
                         <label htmlFor="planDesc" className="justify">{intl.get('QMS.Level')} :</label>
                     </div>
                     <div className="flex-col-7">
-                        <label><input name="lv" type="radio" value="" />{intl.get('QMS.Director')} </label>
-                        <HInput
-                            clear
-                            type="text"
-                            defaultValue={'aa'}
-                            options={options}
-                            onChange={this.bind('planDesc')}
-                        />
-                        <label><input name="lv" type="radio" value="" />{intl.get('QMS.SrMgr')} </label>
-                        <HInput
-                            clear
-                            type="text"
-                            defaultValue={'aa'}
-                            options={options}
-                            onChange={this.bind('planDesc')}
-                        />
-                        <label><input name="lv" type="radio" value="" />{intl.get('QMS.EGM')} </label>
-                        <HInput
-                            clear
-                            type="text"
-                            defaultValue={'aa'}
-                            options={options}
-                            onChange={this.bind('planDesc')}
-                        />
+                        <label><input name="lv" type="radio" value="3" onChange={this.bind('targetLevel')}/>{intl.get('QMS.Director')} </label>
+                        <HSelect
+                            value={this.state.directorID}
+                            options={this.state.directors}
+                            onChange={this.bind('directorID')}
+                        >
+                        </HSelect>
+                        <label><input name="lv" type="radio" value="2" onChange={this.bind('targetLevel')}/>{intl.get('QMS.SrMgr')} </label>
+                        <HSelect
+                            value={this.state.seniorMgrID}
+                            options={this.state.seniorMgrs}
+                            onChange={this.bind('seniorMgrID')}
+                        >
+                        </HSelect>
+                        <label><input name="lv" type="radio" value="1" onChange={this.bind('targetLevel')}/>{intl.get('QMS.EGM')} </label>
+                        <HSelect
+                            value={this.state.majorID}
+                            options={this.state.majors}
+                            onChange={this.bind('majorID')}
+                        >
+                        </HSelect>
                     </div>
                 </div>
                 <div className="edit-item flex-row">
@@ -112,8 +138,9 @@ export class IssueUP extends React.Component {
                     </div>
                     <div className="flex-col-7">
                         <HSelect
-                            value={this.state.planDesc}
-                            onChange={this.bind('planDesc')}
+                            value={this.state.prblmUpgradeOp}
+                            options={[{text:"申请",value:"C"}]}
+                            onChange={this.bind('prblmUpgradeOp')}
                         >
                         </HSelect>
                     </div>
@@ -125,8 +152,8 @@ export class IssueUP extends React.Component {
                     <div className="flex-col-7">
                         <HTextarea
                             clear
-                            value={this.state.planDesc}
-                            onChange={this.bind('planDesc')}
+                            value={this.state.upgradeReason}
+                            onChange={this.bind('upgradeReason')}
                         >
                         </HTextarea>
                     </div>

@@ -60,22 +60,36 @@ export class WorkPlanEdit extends React.Component {
         // this.parent.setState({workPlanOpen: false});
     }
     save = () => {
-        var url = ''
+        var url = '';
+        var prblmPhaseID = '';
+        
         if(this.props.action === 'add'){
             url = '/mproblem/createWorkPlan';
+            prblmPhaseID = this.props.parent.parent.state.issueData.crntPhase;
         }else if(this.props.action === 'edit'){
             url = '/mproblem/updateWorkPlan';
+            prblmPhaseID = this.state.prblmPhaseID
         }
-        console.log(url,this.props.data)
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
         POST(url, {
-        data: this.props.data
+        headers: headers,
+        data: {
+                planDesc: this.state.planDesc,
+                planFinishDate: this.state.planFinishDate,
+                pwActlFinishDate: this.state.pwActlFinishDate,
+                prblmId: this.props.parent.parent.state.issueData.prblmId,
+                prblmPhaseID: prblmPhaseID,
+                rspnsUser: this.state.rspnsUser,
+                workPlanID: this.state.workPlanID,
+                workPlanStatus: this.state.workPlanStatus
+        }
         }).then((res) => {
             if (res.success === true) {
-                this.parent.props.actions.upWorkPlanListData({
-                    action: this.props.action,
-                    value: this.state
-                });
+                this.props.parent.selectWorkPlan();
                 this.parentStateChange();
+            }else{
+                alert("提交失败");
             }
         })
     }

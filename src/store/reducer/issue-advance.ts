@@ -16,7 +16,8 @@ interface WorkPlanUpAction extends Action {
 export default {
     state: {
         workPlanEditData: {},
-        workPlanData: [] // 工作计划所有
+        workPlanData: [], // 工作计划所有,
+        workPlanFilterData: []
     },
     // 用 types 作key保证action唯一性
     mutations: {
@@ -39,11 +40,9 @@ export default {
                     state.workPlanData = payload.value;
                     break;
                 case 'add':
-                    console.log(payload.value)
                     state.workPlanData.unshift(payload.value);
                     break;
                 case 'edit':
-                    console.log(payload)
                     state.workPlanData = state.workPlanData.concat([]);
                     state.workPlanData.some(function (item: WorkPlanDataItem, i: number): boolean {
                         if (item.workPlanID === payload.value.workPlanID) {
@@ -68,5 +67,17 @@ export default {
                     return;
             }
         }
+    },
+    /* 过滤计划列表 */
+    [types.FILTER_WORK_PLAN_LIST_DATA] (state: States, action: Action) {
+        var filterVal: string = action.payload.filter;
+        var data = state.workPlanData.filter((item: any) => {
+            if (filterVal === '') {
+                return item;
+            } else if (item.prblmPhaseID === filterVal) {
+                return item;
+            }
+        });
+        state.workPlanFilterData = data;
     }
 }

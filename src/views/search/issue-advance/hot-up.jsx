@@ -5,54 +5,68 @@ import PropTypes from 'prop-types';
 import RaisedButton from 'material-ui/RaisedButton';
 import pathToJSON from '@/utils/object/pathToJSON';
 import HSelect from '@/components/form/h-select';
+import HDate from '@/components/form/h-date';
 import HTextarea from '@/components/form/h-textarea';
 import intl from '@/components/intl';
+import { POST } from '@/plugins/fetch';
+import array2Array from '@/utils/array/array2Array';
 /*
     s
 */
 
 export class HotUp extends React.Component {
     static defaultProps = {
-        data: {}
     }
     static propTypes = {
-        data: PropTypes.object,
         parent: PropTypes.instanceOf(React.Component).isRequired
     }
     
     state = {
-        planDesc: '',
-        planFinishDate: '',
-        prblmId: '',
-        prblmPhaseID: '',
-        rspnsUser: '',
-        workPlanID: '',
-        workPlanStatus: ''
+        apprs:[],
+        aprvr: '',
+        reviewTime: '',
+        upgradeReason: '',
+        prblmReviewOp: '',
+        hotLevel: ''
     }
     componentWillMount () {
         this.parent = this.props.parent;
-    }
-    componentWillReceiveProps (nextProps) {
-        if (nextProps.action === 'add') {
-            this.setState({
-                planDesc: '',
-                planFinishDate: '',
-                prblmId: '',
-                prblmPhaseID: '',
-                rspnsUser: '',
-                workPlanID: '',
-                workPlanStatus: ''
-            });
-            return;
-        }
-        this.setState(nextProps.data);
+        POST('/mproblem/findAprvr', {
+        data: {}
+        }).then((res) => {
+            if (res.success === true) {
+                var apprs = [];
+                // console.log(array2Array({data: res.result,format: ["text","value"],originaFormat:["NAME","EMP_ID"]}))
+                if(res.result){
+                    apprs = array2Array({data: res.result,format: ["text","value"],originaFormat:["NAME","EMP_ID"]});
+                }
+                // console.log(res.result,apprs)
+                this.setState({
+                    apprs : apprs
+                });
+            }
+        })
     }
     submit = () => {
-        /*this.parent.props.actions.upWorkPlanListData({
-            action: this.props.action,
-            value: this.state
-        });*/
-        this.parentStateChange();
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        POST('/mproblem/createReviewLog', {
+        headers: headers,
+        data: {
+            prblmId: this.parent.state.issueData.prblmId,
+            aprvr: this.state.aprvr,
+            reviewTime: this.state.reviewTime,
+            upgradeReason: this.state.upgradeReason,
+            prblmReviewOp: this.state.prblmReviewOp,
+            hotLevel: this.state.hotLevel
+        }
+        }).then((res) => {
+            if (res.success === true) {
+                this.parentStateChange();
+            }else{
+                alert("操作失败");
+            }
+        })
     }
     cancel = () => {
         this.parentStateChange();
@@ -71,7 +85,12 @@ export class HotUp extends React.Component {
     }
     render() {
         // var { data } = this.props;Reason
-        var options = ['aa', 'xxxx', 'xvv']
+        var options = [];
+        if(this.parent.state.advType === 'QDCPIR'){
+            options = [{text:"售后EQR专题",value:4}]
+        }else{
+            options = [{text:"EQR专题",value:1},{text:"EQR常规",value:2},{text:"项目热点",value:3}]
+        }
         intl.setMsg(require('@/static/i18n').default, require('./locale'))
         return (
             <div className="hot-up-form">
@@ -81,9 +100,9 @@ export class HotUp extends React.Component {
                     </div>
                     <div className="flex-col-7">
                         <HSelect
-                            defaultValue={'aa'}
+                            value={this.state.hotLevel}
                             options={options}
-                            onChange={this.bind('planDesc')}
+                            onChange={this.bind('hotLevel')}
                         >
                         </HSelect>
                     </div>
@@ -94,8 +113,9 @@ export class HotUp extends React.Component {
                     </div>
                     <div className="flex-col-7">
                         <HSelect
-                            value={this.state.planDesc}
-                            onChange={this.bind('planDesc')}
+                            value={this.state.aprvr}
+                            options={this.state.apprs}
+                            onChange={this.bind('aprvr')}
                         >
                         </HSelect>
                     </div>
@@ -106,10 +126,25 @@ export class HotUp extends React.Component {
                     </div>
                     <div className="flex-col-7">
                         <HSelect
-                            value={this.state.planDesc}
-                            onChange={this.bind('planDesc')}
+                            value={this.state.prblmReviewOp}
+                            options={[{text:"申请",value:"C"}]}
+                            onChange={this.bind('prblmReviewOp')}
                         >
                         </HSelect>
+                    </div>
+                </div>
+                <div className="edit-item flex-row">
+                    <div className="flex-col-3">
+                        <label htmlFor="">{intl.get('QMS.ReportDate')}:</label>
+                    </div>
+                    <div className="flex-col-7">
+                        <HDate
+                            clear
+                            type="date"
+                            value={this.state.reviewTime}
+                            onChange={this.bind('reviewTime')}
+                        >
+                        </HDate>
                     </div>
                 </div>
                 <div className="edit-item flex-row">
@@ -119,8 +154,8 @@ export class HotUp extends React.Component {
                     <div className="flex-col-7">
                         <HTextarea
                             clear
-                            value={this.state.planDesc}
-                            onChange={this.bind('planDesc')}
+                            value={this.state.upgradeReason}
+                            onChange={this.bind('upgradeReason')}
                         >
                         </HTextarea>
                     </div>
