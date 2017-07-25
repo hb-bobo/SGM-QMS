@@ -33,17 +33,18 @@ import intl from '@/components/intl';
 // )
 
 class Overview extends React.Component {
-    state = {
-        title: '',
-        listData2: [],
-        isIndex: true, // 除了主页显示itemList 其他页面都消失,
-        tabValue: 0
-    }
     static contextTypes = {
         muiTheme: PropTypes.object,
         plugins: PropTypes.object,
         store: PropTypes.object
     }
+
+    state = {
+        title: '',
+        isIndex: true, // 除了主页显示itemList 其他页面都消失,
+        tabValue: 0
+    }
+    
     componentDidMount ()　{
         this.setState({
             title: intl.get('projectQuality'),

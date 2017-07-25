@@ -57,10 +57,13 @@ class HSelect extends React.Component {
             emptyText
         } = this.props;
 
-        var optionsData = objectArray(options, {
-            keyName: 'value',
-            valueName: 'text'
-        });
+        if (Object.prototype.toString.call(options[0]) !== '[object Object]' && options[0] !== undefined) {
+            var optionsData = objectArray(options, {
+                keyName: 'value',
+                valueName: 'text'
+            });
+        }
+        
         if (!this.state.controllable) {
             value = this.state.value;
         }

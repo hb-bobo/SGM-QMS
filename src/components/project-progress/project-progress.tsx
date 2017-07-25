@@ -10,7 +10,7 @@ interface ProjectSchedules {
     subProjectID: string;
     projectPhase: string;
     openStatus: string;
-    regateTime: string;
+    regateTime: any;
 }
 class ProjectProgress extends React.Component<{[key: string]: any}, any> {
     static propTypes = {
@@ -103,7 +103,7 @@ class ProjectProgress extends React.Component<{[key: string]: any}, any> {
                                     <span>
                                         {
                                             currentPhase.regateTime && 
-                                            getTime({time: currentPhase.regateTime, format: dateFormat})
+                                            getTime({time: currentPhase.regateTime.time, format: dateFormat})
                                         }
                                     </span>
                                 </div>

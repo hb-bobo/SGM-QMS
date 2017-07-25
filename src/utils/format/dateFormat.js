@@ -29,6 +29,9 @@ function dateFormat (param) {
         format = param
     }
     if (Object.prototype.toString.call(param) === '[object Object]') {
+        if (param.time === null || param.time === undefined) {
+            return '';
+        }
         time = new Date(param.time);
         if (Object.is(NaN, time.getFullYear())) { 
             throw Error('time is Invalid date, 日期有误');
