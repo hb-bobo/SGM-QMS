@@ -56,12 +56,9 @@ class HSelect extends React.Component {
             options,
             emptyText
         } = this.props;
-
-        if (Object.prototype.toString.call(options[0]) !== '[object Object]' && options[0] !== undefined) {
-            var optionsData = objectArray(options, {
-                keyName: 'value',
-                valueName: 'text'
-            });
+        var optionsData = options;
+        if (options[0].value === undefined && options[0].text === undefined) {
+            throw Error('格式有误: -> [{text: any, value: any}]');
         }
         
         if (!this.state.controllable) {

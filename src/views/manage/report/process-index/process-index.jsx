@@ -1,6 +1,7 @@
 import * as React from 'react';
 import EchartLine from '@/components/echarts/echart-line';
 import { Accordion } from 'antd-mobile';
+import { POST } from '@/plugins/fetch';
 
 /* 质量月报->过程指标 */
 class ProcessIndex extends React.Component {
@@ -25,14 +26,15 @@ class ProcessIndex extends React.Component {
         return (
             <div>
                 <Accordion defaultActiveKey="0" className="chart-list">
-                    <Accordion.Panel header="PRTS(60%)">
-                        <EchartLine info={state.PRTS60_INFO} chartData={state.PRTS60_DATA}></EchartLine>
+                    <Accordion.Panel header="IQS(K227)" className="chart-item">
+                        <EchartLine
+                            series={state.AftersalesIssue60_DATA}
+                        />
                     </Accordion.Panel>
-                    <Accordion.Panel header="PRTS(60%)" className="chart-item">
-                        <EchartLine info={state.EIR_INFO} chartData={[]}></EchartLine>
-                    </Accordion.Panel>
-                    <Accordion.Panel header="PRTS(60%)" className="chart-item">
-                        Text text text text text text text text text text text text text text text
+                    <Accordion.Panel header="DV by X MRD" className="chart-item">
+                        <EchartLine
+                            series={state.AftersalesIssue60_DATA}
+                        />
                     </Accordion.Panel>
                 </Accordion>
             </div>
