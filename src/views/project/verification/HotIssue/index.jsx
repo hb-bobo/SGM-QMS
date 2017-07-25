@@ -1,28 +1,46 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-
+import mixins from '@/decorator/mixins';
+import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
 import Scroller from '@/components/scroller';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
 
-class VerificationDetails extends React.Component {
+var subProjectId = null;
+/* 热点问题 */
+@mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
+class HotIssue extends React.Component {
     static defaultProps = {
-        dataSource: []
+        getListDataAPI: '/ProjectQuality/mListHotIssue',	
     }
     static propTypes = {
-        dataSource: PropTypes.array,
-        selectReLvl: PropTypes.func.isRequired
+        getListDataAPI: PropTypes.string.isRequired
+    }
+    static contextTypes = {
+        router: PropTypes.object
     }
     state = {
         selectReLvl: ""
     }
+    componentDidMount () {
+        subProjectId = this.context.router.route.match.params.subProjectId;
+        this.getListData('down', {
+            subProjectId: subProjectId,
+            hotLevel: 0
+        });
+    }
+    /* 评审级别查询刷新 */
     selectChange = (ev) => {
-        this.props.selectReLvl(ev.target.value);
-    }   
+        var value = ev.target.value;
+        this.getListData('down', {
+            subProjectId: subProjectId,
+            hotLevel: value
+        });
+    }  
     render () {
         intl.setMsg(require('@/static/i18n').default);
-        var { dataSource } = this.props;
+        var { listData } = this.state;
         return (
             <div>
                 <div className="item-top flex-row">
@@ -31,15 +49,21 @@ class VerificationDetails extends React.Component {
                     </div>
                     <div className="flex-col-2">                        
                         <select onChange={this.selectChange} style={{marginLeft: '8px'}}>
-                            <option value="">请选择</option>
+                            <option value="0">所有</option>
                             <option value="1">EQR专题</option>
                             <option value="2">EQR常规</option>
                             <option value="3">项目热点</option>
                         </select>
                     </div>
                 </div>
-                <Scroller autoSetHeight={true} >
-                    {dataSource.map((item, i) => {
+                <Scroller
+                    autoSetHeight={true}
+                    onPullupLoading={() => this.loadingMore()}
+                    onPulldownLoading={() => this.getListData('down')}
+                    config={this.state.scrollConfig}
+                    ref="scroller"
+                >
+                    {listData.map((item, i) => {
                         return (
                             <div key={i} className="item">
                                 <SpaceRow height="0.4em"/>
@@ -113,4 +137,4 @@ class VerificationDetails extends React.Component {
     }
 }
 
-export default VerificationDetails
+export default HotIssue

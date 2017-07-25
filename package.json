@@ -4,9 +4,15 @@
   "private": true,
   "proxy": {
     "/local": {
-      "target": "http://10.11.147.8:8090",
+      "target": "http://10.6.96.182:8090",
       "pathRewrite": {
         "/local": ""
+      }
+    },
+    "/local2": {
+      "target": "http://10.6.96.96:8090",
+      "pathRewrite": {
+        "/local2": ""
       }
     }
   },

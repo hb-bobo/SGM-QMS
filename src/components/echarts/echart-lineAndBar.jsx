@@ -3,21 +3,22 @@ import ReactEchartsCore from 'echarts-for-react/lib/core';
 import echarts from 'echarts/lib/echarts';
 import PropTypes from 'prop-types';
 import 'echarts/lib/chart/line';
+import 'echarts/lib/chart/bar';
 import 'echarts/lib/component/tooltip';
 import 'echarts/lib/component/legend';
 // 缩放(暂时只开发了缩放宽度的功能)
 // import TouchZoom from '@/components/zoom';
 
-class EchartLine extends React.Component {
+export default class EchartLineAndBar extends React.Component {
     static defaultProps = {
         style: {
             height: "300px",
             width: "100%"
         },
         yFormat: "{value} %", // y轴上的格式
-        legendData: ['目标值','实际值'],
+        legendData: ['落实率', '应该开启', '实际开启'],
         showLegend: true,
-        color: ['#EC2121', '#4e7fac'], // line color
+        color: ['#c23531', 'blue', 'green'], // line color
         series: [],
     }
     static propTypes = {
@@ -118,60 +119,52 @@ class EchartLine extends React.Component {
 
 // legend.data color series formatter默认值在此设置无效,到defaultProps设置
 var getOptions = function () {
-    return {
-        tooltip : {
-            trigger: 'axis'
+    return  {
+        grid: {top:30, left: 45, right: 30, bottom: 40},
+        tooltip: {
+            trigger: 'axis',
+            formatter: '{a1}:{c1}<br/>{a2}:{c2}<br/>{a0}:{c0}%'
         },
         legend: {
             show: true,
-            data:['目标值', '实际值'],
+            data: [],
             right: 10
         },
-        grid: {top:30, left: 45, right: 30, bottom: 40},
-        xAxis: [{
-            type: 'category',
-            data: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-            axisLabel :{  
-                interval:0,
-                textStyle: {
-                    fontStyle: 50
-                }
-            }
-        }],
-        yAxis: [{
-            type: 'value',
-            axisLabel: {
-                show: true,
-                interval: 'auto',
-                formatter: '{value} %',
-                textStyle: {
-                    fontStyle: 50
-                }
-            },
-            splitLine:{
-                show:false
-            }
-        }],
-        series: [
+        xAxis: [
             {
-                name: "目标值",
-                type: "line",
-                data: []
-            },
-            {
-                name: "实际值",
-                type: "line",
-                label: {
-                    normal: {
-                        show: true
-                    }
-                },
-                data: []
+                type: 'category',
+                data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                axisLabel :{  
+                    interval:0   
+                }
             }
         ],
-        color: ['#EC2121', '#4e7fac']
-    }
+        yAxis: [
+            {
+                type: 'value',
+                axisLabel: {
+                    show: true,
+                    interval: 'auto',
+                    formatter: '{value}'
+                },
+                splitLine:{
+                    show:false
+                }
+            },
+            {
+                type: 'value',
+                axisLabel: {
+                    show: true,
+                    interval: 'auto',
+                    formatter: '{value} %'
+                },
+                splitLine:{
+                    show:false
+                }
+            }
+        ],
+        series: [
+        ],
+        color: []
+    };
 }
-
-
-export default EchartLine;

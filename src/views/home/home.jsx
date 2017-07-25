@@ -23,7 +23,9 @@ class HomePage extends React.Component{
     store: PropTypes.object
   }
   state = {
-    showMore: false
+    showMore: false,
+    personalInfo: [],
+    selectedId: {}
   }
   componentWillMount () {
     var Home = this;
@@ -54,7 +56,9 @@ class HomePage extends React.Component{
         }); */
         
         POST('enter.do', {
-            data: 'userName=' + fhname,
+            data: {
+              
+            }
         })
         .then((res) => {
           if (!res.success) {
@@ -71,6 +75,19 @@ class HomePage extends React.Component{
     document.cookie = `empId=${empId};`;
   }
   componentDidMount () {
+    POST('/monthReport/mIndex', {
+        data:{
+          empId: '107195'
+        }
+    })
+    .then((res) => {
+      if (res.success) {
+        this.setState({
+          personalInfo: res.data
+        });
+        this.changeId('B6100201');
+      }
+    })
   }
   /*常用的菜单 element*/
   commonMenu () {
@@ -83,7 +100,7 @@ class HomePage extends React.Component{
             </Link>
           </div>
           <div className="flex-col-1">
-            <Link to="/manage/quality-after-sale">
+            <Link to="/manage/aftermarket">
               <MenuButton iconName="after-sale" text="售后质量" bgName="leftBottom"/>
             </Link>
           </div>
@@ -121,8 +138,21 @@ class HomePage extends React.Component{
       </div>
     )
   }
+  /* change身份 */
+  changeId (id) {
+    this.state.personalInfo.some((info) => {
+      if (info.DEPT_ID === id) {
+        this.setState({
+          selectedId: info
+        });
+        return true;
+      }
+      return false;
+    });
+  }
   render () {
     intl.setMsg(require('./locale'));
+    var selectedId = this.state.selectedId;
      return (
         <div className="home" style={{height: window.innerHeight}}>
           <div className="home-top" style={homeTopBg}>
@@ -135,11 +165,11 @@ class HomePage extends React.Component{
               <div className="flex-col-8">
                 <div style={{paddingBottom: '10px', marginBottom: '10px'}}>
                   <span>{intl.get('job')}: </span>
-                  <span>工程师</span>
+                  <span>{selectedId.POSIT_DESC}</span>
                 </div>
                 <div>
                   <span>{intl.get('department')}: </span>
-                  <span>EQDs</span>
+                  <span>{selectedId.DEPT_CHN_DESC}</span>
                 </div>
               </div>
               <div className="flex-col-2">

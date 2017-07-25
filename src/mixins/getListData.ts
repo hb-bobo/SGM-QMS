@@ -1,18 +1,22 @@
 import { POST } from '@/plugins/fetch';
 import AppConfig from '@/AppConfig';
-
+/*必备参数 */
 interface Param {
     empId: string,
     pageSize: number | string,
     pageNumber: number | string,
     positNum: string
 }
+/*额外的参数 */
+interface ExtraParam {
+    [x: string]: any
+}
 /**
  * 加载数据
  * @param {'up' | 'down'} 上拉还是下拉
  * @param {string[]} (需要额外传参时用) 取state上的key(参数都放state上)
  */
-export default function getListData (this: any, action: string, stateKes: string[]): void {
+export default function getListData (this: any, action: string, params: ExtraParam): void {
 
     if (action === 'down') {
         this.setState({
@@ -34,11 +38,13 @@ export default function getListData (this: any, action: string, stateKes: string
         'pageNumber': this.state.pageNumber,
         'positNum': 'A3010274'
     }
-    // 如果需要额外传参，就从state上取，并合并
-    if (Array.isArray(stateKes)) {
-        stateKes.forEach((key) => Object.assign(defaultParam, {
-            [key]: this.state[key]
-        }));
+    // 如果需要额外传参，就并合并
+    for (let key in params) {
+        if (defaultParam[key] !== undefined) {
+            throw Error('额外的参数的key有重复');
+        } else {
+            defaultParam[key] = params[key];
+        }
     }
     // AppConfig.listConfig.count 每次加多少条
     POST(this.props.getListDataAPI, {

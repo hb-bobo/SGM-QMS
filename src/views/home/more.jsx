@@ -23,7 +23,7 @@ const MoreMenu = (props) => {
                         </Link>
                     </div>
                     <div className="flex-col-1">
-                        <Link to="/manage/quality-after-sale">
+                        <Link to="/manage/aftermarket">
                             <MenuButton iconName="after-sale" text="售后质量" bgName="leftBottom"/>
                         </Link>
                     </div>

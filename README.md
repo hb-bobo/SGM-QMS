@@ -43,3 +43,6 @@ yarn build
 
 ```
 
+# 代理设置
+package.json 的proxy
+

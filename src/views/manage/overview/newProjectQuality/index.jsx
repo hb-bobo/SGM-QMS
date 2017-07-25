@@ -36,11 +36,11 @@ class NewProjectQuality extends React.Component {
      * go 项目质量验证总览, 目前是只有热点问题
      * path = /project/verification
      */
-    goHotIssue = () => {
-        this.context.router.history.push('/project/verification')
+    goHotIssue = (subProjectId) => {
+        this.context.router.history.push('/project/verification/' + subProjectId);
     } 
     render () {
-        var { listData } = this.state;console.log(this.state)
+        var { listData } = this.state;
         intl.setMsg(require('./locale'));
         var { lang } = this.context;
         // timingName的样式，中英文差距大
@@ -73,7 +73,7 @@ class NewProjectQuality extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="flex-col-1" onClick={() => {this.goHotIssue()}}>
+                                <div className="flex-col-1" onClick={() => {this.goHotIssue(item.subProjectId)}}>
                                     <Circle value={item.qualityRisk}></Circle>
                                 </div>
                             </div>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import objectArray from '@/utils/array/objectArray';
+
 import '../style/common.css';
 
 var containerStyle = {
@@ -57,6 +57,10 @@ class HSelect extends React.Component {
             emptyText
         } = this.props;
         var optionsData = options;
+        if (optionsData.length === 0) {
+            // First empty
+            optionsData.unshift({value: '', text: emptyText});
+        }
         if (options[0].value === undefined && options[0].text === undefined) {
             throw Error('格式有误: -> [{text: any, value: any}]');
         }
@@ -68,8 +72,7 @@ class HSelect extends React.Component {
         if (this.context.language === 'en') {
             emptyText = 'Please Select';
         }
-        // First empty
-        optionsData.unshift({value: '', text: emptyText});
+        
         return (
             <div className="form-container" style={Object.assign(containerStyle, this.props.containerStyle)}>
                 <select

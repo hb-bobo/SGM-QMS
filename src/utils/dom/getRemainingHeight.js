@@ -4,10 +4,12 @@
  * @return {number} element height
 */
 var getRemainingHeight = function (element) {
-  if (element) {
+  if (element instanceof HTMLElement) {
     var offsetHeight = element.getBoundingClientRect().top
     var clintH = document.documentElement.clientHeight
     return (clintH - offsetHeight)
+  } else {
+    throw Error('must be a dom');
   }
 }
 export default getRemainingHeight

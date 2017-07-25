@@ -50,13 +50,10 @@ class HotIssueReviewPlan extends React.Component {
     }
     /* 评审计划查询刷新 */
     selectHis = (value) => {
-        var listData = [{prblmNo:"1111",currentStatus:"G",prblmDesc:"1111",projectName:"11111",reviewLevel:"1111",prblmSeverity:1,dept:"1111",stockDay:1,crntPhase:"1111"},
-                                {prblmNo:"222",currentStatus:"G",prblmDesc:"222",projectName:"222",reviewLevel:"222",prblmSeverity:1,dept:"222",stockDay:1,crntPhase:"222"}]
-        this.setState({
-            listData: listData
-        });
         this.refs.scroller.to('y', 50);
-        this.getListData('down', ['time']);
+        this.getListData('down', {
+            time: this.state.time
+        });
         
     }
     render () {

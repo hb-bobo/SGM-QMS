@@ -122,7 +122,7 @@ export const routes = [
     component: Project,
     routes: [
       {
-        path: '/project/verification',
+        path: '/project/verification/:subProjectId',
         component: require('@/views/project/verification').default
       },
       {

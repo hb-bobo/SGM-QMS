@@ -3,8 +3,8 @@ import EchartLine from '@/components/echarts/echart-line';
 import { Accordion } from 'antd-mobile';
 import { POST } from '@/plugins/fetch';
 import dateFormat from '@/utils/format/dateFormat';
-// 当前月
-var currMounth = new Date().getMonth();
+import {currMounth, handleLineData, arrToArr} from '../handleChartData';
+
 /* 质量月报->结果指标 */
 class ResultIndex extends React.Component {
     state = {
@@ -220,6 +220,7 @@ class ResultIndex extends React.Component {
                     </Accordion.Panel>
                     <Accordion.Panel header="EIR" className="chart-item">
                         <EchartLine
+                            yFormat="{value}"
                             series={state.EIR_DATA}
                         />
                     </Accordion.Panel>
@@ -235,26 +236,31 @@ class ResultIndex extends React.Component {
                     </Accordion.Panel>
                     <Accordion.Panel header="Quality spill" className="chart-item">
                         <EchartLine
+                            yFormat="{value}"
                             series={state.QualitySpill_DATA}
                         />
                     </Accordion.Panel>
                     <Accordion.Panel header="IPTV(12 MIS)" className="chart-item">
                         <EchartLine
+                            yFormat="{value}"
                             series={state.IPTV12_DATA}
                         />
                     </Accordion.Panel>
                     <Accordion.Panel header="CPV(12 MIS)" className="chart-item">
                         <EchartLine
+                            yFormat="{value}"
                             series={state.CPV12_DATA}
                         />
                     </Accordion.Panel>
                     <Accordion.Panel header="IPTV(24 MIS)" className="chart-item">
                         <EchartLine
+                            yFormat="{value}"
                             series={state.IPTV24_DATA}
                         />
                     </Accordion.Panel>
                     <Accordion.Panel header="CPV(24 MIS)" className="chart-item">
                         <EchartLine
+                            yFormat="{value}"
                             series={state.CPV24_DATA}
                         />
                     </Accordion.Panel>
@@ -267,68 +273,3 @@ class ResultIndex extends React.Component {
 
 export default ResultIndex;
 
-
-/**
- * 处理line chart 数据
- * @param {array} 包含目标值
- * @param {array} 实际值
- * @param {boolean} 是否截取到当前月
- * @return {array} series
- */
-var handleLineData = function (resData0, resData1, isCutMount) {
-    var LineSeries = [
-        {
-            name: "目标值",
-            type: "line",
-            data: []
-        },
-        {
-            name: "实际值",
-            type: "line",
-            label: {
-                normal: {
-                    show: true
-                }
-            },
-            data: []
-        }
-    ];
-    // 目标值都是一样，取target
-    if (resData0[0] !== undefined) {
-        var item = resData0[0];
-        // 取公司目标值
-        var targetValue = item.patacTargetValue;
-        for (let i = 0; i < 12; i++) {
-            LineSeries[0].data.push(targetValue)
-        }
-    }
-    // 先把12个月填空
-    for (let i = 0; i < 12; i++) {
-        LineSeries[1].data.push('')
-    }
-    Array.isArray(resData1) && resData1.some(function (item, i) {
-        // 跳出，截取到当前月份的数据
-        if (isCutMount && i >= currMounth) {
-            return true;
-        }
-        //把month可能只有一个
-        LineSeries[1].data[item.MONTH - 1] = item.COUNT || 0;
-        return false;
-    });
-    return LineSeries;
-}
-
-/**
- * 数据格式化 "[0,1,2,2]" -> [{MONTH: 1, COUNT:0}, {MONTH: 2, COUNT:1}, {MONTH: 3, COUNT:2}]
- * @param {Array} arr 
- */
-var arrToArr = function (arr) {
-    var res = [];
-    arr.forEach(function (item, i) {
-        res.push({
-            MONTH: i + 1,
-            COUNT: item
-        });
-    });
-    return res;
-}

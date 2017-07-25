@@ -1,4 +1,4 @@
-// 是否开发环境 (locale 去 package.json改代理ip)
+// 是否开发环境 (locale 去 package.json 的proxy改代理ip)
 const isDev = process.env.NODE_ENV === 'development';
 const BASE_URL = window.location.origin + window.location.pathname.replace(/\w+\.(html|jsp)/, '');
 

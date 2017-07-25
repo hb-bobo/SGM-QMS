@@ -13,7 +13,7 @@ import intl from '@/components/intl';
 
 /*EQR热点评审 */
 
-class Overview extends React.Component {
+class EQRHotIssue extends React.Component {
     state = {
         title: '',
         listData: [],
@@ -61,11 +61,7 @@ class Overview extends React.Component {
                     }   
                 />
                 <div>
-                    {/*列表*/
-                        this.state.isIndex? 
-                            <AssistDetails dataSource={this.state.listData}/>
-                            : null
-                    }
+                    未开通
                 </div>
                 {/*route*/}
                 {routes.map((route, i) => {
@@ -78,4 +74,4 @@ class Overview extends React.Component {
     }
 }
 
-export default Overview
+export default EQRHotIssue
