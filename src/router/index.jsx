@@ -58,8 +58,8 @@ export const routes = [
         component: require('@/views/manage/report').default,
       },
       {
-        path: '/manage/quality-after-sale',
-        component: require('@/views/manage/quality-after-sale').default,
+        path: '/manage/aftermarket',
+        component: require('@/views/manage/aftermarket').default,
       },
       {
         path: '/manage/overview',
