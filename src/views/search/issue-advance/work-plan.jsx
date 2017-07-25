@@ -54,6 +54,10 @@ class WorkPlan extends React.Component {
 
     componentDidMount () {
         this.parent = this.props.parent;
+        this.selectWorkPlan();
+    }
+    // 查询工作计划
+    selectWorkPlan = () => {
         POST('/mproblem/getWorkPlan', {
         data: {
             id: this.props.prblmId,
@@ -198,7 +202,7 @@ class WorkPlan extends React.Component {
                                                 <div className="flex-col-1">
                                                     <div>
                                                         <span>{intl.get('QMS.ACD')}: </span>
-                                                        <span className="right">{item.xx}</span>
+                                                        <span className="right">{item.pwActlFinishDate}</span>
                                                     </div>
                                                 </div>
                                             </div>
