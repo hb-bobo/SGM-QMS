@@ -17,6 +17,7 @@ export class SILIssueAdvance extends React.Component {
   }
   render() {
     intl.setMsg(require('@/static/i18n').default, require('./locale'))
+    var issueData = this.props.parent.state.issueData;
     return (
       <div>
         <div className="issue-advance-item flex-row">
@@ -25,7 +26,7 @@ export class SILIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              BT语音拨号关联异常（检索项过多）
+              {issueData.prblmDesc}
             </span>
           </div>
         </div>
@@ -35,7 +36,7 @@ export class SILIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              4/4
+              {issueData.crntPhase}
             </span>
           </div>
         </div>
@@ -45,7 +46,7 @@ export class SILIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              尹松Yin Song
+              {issueData.crntRspnsUser}
             </span>
           </div>
         </div>
@@ -54,11 +55,11 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RiskStatus')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <select name="" id="">
-              <option value="1">白色</option>
-              <option value="1">黄色</option>
-              <option value="1">红色</option>
-              <option value="1">绿色</option>
+            <select name="" id="" value={issueData.estimatePrblmStatus}>
+              <option value="w">白色</option>
+              <option value="Y">黄色</option>
+              <option value="R">红色</option>
+              <option value="G">绿色</option>
             </select>
           </div>
         </div>
@@ -67,7 +68,9 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.DiagnoseAssistance')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <Link to="/search/assist">0</Link>
+            <Link to={"/search/assist?id="+issueData.prblmId}>
+              {issueData.assistDiagnoseNum}
+            </Link>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -75,7 +78,9 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.SeverityLevel')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span>B</span>
+            <span>
+              {issueData.prblmSeverity}
+            </span>
           </div>
         </div>
         <SpaceRow height={6} />
@@ -84,7 +89,9 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RootCauseAnalysis')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span>No enough space between beauty cover and CAC duct.No enough space between beauty cover and CAC duct.</span>
+            <span>
+              {issueData.rootCause}
+            </span>
           </div>
         </div>
         <SpaceRow height={6} />
@@ -96,7 +103,9 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.STSolution')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span></span>
+            <span>
+              {issueData.stDesc}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -104,7 +113,9 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.STSolutionBPDate')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.stBreakDate}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -112,7 +123,9 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.STSolutionBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.stBreakPhase}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -120,7 +133,9 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.LTSolution')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.ltDesc}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -128,7 +143,9 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.PlannedBPDate')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.ltPlanBreakDate}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -136,7 +153,9 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.PlannedBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.ltPlanBreakPhase}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -144,7 +163,9 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.ActuralBPDate')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.ltActlBreakDate}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -152,7 +173,9 @@ export class SILIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.ActuralBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.ltActlBreakPhase}
+            </span>
           </div>
         </div>
       </div>

@@ -16,6 +16,7 @@ export class ReadacrossIssueAdvance extends React.Component {
   }
   render() {
     intl.setMsg(require('@/static/i18n').default, require('./locale'))
+    var issueData = this.props.parent.state.issueData;
     return (
       <div>
         <div className="issue-advance-item flex-row">
@@ -24,7 +25,7 @@ export class ReadacrossIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              DCT变速箱-R档切换到N档时异响
+              {issueData.prblmDesc}
             </span>
           </div>
         </div>
@@ -34,7 +35,7 @@ export class ReadacrossIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              Solution
+              {issueData.crntPhase}
             </span>
           </div>
         </div>
@@ -44,7 +45,7 @@ export class ReadacrossIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              刘平Liu Ping
+              {issueData.crntRspnsUser}
             </span>
           </div>
         </div>
@@ -53,11 +54,11 @@ export class ReadacrossIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RiskStatus')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <select name="" id="">
-              <option value="1">白色</option>
-              <option value="1">黄色</option>
-              <option value="1">红色</option>
-              <option value="1">绿色</option>
+            <select name="" id="" value={issueData.estimatePrblmStatus}>
+              <option value="w">白色</option>
+              <option value="Y">黄色</option>
+              <option value="R">红色</option>
+              <option value="G">绿色</option>
             </select>
           </div>
         </div>
@@ -67,7 +68,7 @@ export class ReadacrossIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              EIR-R-K21-61-LIR-0044
+              {issueData.parentPrblmNo}
             </span>
           </div>
         </div>
@@ -76,7 +77,9 @@ export class ReadacrossIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.ParentIssueSeverity')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span>3</span>
+            <span>
+              {issueData.parentPrblmServerity}
+            </span>
           </div>
         </div>
         <SpaceRow height={6} />
@@ -85,7 +88,9 @@ export class ReadacrossIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RootCauseAnalysis')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span>No enough space between beauty cover and CAC duct.No enough space between beauty cover and CAC duct.</span>
+            <span>
+              {issueData.rootCauseAnalysis}
+            </span>
           </div>
         </div>
         <SpaceRow height={6} />
@@ -97,7 +102,9 @@ export class ReadacrossIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.STSolution')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span></span>
+            <span>
+              {issueData.shortMsr}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -105,7 +112,9 @@ export class ReadacrossIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.STSolutionBPDate')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.shortBreakDate}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -113,7 +122,9 @@ export class ReadacrossIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.STSolutionBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.shortBreakPhase}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -121,7 +132,9 @@ export class ReadacrossIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.LTSolution')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.longMsr}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -129,7 +142,9 @@ export class ReadacrossIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.PlannedBPDate')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.frcstBreakDate}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -137,7 +152,9 @@ export class ReadacrossIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.PlannedBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.frcstBreakPhase}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -145,7 +162,9 @@ export class ReadacrossIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.ActuralBPDate')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.actlBreakDate}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -153,7 +172,9 @@ export class ReadacrossIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.ActuralBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.actlBreakPhase}
+            </span>
           </div>
         </div>
       </div>

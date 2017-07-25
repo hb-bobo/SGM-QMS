@@ -37,6 +37,7 @@ export class IssueAdvance extends React.Component {
     hotUpOpen: false,
     issueUPOpen: false,
     issueData: {},
+    pc: {}
   }
 
   componentWillMount () {
@@ -48,15 +49,35 @@ export class IssueAdvance extends React.Component {
 
   componentDidMount () {
     var id = querystring.parse(this.props.location.search).id;
-    POST('/mproblem/mPrtsDetail', {
+    var url = "";
+    if(this.state.advType === "PRTS"){
+      url = '/mproblem/mPrtsDetail';
+    }else if(this.state.advType === "EIR"){
+      url = '/mproblem/mEirDetail';
+    }else if(this.state.advType === "QDCPIR"){
+      url = '/mproblem/mQdcDetail';
+    }else if(this.state.advType === "Readacross"){
+      url = '/mproblem/mReadDetail';
+    }else if(this.state.advType === "SIL"){
+      url = '/mproblem/mSilDetail';
+    }else if(this.state.advType === "VE"){
+      url = '/mproblem/mVeDetail';
+    }else if(this.state.advType === "VOC"){
+      url = '/mproblem/mVocDetail';
+    }
+    POST(url, {
       data: {
         id: id
       }
     }).then((res) => {
         if (res.success === true) {
-          console.log(res.data)
+          var pc = {};
+          if(res.pc && res.pc.length > 0){
+            pc = res.pc[0];
+          }
           this.setState({
-            issueData : res.data
+            issueData : res.data,
+            pc : pc
           });
           this.props.actions.upWorkPlanListData({
             action: 'update',
@@ -84,23 +105,47 @@ export class IssueAdvance extends React.Component {
   }
 
   goHotUp = () => {
-    intl.setMsg(require('@/static/i18n').default, require('./locale'));
-    this.setState({
-      hotUpOpen: true,
-      title: intl.get('HotEscalate'),
-      isIndex: false
-    });
-    return false
+    POST('/mproblem/getMaxReviewLog', {
+      data: {
+        id: this.state.issueData.prblmId
+      }
+    }).then((res) => {
+      if (res.success === true) {
+        if(res.result === 'C'){
+          alert("已存在未审核的申请");
+        }else{
+          intl.setMsg(require('@/static/i18n').default, require('./locale'));
+          this.setState({
+            hotUpOpen: true,
+            title: intl.get('HotEscalate'),
+            isIndex: false
+          });
+          return false
+        }
+      }
+    })
   }
 
   goIssueUp = () => {
-    intl.setMsg(require('@/static/i18n').default, require('./locale'));
-    this.setState({
-      issueUPOpen: true,
-      title: intl.get('IssueEscalate'),
-      isIndex: false
-    });
-    return false
+    POST('/mproblem/getMaxUpgradeLog', {
+      data: {
+        id: this.state.issueData.prblmId
+      }
+    }).then((res) => {
+      if (res.success === true) {
+        if(res.result === 'C'){
+          alert("已存在未审核的申请");
+        }else{
+          intl.setMsg(require('@/static/i18n').default, require('./locale'));
+          this.setState({
+            issueUPOpen: true,
+            title: intl.get('IssueEscalate'),
+            isIndex: false
+          });
+          return false
+        }
+      }
+    })
   }
 
   render() {

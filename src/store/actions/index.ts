@@ -5,7 +5,8 @@ import {
     CLEAR_LIST_DATA,
     CLEAR_TEMP_DATA,
     UP_WORK_PLAN_EDIT_DATA,
-    UP_WORK_PLAN_LIST_DATA
+    UP_WORK_PLAN_LIST_DATA,
+    FILTER_WORK_PLAN_LIST_DATA
 } from './actionTypes';
 // import AppConfig from '../../AppConfig';
 import { Action } from '../../types';
@@ -53,6 +54,14 @@ export const upWorkPlanListData: Function = function (payload: any): Action {
         payload: payload
     }
 }
+/* Action:过滤工作计划列表 */
+export const filterWorkPlanListData: Function = function (payload: any): Action {
+    return {
+        type: FILTER_WORK_PLAN_LIST_DATA,
+        payload: payload
+    }
+}
+
 /*异步action*/
 export const getListData: Function = function (payload: any): any  {
     return function (dispatch: Function) {

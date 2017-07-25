@@ -17,6 +17,7 @@ export class VEIssueAdvance extends React.Component {
   }
   render() {
     intl.setMsg(require('@/static/i18n').default)
+    var issueData = this.props.parent.state.issueData;
     return (
       <div>
         <div className="issue-advance-item flex-row">
@@ -25,7 +26,7 @@ export class VEIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              Decklid Rear Body Opening Appearance Requirement
+              {issueData.prblmDesc}
             </span>
           </div>
         </div>
@@ -35,7 +36,7 @@ export class VEIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              Complete
+              {issueData.crntPhase}
             </span>
           </div>
         </div>
@@ -45,7 +46,7 @@ export class VEIssueAdvance extends React.Component {
           </div>
           <div className="flex-col-10 right">
             <span>
-              宗婉婷Zong Wanting
+              {issueData.crntRspnsUser}
             </span>
           </div>
         </div>
@@ -54,11 +55,11 @@ export class VEIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RiskStatus')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <select name="" id="">
-              <option value="1">白色</option>
-              <option value="1">黄色</option>
-              <option value="1">红色</option>
-              <option value="1">绿色</option>
+            <select name="" id="" value={issueData.estimatePrblmStatus}>
+              <option value="w">白色</option>
+              <option value="Y">黄色</option>
+              <option value="R">红色</option>
+              <option value="G">绿色</option>
             </select>
           </div>
         </div>
@@ -67,7 +68,9 @@ export class VEIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.DiagnoseAssistance')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <Link to="/search/assist">0</Link>
+            <Link to={"/search/assist?id="+issueData.prblmId}>
+              {issueData.assistDiagnoseNum}
+            </Link>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -75,7 +78,9 @@ export class VEIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.SeverityLevel')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span></span>
+            <span>
+              {issueData.prblmSeverity}
+            </span>
           </div>
         </div>
         <SpaceRow height={6} />
@@ -84,7 +89,9 @@ export class VEIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RootCauseAnalysis')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span>No enough space between beauty cover and CAC duct.No enough space between beauty cover and CAC duct.</span>
+            <span>
+              {issueData.rootCauseAnalysis}
+            </span>
           </div>
         </div>
         <SpaceRow height={6} />
@@ -96,7 +103,9 @@ export class VEIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.Solution')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span></span>
+            <span>
+              {issueData.solutioinDesc}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -104,7 +113,9 @@ export class VEIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.ActuralBPDate')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.actlBreakDate}
+            </span>
           </div>
         </div>
         <div className="issue-advance-item flex-row">
@@ -112,7 +123,9 @@ export class VEIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.ActuralBPPhase')}: </label>
           </div>
           <div className="flex-col-10 right"> 
-            <span></span>
+            <span>
+              {issueData.actlBreakPhase}
+            </span>
           </div>
         </div>
       </div>

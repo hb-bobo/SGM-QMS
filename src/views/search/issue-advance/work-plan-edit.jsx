@@ -72,7 +72,6 @@ export class WorkPlanEdit extends React.Component {
         }
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
-        console.log(url,this.props.data)
         POST(url, {
         headers: headers,
         data: {
@@ -88,7 +87,9 @@ export class WorkPlanEdit extends React.Component {
         }).then((res) => {
             if (res.success === true) {
                 this.props.parent.selectWorkPlan();
-                //this.parentStateChange();
+                this.parentStateChange();
+            }else{
+                alert("提交失败");
             }
         })
     }

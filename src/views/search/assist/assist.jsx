@@ -10,6 +10,8 @@ import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import AssistDetails from './details';
 import intl from '@/components/intl';
+import { POST } from '@/plugins/fetch';
+import querystring from '@/utils/tools/querystring';
 // import goBack from '@/mixin/goBack';
 // import mixins from '@/mixins/mixins';
 
@@ -25,6 +27,7 @@ import intl from '@/components/intl';
 // @mixins([goBack])
 class Assist extends React.Component {
     state = {
+        pageNumber: 1,
         title: '',
         listData: [],
         isIndex: true, // 除了主页显示itemList 其他页面都消失,
@@ -36,12 +39,21 @@ class Assist extends React.Component {
         store: PropTypes.object
     }
     componentDidMount ()　{
-        var listData = [{sourcePrblmNo:"222",prblmDesc:"222",prjctName:"222",crntRspnsUser:"222",prblmSeverity:1,crntRspnsDept:"222",crntPhase:"222"},
-                        {sourcePrblmNo:"111",prblmDesc:"111",prjctName:"111",crntRspnsUser:"111",prblmSeverity:1,crntRspnsDept:"111",crntPhase:"111"}]
-        this.setState({
-            title: intl.get('Detail'),
-            listData: listData
-        });
+        var id = querystring.parse(this.props.location.search).id;
+        POST('/mproblem/assistList', {
+        data: {
+            id: id,
+            page: this.state.pageNumber
+        }
+        }).then((res) => {
+            if (res.success === true) {
+                this.setState({
+                    title: intl.get('Detail'),
+                    listData: res.result,
+                    pageNumber: this.state.pageNumber+1
+                });
+            }
+        })
     }
     /*back*/
     goBack = () => {

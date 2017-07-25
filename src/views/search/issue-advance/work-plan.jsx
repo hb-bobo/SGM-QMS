@@ -13,7 +13,6 @@ import SpaceRow from '@/components/space-row';
 import Scroller from '@/components/scroller';
 import WorkPlanEdit from './work-plan-edit';
 import { POST } from '@/plugins/fetch';
-import querystring from '@/utils/tools/querystring';
 import intl from '@/components/intl';
 /*
     planDesc         "描述"
@@ -107,10 +106,20 @@ class WorkPlan extends React.Component {
 
     delItem = (workPlanID) => {
         if (window.confirm('确定删除?')) {
-            this.props.actions.upWorkPlanListData({
-                action: 'del',
-                workPlanID: workPlanID
-            });
+            var headers = new Headers();
+            headers.append('Content-Type', 'application/json');
+            POST('/mproblem/deleteWorkPlan', {
+            headers: headers,
+            data: {
+                workPlanID: workPlanID,
+            }
+            }).then((res) => {
+                if (res.success === true) {
+                    this.selectWorkPlan();
+                }else{
+                    alert("操作失败");
+                }
+            })
         }
     }
 
@@ -119,7 +128,7 @@ class WorkPlan extends React.Component {
             filter: ev.target.value
         });
     }
-
+    
     render () {
         intl.setMsg(require('@/static/i18n').default)
         var allData = this.state.allWorkPlan;
@@ -129,9 +138,11 @@ class WorkPlan extends React.Component {
                 return item;
             }else if(item.prblmPhaseID === this.state.filter){
                 return item;
+            }else{
+                return null;
             }
         })
-        console.log(data)
+
         var { workPlanEditData } = this.props;
 
         return (
