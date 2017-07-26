@@ -24,9 +24,9 @@ class Notice extends React.Component {
         });
     }
     /*调到操作页面*/
-    goAdvance = (type) => {
+    goAdvance = (type, prblmNo) => {
         if (type) {
-            this.props.history.push('/search/issue-advance/' + type);
+            this.props.history.push('/search/issue-advance/' + type + `?prblmNo=${prblmNo}`);
             this.setState({
                 isIndex: false
             });

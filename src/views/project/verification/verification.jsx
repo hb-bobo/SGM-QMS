@@ -36,7 +36,15 @@ class Verification extends React.Component {
             });
         }
     }
-    
+    /*跳到推进页面*/
+    goAdvance = (type, id) => {
+        if (type) {
+            this.props.history.push('/search/issue-advance/' + type + '?id='+id);
+            this.setState({
+                isIndex: false
+            });
+        }
+    }
     render () {
         intl.setMsg(require('@/static/i18n').default);
         // var routes = [];

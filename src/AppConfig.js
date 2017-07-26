@@ -4,7 +4,7 @@ const BASE_URL = window.location.origin + window.location.pathname.replace(/\w+\
 
 const AppConfig = {
     isDev: isDev,
-    API: isDev? BASE_URL + 'local/QMS': BASE_URL,
+    API: isDev? BASE_URL + 'localhost/QMS': BASE_URL,
     language: (window.navigator.language || window.navigator.browserLanguage).split('-')[0],
     listConfig: {
         count: 10 // 每个list每次加载多少条数据

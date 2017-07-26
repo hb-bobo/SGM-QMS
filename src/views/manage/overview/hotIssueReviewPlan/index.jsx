@@ -13,13 +13,6 @@ import dateFormat from '@/utils/format/dateFormat';
 // import AppConfig from '@/AppConfig';
 // import { POST } from '@/plugins/fetch';
 
-/* currentStatus 是中文
-    白 W
-    黄 Y
-    红 R
-    绿 G
-    黑 B
-*/
 /*质量评审计划*/
 @mixins(
     componentWillMount,
@@ -41,7 +34,9 @@ class HotIssueReviewPlan extends React.Component {
         time: dateFormat()
     }
     componentDidMount () {
-        this.getListData('down', ['time']);
+        this.getListData('down', {
+            time: this.state.time
+        });
     }
     bind = (key) => {
         return (e) => {
@@ -54,7 +49,6 @@ class HotIssueReviewPlan extends React.Component {
         this.getListData('down', {
             time: this.state.time
         });
-        
     }
     render () {
         intl.setMsg(require('@/static/i18n').default);
@@ -83,7 +77,9 @@ class HotIssueReviewPlan extends React.Component {
                 <Scroller 
                     autoSetHeight={true}
                     onPullupLoading={() => this.loadingMore()}
-                    onPulldownLoading={() => this.getListData('down', ['time'])}
+                    onPulldownLoading={() => this.getListData('down', {
+                        time: this.state.time
+                    })}
                     config={this.state.scrollConfig}
                     ref="scroller"
                 >

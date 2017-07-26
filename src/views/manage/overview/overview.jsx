@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { RouteWithSubRoutes } from '@/router';
 // import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
-// import { fillListData } from '@/store/actions';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';

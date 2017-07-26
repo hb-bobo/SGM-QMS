@@ -59,7 +59,7 @@ class HDate extends React.Component {
     handleChange = (e) => {
         var value = e.target.value;
         var showClear = false;
-        if (value.length > 0) {
+        if (value.length > 0 && this.props.clear === true) {
             showClear = true;
         }
         if (this.state.controllable) {

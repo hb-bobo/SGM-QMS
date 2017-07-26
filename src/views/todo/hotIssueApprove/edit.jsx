@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import RaisedButton from 'material-ui/RaisedButton';
 import pathToJSON from '@/utils/object/pathToJSON';
@@ -11,32 +12,28 @@ import Scroller from '@/components/scroller';
 /*
     s
 */
-
+@connect(
+    // mapStateToProps 取store的state到當前的組件的props上
+    (state) => ({tempData: state.common.tempData})
+)
 class HotIssueEdit extends React.Component {
   static defaultProps = {
-        data: {}
     }
     static propTypes = {
-        data: PropTypes.object,
+        tempData: PropTypes.object,
         parent: PropTypes.instanceOf(React.Component).isRequired
     }
     
     state = {
         reviewTime: ''
     }
-    componentWillMount () {
+    componentDidMount () {
         this.parent = this.props.parent;
-        // 绑定store响应
-        this.$store.subscribe(() => {
-            this.setState(this.$store.getState().common.tempData);
-        });
     }
-
+    componentWillReceiveProps (nextProps) {
+        this.setState(nextProps.tempData);
+    }
     submit = () => {
-        /*this.parent.props.actions.upWorkPlanListData({
-            action: this.props.action,
-            value: this.state
-        });*/
         this.parentStateChange();
     }
     cancel = () => {

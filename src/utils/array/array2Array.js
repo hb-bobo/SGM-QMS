@@ -24,7 +24,7 @@ var array2Array = function (options) {
   if (isArray(arr)) {
     return arr.map(function (item) {
       var itemTemp = {}
-      format.map(function (formatName, index) {
+      format.forEach(function (formatName, index) {
         itemTemp[formatName] = item[originaFormat[index]]
       })
       return itemTemp

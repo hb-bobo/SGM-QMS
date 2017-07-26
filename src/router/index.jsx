@@ -128,6 +128,10 @@ export const routes = [
       {
         path: '/project/overview',
         component: require('@/views/project/overview').default
+      },
+      {
+        path: '/project/EQRHotIssue',
+        component: require('@/views/project/EQRHotIssue').default
       }
     ]
   },
@@ -138,6 +142,10 @@ export const routes = [
   {
     path: '/todo',
     component: Todo
+  },
+  {
+    path: '/department',
+    component: require('@/views/department/').default
   }
 ]
 
@@ -145,7 +153,7 @@ export const routes = [
 // sub routes are added to any route it'll work
 export const RouteWithSubRoutes = (route) => {
   var isExact = route.exact || false;
-  // if exact = true will replace homePafe
+  // if exact = true will replace homePage
   return (
     <ReactCSSTransitionGroup
       transitionName="example"
@@ -156,10 +164,12 @@ export const RouteWithSubRoutes = (route) => {
         exact={isExact}
         render={props => (
         // pass the sub-routes down to keep nesting
+        
           <route.component
-            {...props}
             parent={route.parent}
             routes={route.routes}
+            {...props}
+            
           />
         )}
       />

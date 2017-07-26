@@ -61,7 +61,6 @@ class HotIssueApprove extends React.Component {
         // 设置父级弹出的内容
         parent.setDrawerChildren(
             <HotIssueEdit 
-                data={this.$store.getState().common.tempData}
                 tabValue={parent.tabValue}
                 parent={this}
             />

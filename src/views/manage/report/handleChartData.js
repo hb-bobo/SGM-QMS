@@ -114,14 +114,12 @@ export var handleLineBarData = function (lineData, barData1, barData2, isCutMoun
             data: []
         }
     ];
-    // 落实率，写死
+    //TODO 落实率，写死
     var count = 1;
     do {
         LineBarSeries[0].data.push(100);
-    } while (count < currMounth) {
-        LineBarSeries[0].data.push(100);
         count++;
-    }
+    } while (count <= currMounth)
     
     // 先把12个月填空
     for (let i = 0; i < 12; i++) {

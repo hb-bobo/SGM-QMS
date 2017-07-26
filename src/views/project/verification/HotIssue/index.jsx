@@ -16,16 +16,13 @@ class HotIssue extends React.Component {
     }
     static propTypes = {
         getListDataAPI: PropTypes.string.isRequired,
-        parent: PropTypes.instanof(React.Component)
-    }
-    static contextTypes = {
-        router: PropTypes.object
+        parent: PropTypes.instanceOf(React.Component).isRequired
     }
     state = {
         selectReLvl: ""
     }
     componentDidMount () {
-        subProjectId = this.context.router.route.match.params.subProjectId;
+        subProjectId = this.props.match.params.subProjectId;
         this.getListData('down', {
             subProjectId: subProjectId,
             hotLevel: 0
@@ -34,6 +31,7 @@ class HotIssue extends React.Component {
             title: intl.get('QMS.HotIssues')
         });
     }
+
     /* 评审级别查询刷新 */
     selectChange = (ev) => {
         var value = ev.target.value;
@@ -45,6 +43,7 @@ class HotIssue extends React.Component {
     render () {
         intl.setMsg(require('@/static/i18n').default);
         var { listData } = this.state;
+        var { goAdvance } = this.props.parent;
         return (
             <div>
                 <div className="item-top flex-row">

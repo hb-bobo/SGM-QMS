@@ -3,16 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "proxy": {
-    "/local": {
+    "/@dev": {
       "target": "http://10.6.96.182:8090",
       "pathRewrite": {
-        "/local": ""
+        "/@dev": ""
       }
     },
-    "/local2": {
-      "target": "http://10.6.96.96:8090",
+    "/localhost": {
+      "target": "http://localhost:8080",
       "pathRewrite": {
-        "/local2": ""
+        "/localhost": ""
       }
     }
   },

@@ -49,22 +49,18 @@ export class IssueAdvance extends React.Component {
 
   componentDidMount () {
     var id = querystring.parse(this.props.location.search).id;
-    var url = "";
-    if(this.state.advType === "PRTS"){
-      url = '/mproblem/mPrtsDetail';
-    }else if(this.state.advType === "EIR"){
-      url = '/mproblem/mEirDetail';
-    }else if(this.state.advType === "QDCPIR"){
-      url = '/mproblem/mQdcDetail';
-    }else if(this.state.advType === "Readacross"){
-      url = '/mproblem/mReadDetail';
-    }else if(this.state.advType === "SIL"){
-      url = '/mproblem/mSilDetail';
-    }else if(this.state.advType === "VE"){
-      url = '/mproblem/mVeDetail';
-    }else if(this.state.advType === "VOC"){
-      url = '/mproblem/mVocDetail';
+    var url = '/mproblem/';
+    var params = {
+      "PRTS": 'mPrtsDetail',
+      "EIR": 'mEirDetail',
+      "QDCPIR": 'mQdcDetail',
+      "Readacross": 'mReadDetail',
+      "SIL": 'mSilDetail',
+      "VE": 'mVeDetail',
+      "VOC": 'mVocDetail',
     }
+    url += params[this.state.advType];
+    
     POST(url, {
       data: {
         id: id
@@ -85,10 +81,6 @@ export class IssueAdvance extends React.Component {
           });
         }
     })
-    // this.props.actions.upWorkPlanListData({
-    //   action: 'update',
-    //   value: require('@/static/workPlan.json').result
-    // });
     this.setState({
       title: intl.get('QMS.' + this.state.advType + 'Report')
     });

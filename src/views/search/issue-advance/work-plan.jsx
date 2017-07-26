@@ -136,13 +136,11 @@ class WorkPlan extends React.Component {
         var data = allData.filter((item)=>{
             if(this.state.filter === ''){
                 return item;
-            }else if(item.prblmPhaseID === this.state.filter){
+            } else if(item.prblmPhaseID === this.state.filter){
                 return item;
-            }else{
-                return null;
             }
+            return null;
         })
-
         var { workPlanEditData } = this.props;
 
         return (
