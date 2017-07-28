@@ -48,7 +48,7 @@ export class IssueAdvance extends React.Component {
   }
 
   componentDidMount () {
-    var id = querystring.parse(this.props.location.search).id;
+    var id = querystring.parse(this.props.location.search).problemId;
     var url = '/mproblem/';
     var params = {
       "PRTS": 'mPrtsDetail',
@@ -60,7 +60,7 @@ export class IssueAdvance extends React.Component {
       "VOC": 'mVocDetail',
     }
     url += params[this.state.advType];
-    
+    console.log(id)
     POST(url, {
       data: {
         id: id
@@ -72,8 +72,8 @@ export class IssueAdvance extends React.Component {
             pc = res.pc[0];
           }
           this.setState({
-            issueData : res.data,
-            pc : pc
+            issueData: res.data || {},
+            pc: pc
           });
           this.props.actions.upWorkPlanListData({
             action: 'update',
@@ -103,7 +103,7 @@ export class IssueAdvance extends React.Component {
       }
     }).then((res) => {
       if (res.success === true) {
-        if(res.result === 'C'){
+        if(res.result === 'C' && false){
           alert("已存在未审核的申请");
         }else{
           intl.setMsg(require('@/static/i18n').default, require('./locale'));
@@ -146,6 +146,7 @@ export class IssueAdvance extends React.Component {
     if (this.props.routes) {
         routes = this.props.routes;
     }
+      console.log(this)
     return (
       <div className="issue-advance">
         {/*头部*/}
@@ -163,7 +164,9 @@ export class IssueAdvance extends React.Component {
           <div className={this.state.isIndex ? "advance-top flex-row" : "advance-top flex-row hide"}>
             <div className="flex-col-6">
               <span>{intl.get('QMS.IssueNo')}: </span>
-              <span style={{marginLeft: '1.4em', color: '#6AC4F6'}}>{this.state.issueData.sourcePrblmNo}</span>
+              <span style={{marginLeft: '1.4em', color: '#6AC4F6'}}>
+                {this.state.issueData.sourcePrblmNo}
+              </span>
             </div>
             <SpaceRow height={50} width="1px" backgroundColor="#EEEDED"/>
             <div className="flex-col-4">
@@ -207,7 +210,7 @@ export class IssueAdvance extends React.Component {
           })}
           {/*工作计划*/}
           <div className="work-plan">
-            <WorkPlan prblmId={querystring.parse(this.props.location.search).id} parent={this}/>
+            <WorkPlan prblmId={querystring.parse(this.props.location.search).problemId} parent={this}/>
           </div>
         </Scroller>
       </div>

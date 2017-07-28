@@ -49,7 +49,7 @@ class HotIssueNotice extends React.Component {
                                 <SpaceRow height="0.4em"/>
                                 <div className="item-top flex-row">
                                     <div className="flex-col-9">
-                                        <div onClick={() => {goAdvance(item.source, item.prblmNo)}}>
+                                        <div onClick={() => {goAdvance(item.source, item.problemId)}}>
                                             <span className="issueNo"> {item.prblmNo}</span>
                                         </div>
                                         <div style={{marginTop: '0.6em'}}>

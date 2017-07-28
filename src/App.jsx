@@ -12,6 +12,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppConfig from './AppConfig';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import intl from './components/intl';
+
+//样式
 import './static/css/base.css';
 import './static/css/app.css';
 import './static/css/common.css';
@@ -42,7 +44,8 @@ React.Component.prototype.$store = store;
 class App extends React.Component{
   static childContextTypes = {
     language: PropTypes.string,
-    setLanguage: PropTypes.func
+    setLanguage: PropTypes.func,
+    plugins: PropTypes.object
   }
   state = {
     language: AppConfig.language
@@ -53,15 +56,17 @@ class App extends React.Component{
       setLanguage : (language) => {
         this.setState({language: language});
         intl.setLanguage(language);
+      },
+      plugins: {
       }
     };
   }
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>
-            <Provider store={store}>
-                <AppRouter/>
-            </Provider>
+          <Provider store={store}>
+              <AppRouter/>
+          </Provider>
       </MuiThemeProvider>
     );
   }

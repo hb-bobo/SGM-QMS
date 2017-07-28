@@ -1,8 +1,8 @@
 var isArray = Array.isArray;
 
 /**
-  * 数组格式转换
-  * [a:1] ->[b:1]
+  * 数据格式转换(转换key/Hash)
+  * [{site:1, site_cn_name: 2}] ->[{id:1, text: 2}]
   * @param {Object}
   * @return {Array}
   * options = {

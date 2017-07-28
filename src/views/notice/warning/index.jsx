@@ -50,7 +50,7 @@ class Warning extends React.Component {
                             <div key={i} className="item">
                                 <SpaceRow height="0.4em"/>
                                 <div className="flex-row item-top">
-                                    <div className="flex-col-9" onClick={() => {goAdvance(item.source, item.prblmNo)}}>
+                                    <div className="flex-col-9" onClick={() => {goAdvance(item.source, item.problemId)}}>
                                         <div>
                                             <span className="issueNo"> {item.prblmNo}</span>
                                         </div>

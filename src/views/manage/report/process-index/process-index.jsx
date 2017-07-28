@@ -10,7 +10,7 @@ import {handleLineData, handleLineBarData, arrToArr} from '../handleChartData';
 /* 质量月报->过程指标 */
 class ProcessIndex extends React.Component {
     state = {
-        time: dateFormat('yyyy-MM'),
+        time: dateFormat(new Date(), 'yyyy-MM'),
         IQSK227_DATA: [],
         DV_by_XMRD_DATA: [],
         LL_DATA: [],
@@ -69,7 +69,7 @@ class ProcessIndex extends React.Component {
                 if (res.success === true) {
                     var actualValue = JSON.parse(res.count).COUNT;
                     // TODO 需求需写死，部门还未统计，看需求再删除
-                    if (dateFormat('yyyy') <= 2017 && lineChartParams[index].kpiName === 'MRD') {
+                    if (dateFormat(new Date(), 'yyyy') <= 2017 && lineChartParams[index].kpiName === 'MRD') {
                         actualValue = [0, 100, 93].concat(actualValue);
                     }
                     this.setState({

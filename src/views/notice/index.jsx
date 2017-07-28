@@ -24,24 +24,19 @@ class Notice extends React.Component {
         });
     }
     /*调到操作页面*/
-    goAdvance = (type, prblmNo) => {
+    goAdvance = (type, problemId) => {
         if (type) {
-            this.props.history.push('/search/issue-advance/' + type + `?prblmNo=${prblmNo}`);
+            this.props.history.push('/search/issue-advance/' + type + `?problemId=${problemId}`);
             this.setState({
                 isIndex: false
             });
         }
     }
     componentDidMount () {
-        var hotIssueData = [{prblmNo:"222",state:"W",problemDesc:"222",reviewTime:"222",hotLevel:"222",stockDay:1,projectName:"222",problemSevertiy:1,crntPhase:"222",pspnsUser:"222"}]
-        var warningData = [{prblmNo:"222",state:"R",problemDesc:"222",source:"222",projectName:"222",problemSevertiy:1,pspnsDept:"222",crntPhase:"asdasdasd",promotion:"222",stockDay:1,name:"222",reviewOp:"222"}]
-
         this.setState({
-            title: intl.get('QMS.notice'),
-            hotIssueData: hotIssueData,
-            warningData: warningData
+            title: intl.get('QMS.notice')
         });
-  }
+    }
     render () {
         intl.setMsg(require('@/static/i18n').default)
         return (
@@ -75,10 +70,10 @@ class Notice extends React.Component {
                     onChangeIndex={this.tabChange}
                 > 
                     <Scroller autoSetHeight={true}>
-                        <HotIssueNotice dataSource={this.state.hotIssueData} tabValue={this.state.tabValue} goAdvance={this.goAdvance}/>
+                        <HotIssueNotice tabValue={this.state.tabValue} goAdvance={this.goAdvance}/>
                     </Scroller>
                     <Scroller autoSetHeight={true}>
-                        <Warning dataSource={this.state.warningData} tabValue={this.state.tabValue} goAdvance={this.goAdvance}/>
+                        <Warning tabValue={this.state.tabValue} goAdvance={this.goAdvance}/>
                     </Scroller>
                 </SwipeableViews>
                 

@@ -10,7 +10,8 @@ var selectStyle = {}
 class HSelect extends React.Component {
     static defaultProps = {
         options: [],
-        emptyText: '请选择'
+        emptyText: '请选择',
+        isFirstEmpty: true
     }
     static propTypes = {
         options: PropTypes.array,
@@ -18,6 +19,7 @@ class HSelect extends React.Component {
         emptyText: PropTypes.string,
         containerStyle: PropTypes.object, // 容器样式覆盖,也就是div
         inputStyle: PropTypes.object,
+        isFirstEmpty: PropTypes.bool,
     }
     static contextTypes = {
         language: PropTypes.string
@@ -54,25 +56,18 @@ class HSelect extends React.Component {
         var {
             value,
             options,
-            emptyText
+            emptyText,
+            isFirstEmpty
         } = this.props;
         var optionsData = options;
-        if (optionsData.length === 0) {
-            // First empty
-            optionsData.unshift({value: '', text: emptyText});
-        }
-        if (options[0].value === undefined && options[0].text === undefined) {
+        if (options.length !== 0 && options[0].value === undefined && options[0].text === undefined) {
             throw Error('格式有误: -> [{text: any, value: any}]');
         }
         
         if (!this.state.controllable) {
             value = this.state.value;
         }
-        // 为英语时
-        if (this.context.language === 'en') {
-            emptyText = 'Please Select';
-        }
-        
+
         return (
             <div className="form-container" style={Object.assign(containerStyle, this.props.containerStyle)}>
                 <select
@@ -82,6 +77,9 @@ class HSelect extends React.Component {
                     value={value}
                     onChange={this.handleChange} 
                 >
+                    {/*第一条为空  */
+                        isFirstEmpty ? <option value="">{emptyText}</option> : null
+                    }
                     {
                         optionsData.map((o, i) => {
                             return (

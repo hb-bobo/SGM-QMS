@@ -43,13 +43,11 @@ class Todo extends React.Component {
         });
     }
     /*调到推进页面*/
-    goAdvance = (path) => {
-        if (path) {
-            this.props.history.push(path);
-            this.setState({
-                isIndex: false
-            });
-        }
+    goAdvance = (advanceType, problemId) => {
+        this.props.history.push('/search/issue-advance/' + advanceType + `?problemId=${problemId}`);
+        this.setState({
+            isIndex: false
+        });
     }
     componentDidMount () {
         this.setState({
@@ -102,7 +100,7 @@ class Todo extends React.Component {
                         <HotReview ref="HotReview"  parent={this}/>
                     </div>
                     <div>
-                        <WarningReview  goAdvance={this.goAdvance}/>
+                        <WarningReview  parent={this}/>
                     </div>
                         
                 </SwipeableViews>

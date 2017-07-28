@@ -4,9 +4,15 @@
   "private": true,
   "proxy": {
     "/@dev": {
-      "target": "http://10.6.96.182:8090",
+      "target": "http://10.11.146.18:6080",
       "pathRewrite": {
         "/@dev": ""
+      }
+    },
+    "/@dev2": {
+      "target": "http://10.11.147.7:8090",
+      "pathRewrite": {
+        "/@dev2": ""
       }
     },
     "/localhost": {

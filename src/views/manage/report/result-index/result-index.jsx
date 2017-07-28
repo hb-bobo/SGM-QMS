@@ -8,7 +8,7 @@ import {currMounth, handleLineData, arrToArr} from '../handleChartData';
 /* 质量月报->结果指标 */
 class ResultIndex extends React.Component {
     state = {
-        time: dateFormat('yyyy-MM'),
+        time: dateFormat(new Date(), 'yyyy-MM'),
         PRTS60_DATA: [],
         PRTS95_DATA: [],
         EIR_DATA: [],

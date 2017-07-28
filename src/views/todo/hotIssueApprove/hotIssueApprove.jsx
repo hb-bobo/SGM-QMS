@@ -20,7 +20,7 @@ import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
 import Scroller from '@/components/scroller';
 import HotIssueEdit from './edit';
-
+import { POST } from '@/plugins/fetch';
 
 /*  //TODO //hotLevel
     1: EQR专题
@@ -28,17 +28,7 @@ import HotIssueEdit from './edit';
     3: 项目热点
     4：售后EQR专题
     */
-// @connect(
-//     // mapStateToProps
-//     (state) => ({tempData: state.common.tempData}),
-//     // buildActionDispatcher
-//     (dispatch, ownProps) => ({
-//         actions: bindActionCreators({
-//             upTempData,
-//             clearTempData
-//         }, dispatch)
-//     })
-// )
+
 @mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
 class HotIssueApprove extends React.Component {
     static defaultProps = {
@@ -55,9 +45,12 @@ class HotIssueApprove extends React.Component {
     componentDidMount () {
         var {parent} = this.props;
         // var data = require('./data.json').data;
-        this.getListData('down');
-        /* Fetch API cannot load http://10.6.96.190:8090/QMS/backlog/PchotIssueApprove. The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*' when the request's credentials mode is 'include'. Origin 'http://localhost:3000' is therefore not allowed access. */
 
+        //TODO 测试
+        // this.getListData('down');
+        this.setState({
+            listData: require('./data.json').data
+        });
         // 设置父级弹出的内容
         parent.setDrawerChildren(
             <HotIssueEdit 
@@ -69,9 +62,11 @@ class HotIssueApprove extends React.Component {
     componentWillUnmount () {
         this.$store.dispatch(clearTempData()); 
     }
-    // Go to Advance page
-    goAdvance = (advanceType,id) => {
-        this.props.parent.goAdvance('/search/issue-advance/' + advanceType + `?id=${id}`);
+    // TODO 测试
+    loadingMore = () => {
+        this.setState({
+            listData: this.state.listData.concat(require('./data.json').data)
+        });
     }
     // edit review time
     edit (data) {
@@ -87,19 +82,39 @@ class HotIssueApprove extends React.Component {
         return false;
     }
     // Approved the hot review item
-    approve (id) {
+    approve (problemId) {
         return () => {
-            console.log(id, '批准')
+            this.approveCtrl(problemId, 'Y')
         }
     }
     // Reject the hot review item
-    reject (id) {
+    reject (problemId) {
         return () => {
-            console.log(id, '驳回')
+            this.approveCtrl(problemId, 'N')
         }
+    }
+    approveCtrl (problemId, prblmReviewOp) {
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        POST('/mproblem/auditReviewLog', {
+            headers,
+            data: {
+                empId: 'P0892',
+                positNum: 'A3010274',
+                prblmId: problemId,
+                prblmReviewOp: prblmReviewOp
+            }
+        })
+        .then((res) => {
+            if (res.success === '') {
+                // var listData = Object.assign({}, this.state.listData);
+                console.log(res)
+            }
+        })
     }
     render () {
         var { listData } = this.state;
+        var {goAdvance} = this.props.parent;
         // intl.setMsg(require('./locale').default);
 
         return (
@@ -121,7 +136,7 @@ class HotIssueApprove extends React.Component {
                                                 <span 
                                                     className="issueNo"
                                                     style={{marginLeft: 0}}
-                                                    onClick={() => this.goAdvance(item.source, item.problemId)}
+                                                    onClick={() => goAdvance(item.source, item.problemId)}
                                                 >
                                                 {item.prblmNo}
                                                 </span>
@@ -217,7 +232,7 @@ class HotIssueApprove extends React.Component {
                                                 label={intl.get('QMS.Approve')}
                                                 fullWidth={true}
                                                 labelStyle={{paddingLeft:'0'}}
-                                                onClick={this.approve(1321312)}
+                                                onClick={this.approve(item.problemId)}
                                             >
                                                 <svg className="icon" aria-hidden="true">
                                                     <use xlinkHref="#icon-pass"></use>
@@ -231,7 +246,7 @@ class HotIssueApprove extends React.Component {
                                                 label={intl.get('QMS.Reject')}
                                                 fullWidth={true}
                                                 labelStyle={{paddingLeft:'0'}}
-                                                onClick={this.reject(123123)}
+                                                onClick={this.reject(item.problemId)}
                                             >
                                                 <svg className="icon" aria-hidden="true">
                                                     <use xlinkHref="#icon-reject"></use>

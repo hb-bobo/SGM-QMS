@@ -37,9 +37,9 @@ class Verification extends React.Component {
         }
     }
     /*跳到推进页面*/
-    goAdvance = (type, id) => {
+    goAdvance = (type, problemId) => {
         if (type) {
-            this.props.history.push('/search/issue-advance/' + type + '?id='+id);
+            this.props.history.push('/search/issue-advance/' + type + '?problemId='+problemId);
             this.setState({
                 isIndex: false
             });

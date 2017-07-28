@@ -1,45 +1,38 @@
 import fillZero from './fillZero';
 
 /**
- *
+ * 日期时间格式化
  * @category format
- * @param {number}
+ * @param {Date}
+ * @param {string}
+ * @param {Object}
  * @returns {string}
  *
  * dateFormat() get current date
  * // => '2016-01-01'
  * 
- * dateFormat('yyyy-MM-dd hh:mm:ss') get current date
+ * dateFormat(new Date(), 'yyyy-MM-dd hh:mm:ss') get current date
  * // => '2016-01-01 17:23:10'
  * 
- * dateFormat({
- *  time: 1492664545,
- *  format: 'yyyy-MM-dd',
- *  noZero: true
- * })
+ * dateFormat(new Date(), 'yyyy-MM-dd', {noZero: true})
  * // => '2016-1-12'
  */
-function dateFormat (param) {
-    var format = 'yyyy-MM-dd';
-    var time = new Date();
-    var noZero = false;
+
+function dateFormat (
+    time = new Date(),
+    format = 'yyyy-MM-dd',
+    {
+        noZero = false
+    } = {}
+) {
     var newTime = '';
+    // 星期
     var weeks = ['\u661f\u671f\u65e5', '\u661f\u671f\u4e00', '\u661f\u671f\u4e8c', '\u661f\u671f\u4e09', '\u661f\u671f\u56db', '\u661f\u671f\u4e94', '\u661f\u671f\u516d'];
-    if (typeof param === 'string') {
-        format = param
+
+    if (!time || Object.is(NaN, time.getFullYear())) { 
+        throw Error('time is Invalid date, 日期有误');
     }
-    if (Object.prototype.toString.call(param) === '[object Object]') {
-        if (param.time === null || param.time === undefined) {
-            return '';
-        }
-        time = new Date(param.time);
-        if (Object.is(NaN, time.getFullYear())) { 
-            throw Error('time is Invalid date, 日期有误');
-        }
-        format = param.format ? param.format : format;
-        noZero = param.noZero ? param.noZero :  false;
-    }
-    
+
     var times = {
         'yyyy': time.getFullYear(),
         'MM': time.getMonth() + 1,

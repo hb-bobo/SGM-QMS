@@ -75,7 +75,7 @@ class HotIssue extends React.Component {
                                         <span>{intl.get('QMS.IssueNo')}: </span>
                                         <span
                                             className="issueNo"
-                                            onClick={() => {goAdvance(item.source, item.prblmNo)}}
+                                            onClick={() => {goAdvance(item.source, item.problemId)}}
                                         >
                                             {item.issueId}
                                         </span>

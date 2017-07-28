@@ -26,6 +26,7 @@ import {
 /*function getComponent (path, chunkName) {
   return r => require.ensure([], () => r(require('../views/home')), 'home-page')
 }*/
+// console.log(import('@/views/manage/overview').then((res) => console.log(res.default)))
 
 export const routes = [
   {

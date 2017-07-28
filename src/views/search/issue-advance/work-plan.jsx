@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { upWorkPlanListData, upWorkPlanEditData } from '@/store/actions';
+import { upWorkPlanEditData } from '@/store/actions';
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 
@@ -14,6 +14,7 @@ import Scroller from '@/components/scroller';
 import WorkPlanEdit from './work-plan-edit';
 import { POST } from '@/plugins/fetch';
 import intl from '@/components/intl';
+import AppConfig from '@/AppConfig';
 /*
     planDesc         "描述"
     planFinishDate   "计划完成时间"
@@ -31,8 +32,7 @@ import intl from '@/components/intl';
     // buildActionDispatcher
     (dispatch, ownProps) => ({
         actions: bindActionCreators({
-            upWorkPlanEditData,
-            upWorkPlanListData
+            upWorkPlanEditData
         }, dispatch)
     })
 )
@@ -47,7 +47,10 @@ class WorkPlan extends React.Component {
         workPlan: [],
         allWorkPlan: [],
         phase : [],
-        pageNumber: 1,
+        pageNumber: 1, // 页数
+        scrollConfig: {
+            upContent: ''
+        },
         filter: ''
     }
 
@@ -69,8 +72,19 @@ class WorkPlan extends React.Component {
                     phase : res.phase,
                     pageNumber : this.state.pageNumber+1
                 });
+                
+                if (res.workplan.length < AppConfig.listConfig.count) {
+                    this.setState({
+                        scrollConfig: {
+                            upContent: 'No More'
+                        }
+                    });
+                }
             }
         })
+    }
+    loadingMore = () => {
+        this.selectWorkPlan()
     }
     // 新增工作计划
     workPlanNewData = () => {
@@ -109,10 +123,10 @@ class WorkPlan extends React.Component {
             var headers = new Headers();
             headers.append('Content-Type', 'application/json');
             POST('/mproblem/deleteWorkPlan', {
-            headers: headers,
-            data: {
-                workPlanID: workPlanID,
-            }
+                headers: headers,
+                data: {
+                    workPlanID: workPlanID,
+                }
             }).then((res) => {
                 if (res.success === true) {
                     this.selectWorkPlan();
@@ -133,6 +147,7 @@ class WorkPlan extends React.Component {
         intl.setMsg(require('@/static/i18n').default)
         var allData = this.state.allWorkPlan;
         var phase = this.state.phase;
+        var containerHeight = 500;
         var data = allData.filter((item)=>{
             if(this.state.filter === ''){
                 return item;
@@ -142,7 +157,9 @@ class WorkPlan extends React.Component {
             return null;
         })
         var { workPlanEditData } = this.props;
-
+        if (data.length === 0) {
+            containerHeight = 100;
+        }
         return (
             <div>
                 <SpaceRow height={6} />
@@ -168,7 +185,13 @@ class WorkPlan extends React.Component {
                     </div>
                 </div>
                 <div className="work-plan-list">
-                    <Scroller containerHeight={500} bounce={true}>
+                    <Scroller
+                        autoSetHeight={true}
+                        containerHeight={containerHeight}
+                        onPullupLoading={() => this.loadingMore()}
+                        config={this.state.scrollConfig}
+                        ref="scroller"
+                    >
                         {
                             data.map((item, i) => {
                                 return (

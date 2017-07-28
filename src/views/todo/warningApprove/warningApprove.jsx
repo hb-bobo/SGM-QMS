@@ -14,7 +14,7 @@ import Scroller from '@/components/scroller';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-// import { POST } from '@/plugins/fetch';
+import { POST } from '@/plugins/fetch';
 // import AppConfig from '@/AppConfig';
 
 
@@ -42,7 +42,7 @@ class WarningApprove extends React.Component {
     }
     static propTypes = {
         getListDataAPI: PropTypes.string.isRequired,
-        goAdvance: PropTypes.func.isRequired
+        parent: PropTypes.instanceOf(React.Component).isRequired,
     }
     state = {
     }
@@ -55,24 +55,43 @@ class WarningApprove extends React.Component {
         });
         this.getListData('down');
     }
-    // Go to Advance page
-    goAdvance = (advanceType) => {
-        this.props.goAdvance('/search/issue-advance/' + advanceType);
-    }
+
     // Approved the hot review item
-    approve (id) {
+    approve (problemId) {
         return () => {
-            console.log(id, '批准')
+            this.approveCtrl(problemId, 'Y')
         }
     }
     // Reject the hot review item
-    reject (id) {
+    reject (problemId) {
         return () => {
-            console.log(id, '驳回')
+            this.approveCtrl(problemId, 'N')
         }
     }
+
+    approveCtrl (problemId, prblmUpgradeOp) {
+        var headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+        POST('/mproblem/auditUpgrade', {
+            headers,
+            data: {
+                empId: 'P0892',
+                positNum: 'A3010274',
+                prblmId: problemId,
+                prblmUpgradeOp: prblmUpgradeOp
+            }
+        })
+        .then((res) => {
+            if (res.success === '') {
+                // var listData = Object.assign({}, this.state.listData);
+                console.log(res)
+            }
+        })
+    }
+
     render () {
         var { listData } = this.state;
+        var {goAdvance} = this.props.parent;
         intl.setMsg(require('@/static/i18n').default,require('./locale'));
         return (
             <Scroller
@@ -93,7 +112,7 @@ class WarningApprove extends React.Component {
                                                 <span
                                                     className="issueNo"
                                                     style={{marginLeft: 0}}
-                                                    onClick={() => this.goAdvance(item.source, item.prblmNo)}
+                                                    onClick={() => goAdvance(item.source, item.problemId)}
                                                 >
                                                 {item.prblmNo}
                                                 </span>
@@ -162,7 +181,7 @@ class WarningApprove extends React.Component {
                                                 label={intl.get('QMS.Approve')}
                                                 fullWidth={true}
                                                 labelStyle={{paddingLeft:'0'}}
-                                                onClick={this.approve(1321312)}
+                                                onClick={this.approve(item.problemId)}
                                             >
                                                 <svg className="icon" aria-hidden="true">
                                                     <use xlinkHref="#icon-pass"></use>
@@ -176,7 +195,7 @@ class WarningApprove extends React.Component {
                                                 label={intl.get('QMS.Reject')}
                                                 fullWidth={true}
                                                 labelStyle={{paddingLeft:'0'}}
-                                                onClick={this.reject(123123)}
+                                                onClick={this.reject(item.problemId)}
                                             >
                                                 <svg className="icon" aria-hidden="true">
                                                     <use xlinkHref="#icon-reject"></use>

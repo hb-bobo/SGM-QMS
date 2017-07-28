@@ -1,3 +1,8 @@
+
+/**
+ * 把方法混合到组件上
+ * @param {Array<Function>}
+ */
 export default function mixins(...list: any[]) {
     return function (target: Function) {
         list.forEach(function (fn: Function) {

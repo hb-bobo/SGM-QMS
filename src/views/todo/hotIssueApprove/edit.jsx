@@ -9,6 +9,7 @@ import HInput from '@/components/form/h-input';
 import HDate from '@/components/form/h-date';
 import intl from '@/components/intl';
 import Scroller from '@/components/scroller';
+import { POST } from '@/plugins/fetch';
 /*
     s
 */
@@ -34,7 +35,20 @@ class HotIssueEdit extends React.Component {
         this.setState(nextProps.tempData);
     }
     submit = () => {
-        this.parentStateChange();
+        POST('/toDo/mUpdateTime', {
+            data: {
+                toDoId: this.state.toDoId,
+                reviewTime: this.state.reviewTime
+            }
+        })
+        .then((res) => {
+            if (res.success === true) {
+                // var listData = Object.assign({}, this.state.listData);
+                console.log(res)
+                this.parentStateChange();
+            }
+        })
+        
     }
     cancel = () => {
         this.parentStateChange();

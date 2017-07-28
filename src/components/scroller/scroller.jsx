@@ -23,7 +23,7 @@ class Scroller extends React.Component {
         autoSetHeight: false,
         bottomHeight: 0, // 底部高。May have a menu at the bottom,
         scrollTop: 0,
-        bounce: true, // 是否反弹，关掉是默认的scrollbar, 如果没有下拉上拉加载数据建议设为false
+        bounce: false, // 是否反弹，关掉是默认的scrollbar, 如果没有下拉上拉加载数据建议设为false
         multiTrigger: false,
         config: {
             downContent: '', // 下拉时显示的文字
@@ -70,18 +70,18 @@ class Scroller extends React.Component {
                     this.setState({
                         scrollTop: this.refs.scroller.scrollTop
                     });
-                }
+                } //.getBoundingClientRect().top, 
             }, 500));
         }
 
     }
     shouldComponentUpdate (nextProps, nextState) {
-        if (this.props.bounce === true
-            && this.props.onPullupLoading !== undefined
-            && nextState.pulldownStatus === 'loading-start'
-            && this.state.pulldownStatus === 'loading-start') {
-            return false;
-        }
+        // if (this.props.bounce === true
+        //     && this.props.onPullupLoading !== undefined
+        //     && nextState.pulldownStatus === 'loading-start'
+        //     && this.state.pulldownStatus === 'loading-start') {
+        //     return false;
+        // }
         return true;
     }
     componentDidUpdate () {
@@ -105,7 +105,7 @@ class Scroller extends React.Component {
         var min = 0;
         var max = 0;
         var Scroller = this; //当前组件
-        Transform(scroller, true);
+        Transform(scroller, false);
         var scrollerAt = new AlloyTouch({
             touch: scrollerContainer,//反馈触摸的dom
             vertical: true,//不必需，默认是true代表监听竖直方向touch
@@ -119,8 +119,21 @@ class Scroller extends React.Component {
             // bindSelf: false,
             initialValue: 0,
             change: function (value) {
+                
+            }, 
+            touchStart: function (ev, value) {
+                // 每次点击都重新计算scroll高度
+                min = (containerHeight - scroller.clientHeight) - 10;
+                if (min > max) {
+                    min = max;
+                }
+                this.min = min;
+            },
+            touchMove: function (ev, value) {
                 // 上拉到底了
+                console.log(value, this.min - bufferVal)
                 if (value < (this.min - bufferVal) && Scroller.state.pullupStatus !== 'loading-start') {
+                    console.log('上啦')
                     Scroller.setState({
                         pullupStatus: value < (this.min - bufferVal) ? 'ready' : 'default'
                     });
@@ -132,17 +145,6 @@ class Scroller extends React.Component {
                         pulldownStatus: value > triggerPulldownValue ? 'ready' : 'default'
                     });
                 }
-            }, 
-            touchStart: function (ev, value) {
-                // 每次点击都重新计算scroll高度
-                min = (containerHeight - scroller.clientHeight) - 10;
-                if (min > max) {
-                    min = max;
-                }
-                this.min = min;
-            },
-            touchMove: function (ev, value) {
-                
             },
             touchEnd: function (ev, value) {
                 // 下拉最大值了，并松开了
@@ -151,6 +153,7 @@ class Scroller extends React.Component {
                     return false;              
                 }
                 // 上拉到底了，并松开了 (bufferVal 大致= bottom-loading的高度)
+                console.log(value, (this.min - bufferVal))
                 if (value < (this.min - bufferVal)) {
                     Scroller.onPullupLoading();
                 }
@@ -208,7 +211,7 @@ class Scroller extends React.Component {
             this.setState({
                 pulldownStatus: 'loading-start'
             });
-            // 此时下拉到了一定位置并放开了手，可以加载数据了
+
             this.props.onPulldownLoading && this.props.onPulldownLoading();
             this.autoDoneAll();
         }
@@ -304,26 +307,41 @@ class Scroller extends React.Component {
                             children && React.Children.toArray(children).map((child) => child)
                         }
                         { /*上拉*/
-                            (this.state.scrollerAt && this.props.onPullupLoading && this.state.scrollerAt.min < -1) ? 
+                            (this.state.scrollerAt && this.props.onPullupLoading && this.state.scrollerAt.min <= 0) ? 
                                 <div className="bottom-loading text-center" onClick={this.props.onPullupLoading}>
                                     <span>
                                         {
-                                            config.upContent? 
+                                            (config.upContent && config.upContent === 'No More')? 
                                                 config.upContent :
                                                 <IconLoading 
                                                     style={{width: 20, height: 20}}
                                                     show={pullupStatus === 'loading-start' ? true : false}
                                                 />
                                         }
-                                        <IconArrow
-                                            show={(pullupStatus === 'loading-start' && config.upContent === '') ? false: true}
-                                            className={pullupStatus === 'default' ? 'icon icon-arrow rotate' : 'icon icon-arrow'}
-                                        />
+                                        {
+                                            <IconArrow
+                                                show={(pullupStatus === 'loading-start' || pulldownStatus === 'loading-start' ) ? false: true}
+                                                className={pullupStatus === 'default' ? 'icon icon-arrow rotate' : 'icon icon-arrow'}
+                                            />
+                                        }
                                     </span>
                                 </div> :
                                 null
 
-                        }                        
+                        }  
+                        {/* 上拉2 */
+                            (this.props.bounce === false && this.props.onPullupLoading) ?
+                            <div
+                                className="bottom-loading text-center"
+                                onClick={this.props.onPullupLoading}
+                                style={{paddingBottom: '10px'}}
+                            >
+                                <span>
+                                    Load More ...
+                                </span>
+                            </div> :
+                            null
+                        }              
                     </div>
                 </div>
             </div>
