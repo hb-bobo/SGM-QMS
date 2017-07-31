@@ -53,7 +53,7 @@ class App extends React.Component{
   getChildContext() {
     return {
       language: this.state.language,
-      setLanguage : (language) => {
+      setLanguage: (language) => {
         this.setState({language: language});
         intl.setLanguage(language);
       },
