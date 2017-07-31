@@ -1,2 +1,2 @@
 import Plugins from './plugins';
-export Plugins
+export default Plugins;

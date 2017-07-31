@@ -68,7 +68,11 @@ class WarningApprove extends React.Component {
             this.approveCtrl(problemId, 'N')
         }
     }
-
+    /**
+     * 审批操作
+     * @param {string | number} problemId 
+     * @param {string} "Y" | "N" y是审批通过 
+     */
     approveCtrl (problemId, prblmUpgradeOp) {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -83,7 +87,7 @@ class WarningApprove extends React.Component {
         })
         .then((res) => {
             if (res.success === '') {
-                // var listData = Object.assign({}, this.state.listData);
+                //TODO var listData = Object.assign({}, this.state.listData);
                 console.log(res)
             }
         })

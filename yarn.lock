@@ -6197,6 +6197,12 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.2"
   resolved "http://registry.npm.taobao.org/signal-exit/download/signal-exit-3.0.2.tgz#b5fdc08f1287ea1178628e415e25132b73646c6d"
 
+silk-scroller@^1.0.6:
+  version "1.0.6"
+  resolved "http://registry.npm.taobao.org/silk-scroller/download/silk-scroller-1.0.6.tgz#5bb4c3086f07cb91003c8ac7688dd5b196f59a2a"
+  dependencies:
+    classnames "^2.2.5"
+
 simple-assign@^0.1.0:
   version "0.1.0"
   resolved "http://registry.npm.taobao.org/simple-assign/download/simple-assign-0.1.0.tgz#17fd3066a5f3d7738f50321bb0f14ca281cc4baa"
