@@ -34,7 +34,7 @@
     }
 }
 
-.scroller-container span.icon-top {
+.scroller-container .icon-top {
     display: none;
     position: fixed;
     bottom: 14px;
@@ -42,6 +42,6 @@
     font-size: 1.6em;
     z-index: 100;
 }
-.scroller-container span.icon-top.show {
+.scroller-container .icon-top.show {
     display: inline-block;
 }

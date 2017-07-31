@@ -11,7 +11,7 @@ var injectTapEventPlugin = require('react-tap-event-plugin');
 injectTapEventPlugin();
 
 ReactDOM.render(
-    <App />,
+  <App />,
   document.getElementById('root')
 );
 AppConfig.isDev && registerServiceWorker();

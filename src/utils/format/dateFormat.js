@@ -28,7 +28,6 @@ function dateFormat (
     var newTime = '';
     // 星期
     var weeks = ['\u661f\u671f\u65e5', '\u661f\u671f\u4e00', '\u661f\u671f\u4e8c', '\u661f\u671f\u4e09', '\u661f\u671f\u56db', '\u661f\u671f\u4e94', '\u661f\u671f\u516d'];
-
     if (!time || Object.is(NaN, time.getFullYear())) { 
         throw Error('time is Invalid date, 日期有误');
     }
