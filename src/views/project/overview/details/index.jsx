@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Scroller from '@/components/scroller';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-
+// TODO 未分页
 /*协助诊断 详情列表*/
 class AssistDetails extends React.Component {
     static defaultProps = {

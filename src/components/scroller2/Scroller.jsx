@@ -16,15 +16,17 @@
  * 2、提供下拉刷新和上拉加载更多功能
  * */
 
-import React, {Component, PropTypes} from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import utils from './utils';
 import ICONS from './icons';
 import {REFRESHSTATUS, LOADMORESTATUS} from './status';
 import {getMessage} from './lang';
+import { getRemainingHeight } from '@/utils/dom';
 
-import './Scroller.scss';
+import './Scroller.less';
 
 const boundaryThreshold = 5;
 
@@ -41,6 +43,10 @@ export default class Scroller extends Component {
          * */
         autoLoad: PropTypes.bool,
         /**
+         * 自动设置高
+         */
+        autoSetHeight: PropTypes.bool,
+        /**
          * 是否开启弹性滚动
          * */
         bounce: PropTypes.bool,
@@ -55,6 +61,14 @@ export default class Scroller extends Component {
          * 缓动时间
          * */
         bounceTime: PropTypes.number,
+        /**
+         * 底部高度
+         */
+        bottomHeight: PropTypes.number,
+        /**
+         * 容器高度
+         */
+        containerHeight: PropTypes.number,
         /**
          * 阻尼系数
          * */
@@ -197,9 +211,12 @@ export default class Scroller extends Component {
     static defaultProps = {
         autoRefresh: true,
         autoLoad: true,
+        autoSetHeight: true,
         bounce: true,
         bounceEasing: utils.ease.circular,
         bounceTime: 600,
+        bottomHeight: 1,
+        containerHeight: 100,
         deceleration: 0.0024,
         directionLockThreshold: 0,
         freeScroll: false,
@@ -253,7 +270,13 @@ export default class Scroller extends Component {
         if (this.props.useLoadMore) {
             this.loadMoreOffsetHeight = this.loadMoreEl.offsetHeight;
         }
-
+        if (this.props.autoSetHeight) {
+            this.setHeight();
+        } else {
+            this.setState({
+                containerHeight: this.props.containerHeight
+            });
+        }
         // 初始化事件
         this.initEvent();
         this.refresh();
@@ -294,15 +317,23 @@ export default class Scroller extends Component {
 
     componentWillUnmount() {
         this.initEvent(true);
+        this.Mounted = false
     }
-
+    setHeight () {
+        
+        var remainingHeight = getRemainingHeight(this.refs.scrollerContainer); // 计算剩余高
+        var containerHeight = remainingHeight - this.props.bottomHeight; // 容器实际剩余高
+        this.setState({
+            containerHeight: containerHeight
+        });
+    }
     /**
      * 设置下拉刷新的状态
      * @param status [Number] 下拉刷新的状态
      * @param callback [Function] 修改完状态后的执行的回调函数
      * */
     setRefreshStatus(status) {
-        if (!this.state.usePullRefresh) return;
+        if (!this.state.usePullRefresh || this.Mounted === false) return;
 
         // 保存之前的状态
         this.prevRefreshState = this.pullRefreshStatus;
@@ -581,7 +612,7 @@ export default class Scroller extends Component {
     touchMove(e) {
         if (this.disabled || utils.eventType[e.type] !== this.initiated) return;
 
-        if (this.preventDefault) e.preventDefault();
+        // if (e.preventDefault) e.preventDefault();
 
         const point = e.touches ? e.touches[0] : e;
         const timestamp = utils.getTime();
@@ -1059,6 +1090,7 @@ export default class Scroller extends Component {
      * @param type [String] 是上拉还是下拉加载数据
      * */
     loadData(type) {
+
         const promise = new Promise((resolve, reject) => {
             if (type === 'refresh') {
                 this.props.pullRefreshAction(resolve, reject);
@@ -1082,6 +1114,7 @@ export default class Scroller extends Component {
      * @param code [Number] 请求状态，标识成功还是失败
      * */
     loadDataHandle(type, code) {
+        
         if (type === 'refresh') {
             this.setRefreshStatus(this.pullRefreshStatus = code);
             setTimeout(() => {
@@ -1106,6 +1139,7 @@ export default class Scroller extends Component {
      *     scrollerWidth: 滑块的宽度
      * */
     refresh(refreshOption = {}) {
+        if (this.Mounted === false) {return;}
         // 容器的宽高
         this.wrapperWidth = refreshOption.wrapperWidth ?
             refreshOption.wrapperWidth :
@@ -1345,66 +1379,71 @@ export default class Scroller extends Component {
     render() {
         const {
             usePullRefresh,
-            useLoadMore
+            useLoadMore,
+            containerHeight
         } = this.state;
-
         return (
             <div
-                className={classNames(
-                    'silk-listcontrol-wrapper',
-                    {
-                        'silk-listcontrol-wrapper-default': this.scrollY && !this.props.containerClass
-                    },
-                    this.props.containerClass
-                )}
-                style={this.props.containerStyle}
-                ref={ref => { this.wrapper = ref }}
+                style={{height: parseInt(containerHeight, 10) + 'px', position: "relative"}}
+                ref="scrollerContainer"
             >
-                {
-                    this.props.useSticky ?
-                        <div
-                            ref={ref => { this.stickyNode = ref }}
-                            style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 9999 }}
-                            className="silk-sticky"
-                        /> : null
-                }
                 <div
                     className={classNames(
-                        'silk-listcontrol-scroller',
+                        'silk-listcontrol-wrapper',
                         {
-                            'silk-listcontrol-scroller-horizontal': this.scrollX,
-                            'silk-listcontrol-scroller-vertical': this.scrollY
+                            'silk-listcontrol-wrapper-default': this.scrollY && !this.props.containerClass
                         },
-                        this.props.scrollerClass
+                        this.props.containerClass
                     )}
-                    style={this.props.scrollerStyle}
-                    ref={ref => { this.scroller = ref }}
+                    style={this.props.containerStyle}
+                    ref={ref => { this.wrapper = ref }}
                 >
                     {
-                        usePullRefresh ?
-                            (<div
-                                ref={ref => { this.pullRefreshEl = ref }}
-                                className="silk-listcontrol-loadwrapper silk-listcontrol-loadwrapper-up"
-                            >
-                                <div className="silk-listcontrol-loadtip">
-                                    <i className="silk-listcontrol-icon"/>
-                                    <div className="silk-listcontrol-text"/>
-                                </div>
-                            </div>) : null
+                        this.props.useSticky ?
+                            <div
+                                ref={ref => { this.stickyNode = ref }}
+                                style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 9999 }}
+                                className="silk-sticky"
+                            /> : null
                     }
-                    {this.props.children}
-                    {
-                        useLoadMore ?
-                            (<div
-                                ref={ref => { this.loadMoreEl = ref }}
-                                className="silk-listcontrol-loadwrapper"
-                            >
-                                <div className="silk-listcontrol-loadtip">
-                                    <i className="silk-listcontrol-icon"/>
-                                    <div className="silk-listcontrol-text"/>
-                                </div>
-                            </div>) : null
-                    }
+                    <div
+                        className={classNames(
+                            'silk-listcontrol-scroller',
+                            {
+                                'silk-listcontrol-scroller-horizontal': this.scrollX,
+                                'silk-listcontrol-scroller-vertical': this.scrollY
+                            },
+                            this.props.scrollerClass
+                        )}
+                        style={this.props.scrollerStyle}
+                        ref={ref => { this.scroller = ref }}
+                    >
+                        {
+                            usePullRefresh ?
+                                (<div
+                                    ref={ref => { this.pullRefreshEl = ref }}
+                                    className="silk-listcontrol-loadwrapper silk-listcontrol-loadwrapper-up"
+                                >
+                                    <div className="silk-listcontrol-loadtip">
+                                        <i className="silk-listcontrol-icon"/>
+                                        <div className="silk-listcontrol-text"/>
+                                    </div>
+                                </div>) : null
+                        }
+                        {this.props.children}
+                        {
+                            useLoadMore ?
+                                (<div
+                                    ref={ref => { this.loadMoreEl = ref }}
+                                    className="silk-listcontrol-loadwrapper"
+                                >
+                                    <div className="silk-listcontrol-loadtip">
+                                        <i className="silk-listcontrol-icon"/>
+                                        <div className="silk-listcontrol-text"/>
+                                    </div>
+                                </div>) : null
+                        }
+                    </div>
                 </div>
             </div>
         );

@@ -10,7 +10,8 @@ import {componentWillMount, componentWillUnmount, getListData, loadingMore} from
 
 import FlatButton from 'material-ui/FlatButton';
 
-import Scroller from '@/components/scroller';
+// import Scroller from '@/components/scroller';
+import Scroller2 from '@/components/scroller2';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
@@ -48,12 +49,11 @@ class WarningApprove extends React.Component {
     }
 
     componentDidMount () {
-        // var listData = [{prblmNo:"222",problemDesc:"222",state:"W",promotion:1,problemSevertiy:1,stockDay:11,projectName:"222",name:"222",crntPhase:"222"},
-        //                 {prblmNo:"111",problemDesc:"111",state:"G",promotion:2,problemSevertiy:2,stockDay:22,projectName:"111",name:"111",crntPhase:"111"}]
         this.setState({
             title: intl.get('Detail')
         });
         this.getListData('down');
+        // this.refs.scroller.simulatePullRefresh();
     }
 
     // Approved the hot review item
@@ -94,20 +94,30 @@ class WarningApprove extends React.Component {
     }
 
     render () {
-        var { listData } = this.state;
+        var { listData, noMoreData } = this.state;
         var {goAdvance} = this.props.parent;
         intl.setMsg(require('@/static/i18n').default,require('./locale'));
-        return (
-            <Scroller
+        //onPulldownLoading={() => this.getListData('down')}
+        /*<Scroller
                 autoSetHeight={true}
+                bounce={true}
                 onPullupLoading={() => this.loadingMore()}
-                onPulldownLoading={() => this.getListData('down')}
                 config={this.state.scrollConfig}
+                ref="scroller"
+            >*/
+        return (
+            <Scroller2
+                usePullRefresh
+                pullRefreshAction={(resolve, reject) => {this.getListData('down', resolve, reject)}}
+                useLoadMore
+                loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
+                noMoreData={noMoreData}
+                preventDefault={false}
                 ref="scroller"
             >
                 <div className="gtasks-list">
                     {
-                        listData.map((item, i) => {
+                        listData && listData.map((item, i) => {
                             return (
                                 <div className="item" key={i}>
                                     <div className="flex-row item-top">
@@ -213,7 +223,7 @@ class WarningApprove extends React.Component {
                         })
                     }
                 </div>
-            </Scroller>
+            </Scroller2>
         )
     }
 }

@@ -2,8 +2,8 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 // import AppConfig from '@/AppConfig';
 import { RouteWithSubRoutes } from '@/router';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+// import { connect } from 'react-redux';
+// import { bindActionCreators } from 'redux';
 
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -15,16 +15,8 @@ import querystring from '@/utils/tools/querystring';
 // import goBack from '@/mixin/goBack';
 // import mixins from '@/mixins/mixins';
 
-@connect(
-    // mapStateToProps
-    (state) => (state.common),
-    // buildActionDispatcher
-    (dispatch, ownProps) => ({
-        actions: bindActionCreators({
-        }, dispatch)
-    })
-)
-// @mixins([goBack])
+
+/*诊断详情*/
 class Assist extends React.Component {
     state = {
         pageNumber: 1,

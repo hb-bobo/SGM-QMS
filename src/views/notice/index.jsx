@@ -8,7 +8,6 @@ import SwipeableViews from 'react-swipeable-views';
 import HotIssueNotice from './hotIssueNotice';
 import Warning from './warning';
 
-import Scroller from '@/components/scroller';
 import intl from '@/components/intl';
 
 
@@ -69,12 +68,13 @@ class Notice extends React.Component {
                     index={this.state.tabValue}
                     onChangeIndex={this.tabChange}
                 > 
-                    <Scroller autoSetHeight={true}>
+                    <div>
                         <HotIssueNotice tabValue={this.state.tabValue} goAdvance={this.goAdvance}/>
-                    </Scroller>
-                    <Scroller autoSetHeight={true}>
+                    </div>
+                        
+                    <div>
                         <Warning tabValue={this.state.tabValue} goAdvance={this.goAdvance}/>
-                    </Scroller>
+                    </div>
                 </SwipeableViews>
                 
             </div>

@@ -10,7 +10,7 @@ import Drawer from 'material-ui/Drawer';
 // import pathToJSON from '@/utils/object/pathToJSON';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
-import Scroller from '@/components/scroller';
+import Scroller2 from '@/components/scroller2';
 import WorkPlanEdit from './work-plan-edit';
 import { POST } from '@/plugins/fetch';
 import intl from '@/components/intl';
@@ -48,18 +48,17 @@ class WorkPlan extends React.Component {
         allWorkPlan: [],
         phase : [],
         pageNumber: 1, // 页数
-        scrollConfig: {
-            upContent: ''
-        },
+        noMoreData: false,
         filter: ''
     }
 
     componentDidMount () {
         this.parent = this.props.parent;
         this.selectWorkPlan();
+        this.refs.scroller.simulatePullRefresh();
     }
     // 查询工作计划
-    selectWorkPlan = () => {
+    selectWorkPlan = (resolve, reject) => {
         POST('/mproblem/getWorkPlan', {
         data: {
             id: this.props.prblmId,
@@ -72,14 +71,16 @@ class WorkPlan extends React.Component {
                     phase : res.phase,
                     pageNumber : this.state.pageNumber+1
                 });
-                
+                resolve();
                 if (res.workplan.length < AppConfig.listConfig.count) {
                     this.setState({
-                        scrollConfig: {
-                            upContent: 'No More'
-                        }
+                        noMoreData: true
                     });
                 }
+            }
+        }).catch(() => {
+            if (reject) {
+                reject();
             }
         })
     }
@@ -147,6 +148,7 @@ class WorkPlan extends React.Component {
         intl.setMsg(require('@/static/i18n').default)
         var allData = this.state.allWorkPlan;
         var phase = this.state.phase;
+        var {noMoreData} = this.state;
         var containerHeight = 500;
         var data = allData.filter((item)=>{
             if(this.state.filter === ''){
@@ -185,11 +187,15 @@ class WorkPlan extends React.Component {
                     </div>
                 </div>
                 <div className="work-plan-list">
-                    <Scroller
-                        autoSetHeight={true}
+                    <Scroller2
+                        usePullRefresh
+                        pullRefreshAction={(resolve, reject) => {this.selectWorkPlan('down', resolve, reject)}}
+                        useLoadMore
+                        loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
+                        noMoreData={noMoreData}
+                        preventDefault={false}
                         containerHeight={containerHeight}
-                        onPullupLoading={() => this.loadingMore()}
-                        config={this.state.scrollConfig}
+                        autoSetHeight={false}
                         ref="scroller"
                     >
                         {
@@ -273,7 +279,7 @@ class WorkPlan extends React.Component {
                                 )
                             })
                         }
-                    </Scroller>
+                    </Scroller2>
                 </div>
                 {/*工作计划弹出*/}
                 <Drawer 

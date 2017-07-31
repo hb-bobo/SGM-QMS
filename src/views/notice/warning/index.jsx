@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import mixins from '@/decorator/mixins';
 import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
-import Scroller from '@/components/scroller';
+import Scroller2 from '@/components/scroller2';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
@@ -31,21 +31,25 @@ class Warning extends React.Component {
     }
     componentDidMount () {
         this.getListData('down');
+        // this.refs.scroller.simulatePullRefresh();
     }
     render () {
         intl.setMsg(require('@/static/i18n').default, require('./locale'));
         var { goAdvance } = this.props;
-        var { listData } = this.state;
+        var { listData, noMoreData } = this.state;
+        // onPulldownLoading={() => this.getListData('down')}
         return (
             <div>
-                <Scroller 
-                    autoSetHeight={true}
-                    onPullupLoading={() => this.loadingMore()}
-                    onPulldownLoading={() => this.getListData('down')}
-                    config={this.state.scrollConfig}
+                <Scroller2
+                    usePullRefresh
+                    pullRefreshAction={(resolve, reject) => {this.getListData('down', resolve, reject)}}
+                    useLoadMore
+                    loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
+                    noMoreData={noMoreData}
+                    preventDefault={false}
                     ref="scroller"
                 >
-                    {listData.map((item, i) => {
+                    {listData && listData.map((item, i) => {
                         return (
                             <div key={i} className="item">
                                 <SpaceRow height="0.4em"/>
@@ -107,7 +111,7 @@ class Warning extends React.Component {
                             </div>
                         )
                     })}
-                </Scroller>
+                </Scroller2>
             </div>
         )
     }

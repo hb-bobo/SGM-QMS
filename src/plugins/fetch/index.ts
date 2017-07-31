@@ -97,7 +97,7 @@ export function POST (url: string, opts: Opts) {
         method: 'POST',
         mode: 'cors',
         headers: opts.headers || defaultHeaders,
-        credentials: 'include',
+        // credentials: 'include',
         body: null
     }
 
@@ -162,7 +162,7 @@ export function GET (url: string, opts: Opts) {
         method: 'GET',
         mode: 'cors',
         headers: headers,
-        credentials: 'include'
+        // credentials: 'include'
     }
     return new Promise(function (resolve: Function, reject?: Function) {
         _fetch(fetch(reqUrl, reqOpts), timeout)

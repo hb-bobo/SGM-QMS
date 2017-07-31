@@ -13,22 +13,17 @@ import {
     componentWillMount,
     componentWillUnmount,
     getListData,
-    loadingMore
+    loadingMore,
+    hotLevelFilter
 } from '@/mixins/';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-import Scroller from '@/components/scroller';
+import Scroller2 from '@/components/scroller2';
 import HotIssueEdit from './edit';
 import { POST } from '@/plugins/fetch';
 
-/*  //TODO //hotLevel
-    1: EQR专题
-    2：EQR常规
-    3: 项目热点
-    4：售后EQR专题
-    */
-
+/*热点评审审批*/
 @mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
 class HotIssueApprove extends React.Component {
     static defaultProps = {
@@ -40,20 +35,15 @@ class HotIssueApprove extends React.Component {
     }
     state = {
         hotIssueEditOpen: false,
-        hotIssueEditData: {},
+        hotIssueEditData: {}
     }
     componentDidMount () {
         var {parent} = this.props;
         // var data = require('./data.json').data;
 
         //TODO 测试
-        // this.getListData('down');
-        setTimeout(() => {
-            this.setState({
-                listData: require('./data.json').data
-            });
-        }, 1000)
-        
+        this.getListData('down');
+        // this.refs.scroller.simulatePullRefresh();
         // 设置父级弹出的内容
         parent.setDrawerChildren(
             <HotIssueEdit 
@@ -66,19 +56,20 @@ class HotIssueApprove extends React.Component {
         this.$store.dispatch(clearTempData()); 
     }
     // TODO 测试
-    /*loadingMore = () => {
-        setTimeout(() => {
-            this.setState({
-                listData: this.state.listData.concat(require('./data.json').data)
-            });
-            this.refs.scroller.donePullup();
-            this.setState({
-                scrollConfig: {
-                    upContent: 'No More'
-                }
-            });
-        }, 1000)
-    }*/
+    // loadingMore = () => {
+    //     setTimeout(() => {
+    //         this.setState({
+    //             listData: this.state.listData.concat(require('./data.json').data)
+    //         });
+    //         // this.refs.scroller.donePullup();
+    //         this.setState({
+    //             scrollConfig: {
+    //                 upContent: 'No More'
+    //             },
+    //             noMoreData: true
+    //         });
+    //     }, 2000)
+    // }
     // edit review time
     edit (data) {
         this.$store.dispatch(upTempData(data));
@@ -129,21 +120,33 @@ class HotIssueApprove extends React.Component {
         })
     }
     render () {
-        var { listData } = this.state;
+        var { listData, noMoreData } = this.state;
         var {goAdvance} = this.props.parent;
         // intl.setMsg(require('./locale').default);
         // onPulldownLoading={() => this.getListData('down')}
+        /*<Scroller 
+            autoSetHeight={true}
+            bounce={true}
+            onPullupLoading={() => this.loadingMore()}
+            config={this.state.scrollConfig}
+            ref="scroller"
+        >
+            
+        </Scroller>*/
         return (
-            <Scroller 
-                autoSetHeight={true}
-                bounce={false}
-                onPullupLoading={() => this.loadingMore()}
-                config={this.state.scrollConfig}
+
+            <Scroller2
+                usePullRefresh
+                pullRefreshAction={(resolve, reject) => {this.getListData('down', resolve, reject)}}
+                useLoadMore
+                loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
+                noMoreData={noMoreData}
+                preventDefault={false}
                 ref="scroller"
             >
                 <div className="gtasks-list">
                     {
-                        listData.map((item, i) => {
+                        listData && listData.map((item, i) => {
                             return (
                                 <div className="item" key={i}>
                                     <div className="flex-row item-top">
@@ -175,7 +178,7 @@ class HotIssueApprove extends React.Component {
                                             <div className="flex-col-1">
                                                 <div>{/* 评审级别 */}
                                                     <span>{intl.get('QMS.ReviewLevel')}: </span>
-                                                    <span className="right">{item.hotLevel}</span>
+                                                    <span className="right">{hotLevelFilter(item.hotLevel)}</span>
                                                 </div>
                                             </div>
                                             <div className="flex-col-1">
@@ -276,7 +279,8 @@ class HotIssueApprove extends React.Component {
                         })
                     }
                 </div>
-            </Scroller>
+            </Scroller2>
+            
         )
     }
 }

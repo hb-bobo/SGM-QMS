@@ -67,7 +67,7 @@ class Scroller extends React.Component {
             this.setHeight();
         }
         // 记录scrollTop 位置
-        if (scrollerContainer && this.props.bounce === false) {
+        if (scrollerContainer && this.props.bounce === false && this.props.onPullupLoading) {console.log(this.onPullupLoading)
             scrollerContainer.addEventListener('scroll',() => {
                 // 底部loadMore距顶部高度
                 var loadMoreReactTop = loadMore.getBoundingClientRect().top;
@@ -117,6 +117,7 @@ class Scroller extends React.Component {
         if (!this.state.first || !this.props.bounce) {
             return false;
         }
+        
         // 只执行一次
         if (this.state.first) {
             this.setState({
@@ -160,7 +161,6 @@ class Scroller extends React.Component {
             },
             touchMove: function (ev, value) {
                 // 上拉到底了
-                console.log(value, this.min - bufferVal)
                 if (value < (this.min - bufferVal) && Scroller.state.pullupStatus !== 'loading-start') {
                     console.log('上啦')
                     Scroller.setState({
@@ -322,7 +322,6 @@ class Scroller extends React.Component {
         var children = this.props.children;
         var containerHeight = this.state.containerHeight;
         var { config, pulldownStatus, pullupStatus, showToTop } = this.state;
-        console.log(showToTop)
         return (
             <div>
                 <div ref="scrollerContainer" className="scroller-container" style={{height: parseInt(containerHeight, 10) + 'px'}}>
@@ -374,7 +373,7 @@ class Scroller extends React.Component {
                             <div
                                 className="bottom-loading text-center"
                                 onClick={this.props.onPullupLoading}
-                                style={{paddingBottom: '10px'}}
+                                style={{paddingBottom: '10px', paddingTop: '4px'}}
                                 ref="loadMore"
                             >
                                 <span>
@@ -391,15 +390,20 @@ class Scroller extends React.Component {
                             null
                         }
                         {/*to top*/
-                            <span 
-                                className={showToTop? "icon-top show" : 'icon-top"'}
-                                onClick={(e) => {
-                                    this.to('y', 0);
-                                    return false;
-                                }}
-                            >
-                                <IconTop />
-                            </span>
+                            this.props.bounce === false ?
+                                <span 
+                                    className="icon-top"
+                                    style={{
+                                        display: showToTop? 'inline-block' : 'none'
+                                    }}
+                                    onClick={(e) => {
+                                        this.to('y', 0);
+                                        return false;
+                                    }}
+                                >
+                                    <IconTop />
+                                </span>:
+                                null
                         }
                                      
                     </div>
