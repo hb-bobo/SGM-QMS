@@ -33,3 +33,15 @@
         transform: rotate(360deg);
     }
 }
+
+.scroller-container span.icon-top {
+    display: none;
+    position: fixed;
+    bottom: 14px;
+    right: 18px;
+    font-size: 1.6em;
+    z-index: 100;
+}
+.scroller-container span.icon-top.show {
+    display: inline-block;
+}

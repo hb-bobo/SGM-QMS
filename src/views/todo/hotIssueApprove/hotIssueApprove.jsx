@@ -48,9 +48,12 @@ class HotIssueApprove extends React.Component {
 
         //TODO 测试
         // this.getListData('down');
-        this.setState({
-            listData: require('./data.json').data
-        });
+        setTimeout(() => {
+            this.setState({
+                listData: require('./data.json').data
+            });
+        }, 1000)
+        
         // 设置父级弹出的内容
         parent.setDrawerChildren(
             <HotIssueEdit 
@@ -63,11 +66,19 @@ class HotIssueApprove extends React.Component {
         this.$store.dispatch(clearTempData()); 
     }
     // TODO 测试
-    loadingMore = () => {
-        this.setState({
-            listData: this.state.listData.concat(require('./data.json').data)
-        });
-    }
+    /*loadingMore = () => {
+        setTimeout(() => {
+            this.setState({
+                listData: this.state.listData.concat(require('./data.json').data)
+            });
+            this.refs.scroller.donePullup();
+            this.setState({
+                scrollConfig: {
+                    upContent: 'No More'
+                }
+            });
+        }, 1000)
+    }*/
     // edit review time
     edit (data) {
         this.$store.dispatch(upTempData(data));
@@ -89,10 +100,15 @@ class HotIssueApprove extends React.Component {
     }
     // Reject the hot review item
     reject (problemId) {
-        return () => {
+        return () => {console.log('btn')
             this.approveCtrl(problemId, 'N')
         }
     }
+    /**
+     * 审批操作
+     * @param {string | number} problemId 
+     * @param {string} "Y" | "N" y是审批通过 
+     */
     approveCtrl (problemId, prblmReviewOp) {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -107,7 +123,7 @@ class HotIssueApprove extends React.Component {
         })
         .then((res) => {
             if (res.success === '') {
-                // var listData = Object.assign({}, this.state.listData);
+                //TODO var listData = Object.assign({}, this.state.listData);
                 console.log(res)
             }
         })
@@ -116,12 +132,12 @@ class HotIssueApprove extends React.Component {
         var { listData } = this.state;
         var {goAdvance} = this.props.parent;
         // intl.setMsg(require('./locale').default);
-
+        // onPulldownLoading={() => this.getListData('down')}
         return (
             <Scroller 
                 autoSetHeight={true}
+                bounce={false}
                 onPullupLoading={() => this.loadingMore()}
-                onPulldownLoading={() => this.getListData('down')}
                 config={this.state.scrollConfig}
                 ref="scroller"
             >

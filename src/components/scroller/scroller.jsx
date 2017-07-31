@@ -2,12 +2,12 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import './scroller.css';
 import { getRemainingHeight } from '@/utils/dom';
-import { throttle } from '@/utils/tools';
+// import { throttle } from '@/utils/tools';
 import AlloyTouch from 'alloytouch';
 import Transform from './transform.js';
 import IconLoading from '@/components/icon/loading';
 import IconArrow from '@/components/icon/arrow';
-
+import IconTop from '@/components/icon/top';
 // 下拉时触发的点
 var triggerPulldownValue = 40;
 // 下拉触发后回弹到某点(loading-start时的位置)
@@ -23,8 +23,8 @@ class Scroller extends React.Component {
         autoSetHeight: false,
         bottomHeight: 0, // 底部高。May have a menu at the bottom,
         scrollTop: 0,
-        bounce: false, // 是否反弹，关掉是默认的scrollbar, 如果没有下拉上拉加载数据建议设为false
-        multiTrigger: false,
+        bounce: true, // 是否反弹，关掉是默认的scrollbar, 如果没有下拉上拉加载数据建议设为false
+        multiTrigger: false, // 多次出发底部
         config: {
             downContent: '', // 下拉时显示的文字
             upContent: '' // 上拉时显示的文字
@@ -46,7 +46,8 @@ class Scroller extends React.Component {
         first: true,
         config: {},
         pulldownStatus: 'default',
-        pullupStatus: 'default'
+        pullupStatus: 'default',
+        showToTop: false
     }
     componentWillReceiveProps (nextProps, nextState) {
         this.setState({
@@ -60,20 +61,48 @@ class Scroller extends React.Component {
         });
     }
     componentDidMount () {
+        var {scrollerContainer, loadMore} = this.refs;
+        var clientHeight = document.documentElement.clientHeight;
         if (this.props.autoSetHeight) {
             this.setHeight();
         }
         // 记录scrollTop 位置
-        if (this.refs.scrollerContainer && this.props.bounce === false) {
-            this.refs.scrollerContainer.addEventListener('scroll', throttle(() => {
-                if (this.refs.scrollerContainer !== undefined) {
+        if (scrollerContainer && this.props.bounce === false) {
+            scrollerContainer.addEventListener('scroll',() => {
+                // 底部loadMore距顶部高度
+                var loadMoreReactTop = loadMore.getBoundingClientRect().top;
+                // 滚动条高度
+                var scrollTop = scrollerContainer.scrollTop;
+                // 到底部了
+                if ((loadMoreReactTop !== 0) &&
+                    (loadMoreReactTop < clientHeight) &&
+                    this.state.pullupStatus !== 'loading-start'
+                ) {
+                    if (this.state.pullupStatus === 'default') {
+                        this.onPullupLoading()
+                        console.log('到底了')
+                    }
+                }
+                //大于这个范围 该展示回到顶部的按钮了
+                if (scrollTop > this.state.containerHeight * 2 &&
+                    this.state.showToTop !== true
+                ) {
                     this.setState({
-                        scrollTop: this.refs.scroller.scrollTop
+                        showToTop: true
                     });
-                } //.getBoundingClientRect().top, 
-            }, 500));
+                } else if (scrollTop < this.state.containerHeight * 2 && this.state.showToTop === true) {
+                    // 快到顶了就不用显示了
+                    this.setState({
+                        showToTop: false
+                    });
+                }
+                // if (scrollerContainer !== undefined) {
+                //     this.setState({
+                //         scrollTop: this.refs.scroller.scrollTop
+                //     });
+                // } 
+            });
         }
-
     }
     shouldComponentUpdate (nextProps, nextState) {
         // if (this.props.bounce === true
@@ -188,12 +217,13 @@ class Scroller extends React.Component {
     }
     /*上拉加载*/
     onPullupLoading = () => {
-        var { scrollerAt } = this.state;
-        if (scrollerAt) {
-            this.setState({
-                pullupStatus: 'loading-start'
-            });
-        }
+        // var { scrollerAt } = this.state;
+        // if (scrollerAt) {
+           
+        // }
+        this.setState({
+            pullupStatus: 'loading-start'
+        });
         this.props.onPullupLoading && this.props.onPullupLoading();
         this.autoDoneAll();
     }
@@ -217,18 +247,19 @@ class Scroller extends React.Component {
         }
     }
     /*上拉完成*/
-    donePullup = () => {
+    donePullup = () => {console.log('上蜡完成')
         var { scrollerAt, pullupStatus } = this.state;
         if (scrollerAt) {
             // 本身时loading-start状态就不执行，避免频繁操作
             if (pullupStatus === 'loading-start' && this.props.multiTrigger === false) {
                 return false;
             }
-            this.setState({
-                pullupStatus: 'default'
-            });
             window.clearTimeout(scrollerAt.timer);
         }
+
+        this.setState({
+            pullupStatus: 'default'
+        });
     }
     /*下拉完成*/
     donePulldown = () => {
@@ -267,22 +298,31 @@ class Scroller extends React.Component {
      * @param {string} y | x
      * @param {number} scrollTop | scrollLeft
      */
-    to = (key, value) => {
+    to = (key, value) => {console.log('value')
         var { scrollerAt } = this.state;
-        if (!scrollerAt) {
-            return;
-        }
+        
         if (key === 'y') {
-            scrollerAt.to(value);
-            this.setState({
-                pulldownStatus: 'loading-start'
-            });
+            if (scrollerAt) {
+                scrollerAt.to(value);
+                this.setState({
+                    pulldownStatus: 'loading-start'
+                });
+                return;
+            } else {
+                this.refs.scrollerContainer.scrollTop =  value;
+                this.setState({
+                    showToTop: false
+                });
+            }
+            
         }
+        return false;
     }
     render () {
         var children = this.props.children;
         var containerHeight = this.state.containerHeight;
-        var { config, pulldownStatus, pullupStatus } = this.state;
+        var { config, pulldownStatus, pullupStatus, showToTop } = this.state;
+        console.log(showToTop)
         return (
             <div>
                 <div ref="scrollerContainer" className="scroller-container" style={{height: parseInt(containerHeight, 10) + 'px'}}>
@@ -329,19 +369,39 @@ class Scroller extends React.Component {
                                 null
 
                         }  
-                        {/* 上拉2 */
+                        {/* 上拉2不依赖其他东西 bounce =false时用，没有下拉功能*/
                             (this.props.bounce === false && this.props.onPullupLoading) ?
                             <div
                                 className="bottom-loading text-center"
                                 onClick={this.props.onPullupLoading}
                                 style={{paddingBottom: '10px'}}
+                                ref="loadMore"
                             >
                                 <span>
-                                    Load More ...
+                                    {
+                                        (config.upContent && config.upContent === 'No More')? 
+                                            config.upContent :
+                                            <IconLoading 
+                                                style={{width: 20, height: 20}}
+                                                show={true}
+                                            />
+                                    }
                                 </span>
                             </div> :
                             null
-                        }              
+                        }
+                        {/*to top*/
+                            <span 
+                                className={showToTop? "icon-top show" : 'icon-top"'}
+                                onClick={(e) => {
+                                    this.to('y', 0);
+                                    return false;
+                                }}
+                            >
+                                <IconTop />
+                            </span>
+                        }
+                                     
                     </div>
                 </div>
             </div>
