@@ -392,7 +392,7 @@ class Scroller extends React.Component {
                         }
                         {/*to top*/
                             <span 
-                                className={showToTop? "icon-top show" : 'icon-top"'}
+                                className={(showToTop && this.props.bounce === true)? "icon-top show" : 'icon-top"'}
                                 onClick={(e) => {
                                     this.to('y', 0);
                                     return false;

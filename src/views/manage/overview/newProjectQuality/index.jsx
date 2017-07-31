@@ -45,11 +45,12 @@ class NewProjectQuality extends React.Component {
         var { lang } = this.context;
         // timingName的样式，中英文差距大
         var timingNameStyle = lang === 'zh' ? {} : {float: 'right', marginRight: '8px'};
+        //onPulldownLoading={() => this.getListData('down')}
         return (
             <Scroller
                 autoSetHeight={true}
+                bounce={false}
                 onPullupLoading={() => this.loadingMore()}
-                onPulldownLoading={() => this.getListData('down')}
                 config={this.state.scrollConfig}
                 ref="scroller"
             >

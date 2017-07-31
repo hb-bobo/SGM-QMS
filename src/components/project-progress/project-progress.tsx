@@ -103,7 +103,7 @@ class ProjectProgress extends React.Component<{[key: string]: any}, any> {
                                     <span>
                                         {
                                             currentPhase.regateTime && 
-                                            getTime(currentPhase.regateTime.time, dateFormat)
+                                            getTime(new Date(currentPhase.regateTime.time), dateFormat)
                                         }
                                     </span>
                                 </div>

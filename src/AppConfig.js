@@ -1,7 +1,7 @@
 // 是否开发环境
 const isDev = process.env.NODE_ENV === 'development';
 // proxy设置再package.json.proxy中， proxyMatch会被替换为空并代理到目标源(target)
-const proxyMatch = '/@Dev2';
+const proxyMatch = '/localhost';
 // 工程名
 const projectName = 'QMS';
 // "http://10.11.146.18:6080/QMS/

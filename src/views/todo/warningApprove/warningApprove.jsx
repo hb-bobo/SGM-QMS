@@ -97,11 +97,13 @@ class WarningApprove extends React.Component {
         var { listData } = this.state;
         var {goAdvance} = this.props.parent;
         intl.setMsg(require('@/static/i18n').default,require('./locale'));
+
+        //onPulldownLoading={() => this.getListData('down')}
         return (
             <Scroller
                 autoSetHeight={true}
+                bounce={false}
                 onPullupLoading={() => this.loadingMore()}
-                onPulldownLoading={() => this.getListData('down')}
                 config={this.state.scrollConfig}
                 ref="scroller"
             >
