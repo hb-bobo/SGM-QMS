@@ -243,16 +243,23 @@ export default class Scroller extends Component {
     static childContextTypes = {
         scroller: PropTypes.object
     };
-
-    constructor(props) {
-        super(props);
+    static contextTypes = {
+        language: PropTypes.string
+    }
+    constructor(props, context) {
+        super(props, context);
         this.isIphone = (/iphone/gi).test(navigator.appVersion);
         // 重置属性
         this.resetProps();
         // 缓存个滑块的DOM节点
         this.loadTipElCache = this.getLoadTipElCache();
         // 初始化语言包
-        this.lang = getMessage(props.lang);
+        if (this.context.language) {
+            this.lang = getMessage(this.context.language);
+        } else {
+            this.lang = getMessage(props.lang);
+        }
+        
     }
 
     getChildContext() {
