@@ -1,9 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import mixins from '@/decorator/mixins';
-import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
-import Scroller2 from '@/components/scroller2';
+import fetchList from '@/decorator/fetchList';
+import SilkScroller from '@/components/scroller2';
 import HDate from '@/components/form/h-date';
 import pathToJSON from '@/utils/object/pathToJSON';
 import Circle from '@/components/circle';
@@ -14,18 +13,11 @@ import dateFormat from '@/utils/format/dateFormat';
 // import { POST } from '@/plugins/fetch';
 
 /*质量评审计划*/
-@mixins(
-    componentWillMount,
-    componentWillUnmount,
-    getListData,
-    loadingMore
-)
+@fetchList('/ProjectQuality/mQueryCompanyQuailtyList')
 class HotIssueReviewPlan extends React.Component {
     static defaultProps = {
-        getListDataAPI: '/ProjectQuality/mQueryCompanyQuailtyList'
     }
     static propTypes = {
-        getListDataAPI: PropTypes.string.isRequired,
     }
     static contextTypes = {		
         store: PropTypes.object
@@ -34,9 +26,10 @@ class HotIssueReviewPlan extends React.Component {
         time: dateFormat()
     }
     componentDidMount () {
-        this.getListData('down', {
-            time: this.state.time
-        });
+        // this.props.getListData('down', {
+        //     time: this.state.time
+        // });
+        this.refs.scroller.simulatePullRefresh();
     }
     bind = (key) => {
         return (e) => {
@@ -46,13 +39,13 @@ class HotIssueReviewPlan extends React.Component {
     /* 评审计划查询刷新 */
     selectHis = (value) => {
         this.refs.scroller.to('y', 50);
-        this.getListData('down', {
+        this.props.getListData('down', {
             time: this.state.time
         });
     }
     render () {
         intl.setMsg(require('@/static/i18n').default);
-        var { listData, noMoreData } = this.state;
+        var { listData, noMoreData, getListData, loadingMore } = this.props;
         return (
             <div>
                 <div className="item-body flex-row" style={{padding: "6px 12px", fontSize: "0.8em"}}>
@@ -74,11 +67,13 @@ class HotIssueReviewPlan extends React.Component {
                     </div>
                 </div>
 
-                <Scroller2
+                <SilkScroller
                     usePullRefresh
-                    pullRefreshAction={(resolve, reject) => {this.getListData('down', resolve, reject)}}
+                    pullRefreshAction={(resolve, reject) => {
+                        getListData('down', resolve, reject, { time: this.state.time })
+                    }}
                     useLoadMore
-                    loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
+                    loadMoreAction={(resolve, reject) => loadingMore(resolve, reject , { time: this.state.time })}
                     noMoreData={noMoreData}
                     preventDefault={false}
                     ref="scroller"
@@ -138,7 +133,7 @@ class HotIssueReviewPlan extends React.Component {
                             </div>
                         )
                     })}
-                </Scroller2>   
+                </SilkScroller>   
 
                 
             </div>

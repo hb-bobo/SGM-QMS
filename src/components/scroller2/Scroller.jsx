@@ -25,7 +25,7 @@ import ICONS from './icons';
 import {REFRESHSTATUS, LOADMORESTATUS} from './status';
 import {getMessage} from './lang';
 import { getRemainingHeight } from '@/utils/dom';
-
+import IconTop from '@/components/icon/top';
 import './Scroller.less';
 
 const boundaryThreshold = 5;
@@ -202,6 +202,10 @@ export default class Scroller extends Component {
          * */
         scrollerStyle: PropTypes.shape({}),
         /**
+         * 开启到顶部功能
+         */
+        useToTop: PropTypes.bool,
+        /**
          * 是否还有更多数据
          * */
         noMoreData: PropTypes.bool
@@ -232,6 +236,7 @@ export default class Scroller extends Component {
         scrollerStyle: {},
         containerClass: '',
         scrollerClass: '',
+        useToTop: true,
         useTransform: true,
         useTransition: true,
         usePullRefresh: false,
@@ -1002,7 +1007,21 @@ export default class Scroller extends Component {
             this.scrollerStyle.left = `${x}px`;
             this.scrollerStyle.top = `${y}px`;
         }
-
+        // 按需展示toTop
+        var toTop = this.refs.toTop;
+        if (this.props.useToTop && toTop) {
+            if (
+                (y < -(this.wrapperHeight * 1.5)) && 
+                toTop.style.display === 'none'
+            ) {
+                toTop.style.display = 'inline-block';
+            } else if (
+                y > -(this.wrapperHeight * 1.5) &&
+                toTop.style.display === 'inline-block'
+            ) {
+                toTop.style.display = 'none';
+            }
+        }
         // 重置x,y的值
         this.x = x;
         this.y = y;
@@ -1341,6 +1360,13 @@ export default class Scroller extends Component {
             this.pullRefreshStatus = REFRESHSTATUS.PULL;
             this.loadMoreStatus = loadMoreStatus;
         }
+
+        //容器高度
+        if (this.props.autoSetHeight === false) {
+            this.setState({
+                containerHeight: props.containerHeight
+            });
+        }
     }
 
     /**
@@ -1451,6 +1477,23 @@ export default class Scroller extends Component {
                                 </div>) : null
                         }
                     </div>
+                     {/*to top*/
+                        this.props.useToTop === true ?
+                            <span 
+                                className="silk-listcontrol-icon-top"
+                                style={{
+                                    display: false? 'inline-block' : 'none'
+                                }}
+                                ref="toTop"
+                                onClick={(e) => {
+                                    this.scrollTo(0, 0);
+                                    return false;
+                                }}
+                            >
+                                <IconTop />
+                            </span>:
+                            null
+                    }
                 </div>
             </div>
         );

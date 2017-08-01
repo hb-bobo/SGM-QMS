@@ -12,7 +12,6 @@ export default function componentWillMount (this: any): void {
         }
         return false;
     });
-    console.log(11)
     this.setState({
         listData: [],
         pageNumber: 1, // 默认第一页

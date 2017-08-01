@@ -60,7 +60,6 @@ export class IssueAdvance extends React.Component {
       "VOC": 'mVocDetail',
     }
     url += params[this.state.advType];
-    console.log(id)
     POST(url, {
       data: {
         id: id
@@ -146,7 +145,6 @@ export class IssueAdvance extends React.Component {
     if (this.props.routes) {
         routes = this.props.routes;
     }
-      console.log(this)
     return (
       <div className="issue-advance">
         {/*头部*/}

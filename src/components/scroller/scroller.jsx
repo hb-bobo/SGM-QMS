@@ -19,24 +19,26 @@ var bufferVal = 20;
  */
 class Scroller extends React.Component {
     static defaultProps = {
-        containerHeight: 100,
         autoSetHeight: false,
         bottomHeight: 0, // 底部高。May have a menu at the bottom,
-        scrollTop: 0,
         bounce: true, // 是否反弹，关掉是默认的scrollbar, 如果没有下拉上拉加载数据建议设为false
-        multiTrigger: false, // 多次出发底部
+        containerHeight: 100,
         config: {
             downContent: '', // 下拉时显示的文字
             upContent: '' // 上拉时显示的文字
         },
-        donePulldown: 'done'
+        donePulldown: 'done',
+        multiTrigger: false, // 多次出发底部
+        noMoreData: false, // 是否没用更多数据
+        scrollTop: 0, 
     }
     static propTypes = {
-        containerHeight: PropTypes.number,
         autoSetHeight: PropTypes.bool,
         bottomHeight: PropTypes.number,
-        config: PropTypes.object,
         bounce: PropTypes.bool,
+        containerHeight: PropTypes.number,
+        config: PropTypes.object,
+        noMoreData: PropTypes.bool,
         onScrollBottom: PropTypes.func, // 上拉到底了，会多次执行
         onPullupLoading: PropTypes.func, // 上拉到一定层度并放开时
         onPulldownLoading: PropTypes.func, // 下拉到一定层度并放开时
@@ -67,7 +69,7 @@ class Scroller extends React.Component {
             this.setHeight();
         }
         // 记录scrollTop 位置
-        if (scrollerContainer && this.props.bounce === false && this.props.onPullupLoading) {console.log(this.onPullupLoading)
+        if (scrollerContainer && this.props.bounce === false && this.props.onPullupLoading) {
             scrollerContainer.addEventListener('scroll',() => {
                 // 底部loadMore距顶部高度
                 var loadMoreReactTop = loadMore.getBoundingClientRect().top;
@@ -80,7 +82,6 @@ class Scroller extends React.Component {
                 ) {
                     if (this.state.pullupStatus === 'default') {
                         this.onPullupLoading()
-                        console.log('到底了')
                     }
                 }
                 //大于这个范围 该展示回到顶部的按钮了
@@ -182,7 +183,6 @@ class Scroller extends React.Component {
                     return false;              
                 }
                 // 上拉到底了，并松开了 (bufferVal 大致= bottom-loading的高度)
-                console.log(value, (this.min - bufferVal))
                 if (value < (this.min - bufferVal)) {
                     Scroller.onPullupLoading();
                 }
@@ -247,7 +247,7 @@ class Scroller extends React.Component {
         }
     }
     /*上拉完成*/
-    donePullup = () => {console.log('上蜡完成')
+    donePullup = () => {
         var { scrollerAt, pullupStatus } = this.state;
         if (scrollerAt) {
             // 本身时loading-start状态就不执行，避免频繁操作
@@ -378,8 +378,8 @@ class Scroller extends React.Component {
                             >
                                 <span>
                                     {
-                                        (config.upContent && config.upContent === 'No More')? 
-                                            config.upContent :
+                                        (this.props.noMoreData)? 
+                                            'No More' :
                                             <IconLoading 
                                                 style={{width: 20, height: 20}}
                                                 show={true}

@@ -111,7 +111,7 @@ export function POST (url: string, opts: Opts) {
     return new Promise(function (resolve: Function, reject?: Function) {
         _fetch(
             fetch(reqUrl, reqOpts),
-            opts.timeout || 20000
+            opts.timeout || 60000
         )
         .then(checkStatus)
         .then(parseJSON)
@@ -154,7 +154,7 @@ export function GET (url: string, opts: Opts) {
     var {
         headers = defaultHeaders,
         data = {},
-        timeout = 20000
+        timeout = 60000
     } = opts || {data: {}};
 
     var reqUrl: string = AppConfig.API + url + '?' + querystring.stringify(data); 

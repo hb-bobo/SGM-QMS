@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { upWorkPlanEditData } from '@/store/actions';
+import { upWorkPlanEditData, upWorkPlanListData } from '@/store/actions';
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 
 // import pathToJSON from '@/utils/object/pathToJSON';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
-import Scroller2 from '@/components/scroller2';
+import Scroller from '@/components/scroller';
 import WorkPlanEdit from './work-plan-edit';
 import { POST } from '@/plugins/fetch';
 import intl from '@/components/intl';
@@ -28,11 +28,15 @@ import AppConfig from '@/AppConfig';
 
 @connect(
     // mapStateToProps
-    (state) => ({workPlanEditData: state.issueAdvance.workPlanEditData}),
+    (state) => ({
+        workPlanEditData: state.issueAdvance.workPlanEditData,
+        workPlanData: state.issueAdvance.workPlanData
+    }),
     // buildActionDispatcher
     (dispatch, ownProps) => ({
         actions: bindActionCreators({
-            upWorkPlanEditData
+            upWorkPlanEditData,
+            upWorkPlanListData
         }, dispatch)
     })
 )
@@ -54,38 +58,62 @@ class WorkPlan extends React.Component {
 
     componentDidMount () {
         this.parent = this.props.parent;
-        this.selectWorkPlan();
-        this.refs.scroller.simulatePullRefresh();
+        this.selectWorkPlan('down');
+        // this.refs.scroller.simulatePullRefresh();
     }
-    // 查询工作计划
-    selectWorkPlan = (resolve, reject) => {
-        POST('/mproblem/getWorkPlan', {
-        data: {
-            id: this.props.prblmId,
-            page: this.state.pageNumber
+    /**
+     * 查询工作计划
+     * @param {'up' | 'down'} 上拉还是下拉
+     */
+    selectWorkPlan = (action) => {
+        if (action === 'down') {
+            this.setState({
+                pageNumber: 1
+            });
         }
+        if (action === 'up' && this.state.noMoreData === true) {
+            return;
+        }
+        POST('/mproblem/getWorkPlan', {
+            data: {
+                id: this.props.prblmId,
+                page: this.state.pageNumber
+            }
         }).then((res) => {
             if (res.success === true) {
+                var listData;
+                var action;
+                // 下拉结束
+                if (action === 'down') {
+                    // this.refs.scroller.donePulldown();
+                    listData = res.workplan;
+                    action = 'update';
+                } else if (action === 'up') {
+                    // 上拉结束
+                    // this.refs.scroller.donePullup();
+                    listData = this.state.allWorkPlan.concat(res.workplan);
+                    action = 'update';
+                }
+                this.props.actions.upWorkPlanListData({
+                    action: action,
+                    value: listData
+                });
                 this.setState({
-                    allWorkPlan : res.workplan,
+                    allWorkPlan : listData,
                     phase : res.phase,
                     pageNumber : this.state.pageNumber+1
                 });
-                resolve();
+                this.refs.scroller.donePullup();
                 if (res.workplan.length < AppConfig.listConfig.count) {
                     this.setState({
                         noMoreData: true
                     });
                 }
             }
-        }).catch(() => {
-            if (reject) {
-                reject();
-            }
         })
     }
     loadingMore = () => {
-        this.selectWorkPlan()
+        this.selectWorkPlan('up')
     }
     // 新增工作计划
     workPlanNewData = () => {
@@ -157,11 +185,8 @@ class WorkPlan extends React.Component {
                 return item;
             }
             return null;
-        })
+        });
         var { workPlanEditData } = this.props;
-        if (data.length === 0) {
-            containerHeight = 100;
-        }
         return (
             <div>
                 <SpaceRow height={6} />
@@ -187,15 +212,12 @@ class WorkPlan extends React.Component {
                     </div>
                 </div>
                 <div className="work-plan-list">
-                    <Scroller2
-                        usePullRefresh
-                        pullRefreshAction={(resolve, reject) => {this.selectWorkPlan('down', resolve, reject)}}
-                        useLoadMore
-                        loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
-                        noMoreData={noMoreData}
-                        preventDefault={false}
+                    <Scroller
+                        onPullupLoading={() => this.loadingMore()}
                         containerHeight={containerHeight}
                         autoSetHeight={false}
+                        bounce={false}
+                        noMoreData={noMoreData}
                         ref="scroller"
                     >
                         {
@@ -279,7 +301,7 @@ class WorkPlan extends React.Component {
                                 )
                             })
                         }
-                    </Scroller2>
+                    </Scroller>
                 </div>
                 {/*工作计划弹出*/}
                 <Drawer 

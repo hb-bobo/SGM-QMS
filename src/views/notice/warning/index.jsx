@@ -1,9 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import mixins from '@/decorator/mixins';
-import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
-import Scroller2 from '@/components/scroller2';
+import fetchList from '@/decorator/fetchList';
+import SilkScroller from '@/components/scroller2';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
@@ -18,33 +17,31 @@ import intl from '@/components/intl';
     2： 高级经理
     3： 总监
 */
-@mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
+@fetchList('/toDo/mPromptNotice')
 class Warning extends React.Component {
     static defaultProps = {
-        getListDataAPI: '/notice/mPromptNotice'
     }
     static propTypes = {
-        getListDataAPI: PropTypes.string.isRequired,
         goAdvance: PropTypes.func.isRequired
     }
     state = {
     }
     componentDidMount () {
-        this.getListData('down');
-        // this.refs.scroller.simulatePullRefresh();
+        // this.props.getListData('down');
+        this.refs.scroller.simulatePullRefresh();
     }
     render () {
         intl.setMsg(require('@/static/i18n').default, require('./locale'));
         var { goAdvance } = this.props;
-        var { listData, noMoreData } = this.state;
+        var { listData, noMoreData, getListData, loadingMore } = this.props;
         // onPulldownLoading={() => this.getListData('down')}
         return (
             <div>
-                <Scroller2
+                <SilkScroller
                     usePullRefresh
-                    pullRefreshAction={(resolve, reject) => {this.getListData('down', resolve, reject)}}
+                    pullRefreshAction={(resolve, reject) => {getListData('down', resolve, reject)}}
                     useLoadMore
-                    loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
+                    loadMoreAction={(resolve, reject) => loadingMore(resolve, reject)}
                     noMoreData={noMoreData}
                     preventDefault={false}
                     ref="scroller"
@@ -111,7 +108,7 @@ class Warning extends React.Component {
                             </div>
                         )
                     })}
-                </Scroller2>
+                </SilkScroller>
             </div>
         )
     }

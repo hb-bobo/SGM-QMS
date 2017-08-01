@@ -126,10 +126,10 @@ export const routes = [
         path: '/project/verification/:subProjectId',
         component: require('@/views/project/verification').default
       },
-      {
-        path: '/project/overview',
-        component: require('@/views/project/overview').default
-      },
+      // {
+      //   path: '/project/overview',
+      //   component: require('@/views/project/overview').default
+      // },
       {
         path: '/project/EQRHotIssue',
         component: require('@/views/project/EQRHotIssue').default

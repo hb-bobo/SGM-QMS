@@ -73,17 +73,17 @@ export class WorkPlanEdit extends React.Component {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         POST(url, {
-        headers: headers,
-        data: {
-                planDesc: this.state.planDesc,
-                planFinishDate: this.state.planFinishDate,
-                pwActlFinishDate: this.state.pwActlFinishDate,
-                prblmId: this.props.parent.parent.state.issueData.prblmId,
-                prblmPhaseID: prblmPhaseID,
-                rspnsUser: this.state.rspnsUser,
-                workPlanID: this.state.workPlanID,
-                workPlanStatus: this.state.workPlanStatus
-        }
+            headers: headers,
+            data: {
+                    planDesc: this.state.planDesc,
+                    planFinishDate: this.state.planFinishDate,
+                    pwActlFinishDate: this.state.pwActlFinishDate,
+                    prblmId: this.props.parent.parent.state.issueData.prblmId,
+                    prblmPhaseID: prblmPhaseID,
+                    rspnsUser: this.state.rspnsUser,
+                    workPlanID: this.state.workPlanID,
+                    workPlanStatus: this.state.workPlanStatus
+            }
         }).then((res) => {
             if (res.success === true) {
                 this.props.parent.selectWorkPlan();

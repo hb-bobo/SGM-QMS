@@ -1,32 +1,30 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import mixins from '@/decorator/mixins';
-import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
-import Scroller2 from '@/components/scroller2';
+import fetchList from '@/decorator/fetchList';
+import SilkScroller from '@/components/scroller2';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
 
 var subProjectId = null;
 /* 热点问题 */
-@mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
+@fetchList('/ProjectQuality/mListHotIssue')
 class HotIssue extends React.Component {
     static defaultProps = {
-        getListDataAPI: '/ProjectQuality/mListHotIssue',
     }
     static propTypes = {
-        getListDataAPI: PropTypes.string.isRequired,
         parent: PropTypes.instanceOf(React.Component).isRequired
     }
     state = {
-        selectReLvl: ""
+        selectReLvl: 0
     }
     componentDidMount () {
         subProjectId = this.props.match.params.subProjectId;
-        this.getListData('down', {
-            subProjectId: subProjectId,
-            hotLevel: 0
-        });
+        // this.props.getListData('down', {
+        //     subProjectId: subProjectId,
+        //     hotLevel: 0
+        // });
+        this.refs.scroller.simulatePullRefresh();
         this.props.parent.setState({
             title: intl.get('QMS.HotIssues')
         });
@@ -35,14 +33,17 @@ class HotIssue extends React.Component {
     /* 评审级别查询刷新 */
     selectChange = (ev) => {
         var value = ev.target.value;
-        this.getListData('down', {
+        this.props.getListData('down', {
             subProjectId: subProjectId,
             hotLevel: value
+        });
+        this.setState({
+            selectReLvl: value
         });
     }  
     render () {
         intl.setMsg(require('@/static/i18n').default);
-        var { listData, noMoreData } = this.state;
+        var { listData, noMoreData, getListData, loadingMore } = this.props;
         var { goAdvance } = this.props.parent;
         return (
             <div>
@@ -59,11 +60,21 @@ class HotIssue extends React.Component {
                         </select>
                     </div>
                 </div>
-                <Scroller2
+                <SilkScroller
                     usePullRefresh
-                    pullRefreshAction={(resolve, reject) => {this.getListData('down', resolve, reject)}}
+                    pullRefreshAction={(resolve, reject) => {
+                        getListData('down', resolve, reject, {
+                            subProjectId: subProjectId,
+                            hotLevel: this.state.selectReLvl
+                        })
+                    }}
                     useLoadMore
-                    loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
+                    loadMoreAction={(resolve, reject) => {
+                        loadingMore(resolve, reject, {
+                            subProjectId: subProjectId,
+                            hotLevel: this.state.selectReLvl
+                        })}
+                    }
                     noMoreData={noMoreData}
                     preventDefault={false}
                     ref="scroller"
@@ -141,7 +152,7 @@ class HotIssue extends React.Component {
                             </div>
                         )
                     })}
-                </Scroller2>
+                </SilkScroller>
             </div>
         )
     }

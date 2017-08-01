@@ -28,12 +28,11 @@ class HomePage extends React.Component{
     selectedId: {}
   }
   componentWillMount () {
-    var Home = this;
     this.$store.dispatch(getListData({
       a:1
     }));
     // 取用户名
-    document.addEventListener('plusready', function () {
+    document.addEventListener('plusready', () => {
       var fhname = window.NativeObj.getUserName()
       if (!fhname) {
         alert('获取用户名失败')
@@ -44,27 +43,16 @@ class HomePage extends React.Component{
         fhname === '') {
         window.location.href = 'views/error/403.html'
       } else {
-        /* window.$ajax({
-          type: 'POST',
-          url: 'enter.do',
-          data: 'userName=' + fhname,
-          success: function (data) {
-            if (!data.success) {
-              window.location.href = 'views/error/403.html'
-            }
-          }
-        }); */
-        
-        POST('enter.do', {
-            data: {
+        // POST('enter.do', {
+        //     data: {
               
-            }
-        })
-        .then((res) => {
-          if (!res.success) {
-            Home.context.router.history.push('/404');
-          }
-        })
+        //     }
+        // })
+        // .then((res) => {
+        //   if (!res.success) {
+        //     Home.context.router.history.push('/404');
+        //   }
+        // })
       }
     }, false);
 

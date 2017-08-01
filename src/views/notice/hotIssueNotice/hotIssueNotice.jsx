@@ -1,47 +1,40 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 
-import mixins from '@/decorator/mixins';
-import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
-import Scroller2 from '@/components/scroller2';
+import fetchList from '@/decorator/fetchList';
+import {hotLevelFilter} from '@/mixins/';
+import SilkScroller from '@/components/scroller2';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
 // import { POST } from '@/plugins/fetch';
 // import AppConfig from '@/AppConfig';
 
-/*  //TODO //hotLevel  评审级别
-    1: EQR专题
-    2：EQR常规
-    3: 项目热点
-    4：售后EQR专题
-    */
-@mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
+@fetchList('/notice/mHotIssueNotice')
 class HotIssueNotice extends React.Component {
     static defaultProps = {
-        getListDataAPI: '/notice/mHotIssueNotice'
     }
     static propTypes = {
-        getListDataAPI: PropTypes.string.isRequired,
         goAdvance: PropTypes.func.isRequired
     }
     state = {
     }
     componentDidMount () {
-        this.getListData('down');
+        // this.props.getListData('down');
+        this.refs.scroller.simulatePullRefresh();
     }
     render () {
         intl.setMsg(require('@/static/i18n').default);
         var { goAdvance } = this.props;
-        var { listData, noMoreData } = this.state;
+        var { listData, noMoreData, getListData, loadingMore } = this.props;
         // onPulldownLoading={() => this.getListData('down')}
         return (
             <div>
-                <Scroller2
+                <SilkScroller
                     usePullRefresh
-                    pullRefreshAction={(resolve, reject) => {this.getListData('down', resolve, reject)}}
+                    pullRefreshAction={(resolve, reject) => {getListData('down', resolve, reject)}}
                     useLoadMore
-                    loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
+                    loadMoreAction={(resolve, reject) => loadingMore(resolve, reject)}
                     noMoreData={noMoreData}
                     preventDefault={false}
                     ref="scroller"
@@ -97,7 +90,7 @@ class HotIssueNotice extends React.Component {
                                     <div className="flex-row">
                                         <div className="flex-col-5">
                                             <span>{intl.get('QMS.ReviewLevel')}: </span>
-                                            <span> {item.hotLevel}</span>
+                                            <span> {hotLevelFilter(item.hotLevel)}</span>
                                         </div>
                                         <div className="flex-col-5">
                                             <span>{intl.get('QMS.Age')}: </span>
@@ -108,7 +101,7 @@ class HotIssueNotice extends React.Component {
                             </div>
                         )
                     })}
-                </Scroller2>
+                </SilkScroller>
             </div>
         )
     }

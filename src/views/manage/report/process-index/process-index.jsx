@@ -57,7 +57,7 @@ class ProcessIndex extends React.Component {
                 uploadType: null,
             }
         ]
-        /* 递归取目标值 */
+        /* 递归取目标值（线图） */
         var getChartData = (index) => {
             POST('/monthReport/mGetMonthReportValue', {
                 data: {

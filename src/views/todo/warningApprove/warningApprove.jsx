@@ -5,13 +5,12 @@ import PropTypes from 'prop-types';
 // import { connect } from 'react-redux';
 // import { fillListData } from '@/store/actions';
 
-import mixins from '@/decorator/mixins';
-import {componentWillMount, componentWillUnmount, getListData, loadingMore} from '@/mixins/';
+import fetchList from '@/decorator/fetchList';
 
 import FlatButton from 'material-ui/FlatButton';
 
 // import Scroller from '@/components/scroller';
-import Scroller2 from '@/components/scroller2';
+import SilkScroller from '@/components/scroller2';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
@@ -36,13 +35,11 @@ import { POST } from '@/plugins/fetch';
 //         }, dispatch)
 //     })
 // )
-@mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
+@fetchList('/toDo/mPromptNoticeApporve')
 class WarningApprove extends React.Component {
     static defaultProps = {
-        getListDataAPI: '/toDo/mPromptNoticeApporve'
     }
     static propTypes = {
-        getListDataAPI: PropTypes.string.isRequired,
         parent: PropTypes.instanceOf(React.Component).isRequired,
     }
     state = {
@@ -52,8 +49,8 @@ class WarningApprove extends React.Component {
         this.setState({
             title: intl.get('Detail')
         });
-        this.getListData('down');
-        // this.refs.scroller.simulatePullRefresh();
+        // this.props.getListData('down');
+        this.refs.scroller.simulatePullRefresh();
     }
 
     // Approved the hot review item
@@ -86,15 +83,22 @@ class WarningApprove extends React.Component {
             }
         })
         .then((res) => {
-            if (res.success === '') {
-                //TODO var listData = Object.assign({}, this.state.listData);
+            if (res.success === true) {
+                var newListData = Object.assign({}, this.state.listData);
+                newListData.some((item, i) => {
+                    if (item.prblmId === problemId) {
+                        newListData.splice(i, 1);
+                        return true;
+                    }
+                    return false;
+                })
                 console.log(res)
             }
         })
     }
 
     render () {
-        var { listData, noMoreData } = this.state;
+        var { listData, noMoreData, getListData, loadingMore } = this.props;
         var {goAdvance} = this.props.parent;
         intl.setMsg(require('@/static/i18n').default,require('./locale'));
         //onPulldownLoading={() => this.getListData('down')}
@@ -106,11 +110,11 @@ class WarningApprove extends React.Component {
                 ref="scroller"
             >*/
         return (
-            <Scroller2
+            <SilkScroller
                 usePullRefresh
-                pullRefreshAction={(resolve, reject) => {this.getListData('down', resolve, reject)}}
+                pullRefreshAction={(resolve, reject) => {getListData('down', resolve, reject)}}
                 useLoadMore
-                loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
+                loadMoreAction={(resolve, reject) => loadingMore(resolve, reject)}
                 noMoreData={noMoreData}
                 preventDefault={false}
                 ref="scroller"
@@ -132,7 +136,7 @@ class WarningApprove extends React.Component {
                                                 </span>
                                             </div>
                                             <div style={{marginTop: '0.6em'}}>
-                                                {/*TODO 放 问题标题  <span className="left">
+                                                {/* 放 问题标题  <span className="left">
                                                     {intl.get('QMS.WorkingPlanDescription')}:
                                                 </span> */}
                                                 <span className="right">
@@ -223,7 +227,7 @@ class WarningApprove extends React.Component {
                         })
                     }
                 </div>
-            </Scroller2>
+            </SilkScroller>
         )
     }
 }

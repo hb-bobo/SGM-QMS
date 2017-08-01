@@ -8,30 +8,28 @@ import {
 } from '@/store/actions';
 import FlatButton from 'material-ui/FlatButton';
 // import Drawer from 'material-ui/Drawer';
-import mixins from '@/decorator/mixins';
+import fetchList from '@/decorator/fetchList';
 import {
-    componentWillMount,
-    componentWillUnmount,
-    getListData,
-    loadingMore,
     hotLevelFilter
 } from '@/mixins/';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-import Scroller2 from '@/components/scroller2';
+import SilkScroller from '@/components/scroller2';
 import HotIssueEdit from './edit';
 import { POST } from '@/plugins/fetch';
 
 /*热点评审审批*/
-@mixins(componentWillMount, componentWillUnmount, getListData, loadingMore)
+// @fetchList('/toDo/mHotIssueApprove')
+@fetchList('/toDo/mHotIssueApprove')
 class HotIssueApprove extends React.Component {
     static defaultProps = {
-        getListDataAPI: '/toDo/mHotIssueApprove'
     }
     static propTypes = {
-        getListDataAPI: PropTypes.string.isRequired,
         parent: PropTypes.instanceOf(React.Component).isRequired,
+        setListData: PropTypes.func,
+        getListData: PropTypes.func,
+        loadingMore: PropTypes.func,
     }
     state = {
         hotIssueEditOpen: false,
@@ -40,10 +38,8 @@ class HotIssueApprove extends React.Component {
     componentDidMount () {
         var {parent} = this.props;
         // var data = require('./data.json').data;
-
-        //TODO 测试
-        this.getListData('down');
-        // this.refs.scroller.simulatePullRefresh();
+        // getListData(this, 'down');
+        this.refs.scroller.simulatePullRefresh();
         // 设置父级弹出的内容
         parent.setDrawerChildren(
             <HotIssueEdit 
@@ -113,14 +109,22 @@ class HotIssueApprove extends React.Component {
             }
         })
         .then((res) => {
-            if (res.success === '') {
-                //TODO var listData = Object.assign({}, this.state.listData);
-                console.log(res)
+            if (res.success === true) {
+                alert('成功')
+                var newListData = JSON.parse(JSON.stringify(this.props.listData));
+                newListData.some((item, i) => {
+                    if (item.problemId === problemId) {
+                        console.log(item.problemId, newListData.splice(i, 1))
+                        return true;
+                    }
+                    return false;
+                });
+                this.props.setListData(newListData);
             }
         })
     }
     render () {
-        var { listData, noMoreData } = this.state;
+        var { listData, noMoreData, getListData, loadingMore } = this.props;
         var {goAdvance} = this.props.parent;
         // intl.setMsg(require('./locale').default);
         // onPulldownLoading={() => this.getListData('down')}
@@ -135,13 +139,14 @@ class HotIssueApprove extends React.Component {
         </Scroller>*/
         return (
 
-            <Scroller2
+            <SilkScroller
                 usePullRefresh
-                pullRefreshAction={(resolve, reject) => {this.getListData('down', resolve, reject)}}
+                pullRefreshAction={(resolve, reject) => getListData('down', resolve, reject)}
                 useLoadMore
-                loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
+                loadMoreAction={(resolve, reject) => loadingMore(resolve, reject)}
                 noMoreData={noMoreData}
                 preventDefault={false}
+                useSticky
                 ref="scroller"
             >
                 <div className="gtasks-list">
@@ -279,7 +284,7 @@ class HotIssueApprove extends React.Component {
                         })
                     }
                 </div>
-            </Scroller2>
+            </SilkScroller>
             
         )
     }
