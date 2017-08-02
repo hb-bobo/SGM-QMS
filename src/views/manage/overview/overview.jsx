@@ -61,6 +61,7 @@ class Overview extends React.Component {
     }
     /*跳到推进页面*/
     goAdvance = (type, problemId) => {
+        console.log(type)
         if (type) {
             this.props.history.push('/search/issue-advance/' + type + '?problemId='+problemId);
             this.setState({
@@ -118,7 +119,7 @@ class Overview extends React.Component {
                     <div>
                         {/*列表*/
                             this.state.isIndex? 
-                                <HotIssueReviewPlan/>
+                                <HotIssueReviewPlan goAdvance={this.goAdvance}/>
                                 : null
                         }
                     </div>

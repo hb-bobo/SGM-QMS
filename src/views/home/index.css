@@ -120,3 +120,11 @@
     width: 1.8em;
     height: 2.2em;
 }
+
+.home .post-item{
+    
+    margin-right: 6px;
+}
+.home .post-item.act{
+    background: #efecec;
+}

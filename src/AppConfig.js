@@ -4,7 +4,7 @@ const isDev = process.env.NODE_ENV === 'development';
 // proxy设置再package.json.proxy中， proxyMatch会被替换为空并代理到目标源(target)
 // eslint-disable-next-line 
 const proxyMatch = '/localhost';
-console.log(process.env)
+
 // 工程名
 const projectName = '/QMS'; // '/pims';
 

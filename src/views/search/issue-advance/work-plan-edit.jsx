@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 // import store from '@/store';
+import { Toast } from 'antd-mobile';
 import RaisedButton from 'material-ui/RaisedButton';
 import pathToJSON from '@/utils/object/pathToJSON';
 // import getTime from '@/utils/format/getTime';
@@ -86,10 +87,11 @@ export class WorkPlanEdit extends React.Component {
             }
         }).then((res) => {
             if (res.success === true) {
+                Toast.info('提交成功');
                 this.props.parent.selectWorkPlan('down');
                 this.parentStateChange();
             }else{
-                alert("提交失败");
+                Toast.info('提交失败');
             }
         })
     }

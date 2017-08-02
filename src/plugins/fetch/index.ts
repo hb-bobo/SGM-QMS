@@ -97,7 +97,7 @@ export function POST (url: string, opts: Opts) {
         method: 'POST',
         mode: 'cors',
         headers: opts.headers || defaultHeaders,
-        credentials: 'include',
+        // credentials: 'include',
         body: null
     }
 

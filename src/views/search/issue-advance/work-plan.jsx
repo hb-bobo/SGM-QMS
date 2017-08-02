@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { upWorkPlanEditData, upWorkPlanListData } from '@/store/actions';
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
-
+import { Toast } from 'antd-mobile';
 // import pathToJSON from '@/utils/object/pathToJSON';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
@@ -158,8 +158,9 @@ class WorkPlan extends React.Component {
             }).then((res) => {
                 if (res.success === true) {
                     this.selectWorkPlan('down');
+                    Toast.info('删除成功');
                 }else{
-                    alert("操作失败");
+                    Toast.info('删除失败');
                 }
             })
         }

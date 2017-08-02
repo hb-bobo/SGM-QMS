@@ -10,7 +10,7 @@ import MoreMenu from './more.jsx';
 import './index.css';
 import home_top from '@/static/images/home_top.jpg';
 import home_banner from '@/static/images/home_banner.jpg';
-
+import { Toast } from 'antd-mobile';
 // 10.6.96.190:8090
 var homeTopBg = {
   backgroundImage:  `url(${home_top})`
@@ -33,7 +33,7 @@ class HomePage extends React.Component{
       var fhname = window.NativeObj.getUserName();
       alert(fhname)
       if (!fhname) {
-        alert('获取用户名失败')
+        Toast.info('获取用户名失败');
       }
       if (
         fhname === null ||
@@ -70,7 +70,7 @@ class HomePage extends React.Component{
     .then((res) => {
       if (res.success) {
         this.setState({
-          personalInfo: res.data.concat(res.data)
+          personalInfo: res.data
         });
         this.changeId(res.data[0].DEPT_ID);
       }
@@ -153,9 +153,15 @@ class HomePage extends React.Component{
                 <div style={{paddingBottom: '10px', marginBottom: '10px'}}>
                   <span>{intl.get('job')}: </span>
                   {
-                    personalInfo.map(() => {
+                    personalInfo.map((item, i) => {
                       return (
-                        <span className="post-item">{selectedId.POSIT_DESC}</span>
+                        <span 
+                          key={i}
+                          className={selectedId.DEPT_ID === item.DEPT_ID ? "post-item act" : "post-item"}
+                          onClick={() => this.changeId(item.DEPT_ID)}
+                        >
+                          {item.POSIT_DESC}
+                        </span>
                       )
                     })
                   }

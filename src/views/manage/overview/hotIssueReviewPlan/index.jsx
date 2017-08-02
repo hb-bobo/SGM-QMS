@@ -42,7 +42,7 @@ class HotIssueReviewPlan extends React.Component {
     }
     render () {
         intl.setMsg(require('@/static/i18n').default);
-        var { listData, noMoreData, getListData, loadingMore } = this.props;
+        var { listData, noMoreData, getListData, loadingMore, goAdvance } = this.props;
         return (
             <div>
                 <div className="item-body flex-row" style={{padding: "6px 12px", fontSize: "0.8em"}}>
@@ -85,7 +85,7 @@ class HotIssueReviewPlan extends React.Component {
                                         <div className="flex-col-9">
                                             <div>
                                                 <span>{intl.get('QMS.IssueNo')}: </span>
-                                                <span className="issueNo">{item.problemNo}</span>
+                                                <span className="issueNo" onClick={() => {goAdvance(item.problemSource, item.problemId)}}>{item.problemNo}</span>
                                             </div>
                                             <div style={{marginTop: '0.6em'}}>
                                                 <span>{intl.get('QMS.Description')}: </span>
