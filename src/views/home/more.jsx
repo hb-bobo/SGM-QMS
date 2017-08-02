@@ -45,27 +45,26 @@ const MoreMenu = (props) => {
                         
                     </div>
                     <div className="flex-col-1">
-                        <Link to="/">
+                        <Link to="/department">
                             <MenuButton iconName="department" text="部门质量"/>
                         </Link>
                     </div>
                     <div className="flex-col-1">
-                        <Link to="/">
+                        <Link to="/project/EQRHotIssue">
                         <MenuButton iconName="person" text="EQR评审"/>
                         </Link>
                     </div>
                     <div className="flex-col-1">
-                        <Link to="/project/verification">
+                        {/* <Link to="/project/verification">
                             <MenuButton iconName="project" text="热点问题"/>
-                        </Link>
-                        
+                        </Link> */}
                     </div>
                 </div>
                 <div className="flex-row">
                     <div className="flex-col-1">
-                        <Link to="/project/overview">
+                        {/* <Link to="/project/overview">
                             <MenuButton iconName="project" text="项目质量总览" bgName="leftBottom"/>
-                        </Link>
+                        </Link> */}
                     </div>
                     <div className="flex-col-1">
                          
@@ -74,9 +73,9 @@ const MoreMenu = (props) => {
   
                     </div>
                     <div className="flex-col-1">
-                        <Link to="/test">
+                        {/* <Link to="/test">
                             <MenuButton iconName="person" text="test" bgName="leftBottom"/>
-                        </Link> 
+                        </Link>  */}
                     </div>
                 </div>
                 

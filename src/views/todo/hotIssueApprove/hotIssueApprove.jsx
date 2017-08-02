@@ -102,8 +102,8 @@ class HotIssueApprove extends React.Component {
         POST('/mproblem/auditReviewLog', {
             headers,
             data: {
-                empId: 'P0892',
-                positNum: 'A3010274',
+                empId: '111160',
+                positNum: 'A4010338',
                 prblmId: problemId,
                 prblmReviewOp: prblmReviewOp
             }

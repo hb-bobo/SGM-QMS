@@ -4,9 +4,10 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import {Tabs, Tab} from 'material-ui/Tabs';
+import SwipeableViews from 'react-swipeable-views';
 import ResultIndex from './result-index/result-index';
 import ProcessIndex from './process-index/process-index';
-import Scroller from '@/components/scroller';
+
 import intl from '@/components/intl';
 
 /* 质量月报 */
@@ -14,7 +15,7 @@ class QualityMonthReport extends React.Component {
     state = {
         title: intl.get('QMS.manage/report'),
         isIndex: true,
-        tabValue: intl.get('QMS.ResultIndex')
+        tabValue: 0
     }
 
     /*back*/
@@ -33,8 +34,7 @@ class QualityMonthReport extends React.Component {
     }
     componentDidMount () {
         this.setState({
-            title: intl.get('QMS.manage/report'),
-            tabValue: intl.get('QMS.ResultIndex')
+            title: intl.get('QMS.manage/report')
         });
     }
     render () {
@@ -59,6 +59,29 @@ class QualityMonthReport extends React.Component {
                     value={this.state.tabValue}
                     onChange={this.tabChange}
                 >
+                    <Tab label={intl.get('QMS.ResultIndex')} value={0}>
+                    </Tab>
+                    <Tab label={intl.get('QMS.ProcessIndex')} value={1}>
+                    </Tab>
+                </Tabs>
+                
+                <SwipeableViews
+                    index={this.state.tabValue}
+                    onChangeIndex={this.tabChange}
+                > 
+                    <div>
+                        <ResultIndex  parent={this}/>
+                    </div>
+                    <div>
+                        <ProcessIndex  parent={this}/>
+                    </div>
+                        
+                </SwipeableViews>
+                {/*tab*/}
+                {/* <Tabs
+                    value={this.state.tabValue}
+                    onChange={this.tabChange}
+                >
                     <Tab label={intl.get('QMS.ResultIndex')} value={intl.get('QMS.ResultIndex')}>
                         <Scroller autoSetHeight={true} bounce={false}>
                             <ResultIndex/>
@@ -69,7 +92,7 @@ class QualityMonthReport extends React.Component {
                             <ProcessIndex/>
                         </Scroller>
                     </Tab>
-                </Tabs>
+                </Tabs> */}
             </div>
         )
     }

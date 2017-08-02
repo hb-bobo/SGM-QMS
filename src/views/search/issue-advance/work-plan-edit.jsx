@@ -86,7 +86,7 @@ export class WorkPlanEdit extends React.Component {
             }
         }).then((res) => {
             if (res.success === true) {
-                this.props.parent.selectWorkPlan();
+                this.props.parent.selectWorkPlan('down');
                 this.parentStateChange();
             }else{
                 alert("提交失败");

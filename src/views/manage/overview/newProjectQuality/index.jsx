@@ -24,7 +24,7 @@ class NewProjectQuality extends React.Component {
     
     state = {
     }
-    componentDidMount () {console.log(this)
+    componentDidMount () {
         // this.props.actions.fillListData(getProjectQualityList.result)
         // this.props.getListData('down');
         this.refs.scroller.simulatePullRefresh();

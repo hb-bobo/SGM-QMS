@@ -15,11 +15,14 @@ class HotIssue extends React.Component {
     static propTypes = {
         parent: PropTypes.instanceOf(React.Component).isRequired
     }
+    static contextTypes = {
+        router: PropTypes.object
+    }
     state = {
         selectReLvl: 0
     }
     componentDidMount () {
-        subProjectId = this.props.match.params.subProjectId;
+        subProjectId = this.context.router.route.match.params.subProjectId;
         // this.props.getListData('down', {
         //     subProjectId: subProjectId,
         //     hotLevel: 0
@@ -33,10 +36,7 @@ class HotIssue extends React.Component {
     /* 评审级别查询刷新 */
     selectChange = (ev) => {
         var value = ev.target.value;
-        this.props.getListData('down', {
-            subProjectId: subProjectId,
-            hotLevel: value
-        });
+        this.refs.scroller.simulatePullRefresh();
         this.setState({
             selectReLvl: value
         });

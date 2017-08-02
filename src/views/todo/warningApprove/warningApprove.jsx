@@ -76,8 +76,8 @@ class WarningApprove extends React.Component {
         POST('/mproblem/auditUpgrade', {
             headers,
             data: {
-                empId: 'P0892',
-                positNum: 'A3010274',
+                empId: '111160',
+                positNum: 'A4010338',
                 prblmId: problemId,
                 prblmUpgradeOp: prblmUpgradeOp
             }

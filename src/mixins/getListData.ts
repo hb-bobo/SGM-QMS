@@ -43,7 +43,7 @@ export default function getListData (
         'empId': 'P0892',
         'pageSize': AppConfig.listConfig.count,
         'pageNumber': this.state.pageNumber,
-        'positNum': 'A3010274'
+        'positNum': 'A4010338'
     }
     // 如果需要额外传参，就并合并
     for (let key in params) {

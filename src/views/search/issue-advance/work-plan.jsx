@@ -81,8 +81,7 @@ class WorkPlan extends React.Component {
             }
         }).then((res) => {
             if (res.success === true) {
-                var listData;
-                var action;
+                var listData = [];
                 // 下拉结束
                 if (action === 'down') {
                     // this.refs.scroller.donePulldown();
@@ -158,7 +157,7 @@ class WorkPlan extends React.Component {
                 }
             }).then((res) => {
                 if (res.success === true) {
-                    this.selectWorkPlan();
+                    this.selectWorkPlan('down');
                 }else{
                     alert("操作失败");
                 }

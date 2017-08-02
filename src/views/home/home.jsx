@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import { getListData } from '@/store/actions';
+
 import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import intl from '@/components/intl';
@@ -25,15 +25,13 @@ class HomePage extends React.Component{
   state = {
     showMore: false,
     personalInfo: [],
-    selectedId: {}
+    selectedId: ''
   }
   componentWillMount () {
-    this.$store.dispatch(getListData({
-      a:1
-    }));
     // 取用户名
     document.addEventListener('plusready', () => {
-      var fhname = window.NativeObj.getUserName()
+      var fhname = window.NativeObj.getUserName();
+      alert(fhname)
       if (!fhname) {
         alert('获取用户名失败')
       }
@@ -50,30 +48,31 @@ class HomePage extends React.Component{
         // })
         // .then((res) => {
         //   if (!res.success) {
-        //     Home.context.router.history.push('/404');
+        //     this.context.router.history.push('/404');
         //   }
         // })
       }
     }, false);
 
     // 设置必要字段到cookie
-    var positNum = 'A3010274';
-    var empId = "P0892";
+    var positNum = 'A4010338';
+    var empId = "111160";
     document.cookie = `positNum=${positNum};`;
     document.cookie = `empId=${empId};`;
+
   }
   componentDidMount () {
     POST('/monthReport/mIndex', {
         data:{
-          empId: '107195'
+          empId: '111160'
         }
     })
     .then((res) => {
       if (res.success) {
         this.setState({
-          personalInfo: res.data
+          personalInfo: res.data.concat(res.data)
         });
-        this.changeId('B6100201');
+        this.changeId(res.data[0].DEPT_ID);
       }
     })
   }
@@ -140,7 +139,7 @@ class HomePage extends React.Component{
   }
   render () {
     intl.setMsg(require('./locale'));
-    var selectedId = this.state.selectedId;
+    var {selectedId, personalInfo} = this.state;
      return (
         <div className="home" style={{height: window.innerHeight}}>
           <div className="home-top" style={homeTopBg}>
@@ -153,7 +152,13 @@ class HomePage extends React.Component{
               <div className="flex-col-8">
                 <div style={{paddingBottom: '10px', marginBottom: '10px'}}>
                   <span>{intl.get('job')}: </span>
-                  <span>{selectedId.POSIT_DESC}</span>
+                  {
+                    personalInfo.map(() => {
+                      return (
+                        <span className="post-item">{selectedId.POSIT_DESC}</span>
+                      )
+                    })
+                  }
                 </div>
                 <div>
                   <span>{intl.get('department')}: </span>

@@ -2,6 +2,7 @@ import * as React from 'react';
 import EchartLine from '@/components/echarts/echart-line';
 import { Accordion } from 'antd-mobile';
 import { POST } from '@/plugins/fetch';
+import Scroller from '@/components/scroller';
 import dateFormat from '@/utils/format/dateFormat';
 import {currMounth, handleLineData, arrToArr} from '../handleChartData';
 
@@ -206,7 +207,7 @@ class ResultIndex extends React.Component {
     render () {
         var state = this.state;
         return (
-            <div>
+             <Scroller autoSetHeight={true} bounce={false}>
                 <Accordion defaultActiveKey="0" className="chart-list">
                     <Accordion.Panel header="PRTS(60%)">
                         <EchartLine
@@ -265,7 +266,7 @@ class ResultIndex extends React.Component {
                         />
                     </Accordion.Panel>
                 </Accordion>
-            </div>
+            </Scroller>
         )
     }
     

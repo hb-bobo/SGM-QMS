@@ -4,6 +4,7 @@ import EchartLineAndBar from '@/components/echarts/echart-lineAndBar';
 
 import { Accordion } from 'antd-mobile';
 import { POST } from '@/plugins/fetch';
+import Scroller from '@/components/scroller';
 import dateFormat from '@/utils/format/dateFormat';
 import {handleLineData, handleLineBarData, arrToArr} from '../handleChartData';
 
@@ -113,7 +114,7 @@ class ProcessIndex extends React.Component {
     render () {
         var state = this.state;
         return (
-            <div>
+            <Scroller autoSetHeight={true} bounce={false}>
                 <Accordion defaultActiveKey="0" className="chart-list">
                     <Accordion.Panel header="IQS(K227)" className="chart-item">
                         <EchartLine
@@ -154,7 +155,7 @@ class ProcessIndex extends React.Component {
                         />
                     </Accordion.Panel>
                 </Accordion>
-            </div>
+            </Scroller>
         )
     }
     

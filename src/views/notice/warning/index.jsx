@@ -17,7 +17,7 @@ import intl from '@/components/intl';
     2： 高级经理
     3： 总监
 */
-@fetchList('/toDo/mPromptNotice')
+@fetchList('/notice/mPromptNotice')
 class Warning extends React.Component {
     static defaultProps = {
     }

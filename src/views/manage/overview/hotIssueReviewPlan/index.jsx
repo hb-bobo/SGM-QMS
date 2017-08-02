@@ -38,10 +38,7 @@ class HotIssueReviewPlan extends React.Component {
     }
     /* 评审计划查询刷新 */
     selectHis = (value) => {
-        this.refs.scroller.to('y', 50);
-        this.props.getListData('down', {
-            time: this.state.time
-        });
+        this.refs.scroller.simulatePullRefresh();
     }
     render () {
         intl.setMsg(require('@/static/i18n').default);

@@ -19,7 +19,7 @@ class EQRHotIssue extends React.Component {
         store: PropTypes.object
     }
     state = {
-        title: 'EQR熱點',
+        title: 'EQR热点',
         listData: [],
         isIndex: true, // 除了主页显示itemList 其他页面都消失,
         tabValue: 0

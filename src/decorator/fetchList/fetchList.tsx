@@ -4,9 +4,12 @@ import AppConfig from '@/AppConfig';
 
 // 需要包裹的组件的props接口
 interface WrapedComponentPropTypes {
-    listData: Array<any>,
-    pageNumber: number,
-    noMoreData: boolean,
+    listData: Array<any>;
+    pageNumber: number;
+    noMoreData: boolean;
+    getListData: Function;
+    loadingMore: Function;
+    setListData: Function;
 }
 /*必备参数 */
 interface Param {
@@ -24,6 +27,12 @@ function getDisplayName (component: React.ComponentClass<{}>): string {
     return component.displayName || component.name || 'Component';
 }
 
+/**
+ * 获取列表，刷新，加载更多
+ * 此高阶组件会在组件外面包一层，有点类似react-redux的connect
+ * @param {string} 请求的API
+ * @return {React.ComponentClass} 返回一个被包裹好的组件
+ */
 export default (getListDataAPI: string) => (WrapedComponent: React.ComponentClass<WrapedComponentPropTypes>) => {
 
     return class FetchList extends React.Component<WrapedComponentPropTypes, any> {
@@ -68,10 +77,10 @@ export default (getListDataAPI: string) => (WrapedComponent: React.ComponentClas
                 throw Error('fetchList param getListDataAPI is required');
             }
             var defaultParam: Param = {
-                'empId': 'P0892',
+                'empId': '111160',
                 'pageSize': AppConfig.listConfig.count,
                 'pageNumber': this.state.pageNumber,
-                'positNum': 'A3010274'
+                'positNum': 'A4010338'
             }
             // 如果需要额外传参，就并合并
             if (params !== undefined) {
