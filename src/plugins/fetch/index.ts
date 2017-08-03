@@ -34,6 +34,9 @@ function checkStatus(response: Response) {
  * @param {Response}
  */
 function parseJSON(response: Response) {
+    if (response.ok === false) {
+        console.warn('返回数据失败');
+    }
     return response.json()
 }
 

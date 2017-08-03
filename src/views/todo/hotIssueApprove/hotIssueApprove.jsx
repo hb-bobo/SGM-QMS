@@ -15,7 +15,7 @@ import {
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
-import SilkScroller from '@/components/scroller2';
+import SilkScroller from '@/components/silk-scroller';
 import HotIssueEdit from './edit';
 import { POST } from '@/plugins/fetch';
 

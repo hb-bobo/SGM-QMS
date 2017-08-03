@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import MenuButton from './menu-button';
 import Scroller from '@/components/scroller';
+import { Toast } from 'antd-mobile';
 /**
  * 全部菜单
  * 后续加菜单，flex-col-1必须要有4个(目前是4个一排),没有就放空
@@ -45,12 +46,12 @@ const MoreMenu = (props) => {
                         
                     </div>
                     <div className="flex-col-1">
-                        <Link to="/department">
+                        <Link to="" onClick={() => Toast.info('II期发布,敬请期待')}>
                             <MenuButton iconName="department" text="部门质量"/>
                         </Link>
                     </div>
                     <div className="flex-col-1">
-                        <Link to="/project/EQRHotIssue">
+                        <Link to="" onClick={() => Toast.info('II期发布,敬请期待')}>
                         <MenuButton iconName="person" text="EQR评审"/>
                         </Link>
                     </div>

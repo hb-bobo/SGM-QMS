@@ -1,7 +1,7 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 // import store from '@/store';
-
+import { Toast } from 'antd-mobile';
 import RaisedButton from 'material-ui/RaisedButton';
 import pathToJSON from '@/utils/object/pathToJSON';
 import HSelect from '@/components/form/h-select';
@@ -66,21 +66,22 @@ export class IssueUP extends React.Component {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         POST('/mproblem/createUpgradeLog', {
-        headers: headers,
-        data: {
-            prblmId: this.parent.state.issueData.prblmId,
-            targetLevel: this.state.targetLevel,
-            prblmUpgradeOp: this.state.prblmUpgradeOp,
-            upgradeReason: this.state.upgradeReason,
-            directorID: this.state.directorID,
-            seniorMgrID: this.state.seniorMgrID,
-            majorID: this.state.majorID
-        }
+            headers: headers,
+            data: {
+                prblmId: this.parent.state.issueData.prblmId,
+                targetLevel: this.state.targetLevel,
+                prblmUpgradeOp: this.state.prblmUpgradeOp,
+                upgradeReason: this.state.upgradeReason,
+                directorID: this.state.directorID,
+                seniorMgrID: this.state.seniorMgrID,
+                majorID: this.state.majorID
+            }
         }).then((res) => {
             if (res.success === true) {
                 this.parentStateChange();
+                Toast.info('操作成功');
             }else{
-                alert("操作失败");
+                Toast.info('操作失败');
             }
         })
     }

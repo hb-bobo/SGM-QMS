@@ -109,13 +109,13 @@ class HomePage extends React.Component{
             </Link>
           </div>
           <div className="flex-col-1">
-            <Link to="/department">
-              <MenuButton iconName="department" text="部门质量"/>
+            <Link to="/" onClick={() => Toast.info('II期发布,敬请期待')}>
+              <MenuButton iconName="department" text="部门质量" />
             </Link>
           </div>
           <div className="flex-col-1">
-            <Link to="/project/EQRHotIssue">
-              <MenuButton iconName="person" text="EQR评审"/>
+            <Link to="/" onClick={() => Toast.info('II期发布,敬请期待')}>
+              <MenuButton iconName="person" text="EQR评审" />
             </Link>
           </div>
           <div className="flex-col-1" onClick={() => this.setState({showMore: true})}>

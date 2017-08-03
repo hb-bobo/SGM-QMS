@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 
 import fetchList from '@/decorator/fetchList';
-import SilkScroller from '@/components/scroller2';
+import SilkScroller from '@/components/silk-scroller';
 import HDate from '@/components/form/h-date';
 import pathToJSON from '@/utils/object/pathToJSON';
 import Circle from '@/components/circle';

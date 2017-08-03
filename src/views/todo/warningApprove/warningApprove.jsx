@@ -10,7 +10,7 @@ import fetchList from '@/decorator/fetchList';
 import FlatButton from 'material-ui/FlatButton';
 
 // import Scroller from '@/components/scroller';
-import SilkScroller from '@/components/scroller2';
+import SilkScroller from '@/components/silk-scroller';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';

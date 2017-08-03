@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import fetchList from '@/decorator/fetchList';
 import {hotLevelFilter} from '@/mixins/';
-import SilkScroller from '@/components/scroller2';
+import SilkScroller from '@/components/silk-scroller';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';

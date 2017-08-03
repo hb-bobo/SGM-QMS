@@ -108,17 +108,20 @@ var options =  {
 		top: 30,
 		padding: 0
 	},
-	series: [{
-		name:'',
-        type:'pie',
-        radius: ['85%', '100%'],
-        labelLine: {
-            normal: {
-                show: false
-            }
-        },
-        data:[]
-	}]
+	series: [
+        {
+            name:'',
+            type:'pie',
+            hoverAnimation:false,
+            radius: ['85%', '100%'],
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
+            data:[]
+        }
+    ]
 };
 
 export default EchartPie;

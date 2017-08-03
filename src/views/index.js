@@ -1,6 +1,6 @@
 import HomePage from './home';
-import Error404 from './404';
-import Error403 from './403';
+import Error404 from './status/404';
+import Error403 from './status/403';
 // Manage
 import Manage from './manage';
 // Project

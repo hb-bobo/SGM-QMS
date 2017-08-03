@@ -45,7 +45,6 @@ class QualityAfterSaleReport extends React.Component {
             title: intl.get('QMS.aftermarket')
         });
 
-        
         //pie图  {"count":5,"spillKpi":"11","success":true}
          GET('/ProjectQuality/mGetSpillCount')
         .then((res) => {
@@ -109,24 +108,6 @@ class QualityAfterSaleReport extends React.Component {
                 });
             }
         });
-        
-        /* setTimeout(() => {
-            var data = require('./data.json').data;
-            this.setState({
-                pieData: [{value: 5},{value: 11}],
-                chart60Value: 50,
-                chart95Value: 100,
-                MY16_12MIS_IPTV_DATAL: data.iptvTwelve,
-                MY15_24MIS_IPTV_DATAL: data.iptvTwentyFour,
-                MY16_12MIS_CPV_DATAL: data.cpvTwelve,
-                MY15_24MIS_CPV_DATAL: data.cpvTwentyFour,
-                totalData: [{"TOTALCOUNT":3,"HOTCOUNT":2,"MONTH":1},
-                            {"TOTALCOUNT":5,"HOTCOUNT":1,"MONTH":2},
-                            {"TOTALCOUNT":7,"HOTCOUNT":0,"MONTH":3},
-                            {"TOTALCOUNT":11,"HOTCOUNT":1,"MONTH":5},
-                            {"TOTALCOUNT":12,"HOTCOUNT":1,"MONTH":6}]
-            });
-        }, 300);  */
     }
     render () {
         intl.setMsg(require('@/static/i18n').default)
@@ -176,7 +157,7 @@ class QualityAfterSaleReport extends React.Component {
                             series={this.state.totalData}
                             color={ ['rgb(219, 40, 36)', 'yellow'] }
                             yFormat="{value}"
-                            showLegend={false}
+                            showLegend={true}
                             legendData={ ['Hot Issues', 'Open Issues'] }
                             style={{height: "200px",  width: "100%"}}
                         /> 
