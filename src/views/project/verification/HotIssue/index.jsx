@@ -88,7 +88,7 @@ class HotIssue extends React.Component {
                                         <span>{intl.get('QMS.IssueNo')}: </span>
                                         <span
                                             className="issueNo"
-                                            onClick={() => {goAdvance(item.source, item.problemId)}}
+                                            onClick={() => {goAdvance(item.problemSource, item.issueId)}}
                                         >
                                             {item.issueId}
                                         </span>
@@ -99,9 +99,13 @@ class HotIssue extends React.Component {
                                 </div>
                                 <div className="item-body">
                                     <div className="flex-row">
-                                        <div className="flex-col-5">
-                                            <span>{intl.get('QMS.Description')}: </span>
-                                            <span> {item.description}</span>
+                                        <div className="flex-col-5 flex-row">
+                                            <div className="flex-col-3">
+                                                <span>{intl.get('QMS.Description')}: </span>
+                                            </div>
+                                            <div className="flex-col-7" style={{paddingRight: "2px"}}>
+                                                <span> {item.description} </span>
+                                            </div>
                                         </div>
                                         <div className="flex-col-5">
                                             <span>{intl.get('QMS.SeverityLevel')}: </span>
@@ -109,9 +113,13 @@ class HotIssue extends React.Component {
                                         </div>
                                     </div>
                                     <div className="flex-row">
-                                        <div className="flex-col-5">
-                                            <span>{intl.get('QMS.CurrentStep')}: </span>
-                                            <span> {item.step}</span>
+                                        <div className="flex-col-5 flex-row">
+                                            <div className="flex-col-3">
+                                                <span>{intl.get('QMS.CurrentIssueStep')}: </span>
+                                            </div>
+                                            <div className="flex-col-7">
+                                                <span> {item.step}</span>
+                                            </div>
                                         </div>
                                         <div className="flex-col-5">
                                             <span>{intl.get('QMS.Dept')}: </span>
@@ -136,16 +144,6 @@ class HotIssue extends React.Component {
                                         <div className="flex-col-5">
                                             <span>{intl.get('QMS.ApprovalStatus')}: </span>
                                             <span> {item.reviewStatus}</span>
-                                        </div>
-                                    </div>
-                                    <div className="flex-row">
-                                        <div className="flex-col-5">
-                                            <span>{intl.get('QMS.Age')}: </span>
-                                            <span> {item.instockDay}</span>
-                                        </div>
-                                        <div className="flex-col-5">
-                                            <span>{intl.get('QMS.ProgramName')}: </span>
-                                            <span> {item.projectName}</span>
                                         </div>
                                     </div>
                                 </div>

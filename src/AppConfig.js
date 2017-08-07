@@ -18,8 +18,8 @@ const DEV_API = 'http://10.203.99.56:7003/QMS';
 
 const AppConfig = {
     isDev: isDev,
-    API: isDev? BASE_URL + proxyMatch: BASE_URL,
-    // API: DEV_API,
+    // API: isDev? BASE_URL + proxyMatch: BASE_URL,
+    API: DEV_API,
     language: (window.navigator.language || window.navigator.browserLanguage).split('-')[0],
     listConfig: {
         count: 20 // 每个list每次加载多少条数据

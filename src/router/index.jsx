@@ -6,149 +6,134 @@ import {
 } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 // import { CSSTransitionGroup } from 'react-transition-group';
+import asyncComponet from '@/components/asyncComponet';
 
-// views
-import {
-  HomePage,
-  Error404,
-  Error403,
-  Manage,
-  Project,
-  Search,
-  Notice,
-  IssueAdvance,
-  Todo
-} from '@/views/';
-
-/*import {
-  BasicInputExampleWrapper
-} from '@/views/page1';*/
-/*function getComponent (path, chunkName) {
-  return r => require.ensure([], () => r(require('../views/home')), 'home-page')
-}*/
-// console.log(import('@/views/manage/overview').then((res) => console.log(res.default)))
+/**
+ * import() 方法返回一个Promise
+ * import(注释为chunkName + 路径) chunkNam： 一个模块的子模块命令都与大模块一样；
+ */
 
 export const routes = [
   {
     path: '/404',
-    component: Error404
+    component: asyncComponet(() => import(/* webpackChunkName: "404" */ '@/views/status/404'))
   },
   {
     path: '/403',
-    component: Error403
+    component: asyncComponet(() => import(/* webpackChunkName: "403" */ '@/views/status/403'))
   },
   { 
     path: '/',
-    exact: true,
-    component: HomePage
+    exact: true, // HomePage
+    component: asyncComponet(() => import(/* webpackChunkName: "home" */ '@/views/home'))
   },
-  {
-    path: '/test',
-    component: require('@/views/home/home').TodoList
-  },
-  { 
-    path: '/project',
-    component: Project
-  },
+  // {
+  //   path: '/test',
+  //   component: require('@/views/home/home').TodoList
+  // },
+  
   {
     path: '/manage',
-    component: Manage,
+    component: asyncComponet(() => import(/* webpackChunkName: "Manage" */ '@/views/manage')),
     routes: [
       {
         path: '/manage/report',
-        component: require('@/views/manage/report').default,
+        component: asyncComponet(() => import(/* webpackChunkName: "Manage" */ '@/views/manage/report'))
       },
       {
         path: '/manage/aftermarket',
-        component: require('@/views/manage/aftermarket').default,
+        component: asyncComponet(() => import(/* webpackChunkName: "Manage" */ '@/views/manage/aftermarket'))
       },
       {
         path: '/manage/overview',
-        component: require('@/views/manage/overview').default
+        component: asyncComponet(() => import(/* webpackChunkName: "Manage" */ '@/views/manage/overview'))
       }
     ]
   },
+  
   {
     path: '/search',
-    component: Search,
+    component: asyncComponet(() => import(/* webpackChunkName: "Search" */ '@/views/search')),
     routes: [
         { 
           path: '/search/issue-advance',
           exact: false,
-          component: IssueAdvance,
+          component: asyncComponet(() => import(/* webpackChunkName: "Search" */ '@/views/search/issue-advance')), 
           routes: [
             {
               path: '/search/issue-advance/PRTS',
-              component: require('@/views/search/issue-advance/advanceType/PRTS-issue-advance').default,
+              component: asyncComponet(() => import(/* webpackChunkName: "Search" */ '@/views/search/issue-advance/advanceType/PRTS-issue-advance'))
             },
             {
               path: '/search/issue-advance/QDCPIR',
-              component: require('@/views/search/issue-advance/advanceType/QDCPIR-issue-advance').default,
+              component: asyncComponet(() => import(/* webpackChunkName: "Search" */ '@/views/search/issue-advance/advanceType/QDCPIR-issue-advance'))
             },
             {
               path: '/search/issue-advance/EIR',
-              component: require('@/views/search/issue-advance/advanceType/EIR-issue-advance').default,
+              component: asyncComponet(() => import(/* webpackChunkName: "Search" */ '@/views/search/issue-advance/advanceType/EIR-issue-advance'))
             },
             {
               path: '/search/issue-advance/SIL',
-              component: require('@/views/search/issue-advance/advanceType/SIL-issue-advance').default,
+              component: asyncComponet(() => import(/* webpackChunkName: "Search" */ '@/views/search/issue-advance/advanceType/SIL-issue-advance'))
             },
             {
               path: '/search/issue-advance/Readacross',
-              component: require('@/views/search/issue-advance/advanceType/Readacross-issue-advance').default,
+              component: asyncComponet(() => import(/* webpackChunkName: "Search" */ '@/views/search/issue-advance/advanceType/Readacross-issue-advance'))
             },
             {
               path: '/search/issue-advance/VE',
-              component: require('@/views/search/issue-advance/advanceType/VE-issue-advance').default,
+              component: asyncComponet(() => import(/* webpackChunkName: "Search" */ '@/views/search/issue-advance/advanceType/VE-issue-advance'))
             },
             {
               path: '/search/issue-advance/VOC',
-              component: require('@/views/search/issue-advance/advanceType/VOC-issue-advance').default,
+              component: asyncComponet(() => import(/* webpackChunkName: "Search" */ '@/views/search/issue-advance/advanceType/VOC-issue-advance'))
             },
             {
               name: 'work-plan-edit',
               path: '/search/issue-advance/work-plan-edit/:id',
-              component: require('@/views/search/issue-advance/work-plan-edit').default,
+              component: asyncComponet(() => import(/* webpackChunkName: "Search" */ '@/views/search/issue-advance/work-plan-edit'))
             },
           ]
         },
         {
           path: '/search/assist',
-          component: require('@/views/search/assist').default
+          component: asyncComponet(() => import(/* webpackChunkName: "Search" */ '@/views/search/assist'))
         }
     ]
   },
+
   {
     path: '/project',
-    component: Project,
+    component: asyncComponet(() => import(/* webpackChunkName: "Project" */ '@/views/project')),
     routes: [
       {
         path: '/project/verification/:subProjectId',
-        component: require('@/views/project/verification').default
+        component: asyncComponet(() => import(/* webpackChunkName: "Project" */ '@/views/project/verification'))
       },
       // {
       //   path: '/project/overview',
-      //   component: require('@/views/project/overview').default
+      //   component: asyncComponet(() => import(/* webpackChunkName: "Project" */ '@/views/project/overview'))
       // },
       {
         path: '/project/EQRHotIssue',
-        component: require('@/views/project/EQRHotIssue').default
+        component: asyncComponet(() => import(/* webpackChunkName: "Project" */ '@/views/project/EQRHotIssue'))
       }
     ]
   },
   {
     path: '/notice',
-    component: Notice
+    component: asyncComponet(() => import(/* webpackChunkName: "Notice" */ '@/views/notice'))
   },
   {
     path: '/todo',
-    component: Todo
+    component: asyncComponet(() => import(/* webpackChunkName: "Todo" */ '@/views/todo'))
   },
   {
     path: '/department',
-    component: require('@/views/department/').default
+    component: asyncComponet(() => import(/* webpackChunkName: "Department" */ '@/views/department'))
   }
 ]
+
 
 // wrap <Route> and use this everywhere instead, then when
 // sub routes are added to any route it'll work
@@ -165,7 +150,6 @@ export const RouteWithSubRoutes = (route) => {
         exact={isExact}
         render={props => (
         // pass the sub-routes down to keep nesting
-        
           <route.component
             parent={route.parent}
             routes={route.routes}

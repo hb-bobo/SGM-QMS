@@ -13,6 +13,12 @@ export interface Routes {
   component: any,
   routes?: Array<any>
 }
+
 export interface RoutesProps extends React.Props<any> {
   routes?: Array<any>;
+}
+
+export interface EsModule {
+    default?: any;
+    [x: string]: any;
 }

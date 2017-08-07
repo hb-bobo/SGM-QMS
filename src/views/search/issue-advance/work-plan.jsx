@@ -173,7 +173,7 @@ class WorkPlan extends React.Component {
     }
     
     render () {
-        intl.setMsg(require('@/static/i18n').default)
+        intl.setMsg(require('@/static/i18n').default, require('./locale'))
         var allData = this.state.allWorkPlan;
         var phase = this.state.phase;
         var {noMoreData} = this.state;
@@ -227,7 +227,7 @@ class WorkPlan extends React.Component {
                                         <div className="flex-row plan-describe">
                                             <div className="flex-col-9">
                                                 <span className="left">
-                                                {intl.get('QMS.WorkingPlanDescription')}:
+                                                {intl.get('PlanDescription')}:
                                                 </span>
                                                 <span className="right">
                                                     {item.planDesc}
@@ -255,13 +255,13 @@ class WorkPlan extends React.Component {
                                             <div className="flex-row plan-info">
                                                 <div className="flex-col-1">
                                                     <div>
-                                                        <span>{intl.get('QMS.ECD')}: </span>
+                                                        <span>{intl.get('ECD')}: </span>
                                                         <span className="right">{item.planFinishDate}</span>
                                                     </div>
                                                 </div>
                                                 <div className="flex-col-1">
                                                     <div>
-                                                        <span>{intl.get('QMS.ACD')}: </span>
+                                                        <span>{intl.get('ACD')}: </span>
                                                         <span className="right">{item.pwActlFinishDate}</span>
                                                     </div>
                                                 </div>

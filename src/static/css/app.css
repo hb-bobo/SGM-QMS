@@ -3,7 +3,11 @@
  *引入 ant 会把html font-size设为50px; 再此设置与它抵消
  */
 #root{
-    position: relative;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
     font-size: 1rem;
     background-color: #FFF;
 }
@@ -67,9 +71,7 @@
 .details-item-left{
     color: #000;
 }
-.details-item-right{
 
-}
 /*公共list样式*/
 .list-more{
     padding: 0.4em 0;
@@ -81,6 +83,9 @@
     padding: 0.5em 1em;
     margin-top: 0.1em;
     font-size: 0.7em;
+}
+.item>.item-body [class*="flex-col-"] {
+    align-self: flex-start;
 }
 .item-body>.flex-row {
     padding: 3px 0;

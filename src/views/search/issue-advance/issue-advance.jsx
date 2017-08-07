@@ -8,6 +8,7 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Drawer from 'material-ui/Drawer';
+import { Toast } from 'antd-mobile';
 // import { WingBlank, Button, Icon } from 'antd-mobile';
 import Scroller from '@/components/scroller';
 import WorkPlan from './work-plan';
@@ -60,6 +61,7 @@ export class IssueAdvance extends React.Component {
       "VOC": 'mVocDetail',
     }
     url += params[this.state.advType];
+
     POST(url, {
       data: {
         id: id
@@ -94,43 +96,37 @@ export class IssueAdvance extends React.Component {
     }
     return true;
   }
-
+  /**
+   * 热点上升
+   */
   goHotUp = () => {
-    POST('/mproblem/getMaxReviewLog', {
-      data: {
-        id: this.state.issueData.prblmId
-      }
-    }).then((res) => {
-      if (res.success === true) {
-        if(res.result === 'C' && false){
-          alert("已存在未审核的申请");
-        }else{
-          intl.setMsg(require('@/static/i18n').default, require('./locale'));
-          this.setState({
-            hotUpOpen: true,
-            title: intl.get('HotEscalate'),
-            isIndex: false
-          });
-          return false
-        }
-      }
-    })
+    this.topCtrl('/mproblem/getMaxReviewLog', 'HotEscalate');
   }
-
+  /**
+   * 问题上升
+   */
   goIssueUp = () => {
-    POST('/mproblem/getMaxUpgradeLog', {
+    this.topCtrl('/mproblem/getMaxUpgradeLog', 'IssueEscalate');
+  }
+  /**
+   * 顶部的操作 热点上升，问题上升
+   * @param {string} url
+   * @param {string} titleIntl i18n
+   */
+  topCtrl = (url, titleIntl) => {
+    POST(url, {
       data: {
         id: this.state.issueData.prblmId
       }
     }).then((res) => {
       if (res.success === true) {
         if(res.result === 'C'){
-          alert("已存在未审核的申请");
+          Toast.info('已存在未审核的申请')
         }else{
           intl.setMsg(require('@/static/i18n').default, require('./locale'));
           this.setState({
             issueUPOpen: true,
-            title: intl.get('IssueEscalate'),
+            title: intl.get(titleIntl),
             isIndex: false
           });
           return false
@@ -138,7 +134,12 @@ export class IssueAdvance extends React.Component {
       }
     })
   }
-
+  /**
+   * 保存操作
+   */
+  save = () => {
+    console.log(this.state.issueData.prblmId)
+  }
   render() {
     intl.setMsg(require('@/static/i18n').default, require('./locale'));
     var routes = [];
@@ -160,19 +161,22 @@ export class IssueAdvance extends React.Component {
         <Scroller autoSetHeight={true} bounce={false}>
           {/*顶部*/}
           <div className={this.state.isIndex ? "advance-top flex-row" : "advance-top flex-row hide"}>
-            <div className="flex-col-6">
+            <div className="flex-col-5">
               <span>{intl.get('QMS.IssueNo')}: </span>
               <span style={{marginLeft: '1.4em', color: '#6AC4F6'}}>
                 {this.state.issueData.sourcePrblmNo}
               </span>
             </div>
             <SpaceRow height={50} width="1px" backgroundColor="#EEEDED"/>
-            <div className="flex-col-4">
+            <div className="flex-col-5">
+              <span onClick={this.save}>
+                <IconUp value="保存" style={{marginLeft: '10px'}} > </IconUp>
+              </span>
               <span onClick={this.goHotUp} style={{display: this.state.advType === 'VOC' ? "none" : "inline-block"}}>
-                <IconUp value="热点" style={{marginLeft: '10px'}} > </IconUp>
+                <IconUp value="热点" style={{marginLeft: '4px'}} > </IconUp>
               </span>
               <span onClick={this.goIssueUp}>
-                <IconUp value="问题" style={{marginLeft: '10px'}}> </IconUp>
+                <IconUp value="问题" style={{marginLeft: '4px'}}> </IconUp>
               </span>
             </div>
           </div>

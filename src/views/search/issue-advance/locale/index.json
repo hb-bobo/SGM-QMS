@@ -4,13 +4,19 @@
         "HotEscalate": "热点上升",
         "AddWorkPlan": "新增工作计划",
         "EditWorkPlan": "编辑工作计划",
-        "AppoveSeverity": "评审等级"
+        "AppoveSeverity": "评审等级",
+        "PlanDescription": "计划描述",
+        "ECD": "计划完成",
+        "ACD": "实际完成"
     },
     "en": {
         "IssueEscalate": "Issue Escalate",
         "HotEscalate": "Intelligent Escalate",
         "AddWorkPlan": "Add Work Plan",
         "EditWorkPlan": "Edit Work Plan",
-        "AppoveSeverity": "Appove Severity"
+        "AppoveSeverity": "Appove Severity",
+        "PlanDescription": "Plan Description",
+        "ECD": "ECD",
+        "ACD": "ACD"
     }
 }

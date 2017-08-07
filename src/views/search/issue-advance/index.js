@@ -1,2 +1,2 @@
-import IssueAdvance from './warningApprove';
+import IssueAdvance from './issue-advance';
 export default IssueAdvance
