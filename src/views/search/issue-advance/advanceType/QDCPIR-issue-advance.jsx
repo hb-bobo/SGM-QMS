@@ -13,7 +13,7 @@ export class QDCPIRIssueAdvance extends React.Component {
     advanceData: {}
   }
   static propsType = {
-    advanceData: PropTypes.object
+    parent: PropTypes.instanceOf(React.Component).isRequired
   }
   render() {
     intl.setMsg(require('@/static/i18n').default);
@@ -91,9 +91,7 @@ export class QDCPIRIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RootCauseAnalysis')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <span>
-              {issueData.rcAnalysis}
-            </span>
+            <span dangerouslySetInnerHTML={{__html: issueData.rcAnalysis}}/>
           </div>
         </div>
         <SpaceRow height={6} />

@@ -10,10 +10,9 @@ export class PRTSIssueAdvance extends React.Component {
   state = {
   }
   static defaultProps = {
-    advanceData: {}
   }
   static propsType = {
-    advanceData: PropTypes.object
+    parent: PropTypes.instanceOf(React.Component).isRequired
   }
   render() {
     var issueData = this.props.parent.state.issueData;

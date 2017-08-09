@@ -6,6 +6,7 @@ import store from './store';
 import { Provider } from 'react-redux';
 // import { IntlProvider } from 'react-intl';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 // import {addLocaleData} from 'react-intl';
 // import zh from 'react-intl/locale-data/zh';
 // import en from 'react-intl/locale-data/en';
@@ -56,8 +57,6 @@ class App extends React.Component{
       setLanguage: (language) => {
         this.setState({language: language});
         intl.setLanguage(language);
-      },
-      plugins: {
       }
     };
   }

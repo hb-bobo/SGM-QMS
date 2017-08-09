@@ -7,6 +7,7 @@ import {
     clearTempData
 } from '@/store/actions';
 import FlatButton from 'material-ui/FlatButton';
+import { Toast } from 'antd-mobile';
 // import Drawer from 'material-ui/Drawer';
 import fetchList from '@/decorator/fetchList';
 import {
@@ -20,7 +21,7 @@ import HotIssueEdit from './edit';
 import { POST } from '@/plugins/fetch';
 import { Toast } from 'antd-mobile';
 /*热点评审审批*/
-// @fetchList('/toDo/mHotIssueApprove')
+
 @fetchList('/toDo/mHotIssueApprove')
 class HotIssueApprove extends React.Component {
     static defaultProps = {
@@ -51,21 +52,6 @@ class HotIssueApprove extends React.Component {
     componentWillUnmount () {
         this.$store.dispatch(clearTempData()); 
     }
-    // TODO 测试
-    // loadingMore = () => {
-    //     setTimeout(() => {
-    //         this.setState({
-    //             listData: this.state.listData.concat(require('./data.json').data)
-    //         });
-    //         // this.refs.scroller.donePullup();
-    //         this.setState({
-    //             scrollConfig: {
-    //                 upContent: 'No More'
-    //             },
-    //             noMoreData: true
-    //         });
-    //     }, 2000)
-    // }
     // edit review time
     edit (data) {
         this.$store.dispatch(upTempData(data));
@@ -102,19 +88,20 @@ class HotIssueApprove extends React.Component {
         POST('/mproblem/auditReviewLog', {
             headers,
             data: {
-                empId: '111160',
-                positNum: 'A4010338',
+                empId: sessionStorage.getItem('empId'),
+                positNum: sessionStorage.getItem('positNum'),
                 prblmId: problemId,
                 prblmReviewOp: prblmReviewOp
             }
         })
         .then((res) => {
+            // 成功了本地删除，不刷新
             if (res.success === true) {
                 Toast.info('操作成功');
                 var newListData = JSON.parse(JSON.stringify(this.props.listData));
                 newListData.some((item, i) => {
                     if (item.problemId === problemId) {
-                        console.log(item.problemId, newListData.splice(i, 1))
+                        newListData.splice(i, 1)
                         return true;
                     }
                     return false;

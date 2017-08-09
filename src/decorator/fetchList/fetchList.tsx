@@ -13,10 +13,10 @@ interface WrapedComponentPropTypes {
 }
 /*必备参数 */
 interface Param {
-    empId: string,
+    empId: string | null,
     pageSize: number | string,
     pageNumber: number | string,
-    positNum: string
+    positNum: string | null
 }
 /*额外的参数 */
 interface ExtraParam {
@@ -77,10 +77,10 @@ export default (getListDataAPI: string) => (WrapedComponent: React.ComponentClas
                 throw Error('fetchList param getListDataAPI is required');
             }
             var defaultParam: Param = {
-                'empId': '111160',
+                'empId': sessionStorage.getItem('empId'),
                 'pageSize': AppConfig.listConfig.count,
                 'pageNumber': this.state.pageNumber,
-                'positNum': 'A4010338'
+                'positNum': sessionStorage.getItem('positNum')
             }
             // 如果需要额外传参，就并合并
             if (params !== undefined) {

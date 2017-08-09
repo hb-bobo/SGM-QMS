@@ -10,10 +10,9 @@ export class EIRIssueAdvance extends React.Component {
   state = {
   }
   static defaultProps = {
-    advanceData: {}
   }
   static propsType = {
-    advanceData: PropTypes.object
+    parent: PropTypes.instanceOf(React.Component).isRequired
   }
   componentDidMount () {
     console.log(this.props.parent)
