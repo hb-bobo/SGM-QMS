@@ -5,13 +5,27 @@ import '../style/common.css';
 
 var containerStyle = {
 }
-var selectStyle = {}
+var selectStyle = {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    opacity: 0,
+    height: '100%',
+    width: '100%',
+    border: 0
+}
 
+var inputStyle = {
+    width: '100%',
+    height: '100%',
+    border: '1px solid #CCC',
+    paddingRight: '4px'
+}
 class HSelect extends React.Component {
     static defaultProps = {
         options: [],
         emptyText: '请选择',
-        isFirstEmpty: true
+        isFirstEmpty: true,
     }
     static propTypes = {
         options: PropTypes.array,
@@ -20,6 +34,7 @@ class HSelect extends React.Component {
         containerStyle: PropTypes.object, // 容器样式覆盖,也就是div
         inputStyle: PropTypes.object,
         isFirstEmpty: PropTypes.bool,
+        style: PropTypes.object
     }
     static contextTypes = {
         language: PropTypes.string
@@ -57,7 +72,8 @@ class HSelect extends React.Component {
             value,
             options,
             emptyText,
-            isFirstEmpty
+            isFirstEmpty,
+            style
         } = this.props;
         var optionsData = options;
         if (options.length !== 0 && options[0].value === undefined && options[0].text === undefined) {
@@ -68,8 +84,31 @@ class HSelect extends React.Component {
             value = this.state.value;
         }
 
+        var selectedItem = {};
+        for (let i = 0; i < optionsData.length; i ++) {
+            if (String(optionsData[i].value) === String(value)) {
+                selectedItem = optionsData[i];
+                break;
+            }
+        }
+
         return (
             <div className="form-container" style={Object.assign(containerStyle, this.props.containerStyle)}>
+                <div>
+                    <input
+                        style={Object.assign(inputStyle, style)}
+                        type="text"
+                        onChange={() => {}}
+                        value={(selectedItem.text === undefined) ? emptyText : selectedItem.text}
+                    />
+                    <span style={{position: 'absolute', right: '10px', top: '2px'}}>
+                        <svg className="icon" style={{}} viewBox="0 0 1024 1024" width="200" height="200">
+                            <path d="M511.609097 961.619254M511.906879 662.759609L511.906879 662.759609 129.831974 280.679587c-14.788821-14.762215-38.777165-14.762215-53.585429 0-14.788821 14.812357-14.788821 38.799678 0 53.607942l405.851425 405.805376c0.867764 1.107217 1.824555 2.190899 2.843768 3.206018 14.808264 14.788821 38.795585 14.788821 53.585429 0l408.230612-408.226518c14.807241-14.808264 14.807241-38.795585 0-53.584406-14.767332-14.785751-38.754652-14.785751-53.562916 0L511.906879 662.759609 511.906879 662.759609zM511.906879 662.759609">
+                                
+                            </path>
+                        </svg>
+                    </span>
+                </div>
                 <select
                     ref="select"
                     className="form-element"

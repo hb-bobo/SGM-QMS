@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import fetchList from '@/decorator/fetchList';
 
 import FlatButton from 'material-ui/FlatButton';
-
+import { Toast } from 'antd-mobile';
 // import Scroller from '@/components/scroller';
 import SilkScroller from '@/components/silk-scroller';
 import Circle from '@/components/circle';
@@ -76,14 +76,16 @@ class WarningApprove extends React.Component {
         POST('/mproblem/auditUpgrade', {
             headers,
             data: {
-                empId: '111160',
-                positNum: 'A4010338',
+                empId: sessionStorage.getItem('empId'),
+                positNum: sessionStorage.getItem('positNum'),
                 prblmId: problemId,
                 prblmUpgradeOp: prblmUpgradeOp
             }
         })
         .then((res) => {
+            // 成功了本地删除，不刷新
             if (res.success === true) {
+                Toast.info('操作成功');
                 var newListData = Object.assign({}, this.state.listData);
                 newListData.some((item, i) => {
                     if (item.prblmId === problemId) {
@@ -92,7 +94,8 @@ class WarningApprove extends React.Component {
                     }
                     return false;
                 })
-                console.log(res)
+            } else {
+                Toast.info('操作失败');
             }
         })
     }

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { Toast } from 'antd-mobile';
+
+import Access from '@/components/Access';
 import intl from '@/components/intl';
 import { POST } from '@/plugins/fetch';
 import MenuButton from './menu-button';
@@ -10,7 +13,12 @@ import MoreMenu from './more.jsx';
 import './index.css';
 import home_top from '@/static/images/home_top.jpg';
 import home_banner from '@/static/images/home_banner.jpg';
-import { Toast } from 'antd-mobile';
+
+
+
+export var worker = null;
+
+
 // 10.6.96.190:8090
 var homeTopBg = {
   backgroundImage:  `url(${home_top})`
@@ -20,7 +28,7 @@ class HomePage extends React.Component{
     language: PropTypes.string,
     setLanguage: PropTypes.func,
     router: PropTypes.object,
-    store: PropTypes.object
+    store: PropTypes.object,
   }
   state = {
     showMore: false,
@@ -59,12 +67,23 @@ class HomePage extends React.Component{
     var empId = "111160";
     document.cookie = `positNum=${positNum};`;
     document.cookie = `empId=${empId};`;
-
+    // sessionStorage也设，essionStorage更方便使用
+    sessionStorage.setItem('positNum', positNum);
+    sessionStorage.setItem('empId', empId);
+    
   }
   componentDidMount () {
+    this.getInfo();
+    this.getAccess();
+  }
+
+  /**
+   * 获取身份信息
+   */
+  getInfo () {
     POST('/monthReport/mIndex', {
         data:{
-          empId: '111160'
+          empId: sessionStorage.getItem('empId')
         }
     })
     .then((res) => {
@@ -74,7 +93,23 @@ class HomePage extends React.Component{
         });
         this.changeId(res.data[0].DEPT_ID);
       }
+    });
+  }
+  /**
+   * 获取权限信息
+   */
+  getAccess () {
+    POST('/toDo/mPermissionByUser', {
+        data:{
+          empId: sessionStorage.getItem('empId'),
+          positNum: sessionStorage.getItem('positNum'),
+        }
     })
+    .then((res) => {
+      if (res.success) {
+
+      }
+    });
   }
   /*常用的菜单 element*/
   commonMenu () {
@@ -83,7 +118,9 @@ class HomePage extends React.Component{
         <div className="flex-row">
           <div className="flex-col-1">
             <Link to="/manage/overview">
-              <MenuButton iconName="project" text="项目质量" bgName="leftBottom"/>
+              <Access PATH="/manage/overview" PERMISSION_CODE="/manage/overview">
+                <MenuButton iconName="project" text="项目质量" bgName="leftBottom"/>
+              </Access>
             </Link>
           </div>
           <div className="flex-col-1">

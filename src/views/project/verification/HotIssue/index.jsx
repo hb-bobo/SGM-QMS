@@ -5,8 +5,28 @@ import SilkScroller from '@/components/silk-scroller';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
+import HSelect from '@/components/form/h-select';
 
 var subProjectId = null;
+
+var selectOptions = [
+    {
+        text: "所有",
+        value: '0'
+    },
+    {
+        text: "EQR专题",
+        value: '1'
+    },
+    {
+        text: "EQR常规",
+        value: '2'
+    },
+    {
+        text: "项目热点",
+        value: '3'
+    },
+]
 /* 热点问题 */
 @fetchList('/ProjectQuality/mListHotIssue')
 class HotIssue extends React.Component {
@@ -51,13 +71,14 @@ class HotIssue extends React.Component {
                     <div className="flex-col-1">
                         <label htmlFor="">{intl.get('QMS.ReviewLevel')}:</label>
                     </div>
-                    <div className="flex-col-2">                        
-                        <select onChange={this.selectChange} style={{marginLeft: '8px'}}>
-                            <option value="0">所有</option>
-                            <option value="1">EQR专题</option>
-                            <option value="2">EQR常规</option>
-                            <option value="3">项目热点</option>
-                        </select>
+                    <div className="flex-col-2">
+                        <HSelect
+                            style={{marginLeft: '0', height: '20px'}}
+                            value={this.state.selectReLvl}
+                            onChange={this.selectChange}
+                            isFirstEmpty={false}
+                            options={selectOptions}
+                        />
                     </div>
                 </div>
                 <SilkScroller

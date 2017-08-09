@@ -126,7 +126,7 @@ class HDate extends React.Component {
                 {
                     !this.state.showClear ? 
                         <svg className="icon icon-date">
-                            <use xlinkHref="#icon-date"></use>
+                            <use xlinkHref="#icon-date" onClick={() => this.refs.input.focus()}></use>
                         </svg> :
                         null
                 }

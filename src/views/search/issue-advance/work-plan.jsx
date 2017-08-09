@@ -196,6 +196,13 @@ class WorkPlan extends React.Component {
                 <div className="flex-row issue-advance-item">
                     <div className="flex-col-8">
                         <span>{intl.get('QMS.Step')}: </span>
+                        {/* <HSelect
+                            style={{marginLeft: '0', height: '20px'}}
+                            value={this.state.selectReLvl}
+                            onChange={this.selectChange}
+                            isFirstEmpty={false}
+                            options={selectOptions}
+                        /> */}
                         <select name="" id="" style={{marginLeft: '8px'}} onChange={this.changeFilter}>
                             <option value="">{intl.get('QMS.Option')}</option>
                             {phase.map((item, i) => {

@@ -10,10 +10,9 @@ export class VEIssueAdvance extends React.Component {
   state = {
   }
   static defaultProps = {
-    advanceData: {}
   }
   static propsType = {
-    advanceData: PropTypes.object
+    parent: PropTypes.instanceOf(React.Component).isRequired
   }
   render() {
     intl.setMsg(require('@/static/i18n').default)

@@ -44,7 +44,7 @@ export var handleLineData = function (resData0, resData1, isCutMount) {
             return true;
         }
         //把month可能只有一个
-        LineSeries[1].data[item.MONTH - 1] = item.COUNT || 0;
+        LineSeries[1].data[item.MONTH - 1] = item.COUNT || '';
         return false;
     });
     return LineSeries;
@@ -56,12 +56,14 @@ export var handleLineData = function (resData0, resData1, isCutMount) {
  */
 export var arrToArr = function (arr) {
     var res = [];
-    arr.forEach(function (item, i) {
-        res.push({
-            MONTH: i + 1,
-            COUNT: item
+    if (Array.isArray(arr)) {
+        arr.forEach(function (item, i) {
+            res.push({
+                MONTH: i + 1,
+                COUNT: item
+            });
         });
-    });
+    }
     return res;
 }
 

@@ -4,13 +4,13 @@ import {
   HashRouter as Router,
   Route
 } from 'react-router-dom';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+// import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 // import { CSSTransitionGroup } from 'react-transition-group';
 import asyncComponet from '@/components/asyncComponet';
 
 /**
  * import() 方法返回一个Promise
- * import(注释为chunkName + 路径) chunkNam： 一个模块的子模块命令都与大模块一样；
+ * import(注释为chunkName + 路径) chunkName： 一个模块的子模块chunkName都与大模块一样；
  */
 
 export const routes = [
@@ -137,28 +137,29 @@ export const routes = [
 
 // wrap <Route> and use this everywhere instead, then when
 // sub routes are added to any route it'll work
+
+/* <ReactCSSTransitionGroup
+      transitionName="example"
+      transitionEnterTimeout={300}
+      transitionLeaveTimeout={300}>
+</ReactCSSTransitionGroup> */
 export const RouteWithSubRoutes = (route) => {
   var isExact = route.exact || false;
   // if exact = true will replace homePage
   return (
-    <ReactCSSTransitionGroup
-      transitionName="example"
-      transitionEnterTimeout={300}
-      transitionLeaveTimeout={300}>
-      <Route
-        path={route.path}
-        exact={isExact}
-        render={props => (
-        // pass the sub-routes down to keep nesting
-          <route.component
-            parent={route.parent}
-            routes={route.routes}
-            {...props}
-            
-          />
-        )}
-      />
-    </ReactCSSTransitionGroup>
+    <Route
+      path={route.path}
+      exact={isExact}
+      render={props => (
+      // pass the sub-routes down to keep nesting
+        <route.component
+          parent={route.parent}
+          routes={route.routes}
+          {...props}
+          
+        />
+      )}
+    />
   )
 }
 

@@ -114,15 +114,20 @@ export class IssueAdvance extends React.Component {
    * @param {string} titleIntl i18n
    */
   topCtrl = (url, titleIntl) => {
-    POST(url, {
-      data: {
-        id: this.state.issueData.prblmId
-      }
-    }).then((res) => {
-      if (res.success === true) {
-        if(res.result === 'C'){
-          Toast.info('已存在未审核的申请')
-        }else{
+      POST(url, {
+        data: {
+          id: this.state.issueData.prblmId
+        }
+      }).then((res) => {
+        if (res.success === true) {
+          return res.result;
+        } else {
+          Toast.info('操作失败');
+        }
+      }).then((result) => {
+        if(result === 'C') {
+            Toast.info('已存在未审核的申请')
+        } else {
           intl.setMsg(require('@/static/i18n').default, require('./locale'));
           this.setState({
             issueUPOpen: true,
@@ -131,16 +136,34 @@ export class IssueAdvance extends React.Component {
           });
           return false
         }
+      })
+  }
+    
+  /**
+   * 保存操作
+   * @param {?Object} 不同的参数
+   */
+  
+  save = (data) => {
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    var issueData = this.state.issueData;
+    POST('/mproblem/saveProblem', {
+      headers,
+      data: {
+        prblmId: issueData.prblmId,
+        PrblmStatus: issueData.estimatePrblmStatus,
+        ...data
+      }
+    }).then((res) => {
+      if (res.success === true) {
+        Toast.info('保存成功');
+      } else {
+        Toast.info('保存失败');
       }
     })
   }
-  /**
-   * 保存操作
-   */
-  save = () => {
-    console.log(this.state.issueData.prblmId)
-  }
-  render() {
+  render () {
     intl.setMsg(require('@/static/i18n').default, require('./locale'));
     var routes = [];
     if (this.props.routes) {
@@ -169,7 +192,7 @@ export class IssueAdvance extends React.Component {
             </div>
             <SpaceRow height={50} width="1px" backgroundColor="#EEEDED"/>
             <div className="flex-col-5">
-              <span onClick={this.save}>
+              <span onClick={() => this.save()}>
                 <IconUp value="保存" style={{marginLeft: '10px'}} > </IconUp>
               </span>
               <span onClick={this.goHotUp} style={{display: this.state.advType === 'VOC' ? "none" : "inline-block"}}>
