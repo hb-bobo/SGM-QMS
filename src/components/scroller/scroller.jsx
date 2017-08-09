@@ -15,7 +15,7 @@ var downSpringback = 30;
 // 缓冲距离(下拉距离为1-20，距离太小，没必要触发pulldown)
 var bufferVal = 20;
 /**
- * scroll容器
+ * scroll容器(失败的scroller,慎用)
  */
 class Scroller extends React.Component {
     static defaultProps = {
