@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import {updateMenuAuthority} from '@/store/actions';
 
 import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -99,6 +100,8 @@ class HomePage extends React.Component{
    * 获取权限信息
    */
   getAccess () {
+    console.log(require('./data.json').data)
+    this.context.store.dispatch(updateMenuAuthority(require('./data.json').data));
     POST('/toDo/mPermissionByUser', {
         data:{
           empId: sessionStorage.getItem('empId'),
@@ -117,16 +120,18 @@ class HomePage extends React.Component{
       <div className="home-menu">
         <div className="flex-row">
           <div className="flex-col-1">
-            <Link to="/manage/overview">
-              <Access PATH="/manage/overview" PERMISSION_CODE="/manage/overview">
-                <MenuButton iconName="project" text="项目质量" bgName="leftBottom"/>
-              </Access>
-            </Link>
+            <Access PATH="manage/overview">
+                <Link to="/manage/overview">
+                    <MenuButton iconName="project" text="项目质量" bgName="leftBottom"/>
+                </Link>
+            </Access>
           </div>
           <div className="flex-col-1">
-            <Link to="/manage/aftermarket">
-              <MenuButton iconName="after-sale" text="售后质量" bgName="leftBottom"/>
-            </Link>
+            <Access PATH="manage/aftermarket">
+                <Link to="/manage/aftermarket">
+                    <MenuButton iconName="after-sale" text="售后质量" bgName="leftBottom"/>
+                </Link>
+            </Access>
           </div>
           <div className="flex-col-1">
             <Link to="/manage/report">

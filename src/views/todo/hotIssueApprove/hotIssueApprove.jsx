@@ -19,7 +19,7 @@ import intl from '@/components/intl';
 import SilkScroller from '@/components/silk-scroller';
 import HotIssueEdit from './edit';
 import { POST } from '@/plugins/fetch';
-import { Toast } from 'antd-mobile';
+
 /*热点评审审批*/
 
 @fetchList('/toDo/mHotIssueApprove')

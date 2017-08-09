@@ -46,7 +46,7 @@ class App extends React.Component{
   static childContextTypes = {
     language: PropTypes.string,
     setLanguage: PropTypes.func,
-    plugins: PropTypes.object
+    plugins: PropTypes.object,
   }
   state = {
     language: AppConfig.language

@@ -1,6 +1,6 @@
-import { States } from '../../types';
+import { States, Action } from '../../types';
 import * as types from '../actions/actionTypes';
-import { Action } from '../../types';
+
 export default {
     state: {
         tempData: {} // 临时数据
