@@ -13,6 +13,7 @@ import SwipeableViews from 'react-swipeable-views';
 import NewProjectQuality from './newProjectQuality';
 import HotIssueReviewPlan from './hotIssueReviewPlan';
 
+import Access  from '@/components/Access';
 import Label from '@/components/tabs/label';
 import intl from '@/components/intl';
 // import { POST } from '@/plugins/fetch';
@@ -61,7 +62,6 @@ class Overview extends React.Component {
     }
     /*跳到推进页面*/
     goAdvance = (type, problemId) => {
-        console.log(type)
         if (type) {
             this.props.history.push('/search/issue-advance/' + type + '?problemId='+problemId);
             this.setState({
@@ -74,12 +74,13 @@ class Overview extends React.Component {
             tabValue: value,
         });
     }
-    render () {
+    render () {console.log()
         intl.setMsg(require('@/static/i18n').default);
         var routes = [];
         if (this.props.routes) {
             routes = this.props.routes;
         }
+        // {/*  Access.getAccess("manage/overviewa") ?  */}
         return (
             <div>
                 {/*头部*/}
@@ -99,11 +100,17 @@ class Overview extends React.Component {
                 <Tabs
                     value={this.state.tabValue}
                     onChange={this.tabChange}
-                >
-                    <Tab label={<Label value={intl.get('QMS.manage/overview')}/>} value={0}>
-                    </Tab>
-                    <Tab label={<Label value={intl.get('QMS.EQRProjectHotIssueReviewPlan')}/>} value={1}>
-                    </Tab>
+            >       
+                    {
+                       
+                            <Tab 
+                                label={<Label value={intl.get('QMS.manage/overview')}/>}
+                                value={0}
+                            />
+                        
+                    }
+                    <Tab label={<Label value={intl.get('QMS.EQRProjectHotIssueReviewPlan')}/>} value={1}/>
+                    
                 </Tabs>
                 <SwipeableViews
                     index={this.state.tabValue}

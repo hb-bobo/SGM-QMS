@@ -2,11 +2,12 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import AppRouter from './router';
 import store from './store';
+
 // 各种Provider
 import { Provider } from 'react-redux';
+
 // import { IntlProvider } from 'react-intl';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
 // import {addLocaleData} from 'react-intl';
 // import zh from 'react-intl/locale-data/zh';
 // import en from 'react-intl/locale-data/en';
@@ -60,6 +61,7 @@ class App extends React.Component{
       }
     };
   }
+
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>

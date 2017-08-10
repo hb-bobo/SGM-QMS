@@ -15,15 +15,12 @@ import './index.css';
 import home_top from '@/static/images/home_top.jpg';
 import home_banner from '@/static/images/home_banner.jpg';
 
-
-
-export var worker = null;
-
-
 // 10.6.96.190:8090
 var homeTopBg = {
   backgroundImage:  `url(${home_top})`
 }
+
+/* 首页 */
 class HomePage extends React.Component{
   static contextTypes = {
     language: PropTypes.string,
@@ -37,7 +34,20 @@ class HomePage extends React.Component{
     selectedId: ''
   }
   componentWillMount () {
-    // 取用户名
+    if (sessionStorage.getItem('empId') === null) {
+      this.getUserName();
+    }
+  }
+  componentDidMount () {
+    this.getInfo();
+    this.getAccess();
+  }
+
+  /**
+   * get iwork username
+   */
+  getUserName () {
+    // iwork提供的方法
     document.addEventListener('plusready', () => {
       var fhname = window.NativeObj.getUserName();
       alert(fhname)
@@ -48,7 +58,7 @@ class HomePage extends React.Component{
         fhname === null ||
         fhname === undefined ||
         fhname === '') {
-        window.location.href = 'views/error/403.html'
+        this.context.router.history.push('/403');
       } else {
         // POST('enter.do', {
         //     data: {
@@ -57,6 +67,7 @@ class HomePage extends React.Component{
         // })
         // .then((res) => {
         //   if (!res.success) {
+        //      this.getAccess();
         //     this.context.router.history.push('/404');
         //   }
         // })
@@ -71,11 +82,6 @@ class HomePage extends React.Component{
     // sessionStorage也设，essionStorage更方便使用
     sessionStorage.setItem('positNum', positNum);
     sessionStorage.setItem('empId', empId);
-    
-  }
-  componentDidMount () {
-    this.getInfo();
-    this.getAccess();
   }
 
   /**
@@ -100,8 +106,8 @@ class HomePage extends React.Component{
    * 获取权限信息
    */
   getAccess () {
-    console.log(require('./data.json').data)
-    this.context.store.dispatch(updateMenuAuthority(require('./data.json').data));
+    console.log(require('@/static/json/mPermissionByUser.json').data)
+    this.context.store.dispatch(updateMenuAuthority(require('@/static/json/mPermissionByUser.json').data));
     POST('/toDo/mPermissionByUser', {
         data:{
           empId: sessionStorage.getItem('empId'),
@@ -110,7 +116,7 @@ class HomePage extends React.Component{
     })
     .then((res) => {
       if (res.success) {
-
+        this.context.store.dispatch(updateMenuAuthority(res.data));
       }
     });
   }
