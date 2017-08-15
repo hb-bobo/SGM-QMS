@@ -53,8 +53,13 @@ class Scroller extends React.Component {
     }
     componentWillReceiveProps (nextProps, nextState) {
         this.setState({
-            config: nextProps.config
+            config: nextProps.config,
         });
+
+        if (nextProps.containerHeight !== undefined && this.props.autoSetHeight === false) {
+            
+            this.setState({containerHeight: nextProps.containerHeight})
+        } 
     }
     componentWillMount () {
         // 初始化containerHeight
@@ -63,47 +68,13 @@ class Scroller extends React.Component {
         });
     }
     componentDidMount () {
-        var {scrollerContainer, loadMore} = this.refs;
-        var clientHeight = document.documentElement.clientHeight;
+        
         if (this.props.autoSetHeight) {
             this.setHeight();
         }
-        // 记录scrollTop 位置
-        if (scrollerContainer && this.props.bounce === false && this.props.onPullupLoading) {
-            scrollerContainer.addEventListener('scroll',() => {
-                // 底部loadMore距顶部高度
-                var loadMoreReactTop = loadMore.getBoundingClientRect().top;
-                // 滚动条高度
-                var scrollTop = scrollerContainer.scrollTop;
-                // 到底部了
-                if ((loadMoreReactTop !== 0) &&
-                    (loadMoreReactTop < clientHeight) &&
-                    this.state.pullupStatus !== 'loading-start'
-                ) {
-                    if (this.state.pullupStatus === 'default') {
-                        this.onPullupLoading()
-                    }
-                }
-                //大于这个范围 该展示回到顶部的按钮了
-                if (scrollTop > this.state.containerHeight * 2 &&
-                    this.state.showToTop !== true
-                ) {
-                    this.setState({
-                        showToTop: true
-                    });
-                } else if (scrollTop < this.state.containerHeight * 2 && this.state.showToTop === true) {
-                    // 快到顶了就不用显示了
-                    this.setState({
-                        showToTop: false
-                    });
-                }
-                // if (scrollerContainer !== undefined) {
-                //     this.setState({
-                //         scrollTop: this.refs.scroller.scrollTop
-                //     });
-                // } 
-            });
-        }
+        this.addScrollEvent();
+        this.addTouchMoveEvent();
+        
     }
     shouldComponentUpdate (nextProps, nextState) {
         // if (this.props.bounce === true
@@ -202,6 +173,61 @@ class Scroller extends React.Component {
         });
         // 有下拉方法，则初始化时自动刷新一下
         if (this.props.onPulldownLoading) {scrollerAt.to(triggerPulldownValue)};
+    }
+    /**
+     * onscroll 事件
+     *  
+     */
+    addScrollEvent = () => {
+        var {scrollerContainer, loadMore} = this.refs;
+        var clientHeight = document.documentElement.clientHeight;
+        if (scrollerContainer && this.props.bounce === false && this.props.onPullupLoading) {
+            scrollerContainer.addEventListener('scroll',() => {
+                // 底部loadMore距顶部高度
+                var loadMoreReactTop = loadMore.getBoundingClientRect().top;
+                // 滚动条高度
+                var scrollTop = scrollerContainer.scrollTop;
+                // 到底部了
+                if ((loadMoreReactTop !== 0) &&
+                    (loadMoreReactTop < clientHeight) &&
+                    this.state.pullupStatus !== 'loading-start'
+                ) {
+                    if (this.state.pullupStatus === 'default') {
+                        this.onPullupLoading()
+                    }
+                }
+                //大于这个范围 该展示回到顶部的按钮了
+                if (scrollTop > this.state.containerHeight * 2 &&
+                    this.state.showToTop !== true
+                ) {
+                    this.setState({
+                        showToTop: true
+                    });
+                } else if (scrollTop < this.state.containerHeight * 2 && this.state.showToTop === true) {
+                    // 快到顶了就不用显示了
+                    this.setState({
+                        showToTop: false
+                    });
+                }
+                // if (scrollerContainer !== undefined) {
+                //     this.setState({
+                //         scrollTop: this.refs.scroller.scrollTop
+                //     });
+                // } 
+            });
+        }
+    }
+    /**
+     * 触摸移动事件
+     *
+     */
+    addTouchMoveEvent = () => {
+        var {scrollerContainer} = this.refs;
+        if (scrollerContainer && this.props.bounce === false) {
+            scrollerContainer.addEventListener('touchmove',(e) => {
+                // e.preventDefault();
+            });
+        }
     }
     /*scroller到底部剩余的高度*/
     setHeight (alloyTouch) {

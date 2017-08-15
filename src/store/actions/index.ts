@@ -7,7 +7,8 @@ import {
     UP_WORK_PLAN_EDIT_DATA,
     UP_WORK_PLAN_LIST_DATA,
     FILTER_WORK_PLAN_LIST_DATA,
-    UP_MENU_AUTHORITYS
+    UP_MENU_AUTHORITYS,
+    UP_ISSUE_SAVE_DATA
 } from './actionTypes';
 // import AppConfig from '../../AppConfig';
 import { Action } from '../../types';
@@ -65,6 +66,14 @@ export const upWorkPlanListData: Function = function (payload: any): Action {
 export const filterWorkPlanListData: Function = function (payload: any): Action {
     return {
         type: FILTER_WORK_PLAN_LIST_DATA,
+        payload: payload
+    }
+}
+
+// 
+export const setIssueSaveData: Function = function (payload: any): Action {
+    return {
+        type: UP_ISSUE_SAVE_DATA,
         payload: payload
     }
 }

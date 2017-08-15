@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {updateMenuAuthority} from '@/store/actions';
 
 import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -14,6 +13,12 @@ import MoreMenu from './more.jsx';
 import './index.css';
 import home_top from '@/static/images/home_top.jpg';
 import home_banner from '@/static/images/home_banner.jpg';
+
+// 加载本地语言包
+import(/* webpackChunkName: intl */ './locale')
+.then((intlMsg) => {
+  intl.setMsg(intlMsg);
+});
 
 // 10.6.96.190:8090
 var homeTopBg = {
@@ -33,57 +38,14 @@ class HomePage extends React.Component{
     personalInfo: [],
     selectedId: ''
   }
-  componentWillMount () {
-    if (sessionStorage.getItem('empId') === null) {
-      this.getUserName();
-    }
-  }
+
   componentDidMount () {
     this.getInfo();
-    this.getAccess();
+    this.$store.dispatch({
+      type: 'clearOldtabValue',
+      payload: true
+    });
   }
-
-  /**
-   * get iwork username
-   */
-  getUserName () {
-    // iwork提供的方法
-    document.addEventListener('plusready', () => {
-      var fhname = window.NativeObj.getUserName();
-      alert(fhname)
-      if (!fhname) {
-        Toast.info('获取用户名失败');
-      }
-      if (
-        fhname === null ||
-        fhname === undefined ||
-        fhname === '') {
-        this.context.router.history.push('/403');
-      } else {
-        // POST('enter.do', {
-        //     data: {
-              
-        //     }
-        // })
-        // .then((res) => {
-        //   if (!res.success) {
-        //      this.getAccess();
-        //     this.context.router.history.push('/404');
-        //   }
-        // })
-      }
-    }, false);
-
-    // 设置必要字段到cookie
-    var positNum = 'A4010338';
-    var empId = "111160";
-    document.cookie = `positNum=${positNum};`;
-    document.cookie = `empId=${empId};`;
-    // sessionStorage也设，essionStorage更方便使用
-    sessionStorage.setItem('positNum', positNum);
-    sessionStorage.setItem('empId', empId);
-  }
-
   /**
    * 获取身份信息
    */
@@ -92,33 +54,19 @@ class HomePage extends React.Component{
         data:{
           empId: sessionStorage.getItem('empId')
         }
-    })
-    .then((res) => {
-      if (res.success) {
-        this.setState({
-          personalInfo: res.data
-        });
-        this.changeId(res.data[0].DEPT_ID);
+    }).then((res) => {
+      if (res.success && res.data.length > 0) {
+        return res.data
       }
-    });
-  }
-  /**
-   * 获取权限信息
-   */
-  getAccess () {
-    console.log(require('@/static/json/mPermissionByUser.json').data)
-    this.context.store.dispatch(updateMenuAuthority(require('@/static/json/mPermissionByUser.json').data));
-    POST('/toDo/mPermissionByUser', {
-        data:{
-          empId: sessionStorage.getItem('empId'),
-          positNum: sessionStorage.getItem('positNum'),
-        }
-    })
-    .then((res) => {
-      if (res.success) {
-        this.context.store.dispatch(updateMenuAuthority(res.data));
+    }).then((data) => {
+      if (data === undefined) {
+        return;
       }
-    });
+      this.setState({
+        personalInfo: data
+      });
+      this.changeId(data[0].DEPT_ID);
+    })
   }
   /*常用的菜单 element*/
   commonMenu () {
@@ -186,7 +134,7 @@ class HomePage extends React.Component{
     });
   }
   render () {
-    intl.setMsg(require('./locale'));
+    
     var {selectedId, personalInfo} = this.state;
      return (
         <div className="home" style={{height: window.innerHeight}}>
@@ -201,7 +149,7 @@ class HomePage extends React.Component{
                 <div style={{paddingBottom: '10px', marginBottom: '10px'}}>
                   <span>{intl.get('job')}: </span>
                   {
-                    personalInfo.map((item, i) => {
+                    Array.isArray(personalInfo) &&　personalInfo.map((item, i) => {
                       return (
                         <span 
                           key={i}

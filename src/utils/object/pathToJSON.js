@@ -1,4 +1,5 @@
 /**
+ * ('a.b', 1) ->  {a: {b: 1}}
  * @category Object
  * @param {string}  path
  * @param {any}  set value in new Object

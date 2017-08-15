@@ -14,4 +14,12 @@ ReactDOM.render(
   <App />,
   document.getElementById('root')
 );
+
+// 禁止浏览器(微信)自带下拉
+document.body.addEventListener('touchmove', function (e) {
+  // console.log(e.target, e.cancelable, e.defaultPrevented)
+  // e.preventDefault();
+  
+}, true);
+
 AppConfig.isDev && registerServiceWorker();

@@ -9,6 +9,11 @@ import intl from '@/components/intl';
 // import { POST } from '@/plugins/fetch';
 // import AppConfig from '@/AppConfig';
 
+// 设置本地语言包
+import(/* webpackChunkName: intl */ './locale')
+    .then((intlMsg) => {
+        intl.setMsg(intlMsg);
+    });
 
 //TODO 上升级别
 /*  
@@ -22,7 +27,10 @@ class Warning extends React.Component {
     static defaultProps = {
     }
     static propTypes = {
-        goAdvance: PropTypes.func.isRequired
+        goAdvance: PropTypes.func.isRequired,
+        setListData: PropTypes.func,
+        getListData: PropTypes.func,
+        loadingMore: PropTypes.func,
     }
     state = {
     }
@@ -31,7 +39,7 @@ class Warning extends React.Component {
         this.refs.scroller.simulatePullRefresh();
     }
     render () {
-        intl.setMsg(require('@/static/i18n').default, require('./locale'));
+
         var { goAdvance } = this.props;
         var { listData, noMoreData, getListData, loadingMore } = this.props;
         // onPulldownLoading={() => this.getListData('down')}

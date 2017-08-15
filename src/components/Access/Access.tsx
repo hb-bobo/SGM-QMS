@@ -1,10 +1,10 @@
 import * as React from 'react';
 import PropTypes, {DefaultProps} from './PropTypes';
 import * as ReactPropTypes from 'prop-types';
-// import store from '@/store';
+import store from '@/store';
 import { MenuAuthority } from '@/store/reducer/access'; // interface
 
-export var menuAuthoritys: MenuAuthority[] = [];
+export var menuAuthoritys: MenuAuthority[] = store.getState().access.menuAuthoritys; // 所有菜单权限
 
 /**
  * 通过方法拿权限结果(某些情况下不能render，就用此方法)
@@ -14,6 +14,7 @@ export var menuAuthoritys: MenuAuthority[] = [];
 export function getAccess (PATH: string): boolean {
     var accessable: boolean = false;
     menuAuthoritys.some((item: MenuAuthority) => {
+        
         if (PATH === item.PERMISSION_CODE) {
             accessable = true;
             return true;
@@ -38,8 +39,7 @@ export default class Access extends React.Component<PropTypes, {}> {
     }
 
     public state: StateTypes = {
-        accessable: false, // 是否有访问权,
-        menuAuthoritys: this.context.store.getState().access.menuAuthoritys // 所有菜单权限
+        accessable: false, // 是否有访问权
     }
     
     private unsubscribe: Function; // 取消stroe订阅方法
@@ -55,8 +55,8 @@ export default class Access extends React.Component<PropTypes, {}> {
 
     componentDidMount () {
         var {store} = this.context;
-        // 订阅store
-        if (this.state.menuAuthoritys.length === 0) {
+        // 订阅store and set menuAuthoritys value
+        if (menuAuthoritys.length === 0) {
             menuAuthoritys = store.getState().access.menuAuthoritys;
             this.unsubscribe = store.subscribe(() => {
                 this.setState({});
@@ -97,7 +97,6 @@ export default class Access extends React.Component<PropTypes, {}> {
 
 interface StateTypes {
     accessable: boolean;
-    menuAuthoritys: MenuAuthority[];
 }
 // interface ContextTypes {
 //     store: any

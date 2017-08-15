@@ -2,7 +2,7 @@ import * as React from 'react';
 import EchartLine from '@/components/echarts/echart-line';
 import { Accordion } from 'antd-mobile';
 import { POST } from '@/plugins/fetch';
-import Scroller from '@/components/scroller';
+import SilkScroller from '@/components/silk-scroller';
 import dateFormat from '@/utils/format/dateFormat';
 import {currMounth, handleLineData, arrToArr} from '../handleChartData';
 
@@ -23,6 +23,7 @@ class ResultIndex extends React.Component {
     }
 
     componentDidMount () {
+        console.log(this.refs.scorller)
         // stateKey 是state上用来setState用的，其他字段是传到后台的
         /* PRTS 和 Aftersales issue */
         var PRTS_params = [
@@ -204,11 +205,25 @@ class ResultIndex extends React.Component {
         }
         getChartData2(0);
     }
+    /**
+     * 重置容器高度
+     */
+    restScroller = () => {
+        setTimeout(() => this.refs.scorller.refresh(), 400)
+    }
     render () {
         var state = this.state;
         return (
-             <Scroller autoSetHeight={true} bounce={false}>
-                <Accordion defaultActiveKey="0" className="chart-list">
+            <SilkScroller
+                preventDefault={false}
+                useToTop={false}
+                ref="scorller"
+            >
+                <Accordion
+                    defaultActiveKey="0"
+                    className="chart-list"
+                    onChange={this.restScroller}
+                >
                     <Accordion.Panel header="PRTS(60%)">
                         <EchartLine
                             series={state.PRTS60_DATA}
@@ -266,7 +281,7 @@ class ResultIndex extends React.Component {
                         />
                     </Accordion.Panel>
                 </Accordion>
-            </Scroller>
+            </SilkScroller>
         )
     }
     

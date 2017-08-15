@@ -41,6 +41,9 @@ class WarningApprove extends React.Component {
     }
     static propTypes = {
         parent: PropTypes.instanceOf(React.Component).isRequired,
+        setListData: PropTypes.func,
+        getListData: PropTypes.func,
+        loadingMore: PropTypes.func,
     }
     state = {
     }
@@ -103,7 +106,6 @@ class WarningApprove extends React.Component {
     render () {
         var { listData, noMoreData, getListData, loadingMore } = this.props;
         var {goAdvance} = this.props.parent;
-        intl.setMsg(require('@/static/i18n').default,require('./locale'));
         //onPulldownLoading={() => this.getListData('down')}
         /*<Scroller
                 autoSetHeight={true}

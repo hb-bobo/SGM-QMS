@@ -11,6 +11,7 @@ import HTextarea from '@/components/form/h-textarea';
 import HDate from '@/components/form/h-date';
 import intl from '@/components/intl';
 import { POST } from '@/plugins/fetch';
+
 /*
     planDesc         "描述"
     planFinishDate   "计划完成时间"
@@ -40,7 +41,7 @@ export class WorkPlanEdit extends React.Component {
         workPlanID: '',
         workPlanStatus: ''
     }
-    componentDidMount () {
+    componentWillMount () {
         this.parent = this.props.parent;
     }
     componentWillReceiveProps (nextProps) {
@@ -100,10 +101,8 @@ export class WorkPlanEdit extends React.Component {
     }
     parentStateChange () {
         // 改变父级的一些状态
-        this.parent.setState({
-            workPlanOpen: false
-        });
         this.parent.parent.setState({
+            workPlanOpen: false,
             isIndex: true
         });
     }
@@ -113,8 +112,8 @@ export class WorkPlanEdit extends React.Component {
         }
     }
     render() {
-        intl.setMsg(require('@/static/i18n').default)
-        var prblmPhaseID = this.props.action === 'add' ? this.props.parent.parent.state.issueData.crntPhase : this.state.prblmPhaseID;
+
+        var prblmPhaseID = this.props.action === 'add' ? this.parent.parent.state.issueData.crntPhase : this.state.prblmPhaseID;
         // var { data } = this.props;
         return (
             <div className="work-plan-edit-form">

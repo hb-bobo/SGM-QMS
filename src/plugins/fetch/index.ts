@@ -20,14 +20,12 @@ interface StatusError extends Error {
  * 
  */
 function checkStatus(response: Response) {
-  if (response.status >= 200 && response.status < 300) {
-    return response
-  } else {
-    var error: StatusError = new Error(response.statusText)
-    error.response = response
-    console.warn('response:' + error);
+    if (!(response.status >= 200 && response.status < 300)) {
+        var error: StatusError = new Error(response.statusText)
+        error.response = response
+        console.warn('response error:' + error);
+    }
     return response;
-  }
 }
 /** 
  * parese response to JSON
@@ -35,9 +33,11 @@ function checkStatus(response: Response) {
  */
 function parseJSON(response: Response) {
     if (response.ok === false) {
-        console.warn('返回数据失败');
+        console.warn('返回数据失败', response);
+        return response;
+    } else {
+        return response.json();
     }
-    return response.json()
 }
 
 /* 给fetch包装一个fetch, 增加超时功能 */
@@ -95,15 +95,19 @@ defaultHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
  *  })   =   "path=getProjectQualityList.json&xxx=xxx"
  */
 export function POST (url: string, opts: Opts) {
+    // TODO
+    // var proxyUrl: string = AppConfig.API + '/master/proxy';
+    // opts.data.url =  url;
+
     var reqUrl: string = AppConfig.API + url; 
     var reqOpts: RequestInit = {
         method: 'POST',
         mode: 'cors',
         headers: opts.headers || defaultHeaders,
-        // credentials: 'include',
+        credentials: 'same-origin',
         body: null
     }
-
+    
     if (reqOpts.headers.get('Content-Type') === 'application/x-www-form-urlencoded') {
         // 转换字符为formData格式
         reqOpts.body = querystring.stringify(opts.data);
@@ -165,7 +169,7 @@ export function GET (url: string, opts: Opts) {
         method: 'GET',
         mode: 'cors',
         headers: headers,
-        credentials: 'include'
+        credentials: 'same-origin'
     }
     return new Promise(function (resolve: Function, reject?: Function) {
         _fetch(fetch(reqUrl, reqOpts), timeout)

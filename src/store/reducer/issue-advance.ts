@@ -16,7 +16,8 @@ export default {
     state: {
         workPlanEditData: {},
         workPlanData: [], // 工作计划所有,
-        workPlanFilterData: []
+        workPlanFilterData: [],
+        issueSaveData: {} // 推进页当前需要保存的数据
     },
     // 用 types 作key保证action唯一性
     mutations: {
@@ -65,18 +66,33 @@ export default {
                 default:
                     return;
             }
+        },
+        /* 过滤计划列表 */
+        [types.FILTER_WORK_PLAN_LIST_DATA] (state: States, action: Action) {
+            var filterVal: string = action.payload.filter;
+            var data = state.workPlanData.filter((item: any) => {
+                if (filterVal === '') {
+                    return item;
+                } else if (item.prblmPhaseID === filterVal) {
+                    return item;
+                }
+            });
+            state.workPlanFilterData = data;
+        },
+        /**
+         * 更新 推进页当前需要保存的数据
+         * @param state 
+         * @param action 
+         */
+        [types.UP_ISSUE_SAVE_DATA] (state: States, action: Action) {
+            var newData: any = action.payload;
+            for (let key in newData) {
+                // 语法检测报错，所以加个if，不知道为什么
+                if (key) {
+                    state.issueSaveData[key] = newData[key];
+                }
+            }
         }
     },
-    /* 过滤计划列表 */
-    [types.FILTER_WORK_PLAN_LIST_DATA] (state: States, action: Action) {
-        var filterVal: string = action.payload.filter;
-        var data = state.workPlanData.filter((item: any) => {
-            if (filterVal === '') {
-                return item;
-            } else if (item.prblmPhaseID === filterVal) {
-                return item;
-            }
-        });
-        state.workPlanFilterData = data;
-    }
+    
 }

@@ -9,15 +9,34 @@ import {
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import Drawer from 'material-ui/Drawer';
-import SwipeableViews from 'react-swipeable-views';
 
-import HotReview from './hotIssueApprove';
+import Drawer from 'material-ui/Drawer';
+
+import hotIssueApprove from './hotIssueApprove';
 import WarningReview from './warningApprove';
 
 import intl from '@/components/intl';
+import CreateTabs from '@/components/create-tabs';
 
+
+// 代办菜单配置
+const menuData = [
+    {
+        tabTitle: intl.get('QMS.todo/hotIssueApprove'),
+        tabContent: hotIssueApprove,
+        path: 'todo/hotIssueApprove'
+    },
+    {
+        tabTitle: intl.get('QMS.todo/warning'),
+        tabContent: WarningReview,
+        path: 'todo/warning'
+    }
+];
+
+
+/**
+ * 代办
+ */
 @connect(
     // mapStateToProps
     (state) => ({tempData: state.common.tempData}),
@@ -33,7 +52,6 @@ class Todo extends React.Component {
     state = {
         title: intl.get('QMS.todo'),
         isIndex: true, // 除了主页显示itemList 其他页面都消失,
-        tabValue: 0,
         hotIssueEditOpen: false,
         DrawerChildren: null // Drawer组件的子级
     }
@@ -64,8 +82,9 @@ class Todo extends React.Component {
             DrawerChildren: child
         });
     }
+
     render () {
-        intl.setMsg(require('@/static/i18n').default)
+        
         return (
             <div>
                 {/*头部*/}
@@ -81,34 +100,23 @@ class Todo extends React.Component {
                         <span style={{display: 'inline-block', width: '2.6em'}}></span>
                     }   
                 />
-                {/*tab*/}
-                <Tabs
-                    value={this.state.tabValue}
-                    onChange={this.tabChange}
-                >
-                    <Tab label={intl.get('QMS.todo/hotIssueApprove')} value={0}>
-                    </Tab>
-                    <Tab label={intl.get('QMS.todo/warning')} value={1}>
-                    </Tab>
-                </Tabs>
-                
-                <SwipeableViews
-                    index={this.state.tabValue}
-                    onChangeIndex={this.tabChange}
-                > 
-                    <div>
-                        <HotReview ref="HotReview"  parent={this}/>
-                    </div>
-                    <div>
-                        <WarningReview  parent={this}/>
-                    </div>
-                        
-                </SwipeableViews>
-                {/*HotReview edit弹出,因为SwipeableViews 有transform 属性，导致子级的Position:fixed失效，所以放到SwipeableViews外层*/
+                {/*tab and tabContent*/}
+                <CreateTabs
+                    ref={ref => this.tabs = ref}
+                    menuData={menuData}
+                    parent={this}
+                />
+
+                {/*hotIssueApprove edit弹出,因为ant 的 tabs滑动功能 有transform 属性，导致子级的Position:fixed失效，所以放到CreateTabs外层*/
                     <Drawer
                         ref="Drawer"
                         width="100%"
-                        containerStyle={{top: '48px', overflow: 'hidden', display: this.state.tabValue === 0 ? 'block' : 'none' }} 
+                        containerStyle={{
+                            top: '48px',
+                            overflow: 'hidden',
+                            display: (this.tabs && this.tabs.state.tabValue === intl.get('QMS.todo/hotIssueApprove')) ? 'block' : 'none',
+                            padding: '10px'
+                        }}
                         openSecondary={true}
                         open={this.state.hotIssueEditOpen}
                         children={this.state.DrawerChildren}

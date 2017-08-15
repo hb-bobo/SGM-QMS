@@ -2,31 +2,49 @@ import * as React from 'react';
 import { RouteWithSubRoutes } from '@/router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { upWorkPlanListData } from '@/store/actions';
+import { upWorkPlanListData, setIssueSaveData } from '@/store/actions';
 import './index.css';
+// ui框架
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import Drawer from 'material-ui/Drawer';
 import { Toast } from 'antd-mobile';
 // import { WingBlank, Button, Icon } from 'antd-mobile';
+//components
 import Scroller from '@/components/scroller';
 import WorkPlan from './work-plan';
 import { POST } from '@/plugins/fetch';
 import IconUp from '@/components/icon/up';
 import SpaceRow from '@/components/space-row';
-import HotUp from './hot-up';
-import IssueUP from './issue-up';
 import intl from '@/components/intl';
 import querystring from '@/utils/tools/querystring';
+import IconSave from '@/components/icon/save';
+// views
+import HotUp from './hot-up';
+import IssueUP from './issue-up';
+// 设置本地语言包
+import(/* webpackChunkName: intl */ './locale')
+    .then((intlMsg) => {
+        intl.setMsg(intlMsg);
+    });
 
+// 使用Drawer 返回时不应该用history.go(-1);此组件只是相当于一个model，但又得在效果上相当于返回Drawer消失
+
+/**
+ * 问题推进页
+ */
 @connect(
     // mapStateToProps
-    (state) => ({workPlanData: state.issueAdvance.workPlanData}),
+    (state) => ({
+      workPlanData: state.issueAdvance.workPlanData,
+      issueSaveData: state.issueAdvance.issueSaveData
+    }),
     // buildActionDispatcher
     (dispatch, ownProps) => ({
         actions: bindActionCreators({
-            upWorkPlanListData
+            upWorkPlanListData,
+            setIssueSaveData
         }, dispatch)
     })
 )
@@ -37,6 +55,7 @@ export class IssueAdvance extends React.Component {
     isIndex: true,
     hotUpOpen: false,
     issueUPOpen: false,
+    workPlanOpen: false, // 是否打开工作计划编辑新增面板
     issueData: {},
     pc: {}
   }
@@ -50,6 +69,7 @@ export class IssueAdvance extends React.Component {
 
   componentDidMount () {
     var id = querystring.parse(this.props.location.search).problemId;
+
     var url = '/mproblem/';
     var params = {
       "PRTS": 'mPrtsDetail',
@@ -81,7 +101,8 @@ export class IssueAdvance extends React.Component {
             value: res.workplan
           });
         }
-    })
+    });
+
     this.setState({
       title: intl.get('QMS.' + this.state.advType + 'Report')
     });
@@ -96,24 +117,66 @@ export class IssueAdvance extends React.Component {
     }
     return true;
   }
+
+  componentWillUnmount () {
+    this.$store.dispatch({
+      type: 'clearOldtabValue',
+      payload: false
+    });
+  }
+
+  /**
+   * bar 返回
+   */
+  back = () => {
+    // 纠正 Drawer 返回
+    if (this.state.workPlanOpen) {
+      this.setState({
+        workPlanOpen: false,
+        isIndex: true,
+      });
+      return;
+    }
+    if (this.state.hotUpOpen) {
+      this.setState({
+        hotUpOpen: false,
+        isIndex: true,
+      });
+      return;
+    }
+    if (this.state.issueUPOpen) {
+      this.setState({
+        issueUPOpen: false,
+        isIndex: true,
+      });
+      return;
+    }
+    this.props.history.go(-1);
+  }
   /**
    * 热点上升
    */
   goHotUp = () => {
-    this.topCtrl('/mproblem/getMaxReviewLog', 'HotEscalate');
+    this.topCtrl('/mproblem/getMaxReviewLog', 'HotEscalate', 'hotUpOpen');
   }
   /**
    * 问题上升
    */
   goIssueUp = () => {
-    this.topCtrl('/mproblem/getMaxUpgradeLog', 'IssueEscalate');
+    this.topCtrl('/mproblem/getMaxUpgradeLog', 'IssueEscalate', 'issueUPOpen');
   }
   /**
    * 顶部的操作 热点上升，问题上升
    * @param {string} url
    * @param {string} titleIntl i18n
+   * @param {string} open key
    */
-  topCtrl = (url, titleIntl) => {
+  topCtrl = (url, titleIntl, stateKey) => {
+    this.setState({
+            [stateKey]: true,
+            title: intl.get(titleIntl),
+            isIndex: false
+          });
       POST(url, {
         data: {
           id: this.state.issueData.prblmId
@@ -128,9 +191,8 @@ export class IssueAdvance extends React.Component {
         if(result === 'C') {
             Toast.info('已存在未审核的申请')
         } else {
-          intl.setMsg(require('@/static/i18n').default, require('./locale'));
           this.setState({
-            issueUPOpen: true,
+            [stateKey]: true,
             title: intl.get(titleIntl),
             isIndex: false
           });
@@ -145,9 +207,14 @@ export class IssueAdvance extends React.Component {
    */
   
   save = (data) => {
+    var issueSaveData = this.props.issueSaveData;
+    var issueData = this.state.issueData;
+    if (Object.keys(issueSaveData).length === 0) {
+      Toast.info('未改变');
+      return false;
+    }
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    var issueData = this.state.issueData;
     POST('/mproblem/saveProblem', {
       headers,
       data: {
@@ -164,7 +231,7 @@ export class IssueAdvance extends React.Component {
     })
   }
   render () {
-    intl.setMsg(require('@/static/i18n').default, require('./locale'));
+
     var routes = [];
     if (this.props.routes) {
         routes = this.props.routes;
@@ -176,12 +243,21 @@ export class IssueAdvance extends React.Component {
             title={this.state.title}
             titleStyle={{textAlign: 'center'}}
             iconElementLeft={
-              <IconButton onClick={() => {this.props.history.go(-1)}}>
+              <IconButton onClick={this.back}>
                   <NavigationArrowBack color={'#FFF'}/>
               </IconButton>
             }
         />
-        <Scroller autoSetHeight={true} bounce={false}>
+        {/* <SilkScroller
+            preventDefault={false}
+            useToTop={false}
+            ref="scorller"
+        >
+         */}
+        <Scroller
+            autoSetHeight={true}
+            bounce={false}
+        > 
           {/*顶部*/}
           <div className={this.state.isIndex ? "advance-top flex-row" : "advance-top flex-row hide"}>
             <div className="flex-col-5">
@@ -193,7 +269,7 @@ export class IssueAdvance extends React.Component {
             <SpaceRow height={50} width="1px" backgroundColor="#EEEDED"/>
             <div className="flex-col-5">
               <span onClick={() => this.save()}>
-                <IconUp value="保存" style={{marginLeft: '10px'}} > </IconUp>
+                <IconSave style={{width: 39, height: 46, color:'#676767', marginLeft: '6px'}}></IconSave>
               </span>
               <span onClick={this.goHotUp} style={{display: this.state.advType === 'VOC' ? "none" : "inline-block"}}>
                 <IconUp value="热点" style={{marginLeft: '4px'}} > </IconUp>
@@ -203,8 +279,24 @@ export class IssueAdvance extends React.Component {
               </span>
             </div>
           </div>
+          {/*推进页不同的区域 route*/}
+          {routes.map((route, i) => {
+              route.parent = this;
+              return(
+                  <RouteWithSubRoutes key={i} {...route}/>
+              )
+          })}
+          {/*工作计划*/}
+          <div className="work-plan">
+            <WorkPlan
+              prblmId={querystring.parse(this.props.location.search).problemId}
+              parent={this}
+              workPlanOpen={this.state.workPlanOpen}
+            />
+          </div> 
+        </Scroller>
 
-          {/*热点上升弹出*/}
+        {/*热点上升弹出*/}
           <Drawer 
               width="100%" 
               containerStyle={{top: '48px'}} 
@@ -213,7 +305,7 @@ export class IssueAdvance extends React.Component {
               open={this.state.hotUpOpen} 
           >
               <HotUp data={{}} parent={this}/>
-          </Drawer>
+          </Drawer> 
           
           {/*问题上升弹出*/}
           <Drawer 
@@ -224,20 +316,7 @@ export class IssueAdvance extends React.Component {
               open={this.state.issueUPOpen} 
           >
               <IssueUP data={{}} parent={this}/>
-          </Drawer>
-
-          {/*推进页不同的区域 route*/}
-          {routes.map((route, i) => {
-              route.parent = this;
-              return(
-                  <RouteWithSubRoutes key={i} {...route}/>
-              )
-          })}
-          {/*工作计划*/}
-          <div className="work-plan">
-            <WorkPlan prblmId={querystring.parse(this.props.location.search).problemId} parent={this}/>
-          </div>
-        </Scroller>
+          </Drawer> 
       </div>
     );
   }

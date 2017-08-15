@@ -18,6 +18,9 @@ class HotIssueReviewPlan extends React.Component {
     static defaultProps = {
     }
     static propTypes = {
+        setListData: PropTypes.func,
+        getListData: PropTypes.func,
+        loadingMore: PropTypes.func,
     }
     static contextTypes = {		
         store: PropTypes.object
@@ -41,7 +44,6 @@ class HotIssueReviewPlan extends React.Component {
         this.refs.scroller.simulatePullRefresh();
     }
     render () {
-        intl.setMsg(require('@/static/i18n').default);
         var { listData, noMoreData, getListData, loadingMore, goAdvance } = this.props;
         return (
             <div>
@@ -72,6 +74,7 @@ class HotIssueReviewPlan extends React.Component {
                     useLoadMore
                     loadMoreAction={(resolve, reject) => loadingMore(resolve, reject , { time: this.state.time })}
                     noMoreData={noMoreData}
+                    
                     preventDefault={false}
                     ref="scroller"
                 >

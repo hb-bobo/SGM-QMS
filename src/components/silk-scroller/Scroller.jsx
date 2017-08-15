@@ -274,8 +274,7 @@ export default class Scroller extends Component {
     componentDidMount() {
         // 缓存滑块的样式，提高效率
         this.scrollerStyle = this.scroller.style;
-
-        if (this.props.usePullRefresh) {
+        if (this.props.usePullRefresh) { 
             this.pullRefreshOffsetHeight = this.pullRefreshEl.offsetHeight;
         }
 
@@ -624,7 +623,9 @@ export default class Scroller extends Component {
     touchMove(e) {
         if (this.disabled || utils.eventType[e.type] !== this.initiated) return;
 
-        // if (e.preventDefault) e.preventDefault();
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
 
         const point = e.touches ? e.touches[0] : e;
         const timestamp = utils.getTime();
@@ -1362,7 +1363,7 @@ export default class Scroller extends Component {
         }
 
         //容器高度
-        if (this.props.autoSetHeight === false) {
+        if (isInit && this.props.autoSetHeight === false) {
             this.setState({
                 containerHeight: props.containerHeight
             });

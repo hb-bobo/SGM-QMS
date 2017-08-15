@@ -15,7 +15,10 @@ class HotIssueNotice extends React.Component {
     static defaultProps = {
     }
     static propTypes = {
-        goAdvance: PropTypes.func.isRequired
+        goAdvance: PropTypes.func.isRequired,
+        setListData: PropTypes.func,
+        getListData: PropTypes.func,
+        loadingMore: PropTypes.func,
     }
     state = {
     }
@@ -24,7 +27,6 @@ class HotIssueNotice extends React.Component {
         this.refs.scroller.simulatePullRefresh();
     }
     render () {
-        intl.setMsg(require('@/static/i18n').default);
         var { goAdvance } = this.props;
         var { listData, noMoreData, getListData, loadingMore } = this.props;
         // onPulldownLoading={() => this.getListData('down')}

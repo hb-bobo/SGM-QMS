@@ -9,7 +9,7 @@ import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import HotIssue from './HotIssue/';
-import intl from '@/components/intl';
+// import intl from '@/components/intl';
 
 
 /*项目质量验证总览 目前只有热点问题*/
@@ -46,7 +46,6 @@ class Verification extends React.Component {
         }
     }
     render () {
-        intl.setMsg(require('@/static/i18n').default);
         // var routes = [];
         // if (this.props.routes) {
         //     routes = this.props.routes;

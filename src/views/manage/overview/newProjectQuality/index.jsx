@@ -17,6 +17,9 @@ class NewProjectQuality extends React.Component {
     static defaultProps = {
     }
     static propTypes = {
+        setListData: PropTypes.func,
+        getListData: PropTypes.func,
+        loadingMore: PropTypes.func,
     }
     static contextTypes = {	
         router: PropTypes.object,
@@ -40,7 +43,6 @@ class NewProjectQuality extends React.Component {
     } 
     render () {
         var { listData, noMoreData, getListData, loadingMore } = this.props;
-        intl.setMsg(require('./locale'));
         var { lang } = this.context;
         // timingName的样式，中英文差距大
         var timingNameStyle = lang === 'zh' ? {} : {float: 'right', marginRight: '8px'};

@@ -62,7 +62,6 @@ class HotIssue extends React.Component {
         });
     }  
     render () {
-        intl.setMsg(require('@/static/i18n').default);
         var { listData, noMoreData, getListData, loadingMore } = this.props;
         var { goAdvance } = this.props.parent;
         return (

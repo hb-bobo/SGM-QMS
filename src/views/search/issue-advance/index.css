@@ -25,11 +25,21 @@
 
 /*热点上升*/
 .work-plan-edit-form .flex-row,
+.issue-up-form .flex-row,
 .hot-up-form .flex-row{
     margin-bottom: 10px;
 }
+.issue-up-form .justify,
 .hot-up-form .justify {
     width: 77px;
+}
+
+/* 问题上升 */
+
+.issue-up-form label{
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 5px;
 }
 /*推进页-> 工作计划*/
 .work-plan-list .flex-row{
@@ -41,10 +51,12 @@
 }
 
 .work-plan-edit-form,
-.hot-up-form{
+.hot-up-form,
+.issue-up-form {
     padding:10px 10px 0;
     font-size: 15px;
 }
+.issue-up-form .btn>div,
 .hot-up-form .btn>div,
 .work-plan-edit-form .btn>div {
     padding: 0 2px;

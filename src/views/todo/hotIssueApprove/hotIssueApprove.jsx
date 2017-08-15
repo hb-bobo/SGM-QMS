@@ -20,6 +20,7 @@ import SilkScroller from '@/components/silk-scroller';
 import HotIssueEdit from './edit';
 import { POST } from '@/plugins/fetch';
 
+
 /*热点评审审批*/
 
 @fetchList('/toDo/mHotIssueApprove')
@@ -54,6 +55,7 @@ class HotIssueApprove extends React.Component {
     }
     // edit review time
     edit (data) {
+        console.log(this.props.parent)
         this.$store.dispatch(upTempData(data));
         this.setState({
             hotIssueEditOpen: true,
@@ -73,7 +75,7 @@ class HotIssueApprove extends React.Component {
     }
     // Reject the hot review item
     reject (problemId) {
-        return () => {console.log('btn')
+        return () => {
             this.approveCtrl(problemId, 'N')
         }
     }
@@ -135,7 +137,6 @@ class HotIssueApprove extends React.Component {
                 loadMoreAction={(resolve, reject) => loadingMore(resolve, reject)}
                 noMoreData={noMoreData}
                 preventDefault={false}
-                useSticky
                 ref="scroller"
             >
                 <div className="gtasks-list">
@@ -247,7 +248,7 @@ class HotIssueApprove extends React.Component {
                                                 labelStyle={{paddingLeft:'0'}}
                                                 onClick={this.approve(item.problemId)}
                                             >
-                                                <svg className="icon" aria-hidden="true">
+                                                <svg className="icon icon-pass" aria-hidden="true">
                                                     <use xlinkHref="#icon-pass"></use>
                                                 </svg>
                                             </FlatButton>

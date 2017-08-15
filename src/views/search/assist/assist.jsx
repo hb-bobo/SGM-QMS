@@ -15,6 +15,12 @@ import querystring from '@/utils/tools/querystring';
 // import goBack from '@/mixin/goBack';
 // import mixins from '@/mixins/mixins';
 
+// 设置本地语言包
+import(/* webpackChunkName: intl */ './locale')
+    .then((intlMsg) => {
+        intl.setMsg(intlMsg);
+    });
+
 
 /*诊断详情*/
 class Assist extends React.Component {
@@ -58,7 +64,6 @@ class Assist extends React.Component {
     }
     
     render () {
-        intl.setMsg(require('@/static/i18n').default, require('./locale'))
         var routes = [];
         if (this.props.routes) {
             routes = this.props.routes;

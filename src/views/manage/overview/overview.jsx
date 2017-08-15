@@ -8,41 +8,45 @@ import { RouteWithSubRoutes } from '@/router';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
-import {Tabs, Tab} from 'material-ui/Tabs';
-import SwipeableViews from 'react-swipeable-views';
+import CreateTabs from '@/components/create-tabs';
+
 import NewProjectQuality from './newProjectQuality';
 import HotIssueReviewPlan from './hotIssueReviewPlan';
 
-import Access  from '@/components/Access';
-import Label from '@/components/tabs/label';
 import intl from '@/components/intl';
-// import { POST } from '@/plugins/fetch';
-// import goBacka from '@/mixins//mountedStatus';
-// import mixins from '@/decorator/mixins/';
 
+// 设置本地语言包(公共语言包在App.jsx中提前设置了)
+// import(/* webpackChunkName: intl */ './locale')
+//     .then((intlMsg) => {
+//         console.log(intlMsg)
+//         intl.setMsg(intlMsg);
+//     });
+intl.setMsg(require('./locale'));
+
+// 项目质量总览菜单配置
+const menuData = [
+    {
+        tabTitle: intl.get('QMS.manage/overview'),
+        tabContent: NewProjectQuality,
+        path: 'manage/overview'
+    },
+    {
+        tabTitle: intl.get('QMS.EQRProjectHotIssueReviewPlan'),
+        tabContent: HotIssueReviewPlan,
+        path: 'manage/overview'
+    }
+];
 /* 项目质量总览 */
-// @connect(
-//     // mapStateToProps
-//     (state) => (state.common),
-//     // buildActionDispatcher
-//     (dispatch, ownProps) => ({
-//         actions: bindActionCreators({
-//             fillListData
-//         }, dispatch)
-//     })
-// )
-
 class Overview extends React.Component {
     static contextTypes = {
         muiTheme: PropTypes.object,
         plugins: PropTypes.object,
-        store: PropTypes.object
+        store: PropTypes.object,
     }
 
     state = {
         title: '',
         isIndex: true, // 除了主页显示itemList 其他页面都消失,
-        tabValue: 0
     }
     
     componentDidMount ()　{
@@ -54,33 +58,22 @@ class Overview extends React.Component {
     /*back*/
     goBack = () => {
         this.props.history.go(-1);
-        if (this.props.match.path === '/manage/project-quality') {
-            this.setState({
-                isIndex: true
-            });
-        }
     }
     /*跳到推进页面*/
     goAdvance = (type, problemId) => {
         if (type) {
             this.props.history.push('/search/issue-advance/' + type + '?problemId='+problemId);
-            this.setState({
-                isIndex: false
-            });
         }
     }
-    tabChange = (value) => {
-        this.setState({
-            tabValue: value,
-        });
-    }
-    render () {console.log()
-        intl.setMsg(require('@/static/i18n').default);
+    
+    
+    render () {
+        
         var routes = [];
         if (this.props.routes) {
             routes = this.props.routes;
         }
-        // {/*  Access.getAccess("manage/overviewa") ?  */}
+
         return (
             <div>
                 {/*头部*/}
@@ -94,43 +87,11 @@ class Overview extends React.Component {
                     }
                     iconElementRight={
                         <span style={{display: 'inline-block', width: '2.6em'}}></span>
-                    }   
-                />
-                {/*tab*/}
-                <Tabs
-                    value={this.state.tabValue}
-                    onChange={this.tabChange}
-            >       
-                    {
-                       
-                            <Tab 
-                                label={<Label value={intl.get('QMS.manage/overview')}/>}
-                                value={0}
-                            />
-                        
                     }
-                    <Tab label={<Label value={intl.get('QMS.EQRProjectHotIssueReviewPlan')}/>} value={1}/>
-                    
-                </Tabs>
-                <SwipeableViews
-                    index={this.state.tabValue}
-                    onChangeIndex={this.tabChange}
-                >
-                    <div>
-                        {/*列表*/
-                            this.state.isIndex? 
-                                <NewProjectQuality/>
-                                : null
-                        }
-                    </div>
-                    <div>
-                        {/*列表*/
-                            this.state.isIndex? 
-                                <HotIssueReviewPlan goAdvance={this.goAdvance}/>
-                                : null
-                        }
-                    </div>
-                </SwipeableViews>
+                />
+                {/*tab and tabContent*/}
+                <CreateTabs menuData={menuData} parent={this}/>
+
                 {/*route*/}
                 {routes.map((route, i) => {
                     return(

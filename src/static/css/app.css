@@ -3,9 +3,7 @@
  *引入 ant 会把html font-size设为50px; 再此设置与它抵消
  */
 #root{
-    position: absolute;
-    left: 0;
-    top: 0;
+    position: relative;
     width: 100%;
     height: 100%;
     font-size: 1rem;
@@ -169,4 +167,8 @@
 .icon.icon-up{
     width: 3.5em;
     height: 3.5em;
+}
+.icon.icon-pass{
+    width: 0.9em;
+    height: 0.9em;
 }

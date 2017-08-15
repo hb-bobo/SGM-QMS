@@ -13,7 +13,7 @@ interface LocaleData {
  * first,set language
  * then setMsg
  * last get
- * 
+ * setMsg加载过语言包，子组件子页面里就不用加载了，但子组件可以继续加载不同的语言包，如果有冲突，尽量在外层加载
  */
 class Intl {
     private msg: Msg;
@@ -30,12 +30,13 @@ class Intl {
     // set 当前页的数据
     setMsg (...localeData: LocaleData[]): void {
 
-        if (localeData.length === 1) {
-            this.msg = localeData[0][this.language];
-            return;
-        }
+        // if (localeData.length === 1) {
+        //     this.msg = localeData[0][this.language];
+        //     return;
+        // }
         // if localeData is a array and length greater than 1, merge it
-        var newMsg: Msg = {};
+        var newMsg: Msg = this.msg;
+
         localeData.forEach( (localeDataItem: LocaleData) => {
             // 只提取一种语言
             var tempMsg: Msg  = localeDataItem[this.language];
@@ -44,7 +45,7 @@ class Intl {
                 if (newMsg[key] === undefined || newMsg[key] === '') {
                     newMsg[key] = tempMsg[key];
                 } else {
-                    window.console.warn('localeData has repetitive key [localeData 有重复的key,最好是不要重复]')
+                    window.console.warn('localeData has repetitive key [localeData 有重复的key,最好是不要重复],key:' + key);
                 }
             }
         });

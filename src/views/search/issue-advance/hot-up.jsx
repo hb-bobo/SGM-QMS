@@ -10,10 +10,10 @@ import HTextarea from '@/components/form/h-textarea';
 import intl from '@/components/intl';
 import { POST } from '@/plugins/fetch';
 import array2Array from '@/utils/array/array2Array';
-/*
-    s
-*/
-
+    
+/**
+ * 热点上升
+ */
 export class HotUp extends React.Component {
     static defaultProps = {
     }
@@ -91,7 +91,7 @@ export class HotUp extends React.Component {
         }else{
             options = [{text:"EQR专题",value:1},{text:"EQR常规",value:2},{text:"项目热点",value:3}]
         }
-        intl.setMsg(require('@/static/i18n').default, require('./locale'))
+
         return (
             <div className="hot-up-form">
                 <div className="edit-item flex-row">

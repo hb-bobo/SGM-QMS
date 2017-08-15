@@ -8,13 +8,18 @@ import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import { Toast } from 'antd-mobile';
 // import pathToJSON from '@/utils/object/pathToJSON';
+import AppConfig from '@/AppConfig';
+import WorkPlanEdit from './work-plan-edit';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
+import SilkScroller from '@/components/silk-scroller';
+ // eslint-disable-next-line
 import Scroller from '@/components/scroller';
-import WorkPlanEdit from './work-plan-edit';
+import HSelect from '@/components/form/h-select';
 import { POST } from '@/plugins/fetch';
 import intl from '@/components/intl';
-import AppConfig from '@/AppConfig';
+import array2Array from '@/utils/array/array2Array';
+
 /*
     planDesc         "描述"
     planFinishDate   "计划完成时间"
@@ -23,9 +28,11 @@ import AppConfig from '@/AppConfig';
     rspnsUser        "责任人"
     workPlanID       "101644"
     workPlanStatus   "状态"
-*/
+*/  
 
-
+/**
+ * 工作计划
+ */
 @connect(
     // mapStateToProps
     (state) => ({
@@ -36,28 +43,31 @@ import AppConfig from '@/AppConfig';
     (dispatch, ownProps) => ({
         actions: bindActionCreators({
             upWorkPlanEditData,
-            upWorkPlanListData
+            upWorkPlanListData,
         }, dispatch)
     })
 )
 class WorkPlan extends React.Component {
     static propTypes = {
-        parent: PropTypes.instanceOf(React.Component).isRequired
+        parent: PropTypes.instanceOf(React.Component).isRequired,
+        workPlanOpen: PropTypes.bool.isRequired
     }
     
+    static contextTypes = {
+        router: PropTypes.object
+    }
     state = {
-        workPlanOpen: false,
-        workPlanAction: '',
-        workPlan: [],
-        allWorkPlan: [],
-        phase : [],
+        workPlanAction: '', // 编辑| 新增行为
+        allWorkPlan: [], // 工作计划所有列表
+        phase : [], // 阶段options
         pageNumber: 1, // 页数
         noMoreData: false,
-        filter: ''
+        filter: '' // 阶段过滤选中value
     }
-
-    componentDidMount () {
+    componentWillMount () {
         this.parent = this.props.parent;
+    }
+    componentDidMount () {
         this.selectWorkPlan('down');
         // this.refs.scroller.simulatePullRefresh();
     }
@@ -65,7 +75,7 @@ class WorkPlan extends React.Component {
      * 查询工作计划
      * @param {'up' | 'down'} 上拉还是下拉
      */
-    selectWorkPlan = (action) => {
+    selectWorkPlan = (action, resolve, reject) => {
         if (action === 'down') {
             this.setState({
                 pageNumber: 1
@@ -84,7 +94,6 @@ class WorkPlan extends React.Component {
                 var listData = [];
                 // 下拉结束
                 if (action === 'down') {
-                    // this.refs.scroller.donePulldown();
                     listData = res.workplan;
                     action = 'update';
                 } else if (action === 'up') {
@@ -102,23 +111,26 @@ class WorkPlan extends React.Component {
                     phase : res.phase,
                     pageNumber : this.state.pageNumber+1
                 });
-                this.refs.scroller.donePullup();
+                if (resolve) {resolve();}
                 if (res.workplan.length < AppConfig.listConfig.count) {
                     this.setState({
                         noMoreData: true
                     });
                 }
+            } else {
+                if (reject) {reject()}
             }
+        }).catch(function () {
+            if (reject) {reject()}
         })
     }
-    loadingMore = () => {
-        this.selectWorkPlan('up')
+    loadingMore = (resolve, reject) => {
+        this.selectWorkPlan('up', resolve, reject)
     }
     // 新增工作计划
     workPlanNewData = () => {
-        intl.setMsg(require('@/static/i18n').default, require('./locale'));
         this.setState({
-            workPlanOpen: true,
+            // workPlanOpen: true,
             workPlanAction: 'add'
         });
         // 重置值
@@ -126,21 +138,27 @@ class WorkPlan extends React.Component {
             value: {}
         });
         this.parent.setState({
+            workPlanOpen: true,
             title: intl.get('AddWorkPlan'),
             isIndex: false
         });
+        //this.context.router.history.push('/search/issue-advance/PRTS?problemId=197944');
+        // window.history.pushState(null, '', window.location.url);
+        
+        // router.history.push(`/search/issue-advance/work-plan-edit/${this.parent.state.advType}${router.route.location.search}`);
     }
     // 编辑工作计划
     workPlanDataEdit = (data) => {
-        intl.setMsg(require('@/static/i18n').default, require('./locale'));
+        
         this.setState({
-            workPlanOpen: true,
+            // workPlanOpen: true,
             workPlanAction: 'edit'
         });
         this.props.actions.upWorkPlanEditData({
             value: data
         });
         this.parent.setState({
+            workPlanOpen: true,
             title: intl.get('EditWorkPlan'),
             isIndex: false
         });
@@ -173,12 +191,11 @@ class WorkPlan extends React.Component {
     }
     
     render () {
-        intl.setMsg(require('@/static/i18n').default, require('./locale'))
-        var allData = this.state.allWorkPlan;
-        var phase = this.state.phase;
-        var {noMoreData} = this.state;
+        var {noMoreData, phase, allWorkPlan} = this.state; 
+        var { workPlanEditData } = this.props;
         var containerHeight = 500;
-        var data = allData.filter((item)=>{
+        // 过滤后的工作计划
+        var data = allWorkPlan.filter((item)=>{
             if(this.state.filter === ''){
                 return item;
             } else if(item.prblmPhaseID === this.state.filter){
@@ -186,7 +203,20 @@ class WorkPlan extends React.Component {
             }
             return null;
         });
-        var { workPlanEditData } = this.props;
+        
+        // 下拉数据转换
+        var workPlanSelectOptions = array2Array({
+            data: phase,
+            format: ['value', 'text'],
+            originaFormat: ['prblmPhaseID', 'prblmPhaseID']
+        });
+
+        // 没有数据就不用显示那么高啦
+        if (data.length === 0) {
+            containerHeight = 100;
+        } else {
+            containerHeight = 500;
+        }
         return (
             <div>
                 <SpaceRow height={6} />
@@ -196,21 +226,13 @@ class WorkPlan extends React.Component {
                 <div className="flex-row issue-advance-item">
                     <div className="flex-col-8">
                         <span>{intl.get('QMS.Step')}: </span>
-                        {/* <HSelect
-                            style={{marginLeft: '0', height: '20px'}}
-                            value={this.state.selectReLvl}
-                            onChange={this.selectChange}
-                            isFirstEmpty={false}
-                            options={selectOptions}
-                        /> */}
-                        <select name="" id="" style={{marginLeft: '8px'}} onChange={this.changeFilter}>
-                            <option value="">{intl.get('QMS.Option')}</option>
-                            {phase.map((item, i) => {
-                                return (
-                                    <option key={i} value={item.prblmPhaseID}>{item.prblmPhaseID}</option>
-                                )
-                            })}
-                        </select>
+                        <HSelect
+                            containerStyle={{width: '200px', marginLeft: '8px'}}
+                            value={this.state.filter}
+                            onChange={this.changeFilter}
+                            emptyText={intl.get('QMS.Option')}
+                            options={workPlanSelectOptions}
+                        />
                     </div>
                     <div className="flex-col-2">
                         <svg onClick={this.workPlanNewData} className="icon icon-new" aria-hidden="true">
@@ -226,7 +248,17 @@ class WorkPlan extends React.Component {
                         bounce={false}
                         noMoreData={noMoreData}
                         ref="scroller"
-                    >
+                    >  
+                    {/* <Scroller
+                        useLoadMore
+                        loadMoreAction={(resolve, reject) => this.loadingMore(resolve, reject)}
+                        noMoreData={noMoreData}
+                        autoSetHeight={false}
+                        containerHeight={containerHeight}
+                        preventDefault={false}
+                        bounce={false}
+                        ref="scroller"
+                    >  */}
                         {
                             data.map((item, i) => {
                                 return (
@@ -315,7 +347,7 @@ class WorkPlan extends React.Component {
                     width="100%" 
                     containerStyle={{top: '48px', overflow: 'hidden'}} 
                     openSecondary={true} 
-                    open={this.state.workPlanOpen} 
+                    open={this.props.workPlanOpen} 
                 >
                     <WorkPlanEdit data={workPlanEditData} parent={this} action={this.state.workPlanAction}/>
                 </Drawer>

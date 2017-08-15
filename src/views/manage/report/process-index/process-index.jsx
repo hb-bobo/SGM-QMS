@@ -4,7 +4,7 @@ import EchartLineAndBar from '@/components/echarts/echart-lineAndBar';
 
 import { Accordion } from 'antd-mobile';
 import { POST } from '@/plugins/fetch';
-import Scroller from '@/components/scroller';
+import SilkScroller from '@/components/silk-scroller';
 import dateFormat from '@/utils/format/dateFormat';
 import {handleLineData, handleLineBarData, arrToArr} from '../handleChartData';
 
@@ -111,11 +111,21 @@ class ProcessIndex extends React.Component {
         });
         
     }
+    /**
+     * 重置容器高度
+     */
+    restScroller = () => {
+        setTimeout(() => this.refs.scorller.refresh(), 400)
+    }
     render () {
         var state = this.state;
         return (
-            <Scroller autoSetHeight={true} bounce={false}>
-                <Accordion defaultActiveKey="0" className="chart-list">
+            <SilkScroller
+                preventDefault={false}
+                useToTop={false}
+                ref="scorller"
+            >
+                <Accordion defaultActiveKey="0" className="chart-list" onChange={this.restScroller}>
                     <Accordion.Panel header="IQS(K227)" className="chart-item">
                         <EchartLine
                             yFormat="{value}"
@@ -155,7 +165,7 @@ class ProcessIndex extends React.Component {
                         />
                     </Accordion.Panel>
                 </Accordion>
-            </Scroller>
+            </SilkScroller>
         )
     }
     

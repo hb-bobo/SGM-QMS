@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import SpaceRow from '@/components/space-row';
 import { Link } from 'react-router-dom';
 import intl from '@/components/intl';
+import HSelect from '@/components/form/h-select';
 
 export class VEIssueAdvance extends React.Component {
   state = {
@@ -15,7 +16,7 @@ export class VEIssueAdvance extends React.Component {
     parent: PropTypes.instanceOf(React.Component).isRequired
   }
   render() {
-    intl.setMsg(require('@/static/i18n').default)
+
     var issueData = this.props.parent.state.issueData;
     return (
       <div>
@@ -54,12 +55,40 @@ export class VEIssueAdvance extends React.Component {
             <label htmlFor="">{intl.get('QMS.RiskStatus')}: </label>
           </div>
           <div className="flex-col-10 right">
-            <select name="" id="" value={issueData.estimatePrblmStatus}>
+            <HSelect
+                containerStyle={{width: '60px',  height: '26px'}}
+                defaultValue={issueData.estimatePrblmStatus}
+                isFirstEmpty={false}
+                callBack={(value) => {
+                  this.props.parent.props.actions.setIssueSaveData({
+                    estimatePrblmStatus: value
+                  });
+                }}
+                options={[
+                  {
+                    text: '白色',
+                    value: 'W'
+                  },
+                  {
+                    text: '黄色',
+                    value: 'Y'
+                  },
+                  {
+                    text: '红色',
+                    value: 'R'
+                  },
+                  {
+                    text: '绿色',
+                    value: 'G'
+                  }
+                ]}
+            />
+            {/* <select name="" id="" value={issueData.estimatePrblmStatus}>
               <option value="w">白色</option>
               <option value="Y">黄色</option>
               <option value="R">红色</option>
               <option value="G">绿色</option>
-            </select>
+            </select> */}
           </div>
         </div>
         <div className="issue-advance-item flex-row">

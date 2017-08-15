@@ -39,12 +39,18 @@ export var handleLineData = function (resData0, resData1, isCutMount) {
         LineSeries[1].data.push('')
     }
     Array.isArray(resData1) && resData1.some(function (item, i) {
+        var value;
         // 跳出，截取到当前月份的数据
         if (isCutMount && i >= currMounth) {
             return true;
         }
-        //把month可能只有一个
-        LineSeries[1].data[item.MONTH - 1] = item.COUNT || '';
+        if (item.COUNT === undefined || item.COUNT === null) {
+            value = ''
+        } else {
+            value = item.COUNT;
+        }
+        //month可能只有一个
+        LineSeries[1].data[item.MONTH - 1] = value;
         return false;
     });
     return LineSeries;
@@ -133,7 +139,7 @@ export var handleLineBarData = function (lineData, barData1, barData2, isCutMoun
         if (isCutMount && i >= currMounth) {
             return true;
         }
-        //把month可能只有一个
+        //month可能只有一个
         LineBarSeries[1].data[item.MONTH - 1] = item.COUNT || 0;
         return false;
     });
@@ -142,7 +148,7 @@ export var handleLineBarData = function (lineData, barData1, barData2, isCutMoun
         if (isCutMount && i >= currMounth) {
             return true;
         }
-        //把month可能只有一个
+        //month可能只有一个
         LineBarSeries[2].data[item.MONTH - 1] = item.COUNT || 0;
         return false;
     });

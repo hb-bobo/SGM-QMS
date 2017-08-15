@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import '../style/common.css';
 
 var containerStyle = {
+    height: '25px'
 }
 var selectStyle = {
     position: 'absolute',
@@ -12,7 +13,8 @@ var selectStyle = {
     opacity: 0,
     height: '100%',
     width: '100%',
-    border: 0
+    border: 0,
+
 }
 
 var inputStyle = {
@@ -28,12 +30,13 @@ class HSelect extends React.Component {
         isFirstEmpty: true,
     }
     static propTypes = {
+        containerStyle: PropTypes.object, // 容器样式覆盖,也就是span
         options: PropTypes.array,
         onChange: PropTypes.func,
-        emptyText: PropTypes.string,
-        containerStyle: PropTypes.object, // 容器样式覆盖,也就是div
+        callBack: PropTypes.func, // 不可控时的change事件
+        emptyText: PropTypes.string, // 空的时候的文字
         inputStyle: PropTypes.object,
-        isFirstEmpty: PropTypes.bool,
+        isFirstEmpty: PropTypes.bool, // 第一个options是否为空(‘请选择’)
         style: PropTypes.object
     }
     static contextTypes = {
@@ -44,15 +47,15 @@ class HSelect extends React.Component {
         controllable: false // 默认不可控
     }
 
-    componentWillMount () {
+    componentWillReceiveProps (nextProps) {
         // 这代表可控
-        if (this.props.onChange !== undefined && this.props.value !== undefined) {
+        if (nextProps.onChange !== undefined && nextProps.value !== undefined) {
             this.setState({
                 controllable: true
             });
-        } else {
+        } else if (this.props.defaultValue !== undefined) {
             this.setState({
-                value: this.props.defaultValue
+                value: nextProps.defaultValue
             });
         }
     }
@@ -64,6 +67,9 @@ class HSelect extends React.Component {
             this.setState({
                 value: value
             });
+            if (this.props.callBack) {
+                this.props.callBack(value)
+            }
         }
     }
 
@@ -91,17 +97,21 @@ class HSelect extends React.Component {
                 break;
             }
         }
+        var inputText = (selectedItem.text === undefined && isFirstEmpty === true) ? emptyText : selectedItem.text;
+        if (inputText === undefined) {
+            inputText = '';
+        }
 
         return (
-            <div className="form-container" style={Object.assign(containerStyle, this.props.containerStyle)}>
-                <div>
+            <span className="form-container" style={Object.assign({}, containerStyle, this.props.containerStyle)}>
+                <div style={{height: '100%'}}>
                     <input
                         style={Object.assign(inputStyle, style)}
                         type="text"
                         onChange={() => {}}
-                        value={(selectedItem.text === undefined) ? emptyText : selectedItem.text}
+                        value={inputText}
                     />
-                    <span style={{position: 'absolute', right: '10px', top: '2px'}}>
+                    <span style={{position: 'absolute', right: '10px', top: '25%'}}>
                         <svg className="icon" style={{}} viewBox="0 0 1024 1024" width="200" height="200">
                             <path d="M511.609097 961.619254M511.906879 662.759609L511.906879 662.759609 129.831974 280.679587c-14.788821-14.762215-38.777165-14.762215-53.585429 0-14.788821 14.812357-14.788821 38.799678 0 53.607942l405.851425 405.805376c0.867764 1.107217 1.824555 2.190899 2.843768 3.206018 14.808264 14.788821 38.795585 14.788821 53.585429 0l408.230612-408.226518c14.807241-14.808264 14.807241-38.795585 0-53.584406-14.767332-14.785751-38.754652-14.785751-53.562916 0L511.906879 662.759609 511.906879 662.759609zM511.906879 662.759609">
                                 
@@ -129,7 +139,7 @@ class HSelect extends React.Component {
                         })
                     }
                 </select>
-            </div>
+            </span>
         )
     }
 }

@@ -101,10 +101,9 @@ export class IssueUP extends React.Component {
         }
     }
     render() {
-        intl.setMsg(require('@/static/i18n').default)
         // var { data } = this.props;
         return (
-            <div className="hot-up-form">
+            <div className="issue-up-form">
                 <div className="edit-item flex-row">
                     <div className="flex-col-3" style={{alignSelf: 'flex-start'}}>
                         <label htmlFor="planDesc" className="justify">{intl.get('QMS.Level')} :</label>
@@ -117,6 +116,8 @@ export class IssueUP extends React.Component {
                             onChange={this.bind('directorID')}
                         >
                         </HSelect>
+                        <div> </div>
+
                         <label><input name="lv" type="radio" value="2" onChange={this.bind('targetLevel')}/>{intl.get('QMS.SrMgr')} </label>
                         <HSelect
                             value={this.state.seniorMgrID}
@@ -124,6 +125,8 @@ export class IssueUP extends React.Component {
                             onChange={this.bind('seniorMgrID')}
                         >
                         </HSelect>
+
+                        <div> </div>
                         <label><input name="lv" type="radio" value="1" onChange={this.bind('targetLevel')}/>{intl.get('QMS.EGM')} </label>
                         <HSelect
                             value={this.state.majorID}

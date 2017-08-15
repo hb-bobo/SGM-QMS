@@ -4,6 +4,7 @@ import IconClear from '../../icon/clear';
 // import getTime from '@/utils/format/getTime';
 import '../style/common.css';
 var containerStyle = {
+    height: '25px'
 }
 var inputStyle = {  
 }
@@ -11,10 +12,11 @@ var dateStyle = {
     position: 'absolute',
     top: 0,
     left: 0,
-    width: '100%',
+    width: '102%',
     height: '100%',
     paddingRight: '26px',
-    opacity: 0
+    opacity: 0,
+    zIndex: 10
 }
 var iconStyle = {
 }
