@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import {updateMenuAuthority} from '@/store/actions';
 
 import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -7,15 +8,25 @@ import { Toast } from 'antd-mobile';
 
 import Access from '@/components/Access';
 import intl from '@/components/intl';
+import ReactSwiper, {SwiperWrapper} from '@/components/swiper';
+import LazyImg from '@/components/lazy-img';
+import HSelect from '@/components/form/h-select';
 import { POST } from '@/plugins/fetch';
+import array2Array from '@/utils/array/array2Array';
+import AppConfig from '@/AppConfig';
 import MenuButton from './menu-button';
 import MoreMenu from './more.jsx';
 import './index.css';
 import home_top from '@/static/images/home_top.jpg';
-import home_banner from '@/static/images/home_banner.jpg';
 
+// import slideCar1 from '@/static/images/slide/slide-car1.png';
+// import slideCar2 from '@/static/images/slide/slide-car2.png';
+// import slideCar3 from '@/static/images/slide/slide-car3.png';
+// import slideCar4 from '@/static/images/slide/slide-car4.png';
+// import slideCar5 from '@/static/images/slide/slide-car5.png';
+// import slideCar6 from '@/static/images/slide/slide-car6.png';
 // 加载本地语言包
-import(/* webpackChunkName: intl */ './locale')
+import(/* webpackChunkName: "intl" */ './locale')
 .then((intlMsg) => {
   intl.setMsg(intlMsg);
 });
@@ -24,6 +35,16 @@ import(/* webpackChunkName: intl */ './locale')
 var homeTopBg = {
   backgroundImage:  `url(${home_top})`
 }
+
+// 轮播图url
+var bannerImgUrl = [
+  AppConfig.API + '/static/img/slide/slide-car1.png',
+  AppConfig.API + '/static/img/slide/slide-car2.png',
+  AppConfig.API + '/static/img/slide/slide-car3.png',
+  AppConfig.API + '/static/img/slide/slide-car4.png',
+  AppConfig.API + '/static/img/slide/slide-car5.png',
+  AppConfig.API + '/static/img/slide/slide-car6.png',
+]
 
 /* 首页 */
 class HomePage extends React.Component{
@@ -36,7 +57,7 @@ class HomePage extends React.Component{
   state = {
     showMore: false,
     personalInfo: [],
-    selectedId: ''
+    selectedId: {}
   }
 
   componentDidMount () {
@@ -68,6 +89,39 @@ class HomePage extends React.Component{
       this.changeId(data[0].DEPT_ID);
     })
   }
+
+  /**
+   * 获取权限信息
+   * @param {string}
+   */
+  getAccess (positNum) {
+    POST('/toDo/mPermissionByUser', {
+        data:{
+          empId: sessionStorage.getItem('empId'),
+          positNum: positNum,
+        }
+    })
+    .then((res) => {
+      if (res.success) {
+        this.$store.dispatch(updateMenuAuthority(res.data));
+      }
+    });
+  }
+  
+  /* change身份 */
+  changeId (id) {
+    this.state.personalInfo.some((info) => {
+      if (info.DEPT_ID === id) {
+        this.setState({
+          selectedId: info
+        });
+        this.getAccess(info.POSIT_NUM);
+        return true;
+      }
+      return false;
+    });
+  }
+
   /*常用的菜单 element*/
   commonMenu () {
     return (
@@ -88,21 +142,27 @@ class HomePage extends React.Component{
             </Access>
           </div>
           <div className="flex-col-1">
-            <Link to="/manage/report">
-              <MenuButton iconName="monthly" text="质量月报" bgName="leftBottom"/>
-            </Link>
+            <Access PATH="manage/report">
+              <Link to="/manage/report">
+                <MenuButton iconName="monthly" text="质量月报" bgName="leftBottom"/>
+              </Link>
+            </Access>
           </div>
           <div className="flex-col-1">
-            <Link to="/notice">
-              <MenuButton iconName="notice2" text="通知中心" bgName="leftBottom"/>
-            </Link>
+            <Access PATH="notice" model="includes">
+              <Link to="/notice">
+                <MenuButton iconName="notice2" text="通知中心" bgName="leftBottom"/>
+              </Link>
+            </Access>
           </div>
         </div>
         <div className="flex-row">
           <div className="flex-col-1">
-            <Link to="/todo">
-              <MenuButton iconName="msg" text="待办事项"/>
-            </Link>
+            <Access PATH="todo" model="includes">
+              <Link to="/todo">
+                <MenuButton iconName="msg" text="待办事项"/>
+              </Link>
+            </Access>
           </div>
           <div className="flex-col-1">
             <Link to="/" onClick={() => Toast.info('II期发布,敬请期待')}>
@@ -121,34 +181,51 @@ class HomePage extends React.Component{
       </div>
     )
   }
-  /* change身份 */
-  changeId (id) {
-    this.state.personalInfo.some((info) => {
-      if (info.DEPT_ID === id) {
-        this.setState({
-          selectedId: info
-        });
-        return true;
-      }
-      return false;
-    });
-  }
   render () {
     
     var {selectedId, personalInfo} = this.state;
+
+    
      return (
         <div className="home" style={{height: window.innerHeight}}>
           <div className="home-top" style={homeTopBg}>
           </div>
-          <div className="home-banner" style={{backgroundImage: `url(${home_banner})`}}>
-          </div>
+          <ReactSwiper
+            containerStyle={{
+              height: '34vh'
+            }}
+          >   
+              <SwiperWrapper>
+                {
+                  bannerImgUrl.map((url, i) => (
+                    <LazyImg key={i} style={{height: '100%'}} url={url}/>
+                  ))
+                }
+              </SwiperWrapper>
+          </ReactSwiper>
+          {/* <div className="home-banner" style={{backgroundImage: `url(${home_banner})`}}>
+          </div> */}
 
           <div className="home-info">
             <div className="flex-row">
               <div className="flex-col-8">
                 <div style={{paddingBottom: '10px', marginBottom: '10px'}}>
                   <span>{intl.get('job')}: </span>
-                  {
+                  <HSelect
+                      containerStyle={{position: 'relative', top: '-0.5px', width: '150px'}}
+                      style={{border: '0px'}}
+                      value={this.state.selectedId.DEPT_ID}
+                      onChange={(e) => this.changeId(e.target.value)}
+                      isFirstEmpty={false}
+                      options={
+                        array2Array({
+                          data: personalInfo,
+                          format: ['text', 'value'],
+                          originaFormat: ['POSIT_DESC', 'DEPT_ID']
+                        })
+                      }
+                  />
+                  {/* {
                     Array.isArray(personalInfo) &&　personalInfo.map((item, i) => {
                       return (
                         <span 
@@ -160,7 +237,7 @@ class HomePage extends React.Component{
                         </span>
                       )
                     })
-                  }
+                  } */}
                 </div>
                 <div>
                   <span>{intl.get('department')}: </span>

@@ -7,6 +7,7 @@ import { POST } from '@/plugins/fetch';
 import SilkScroller from '@/components/silk-scroller';
 import dateFormat from '@/utils/format/dateFormat';
 import {handleLineData, handleLineBarData, arrToArr} from '../handleChartData';
+import PanenlHeadContent from '../PanenlHeadContent';
 
 /* 质量月报->过程指标 */
 class ProcessIndex extends React.Component {
@@ -115,7 +116,7 @@ class ProcessIndex extends React.Component {
      * 重置容器高度
      */
     restScroller = () => {
-        setTimeout(() => this.refs.scorller.refresh(), 400)
+        setTimeout(() => this.refs.scorller.refresh(), 500)
     }
     render () {
         var state = this.state;
@@ -126,7 +127,7 @@ class ProcessIndex extends React.Component {
                 ref="scorller"
             >
                 <Accordion defaultActiveKey="0" className="chart-list" onChange={this.restScroller}>
-                    <Accordion.Panel header="IQS(K227)" className="chart-item">
+                    <Accordion.Panel header={<PanenlHeadContent leftContent="IQS(K227)" rightContent="单位:PPH"/>} className="chart-item">
                         <EchartLine
                             yFormat="{value}"
                             series={state.IQSK227_DATA}
@@ -137,7 +138,7 @@ class ProcessIndex extends React.Component {
                             series={state.DV_by_XMRD_DATA}
                         />
                     </Accordion.Panel>
-                    <Accordion.Panel header="LL" className="chart-item">
+                    <Accordion.Panel header={<PanenlHeadContent leftContent="LL" rightContent="单位:个"/>} className="chart-item">
                         <EchartLineAndBar
                             yFormat="{value}"
                             series={state.LL_DATA}
@@ -148,7 +149,7 @@ class ProcessIndex extends React.Component {
                             series={state.DRBTR_Finish_Ratio_DATA}
                         />
                     </Accordion.Panel>
-                    <Accordion.Panel header="DRBFM" className="chart-item">
+                    <Accordion.Panel header={<PanenlHeadContent leftContent="DRBFM" rightContent="单位:个"/>} className="chart-item">
                         <EchartLine
                             yFormat="{value}"
                             series={state.DRBFM_DATA}

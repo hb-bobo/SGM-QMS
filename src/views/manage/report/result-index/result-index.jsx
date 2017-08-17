@@ -5,6 +5,8 @@ import { POST } from '@/plugins/fetch';
 import SilkScroller from '@/components/silk-scroller';
 import dateFormat from '@/utils/format/dateFormat';
 import {currMounth, handleLineData, arrToArr} from '../handleChartData';
+import PanenlHeadContent from '../PanenlHeadContent';
+
 
 /* 质量月报->结果指标 */
 class ResultIndex extends React.Component {
@@ -209,7 +211,7 @@ class ResultIndex extends React.Component {
      * 重置容器高度
      */
     restScroller = () => {
-        setTimeout(() => this.refs.scorller.refresh(), 400)
+        setTimeout(() => this.refs.scorller.refresh(), 500)
     }
     render () {
         var state = this.state;
@@ -234,7 +236,7 @@ class ResultIndex extends React.Component {
                             series={state.PRTS95_DATA}
                         />
                     </Accordion.Panel>
-                    <Accordion.Panel header="EIR" className="chart-item">
+                    <Accordion.Panel header={<PanenlHeadContent leftContent="EIR" rightContent="单位:天"/>} className="chart-item">
                         <EchartLine
                             yFormat="{value}"
                             series={state.EIR_DATA}
@@ -250,31 +252,31 @@ class ResultIndex extends React.Component {
                             series={state.AftersalesIssue95_DATA}
                         />
                     </Accordion.Panel>
-                    <Accordion.Panel header="Quality spill" className="chart-item">
+                    <Accordion.Panel header={<PanenlHeadContent leftContent="Quality spill" rightContent="单位:个"/>} className="chart-item">
                         <EchartLine
                             yFormat="{value}"
                             series={state.QualitySpill_DATA}
                         />
                     </Accordion.Panel>
-                    <Accordion.Panel header="IPTV(12 MIS)" className="chart-item">
+                    <Accordion.Panel header={<PanenlHeadContent leftContent="IPTV(12 MIS)" rightContent="单位:PPT"/>} className="chart-item">
                         <EchartLine
                             yFormat="{value}"
                             series={state.IPTV12_DATA}
                         />
                     </Accordion.Panel>
-                    <Accordion.Panel header="CPV(12 MIS)" className="chart-item">
+                    <Accordion.Panel header={<PanenlHeadContent leftContent="CPV(12 MIS)" rightContent="单位:元"/>} className="chart-item">
                         <EchartLine
                             yFormat="{value}"
                             series={state.CPV12_DATA}
                         />
                     </Accordion.Panel>
-                    <Accordion.Panel header="IPTV(24 MIS)" className="chart-item">
+                    <Accordion.Panel header={<PanenlHeadContent leftContent="IPTV(24 MIS)" rightContent="单位:PPT"/>} className="chart-item">
                         <EchartLine
                             yFormat="{value}"
                             series={state.IPTV24_DATA}
                         />
                     </Accordion.Panel>
-                    <Accordion.Panel header="CPV(24 MIS)" className="chart-item">
+                    <Accordion.Panel header={<PanenlHeadContent leftContent="CPV(24 MIS)" rightContent="单位:元"/>} className="chart-item">
                         <EchartLine
                             yFormat="{value}"
                             series={state.CPV24_DATA}

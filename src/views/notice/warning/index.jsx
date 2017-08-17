@@ -10,7 +10,7 @@ import intl from '@/components/intl';
 // import AppConfig from '@/AppConfig';
 
 // 设置本地语言包
-import(/* webpackChunkName: intl */ './locale')
+import(/* webpackChunkName: "intl" */ './locale')
     .then((intlMsg) => {
         intl.setMsg(intlMsg);
     });

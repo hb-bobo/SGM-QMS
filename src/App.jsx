@@ -43,7 +43,7 @@ const muiTheme = getMuiTheme({
 // 设置语言
 intl.setLanguage(AppConfig.language);
 // 设置公共语言包
-import(/* webpackChunkName: intl */ '@/static/i18n')
+import(/* webpackChunkName: "intl" */ '@/static/i18n')
 .then((res) => {
   intl.setMsg(res.default);
 });
@@ -78,6 +78,10 @@ class App extends React.Component{
     this.getAccess();
   }
 
+  componentWillUnmount () {
+    sessionStorage.removeItem('empId');
+    sessionStorage.removeItem('positNum');
+  }
   /**
    * get iwork username
    */
@@ -108,10 +112,10 @@ class App extends React.Component{
         // })
       }
     }, false);
-
+    // 120485
     // 设置必要字段到cookie
     var positNum = 'A4010338';
-    var empId = "111160";
+    var empId = "111160"; // 120485
     document.cookie = `positNum=${positNum};`;
     document.cookie = `empId=${empId};`;
     // sessionStorage也设，essionStorage更方便使用
@@ -138,6 +142,7 @@ class App extends React.Component{
       }
     });
   }
+  
   render() {
     return (
       <MuiThemeProvider muiTheme={muiTheme}>

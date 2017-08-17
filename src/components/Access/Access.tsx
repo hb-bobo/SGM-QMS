@@ -8,19 +8,25 @@ export var menuAuthoritys: MenuAuthority[] = store.getState().access.menuAuthori
 
 /**
  * 通过方法拿权限结果(某些情况下不能render，就用此方法)
- * @param {string} PATH 
+ * @param {string} PATH
+ * @param {string} 是否为包涵模式
  * @return {boolean}
  */
-export function getAccess (PATH: string): boolean {
+export function getAccess (PATH: string, model: string = 'none'): boolean {
     var accessable: boolean = false;
     menuAuthoritys.some((item: MenuAuthority) => {
         
-        if (PATH === item.PERMISSION_CODE) {
+        if (model === 'none' && PATH === item.PERMISSION_CODE) {
+            accessable = true;
+            return true;
+        }
+        if (model === 'includes' && (item.PERMISSION_CODE.indexOf(PATH) !== -1)) {
             accessable = true;
             return true;
         }
         return false;
     });
+    accessable = true;
     return accessable;
 }
 
@@ -31,7 +37,7 @@ export function getAccess (PATH: string): boolean {
 export default class Access extends React.Component<PropTypes, {}> {
 
     public static defaultProps: DefaultProps = {
-        PATH: ''
+        PATH: '',
     }
 
     public static contextTypes = {
@@ -47,10 +53,11 @@ export default class Access extends React.Component<PropTypes, {}> {
     /**
      * 通过方法拿权限结果(某些情况下不能render，就用此方法)
      * @param {string} PATH 
+     * @param {boolean} 是否为包涵模式 includes | none
      * @return {boolean}
      */
-    public static getAccess (PATH: string): boolean {
-        return getAccess(PATH) as boolean;
+    public static getAccess (PATH: string, model: string): boolean {
+        return getAccess(PATH, model) as boolean;
     }
 
     componentDidMount () {
@@ -59,8 +66,8 @@ export default class Access extends React.Component<PropTypes, {}> {
         if (menuAuthoritys.length === 0) {
             menuAuthoritys = store.getState().access.menuAuthoritys;
             this.unsubscribe = store.subscribe(() => {
-                this.setState({});
                 menuAuthoritys = store.getState().access.menuAuthoritys;
+                this.setState({});
             });
         }
     }
@@ -86,7 +93,8 @@ export default class Access extends React.Component<PropTypes, {}> {
         //     }
         //     return false;
         // });
-        accessable = getAccess(PATH);
+        accessable = getAccess(PATH, this.props.model);
+        accessable = true;
         return (
             <span>
                 {accessable ? React.Children.toArray(Children).map(c => c) : null}

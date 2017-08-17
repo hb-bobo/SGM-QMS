@@ -7,7 +7,7 @@ import intl from '@/components/intl';
 import HSelect from '@/components/form/h-select';
 
 // 设置本地语言包
-import(/* webpackChunkName: intl */ './locale')
+import(/* webpackChunkName: "intl" */ './locale')
     .then((intlMsg) => {
         intl.setMsg(intlMsg);
     });

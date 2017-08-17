@@ -98,7 +98,7 @@ export function POST (url: string, opts: Opts) {
     // TODO
     // var proxyUrl: string = AppConfig.API + '/master/proxy';
     // opts.data.url =  url;
-
+    // TODO
     var reqUrl: string = AppConfig.API + url; 
     var reqOpts: RequestInit = {
         method: 'POST',

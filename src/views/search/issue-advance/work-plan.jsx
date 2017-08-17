@@ -12,6 +12,7 @@ import AppConfig from '@/AppConfig';
 import WorkPlanEdit from './work-plan-edit';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
+ // eslint-disable-next-line
 import SilkScroller from '@/components/silk-scroller';
  // eslint-disable-next-line
 import Scroller from '@/components/scroller';

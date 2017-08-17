@@ -9,8 +9,9 @@
 .home .home-banner{
     height: 34vh;
 }
+
 .home .home-top,
-.home .home-banner{
+.home .swiper-slide div{
     background-position: center center;
     background-repeat: no-repeat;
     background-size: 100% 100%;

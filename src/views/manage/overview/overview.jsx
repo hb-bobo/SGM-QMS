@@ -16,7 +16,7 @@ import HotIssueReviewPlan from './hotIssueReviewPlan';
 import intl from '@/components/intl';
 
 // 设置本地语言包(公共语言包在App.jsx中提前设置了)
-// import(/* webpackChunkName: intl */ './locale')
+// import(/* webpackChunkName: "intl" */ './locale')
 //     .then((intlMsg) => {
 //         console.log(intlMsg)
 //         intl.setMsg(intlMsg);

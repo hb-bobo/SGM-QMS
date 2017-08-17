@@ -32,7 +32,14 @@ export default class CreateTabs extends React.Component {
     }
 
     componentDidMount () {
-        this.tabChange(this.tabPanes[0].key);
+        var defaultActiveKey;
+
+        if (this.tabPanes.length === 0) {
+            defaultActiveKey = '';
+        } else {
+            defaultActiveKey = this.tabPanes[0].key;
+        }
+        this.tabChange(defaultActiveKey);
     }
     componentWillUnmount () {
         oldTabValue = this.state.tabValue
@@ -52,8 +59,10 @@ export default class CreateTabs extends React.Component {
         var getAccess = Access.getAccess;
         var menuData = this.props.menuData;
         
+        // 遍历数据生成TabPane
         for (let i = 0; i < menuData.length; i++) {
             var menu = menuData[i];
+            // 无权限不显示
             if (getAccess(menu.path)) {
                 this.tabPanes.push(
                     <TabPane tab={<Label value={menu.tabTitle}/>} key={menu.tabTitle}>
@@ -62,11 +71,18 @@ export default class CreateTabs extends React.Component {
                 )
             }
         }
-        var defaultActiveKey = this.tabPanes[0].key;
+        var defaultActiveKey;
+        if (this.tabPanes.length === 0) {
+            defaultActiveKey = '';
+        } else {
+            defaultActiveKey = this.tabPanes[0].key;
+        }
+
+        // 有记录则用记录的key
         if (oldTabValue !== '') {
             defaultActiveKey = oldTabValue;
         }
-        console.log(defaultActiveKey)
+
         return (
             <Tabs
                 onChange={this.tabChange}

@@ -63,7 +63,12 @@ module.exports = merge(baseWebpackConfig, {
       'prop-types',
       require.resolve('./polyfills'),
       'react-router-dom',
-      'lodash'
+      'lodash',
+      'echarts',
+      'redux',
+      'redux-thunk',
+      'react-redux',
+      'whatwg-fetch'
     ],
     app: [paths.appIndexJs]
   },

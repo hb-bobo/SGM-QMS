@@ -16,7 +16,7 @@ import querystring from '@/utils/tools/querystring';
 // import mixins from '@/mixins/mixins';
 
 // 设置本地语言包
-import(/* webpackChunkName: intl */ './locale')
+import(/* webpackChunkName: "intl" */ './locale')
     .then((intlMsg) => {
         intl.setMsg(intlMsg);
     });

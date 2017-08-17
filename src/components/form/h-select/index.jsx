@@ -37,7 +37,7 @@ class HSelect extends React.Component {
         emptyText: PropTypes.string, // 空的时候的文字
         inputStyle: PropTypes.object,
         isFirstEmpty: PropTypes.bool, // 第一个options是否为空(‘请选择’)
-        style: PropTypes.object
+        style: PropTypes.object // 会覆盖到input
     }
     static contextTypes = {
         language: PropTypes.string
