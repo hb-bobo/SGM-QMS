@@ -60,6 +60,15 @@ class Todo extends React.Component {
             tabValue: value,
         });
     }
+    back = () => {
+        if (this.state.hotIssueEditOpen) {
+            this.setState({
+                hotIssueEditOpen: false
+            });
+            return;
+        }
+        this.props.history.go(-1);
+    }
     /*调到推进页面*/
     goAdvance = (advanceType, problemId) => {
         this.props.history.push('/search/issue-advance/' + advanceType + `?problemId=${problemId}`);
@@ -92,7 +101,7 @@ class Todo extends React.Component {
                     title={this.state.title}
                     titleStyle={{textAlign: 'center'}}
                     iconElementLeft={
-                        <IconButton onClick={() => {this.props.history.go(-1)}}>
+                        <IconButton onClick={this.back}>
                             <NavigationArrowBack color={'#FFF'}/>
                         </IconButton>
                     }

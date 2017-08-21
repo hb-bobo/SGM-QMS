@@ -66,9 +66,10 @@ function _fetch(fetchPromise: Promise<any>, timeout: number)  {
 
     return abortablePromise;
 }
-
+// 默认设置
 var defaultHeaders: Headers = new Headers();
 defaultHeaders.append('Content-Type', 'application/x-www-form-urlencoded');
+var defaultTimeout = 120000; // 60000
 
 /** POST方法
  * @param {string} url
@@ -118,7 +119,7 @@ export function POST (url: string, opts: Opts) {
     return new Promise(function (resolve: Function, reject?: Function) {
         _fetch(
             fetch(reqUrl, reqOpts),
-            opts.timeout || 60000
+            opts.timeout || defaultTimeout
         )
         .then(checkStatus)
         .then(parseJSON)
@@ -161,7 +162,7 @@ export function GET (url: string, opts: Opts) {
     var {
         headers = defaultHeaders,
         data = {},
-        timeout = 60000
+        timeout = defaultTimeout
     } = opts || {data: {}};
 
     var reqUrl: string = AppConfig.API + url + '?' + querystring.stringify(data); 

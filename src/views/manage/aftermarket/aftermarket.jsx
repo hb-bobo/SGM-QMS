@@ -8,7 +8,8 @@ import NavigationArrowBack from 'material-ui/svg-icons/navigation/arrow-back';
 import EchartGauge from '@/components/echarts/echart-gauge';
 import EchartPie from '@/components/echarts/echart-pie';
 import EchartLine from '@/components/echarts/echart-line';
-import Scroller from '@/components/scroller';
+// import Scroller from '@/components/scroller';
+import SilkScroller from '@/components/silk-scroller';
 import intl from '@/components/intl';
 import { GET } from '@/plugins/fetch';
 
@@ -31,15 +32,7 @@ class QualityAfterSaleReport extends React.Component {
         CPV24_DATA: [],
     }
 
-    /*back*/
-    goBack = () => {
-        this.props.history.go(-1);
-        if (this.props.match.path === '/manage/quality-after-sale') {
-            this.setState({
-                isIndex: true
-            });
-        }
-    }
+   
     componentDidMount () {
         this.setState({
             title: intl.get('QMS.aftermarket')
@@ -109,6 +102,23 @@ class QualityAfterSaleReport extends React.Component {
             }
         });
     }
+
+    /*back*/
+    goBack = () => {
+        this.props.history.go(-1);
+        if (this.props.match.path === '/manage/quality-after-sale') {
+            this.setState({
+                isIndex: true
+            });
+        }
+    }
+    /**
+     * 重置容器高度
+     */
+    restScroller = () => {
+        setTimeout(() => this.refs.scorller.refresh(), 500)
+    }
+
     render () {
         return (
             <div>
@@ -125,10 +135,11 @@ class QualityAfterSaleReport extends React.Component {
                         <span style={{display: 'inline-block', width: '2.6em'}}></span>
                     }   
                 />
-                <Scroller
+                <SilkScroller
                     autoSetHeight={true}
-                    bottomHeight={-15}
-                    bounce={false}
+                    bottomHeight={0}
+                    preventDefault={false}
+                    ref="scorller"
                 >
                     {/*顶部*/}
                     <div className="chat1">
@@ -162,7 +173,11 @@ class QualityAfterSaleReport extends React.Component {
                         /> 
                     </div>
 
-                    <Accordion defaultActiveKey="-1" className="chart-list">
+                    <Accordion 
+                        defaultActiveKey="-1"
+                        className="chart-list"
+                        onChange={this.restScroller}
+                    >
                         <Accordion.Panel header={`${this.state.IPTV12_YEAR} 12MIS IPTV`}>
                             <EchartLine
                                 series={this.state.IPTV12_DATA}
@@ -181,13 +196,14 @@ class QualityAfterSaleReport extends React.Component {
                             /> 
                         </Accordion.Panel>
                         <Accordion.Panel header={`${this.state.CPV24_YEAR} 24MIS CPV`}>
-                             <EchartLine 
+                            <EchartLine 
                                 series={this.state.CPV24_DATA}
                                 
                             /> 
                         </Accordion.Panel>
-                    </Accordion>  
-                </Scroller>
+                    </Accordion>
+                    <div style={{height: '20px'}} note="只为了垫底"></div>
+                </SilkScroller>
             </div>
         )
     }

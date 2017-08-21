@@ -6,7 +6,7 @@ import SilkScroller from '@/components/silk-scroller';
 import dateFormat from '@/utils/format/dateFormat';
 import {currMounth, handleLineData, arrToArr} from '../handleChartData';
 import PanenlHeadContent from '../PanenlHeadContent';
-
+import TouchZoom from '@/components/zoom/touch-zoom';
 
 /* 质量月报->结果指标 */
 class ResultIndex extends React.Component {
@@ -227,9 +227,11 @@ class ResultIndex extends React.Component {
                     onChange={this.restScroller}
                 >
                     <Accordion.Panel header="PRTS(60%)">
-                        <EchartLine
-                            series={state.PRTS60_DATA}
-                        />
+                        <TouchZoom>
+                            <EchartLine
+                                series={state.PRTS60_DATA}
+                            />
+                        </TouchZoom>
                     </Accordion.Panel>
                     <Accordion.Panel header="PRTS(95%)" className="chart-item">
                         <EchartLine

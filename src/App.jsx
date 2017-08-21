@@ -89,7 +89,6 @@ class App extends React.Component{
     // iwork提供的方法
     document.addEventListener('plusready', () => {
       var fhname = window.NativeObj.getUserName();
-      alert(fhname)
       if (!fhname) {
         Toast.info('获取用户名失败');
       }

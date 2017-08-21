@@ -1,7 +1,8 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import IconClear from '../../icon/clear';
-// import getTime from '@/utils/format/getTime';
+import dateFormat from '@/utils/format/dateFormat';
+import DatePicker from 'react-mobile-datepicker';
 import '../style/common.css';
 var containerStyle = {
     height: '25px'
@@ -58,24 +59,29 @@ class HDate extends React.Component {
             });
         }
     }
-    handleChange = (e) => {
-        var value = e.target.value;
+    handleChange = (time) => {
+        var value = dateFormat(time, 'yyyy-MM-dd');
         var showClear = false;
         if (value.length > 0 && this.props.clear === true) {
             showClear = true;
         }
         if (this.state.controllable) {
-            this.props.onChange(e);
+            this.props.onChange({target: {value: value}});
             this.setState({
-                showClear: showClear
+                showClear: showClear,
+                isOpen: false,
             });
         } else {
             this.setState({
                 value: value,
+                isOpen: false,
                 showClear: showClear
             });
         }
     }
+    /**
+     * 清空所有值
+     */
     clearValue = () => {
         // 一般是清空父级的值，让父级可控
         if (this.state.controllable) {
@@ -88,24 +94,34 @@ class HDate extends React.Component {
             showClear: false
         });
     }
-    /* 选择了时间赋值给input */
-    dateSelect = (e) => {
-        var value = e.target.value;
-        this.setState({
-            value: value
-        });
-    }
+    /**
+     * 激活日期选择器
+     */
+    handleClick = () => {
+		this.setState({ isOpen: true });
+	}
+    /**
+     * 取消日期选择器
+     */
+	handleCancel = () => {
+		this.setState({ isOpen: false });
+	}
+
     render () {
         var {
             value,
             disabled,
-            dateType
+            // dateType
         } = this.props;
         // uncontrollable use defaultValu,  defaultValu set in componentWillMount()
         if (!this.state.controllable) {
             value = this.state.value;
         }
-        dateStyle.paddingRight = !this.state.showClear? '5px' : '22px';
+        // 清空后new Date(value) 会变成无效日期，则设为当前日期
+        var time = value ? new Date(value) : new Date();
+
+        dateStyle.paddingRight = !this.state.showClear? '5px' : '24px';
+
         return (
             <div className="form-container" style={Object.assign(containerStyle, this.props.containerStyle)}>
                 <input
@@ -114,21 +130,31 @@ class HDate extends React.Component {
                     type="text"
                     className="form-element"
                     onChange={this.handleChange}
+                    onClick={this.handleClick}
                     disabled={disabled}
+                    readOnly
                     value={value}
 
                 />
-                <input 
+                {/* <input 
                     ref="input"
                     className="form-element"
                     type={dateType}
                     onChange={this.handleChange}
+                    onClick={this.handleClick}
                     style={Object.assign({}, dateStyle)} 
+                /> */}
+                <DatePicker
+                    theme="ios"
+                    value={time}
+					isOpen={this.state.isOpen}
+					onSelect={this.handleChange}
+					onCancel={this.handleCancel}
                 />
                 {
                     !this.state.showClear ? 
                         <svg className="icon icon-date">
-                            <use xlinkHref="#icon-date" onClick={() => this.refs.input.focus()}></use>
+                            <use xlinkHref="#icon-date" onClick={this.handleClick}></use>
                         </svg> :
                         null
                 }

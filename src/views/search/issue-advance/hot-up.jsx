@@ -1,8 +1,11 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 // import store from '@/store';
-
+// ui
+import { Toast } from 'antd-mobile';
 import RaisedButton from 'material-ui/RaisedButton';
+
+// components
 import pathToJSON from '@/utils/object/pathToJSON';
 import HSelect from '@/components/form/h-select';
 import HDate from '@/components/form/h-date';
@@ -32,15 +35,18 @@ export class HotUp extends React.Component {
     componentWillMount () {
         this.parent = this.props.parent;
         POST('/mproblem/findAprvr', {
-        data: {}
+            data: {}
         }).then((res) => {
             if (res.success === true) {
                 var apprs = [];
-                // console.log(array2Array({data: res.result,format: ["text","value"],originaFormat:["NAME","EMP_ID"]}))
+
                 if(res.result){
-                    apprs = array2Array({data: res.result,format: ["text","value"],originaFormat:["NAME","EMP_ID"]});
+                    apprs = array2Array({
+                        data: res.result,
+                        format: ["text","value"],
+                        originaFormat:["NAME","EMP_ID"]
+                    });
                 }
-                // console.log(res.result,apprs)
                 this.setState({
                     apprs : apprs
                 });
@@ -51,20 +57,21 @@ export class HotUp extends React.Component {
         var headers = new Headers();
         headers.append('Content-Type', 'application/json');
         POST('/mproblem/createReviewLog', {
-        headers: headers,
-        data: {
-            prblmId: this.parent.state.issueData.prblmId,
-            aprvr: this.state.aprvr,
-            reviewTime: this.state.reviewTime,
-            upgradeReason: this.state.upgradeReason,
-            prblmReviewOp: this.state.prblmReviewOp,
-            hotLevel: this.state.hotLevel
-        }
+            headers: headers,
+            data: {
+                prblmId: this.parent.state.issueData.prblmId,
+                aprvr: this.state.aprvr,
+                reviewTime: this.state.reviewTime,
+                upgradeReason: this.state.upgradeReason,
+                prblmReviewOp: this.state.prblmReviewOp,
+                hotLevel: this.state.hotLevel
+            }
         }).then((res) => {
             if (res.success === true) {
                 this.parentStateChange();
-            }else{
-                alert("操作失败");
+                Toast.info('操作成功');
+            } else {
+                Toast.info('操作失败');
             }
         })
     }

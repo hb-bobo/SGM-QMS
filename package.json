@@ -51,6 +51,7 @@
     "react": "^15.6.1",
     "react-addons-css-transition-group": "^15.5.2",
     "react-dom": "^15.5.4",
+    "react-mobile-datepicker": "^3.0.6",
     "react-redux": "^5.0.4",
     "react-router-dom": "^4.1.1",
     "react-swipeable-views": "^0.12.3",

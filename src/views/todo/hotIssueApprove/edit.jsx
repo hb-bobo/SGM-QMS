@@ -229,7 +229,7 @@ class HotIssueEdit extends React.Component {
                         </div>
                     </div>
                     <div className="flex-row btn">
-                        <div className="flex-col-1 text-center">
+                        <div className="flex-col-1 text-center" style={{padding: '2px'}}>
                             <RaisedButton fullWidth={true} onClick={this.submit}>
                                 <svg className="icon" aria-hidden="true">
                                     <use xlinkHref="#icon-submit"></use>
@@ -237,7 +237,7 @@ class HotIssueEdit extends React.Component {
                                 {intl.get('QMS.Submit')}
                             </RaisedButton>
                         </div>
-                        <div className="flex-col-1 text-center">
+                        <div className="flex-col-1 text-center" style={{padding: '2px'}}>
                             <RaisedButton fullWidth={true} onClick={this.cancel}>
                                 <svg className="icon" aria-hidden="true">
                                     <use xlinkHref="#icon-cancel"></use>

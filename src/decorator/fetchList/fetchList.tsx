@@ -30,6 +30,7 @@ function getDisplayName (component: React.ComponentClass<{}>): string {
 /**
  * 获取列表，刷新，加载更多
  * 此高阶组件会在组件外面包一层，有点类似react-redux的connect
+ * 返回的listData 的key是data, 如果需要抽离代码到这里，必须所有的返回字段一样，不一样叫后台改
  * @param {string} 请求的API
  * @return {React.ComponentClass} 返回一个被包裹好的组件
  */
@@ -45,7 +46,7 @@ export default (getListDataAPI: string) => (WrapedComponent: React.ComponentClas
             // 这几个key是必须的，所以父传给组件不能冲突
             willSetKeys.some((key: string) => {
                 if (keys.indexOf(key) !== -1) {
-                    throw Error('props的key重复了:' + key);
+                    throw Error('[FetchList] props的key重复了:' + key);
                 }
                 return false;
             });

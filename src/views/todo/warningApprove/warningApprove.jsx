@@ -17,7 +17,10 @@ import intl from '@/components/intl';
 import { POST } from '@/plugins/fetch';
 // import AppConfig from '@/AppConfig';
 
-
+import(/* webpackChunkName: "intl" */ './locale')
+    .then((intlMsg) => {
+        intl.setMsg(intlMsg);
+    });
 //TODO 上升级别
 /*  
     0: 工程师
@@ -49,6 +52,7 @@ class WarningApprove extends React.Component {
     }
 
     componentDidMount () {
+        console.log(intl)
         this.setState({
             title: intl.get('Detail')
         });

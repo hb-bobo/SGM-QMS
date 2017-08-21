@@ -5470,6 +5470,10 @@ react-mixin@^3.0.5:
     object-assign "^4.0.1"
     smart-mixin "^2.0.0"
 
+react-mobile-datepicker@^3.0.6:
+  version "3.0.6"
+  resolved "http://registry.npm.taobao.org/react-mobile-datepicker/download/react-mobile-datepicker-3.0.6.tgz#075fa6f89c977b353d44b6ce66f51627053c0496"
+
 react-native-camera-roll-picker@~1.1.6:
   version "1.1.9"
   resolved "http://registry.npm.taobao.org/react-native-camera-roll-picker/download/react-native-camera-roll-picker-1.1.9.tgz#99bad3a9c117ad79e67044c420ce463ee18f29d3"

@@ -8,7 +8,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import { Toast } from 'antd-mobile';
 // import pathToJSON from '@/utils/object/pathToJSON';
-import AppConfig from '@/AppConfig';
+// import AppConfig from '@/AppConfig';
 import WorkPlanEdit from './work-plan-edit';
 import Circle from '@/components/circle';
 import SpaceRow from '@/components/space-row';
@@ -85,45 +85,52 @@ class WorkPlan extends React.Component {
         if (action === 'up' && this.state.noMoreData === true) {
             return;
         }
-        POST('/mproblem/getWorkPlan', {
-            data: {
-                id: this.props.prblmId,
-                page: this.state.pageNumber
-            }
-        }).then((res) => {
-            if (res.success === true) {
-                var listData = [];
-                // 下拉结束
-                if (action === 'down') {
-                    listData = res.workplan;
-                    action = 'update';
-                } else if (action === 'up') {
-                    // 上拉结束
-                    // this.refs.scroller.donePullup();
-                    listData = this.state.allWorkPlan.concat(res.workplan);
-                    action = 'update';
-                }
-                this.props.actions.upWorkPlanListData({
-                    action: action,
-                    value: listData
-                });
-                this.setState({
-                    allWorkPlan : listData,
-                    phase : res.phase,
-                    pageNumber : this.state.pageNumber+1
-                });
-                if (resolve) {resolve();}
-                if (res.workplan.length < AppConfig.listConfig.count) {
-                    this.setState({
-                        noMoreData: true
-                    });
-                }
-            } else {
-                if (reject) {reject()}
-            }
-        }).catch(function () {
-            if (reject) {reject()}
-        })
+        // TODO
+        var res = {"workplan":[{"changeType":"","count":1,"createBy":"","createTime":null,"createTimes":"","intr":"","isEff":"","planDesc":"dwqfdwafawfwew","planFinishDate":"2017-08-02","prblmId":"197458","prblmPhaseID":"Implementation","pwActlFinishDate":"2017-08-18","readacrossId":"","rspnsUser":"","updateBy":"","updateTime":null,"workPlanID":"102727","workPlanStatus":"F"},{"changeType":"","count":0,"createBy":"","createTime":null,"createTimes":"","intr":"","isEff":"","planDesc":"zz","planFinishDate":"2017-08-02","prblmId":"197458","prblmPhaseID":"Implementation","pwActlFinishDate":"","readacrossId":"","rspnsUser":"zz","updateBy":"","updateTime":null,"workPlanID":"102350","workPlanStatus":" "},{"changeType":"","count":0,"createBy":"","createTime":null,"createTimes":"","intr":"","isEff":"","planDesc":"ttt","planFinishDate":"2017-08-02","prblmId":"197458","prblmPhaseID":"Implementation","pwActlFinishDate":"","readacrossId":"","rspnsUser":"tt","updateBy":"","updateTime":null,"workPlanID":"102347","workPlanStatus":" "},{"changeType":"","count":0,"createBy":"","createTime":null,"createTimes":"","intr":"","isEff":"","planDesc":"tt","planFinishDate":"2017-08-04","prblmId":"197458","prblmPhaseID":"Implementation","pwActlFinishDate":"","readacrossId":"","rspnsUser":"ted","updateBy":"","updateTime":null,"workPlanID":"102341","workPlanStatus":" "},{"changeType":"","count":0,"createBy":"","createTime":null,"createTimes":"","intr":"","isEff":"","planDesc":"dd","planFinishDate":"2017-08-08","prblmId":"197458","prblmPhaseID":"Implementation","pwActlFinishDate":"","readacrossId":"","rspnsUser":"dd","updateBy":"","updateTime":null,"workPlanID":"102345","workPlanStatus":" "},{"changeType":"","count":0,"createBy":"","createTime":null,"createTimes":"","intr":"","isEff":"","planDesc":"aaaa","planFinishDate":"2017-08-11","prblmId":"197458","prblmPhaseID":"Implementation","pwActlFinishDate":"","readacrossId":"","rspnsUser":"","updateBy":"","updateTime":null,"workPlanID":"102726","workPlanStatus":"D"},{"changeType":"","count":0,"createBy":"","createTime":null,"createTimes":"","intr":"","isEff":"","planDesc":"2313","planFinishDate":"","prblmId":"197458","prblmPhaseID":"Implementation","pwActlFinishDate":"","readacrossId":"","rspnsUser":"","updateBy":"","updateTime":null,"workPlanID":"102725","workPlanStatus":"D"}],"success":true,"phase":[{"changeType":"","count":0,"createBy":"","createTime":null,"createTimes":"","intr":"","isEff":"","planDesc":"","planFinishDate":"","prblmId":"","prblmPhaseID":"Implementation","pwActlFinishDate":"","readacrossId":"","rspnsUser":"","updateBy":"","updateTime":null,"workPlanID":"","workPlanStatus":""}]};
+
+        this.setState({
+            allWorkPlan : res.workplan,
+        });
+        // POST('/mproblem/getWorkPlan', {
+        //     data: {
+        //         id: this.props.prblmId,
+        //         page: this.state.pageNumber
+        //     }
+        // }).then((res) => {
+        //     if (res.success === true) {
+        //         var listData = [];
+        //         // 下拉结束
+        //         if (action === 'down') {
+        //             listData = res.workplan;
+        //             action = 'update';
+        //         } else if (action === 'up') {
+        //             // 上拉结束
+        //             // this.refs.scroller.donePullup();
+        //             listData = this.state.allWorkPlan.concat(res.workplan);
+        //             action = 'update';
+        //         }
+        //         // store
+        //         // this.props.actions.upWorkPlanListData({
+        //         //     action: action,
+        //         //     value: listData
+        //         // });
+        //         this.setState({
+        //             allWorkPlan : listData,
+        //             phase : res.phase,
+        //             pageNumber : this.state.pageNumber+1
+        //         });
+        //         if (resolve) {resolve();}
+        //         if (res.workplan.length < AppConfig.listConfig.count) {
+        //             this.setState({
+        //                 noMoreData: true
+        //             });
+        //         }
+        //     } else {
+        //         if (reject) {reject()}
+        //     }
+        // }).catch(function () {
+        //     if (reject) {reject()}
+        // })
     }
     loadingMore = (resolve, reject) => {
         this.selectWorkPlan('up', resolve, reject)
@@ -216,7 +223,7 @@ class WorkPlan extends React.Component {
         if (data.length === 0) {
             containerHeight = 100;
         } else {
-            containerHeight = 500;
+            containerHeight = 400;
         }
         return (
             <div>
