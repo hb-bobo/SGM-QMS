@@ -8,7 +8,8 @@ import {
     UP_WORK_PLAN_LIST_DATA,
     FILTER_WORK_PLAN_LIST_DATA,
     UP_MENU_AUTHORITYS,
-    UP_ISSUE_SAVE_DATA
+    UP_ISSUE_SAVE_DATA,
+    UP_HANDLE_AUTHORITYS
 } from './actionTypes';
 // import AppConfig from '../../AppConfig';
 import { Action } from '../../types';
@@ -90,8 +91,15 @@ export const updateMenuAuthority: Function = function (payload: any): Action {
         payload: payload
     }
 }
+// 更按钮控制单权限
+export const updateHandleAuthority: Function = function (payload: any): Action {
+    return {
+        type: UP_HANDLE_AUTHORITYS,
+        payload: payload
+    }
+}
 
-// 异步action
+// 异步action 写法
 export const getListData: Function = function (payload: any): any  {
     return function (dispatch: Function) {
         dispatch({

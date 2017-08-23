@@ -61,7 +61,6 @@ class HotIssueApprove extends React.Component {
     }
     // edit review time
     edit (data) {
-        console.log(this.props.parent)
         this.$store.dispatch(upTempData(data));
         this.setState({
             hotIssueEditOpen: true,
@@ -109,7 +108,7 @@ class HotIssueApprove extends React.Component {
                 var newListData = JSON.parse(JSON.stringify(this.props.listData));
                 newListData.some((item, i) => {
                     if (item.problemId === problemId) {
-                        newListData.splice(i, 1)
+                        newListData.splice(i, 1);
                         return true;
                     }
                     return false;
@@ -146,6 +145,7 @@ class HotIssueApprove extends React.Component {
                 loadMoreAction={(resolve, reject) => loadingMore(resolve, reject)}
                 noMoreData={noMoreData}
                 preventDefault={false}
+                directionLockThreshold={100}
                 ref="scroller"
             >
                 <div className="gtasks-list">
@@ -249,34 +249,41 @@ class HotIssueApprove extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="flex-row btn">
-                                        <div className="flex-col-1">
-                                            <FlatButton 
-                                                label={intl.get('QMS.Approve')}
-                                                fullWidth={true}
-                                                labelStyle={{paddingLeft:'0'}}
-                                                onClick={this.approve(item.problemId)}
-                                            >
-                                                <svg className="icon icon-pass" aria-hidden="true">
-                                                    <use xlinkHref="#icon-pass"></use>
-                                                </svg>
-                                            </FlatButton>
-                                            
-                                        </div>
-                                        <SpaceRow height={30} width="1px"/>
-                                        <div className="flex-col-1">
-                                            <FlatButton 
-                                                label={intl.get('QMS.Reject')}
-                                                fullWidth={true}
-                                                labelStyle={{paddingLeft:'0'}}
-                                                onClick={this.reject(item.problemId)}
-                                            >
-                                                <svg className="icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-reject"></use>
-                                                </svg>
-                                            </FlatButton>
-                                        </div>
-                                    </div>
+                                    {
+                                        item.aprvr === sessionStorage.getItem('empId') 
+                                            ? (
+                                                <div className="flex-row btn">
+                                                    <div className="flex-col-1">
+                                                        <FlatButton 
+                                                            label={intl.get('QMS.Approve')}
+                                                            fullWidth={true}
+                                                            labelStyle={{paddingLeft:'0'}}
+                                                            onClick={this.approve(item.problemId)}
+                                                        >
+                                                            <svg className="icon icon-pass" aria-hidden="true">
+                                                                <use xlinkHref="#icon-pass"></use>
+                                                            </svg>
+                                                        </FlatButton>
+                                                        
+                                                    </div>
+                                                    <SpaceRow height={30} width="1px"/>
+                                                    <div className="flex-col-1">
+                                                        <FlatButton 
+                                                            label={intl.get('QMS.Reject')}
+                                                            fullWidth={true}
+                                                            labelStyle={{paddingLeft:'0'}}
+                                                            onClick={this.reject(item.problemId)}
+                                                        >
+                                                            <svg className="icon" aria-hidden="true">
+                                                                <use xlinkHref="#icon-reject"></use>
+                                                            </svg>
+                                                        </FlatButton>
+                                                    </div>
+                                                </div>
+                                            )
+                                            : null
+                                    }
+                                    
                                     <SpaceRow height={6} width="100%"/>
                                 </div>
                             )

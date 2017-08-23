@@ -64,36 +64,38 @@ class NewProjectQuality extends React.Component {
                 preventDefault={false}
                 ref="scroller"
             >
-                {listData && listData.map((item, i) => {
-                    return (
-                        <div key={i} >
-                            <SpaceRow height="0.4em"/>
-                            <div className="item-top flex-row">
-                                <div className="flex-col-4">
-                                    <span>{intl.get('platform')}:</span>
-                                    <span> {item.platformProject}</span>
-                                </div>
-                                <div className="flex-col-5">
-                                    <div className="flex-row">
-                                        <div className={lang === 'zh' ? "flex-col-2" : 'flex-col-3'}>
-                                            <span>{intl.get('project')}:</span>
-                                            <span> {item.model}</span>
-                                        </div>
-                                        <div className="flex-col-1">
-                                            <span  style={timingNameStyle}> {item.timingName}</span>
+                <div>
+                    {listData && listData.map((item, i) => {
+                        return (
+                            <div key={i} >
+                                <SpaceRow height="0.4em"/>
+                                <div className="item-top flex-row">
+                                    <div className="flex-col-4">
+                                        <span>{intl.get('platform')}:</span>
+                                        <span> {item.platformProject}</span>
+                                    </div>
+                                    <div className="flex-col-5">
+                                        <div className="flex-row">
+                                            <div className={lang === 'zh' ? "flex-col-2" : 'flex-col-3'}>
+                                                <span>{intl.get('project')}:</span>
+                                                <span> {item.model}</span>
+                                            </div>
+                                            <div className="flex-col-1">
+                                                <span  style={timingNameStyle}> {item.timingName}</span>
+                                            </div>
                                         </div>
                                     </div>
+                                    <div className="flex-col-1" onClick={() => {this.goHotIssue(item.subProjectId)}}>
+                                        <Circle value={item.qualityRisk}></Circle>
+                                    </div>
                                 </div>
-                                <div className="flex-col-1" onClick={() => {this.goHotIssue(item.subProjectId)}}>
-                                    <Circle value={item.qualityRisk}></Circle>
+                                <div className="item-project-progress">
+                                    <ProjectProgress projectSchedules={item.projectSchedules}></ProjectProgress>
                                 </div>
                             </div>
-                            <div className="item-project-progress">
-                                <ProjectProgress projectSchedules={item.projectSchedules}></ProjectProgress>
-                            </div>
-                        </div>
-                    )
-                })}
+                        )
+                    })}
+                </div>
             </SilkScroller>
         )
     }

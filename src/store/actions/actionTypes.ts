@@ -16,3 +16,4 @@ export const UP_ISSUE_SAVE_DATA: string = 'UP_ISSUE_SAVE_DATA';
 
 // 权限
 export const UP_MENU_AUTHORITYS: string = 'UP_MENU_AUTHORITYS';
+export const UP_HANDLE_AUTHORITYS: string = 'UP_HANDLE_AUTHORITYS';

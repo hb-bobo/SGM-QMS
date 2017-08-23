@@ -13,16 +13,17 @@ import { Toast } from 'antd-mobile';
 // import { WingBlank, Button, Icon } from 'antd-mobile';
 //components
 import Scroller from '@/components/scroller';
-import WorkPlan from './work-plan';
 import { POST } from '@/plugins/fetch';
 import IconUp from '@/components/icon/up';
 import SpaceRow from '@/components/space-row';
 import intl from '@/components/intl';
 import querystring from '@/utils/tools/querystring';
 import IconSave from '@/components/icon/save';
+import Access from '@/components/Access';
 // views
 import HotUp from './hot-up';
 import IssueUP from './issue-up';
+import WorkPlan from './work-plan';
 // 设置本地语言包
 import(/* webpackChunkName: "intl" */ './locale')
     .then((intlMsg) => {
@@ -38,7 +39,8 @@ import(/* webpackChunkName: "intl" */ './locale')
     // mapStateToProps
     (state) => ({
       workPlanData: state.issueAdvance.workPlanData,
-      issueSaveData: state.issueAdvance.issueSaveData
+      issueSaveData: state.issueAdvance.issueSaveData,
+      handleAuthoritys: state.access.handleAuthoritys
     }),
     // buildActionDispatcher
     (dispatch, ownProps) => ({
@@ -101,6 +103,7 @@ export class IssueAdvance extends React.Component {
             issueData: res.data || {},
             pc: pc
           });
+          // 更新store上的 工作计划列表 //好像子组件没用到
           this.props.actions.upWorkPlanListData({
             action: 'update',
             value: res.workplan
@@ -125,7 +128,7 @@ export class IssueAdvance extends React.Component {
 
   componentWillUnmount () {
     this.$store.dispatch({
-      type: 'clearOldtabValue',
+      type: 'clearOldTabValue',
       payload: false
     });
   }
@@ -177,11 +180,11 @@ export class IssueAdvance extends React.Component {
    * @param {string} open key
    */
   topCtrl = (url, titleIntl, stateKey) => {
-    this.setState({
-            [stateKey]: true,
-            title: intl.get(titleIntl),
-            isIndex: false
-          });
+      // this.setState({
+      //   [stateKey]: true,
+      //   title: intl.get(titleIntl),
+      //   isIndex: false
+      // });
       POST(url, {
         data: {
           id: this.state.issueData.prblmId
@@ -214,12 +217,15 @@ export class IssueAdvance extends React.Component {
   save = (data) => {
     var issueSaveData = this.props.issueSaveData;
     var issueData = this.state.issueData;
+
     if (Object.keys(issueSaveData).length === 0) {
-      Toast.info('未改变');
+      Toast.info('未发生改变');
       return false;
     }
+
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
+
     POST('/mproblem/saveProblem', {
       headers,
       data: {
@@ -241,6 +247,7 @@ export class IssueAdvance extends React.Component {
     if (this.props.routes) {
         routes = this.props.routes;
     }
+
     return (
       <div className="issue-advance">
         {/*头部*/}
@@ -273,15 +280,21 @@ export class IssueAdvance extends React.Component {
             </div>
             <SpaceRow height={50} width="1px" backgroundColor="#EEEDED"/>
             <div className="flex-col-5">
-              <span onClick={() => this.save()}>
-                <IconSave style={{width: 39, height: 46, color:'#676767', marginLeft: '6px'}}></IconSave>
-              </span>
-              <span onClick={this.goHotUp} style={{display: this.state.advType === 'VOC' ? "none" : "inline-block"}}>
-                <IconUp value="热点" style={{marginLeft: '4px'}} > </IconUp>
-              </span>
-              <span onClick={this.goIssueUp}>
-                <IconUp value="问题" style={{marginLeft: '4px'}}> </IconUp>
-              </span>
+              <Access PATH="search_save" type="button">
+                <span onClick={() => this.save()}>
+                  <IconSave style={{width: 39, height: 46, color:'#676767', marginLeft: '6px'}}></IconSave>
+                </span>
+              </Access>
+              <Access PATH="search_review_audit" type="button">
+                <span onClick={this.goHotUp} style={{display: this.state.advType === 'VOC' ? "none" : "inline-block"}}>
+                  <IconUp value="热点" style={{marginLeft: '4px'}} > </IconUp>
+                </span>
+              </Access>
+              <Access PATH="search_spill_audit" type="button">
+                <span onClick={this.goIssueUp}>
+                  <IconUp value="问题" style={{marginLeft: '4px'}}> </IconUp>
+                </span>
+              </Access>
             </div>
           </div>
           {/*推进页不同的区域 route*/}

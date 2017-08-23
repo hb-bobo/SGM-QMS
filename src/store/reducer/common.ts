@@ -36,7 +36,7 @@ export default {
         /**
          * 清除记录的tabValue，具体看CreateTabs.jsx
          */
-        clearOldtabValue (state: States, action: Action) {
+        clearOldTabValue (state: States, action: Action) {
             state.isClearOldtabValue = action.payload;
         }
     }

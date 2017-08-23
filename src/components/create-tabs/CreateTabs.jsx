@@ -87,9 +87,15 @@ export default class CreateTabs extends React.Component {
             <Tabs
                 onChange={this.tabChange}
                 defaultActiveKey={defaultActiveKey}
-                pageSize={menuData.length}
+                pageSize={3}
                 speed={10}
                 swipeable={false}
+                hammerOptions={{
+                    event: 'pan',
+                    direction: 60,
+                    threshold: 500,
+                    touchAction: 'pan-x'
+                }}
             >       
                 {this.tabPanes}           
             </Tabs>

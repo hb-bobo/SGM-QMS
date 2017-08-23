@@ -5,7 +5,7 @@ import {updateMenuAuthority} from '@/store/actions';
 import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { Toast } from 'antd-mobile';
-
+// components
 import Access from '@/components/Access';
 import intl from '@/components/intl';
 import ReactSwiper, {SwiperWrapper} from '@/components/swiper';
@@ -14,6 +14,8 @@ import HSelect from '@/components/form/h-select';
 import { POST } from '@/plugins/fetch';
 import array2Array from '@/utils/array/array2Array';
 import AppConfig from '@/AppConfig';
+
+// view
 import MenuButton from './menu-button';
 import MoreMenu from './more.jsx';
 import './index.css';
@@ -61,11 +63,26 @@ class HomePage extends React.Component{
   }
 
   componentDidMount () {
-    this.getInfo();
+
+    // 有可能执行到这App.jsx还没拿到empId，所以，就利用下redux的订阅功能
+    if (sessionStorage.getItem('empId') === null) {
+      this.unsubscribe = this.$store.subscribe(() => {
+        if (!this.state.personalInfo.length && sessionStorage.getItem('empId') !== null) {
+          this.getInfo();
+          this.unsubscribe();
+        }
+      });
+    } else {
+      // empId存在就直接调
+      this.getInfo();
+    }
+    
     this.$store.dispatch({
-      type: 'clearOldtabValue',
+      type: 'clearOldTabValue',
       payload: true
     });
+  }
+  componentWillUnmount () {
   }
   /**
    * 获取身份信息
@@ -121,7 +138,10 @@ class HomePage extends React.Component{
       return false;
     });
   }
-
+  showMore = () => {
+    Toast.info(intl.get('noMoreMenu'), 1.5)
+    // this.setState({showMore: true})
+  }
   /*常用的菜单 element*/
   commonMenu () {
     return (
@@ -174,7 +194,7 @@ class HomePage extends React.Component{
               <MenuButton iconName="person" text="EQR评审" />
             </Link>
           </div>
-          <div className="flex-col-1" onClick={() => this.setState({showMore: true})}>
+          <div className="flex-col-1" onClick={this.showMore}>
               <MenuButton iconName="function" text="更多功能"/>
           </div>
         </div>
@@ -192,7 +212,7 @@ class HomePage extends React.Component{
           </div>
           <ReactSwiper
             containerStyle={{
-              height: '34vh'
+              height: '30vh'
             }}
           >   
               <SwiperWrapper>

@@ -52,7 +52,6 @@ class WarningApprove extends React.Component {
     }
 
     componentDidMount () {
-        console.log(intl)
         this.setState({
             title: intl.get('Detail')
         });
@@ -202,34 +201,41 @@ class WarningApprove extends React.Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="flex-row btn">
-                                        <div className="flex-col-1">
-                                            <FlatButton 
-                                                label={intl.get('QMS.Approve')}
-                                                fullWidth={true}
-                                                labelStyle={{paddingLeft:'0'}}
-                                                onClick={this.approve(item.problemId)}
-                                            >
-                                                <svg className="icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-pass"></use>
-                                                </svg>
-                                            </FlatButton>
-                                            
-                                        </div>
-                                        <SpaceRow height={30} width="1px"/>
-                                        <div className="flex-col-1">
-                                            <FlatButton 
-                                                label={intl.get('QMS.Reject')}
-                                                fullWidth={true}
-                                                labelStyle={{paddingLeft:'0'}}
-                                                onClick={this.reject(item.problemId)}
-                                            >
-                                                <svg className="icon" aria-hidden="true">
-                                                    <use xlinkHref="#icon-reject"></use>
-                                                </svg>
-                                            </FlatButton>
-                                        </div>
-                                    </div>
+                                    {
+                                        item.aprvr === sessionStorage.getItem('empId')
+                                            ? (
+                                                <div className="flex-row btn">
+                                                    <div className="flex-col-1">
+                                                        <FlatButton 
+                                                            label={intl.get('QMS.Approve')}
+                                                            fullWidth={true}
+                                                            labelStyle={{paddingLeft:'0'}}
+                                                            onClick={this.approve(item.problemId)}
+                                                        >
+                                                            <svg className="icon" aria-hidden="true">
+                                                                <use xlinkHref="#icon-pass"></use>
+                                                            </svg>
+                                                        </FlatButton>
+                                                        
+                                                    </div>
+                                                    <SpaceRow height={30} width="1px"/>
+                                                    <div className="flex-col-1">
+                                                        <FlatButton 
+                                                            label={intl.get('QMS.Reject')}
+                                                            fullWidth={true}
+                                                            labelStyle={{paddingLeft:'0'}}
+                                                            onClick={this.reject(item.problemId)}
+                                                        >
+                                                            <svg className="icon" aria-hidden="true">
+                                                                <use xlinkHref="#icon-reject"></use>
+                                                            </svg>
+                                                        </FlatButton>
+                                                    </div>
+                                                </div>
+                                            )
+                                            : null
+                                    }
+                                    
                                     <SpaceRow height={6} width="100%"/>
                                 </div>
                             )

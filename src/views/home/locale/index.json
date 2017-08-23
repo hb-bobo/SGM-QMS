@@ -1,10 +1,12 @@
 {
     "zh": {
         "job": "职位",
-        "department": "部门"
+        "department": "部门",
+        "noMoreMenu": "没有更多菜单"
     },
     "en": {
         "job": "Job",
-        "department": "Department"
+        "department": "Department",
+        "noMoreMenu": "No more menu"
     }
 }

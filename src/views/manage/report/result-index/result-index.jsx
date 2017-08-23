@@ -25,7 +25,6 @@ class ResultIndex extends React.Component {
     }
 
     componentDidMount () {
-        console.log(this.refs.scorller)
         // stateKey 是state上用来setState用的，其他字段是传到后台的
         /* PRTS 和 Aftersales issue */
         var PRTS_params = [
@@ -219,6 +218,7 @@ class ResultIndex extends React.Component {
             <SilkScroller
                 preventDefault={false}
                 useToTop={false}
+                eventPassthrough={true}
                 ref="scorller"
             >
                 <Accordion

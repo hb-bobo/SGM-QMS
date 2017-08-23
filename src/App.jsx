@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import AppRouter from './router';
 import store from './store';
-import {updateMenuAuthority} from '@/store/actions';
+import {updateMenuAuthority, updateHandleAuthority} from '@/store/actions';
 import { POST } from '@/plugins/fetch';
 
 // 各种Provider
@@ -60,6 +60,7 @@ class App extends React.Component{
   state = {
     language: AppConfig.language
   }
+  // 设置了所有子组件才拿到ｃｏｎｔｅｘｔ
   getChildContext() {
     return {
       language: this.state.language,
@@ -69,19 +70,26 @@ class App extends React.Component{
       }
     };
   }
+
   componentWillMount () {
-    if (sessionStorage.getItem('empId') === null) {
+    // 先清一遍
+    sessionStorage.removeItem('empId');
+    sessionStorage.removeItem('positNum');
+    sessionStorage.removeItem('userName');
+
+    if (sessionStorage.getItem('userName') === null) {
       this.getUserName();
     }
   }
   componentDidMount () {
-    this.getAccess();
+    
   }
 
   componentWillUnmount () {
     sessionStorage.removeItem('empId');
     sessionStorage.removeItem('positNum');
   }
+  
   /**
    * get iwork username
    */
@@ -98,37 +106,66 @@ class App extends React.Component{
         fhname === '') {
         window.location.hash="403";
       } else {
-        // POST('enter.do', {
-        //     data: {
-              
-        //     }
-        // })
-        // .then((res) => {
-        //   if (!res.success) {
-        //      this.getAccess();
-        //      window.location.hash="403";
-        //   }
-        // })
+        // 拿到userName再拿id
+        sessionStorage.setItem('userName', fhname);
+        this.getIdByUserName();
       }
     }, false);
-    // 120485
-    // 设置必要字段到cookie
-    var positNum = 'A4010338';
-    var empId = "111160"; // 120485
-    document.cookie = `positNum=${positNum};`;
-    document.cookie = `empId=${empId};`;
-    // sessionStorage也设，essionStorage更方便使用
-    sessionStorage.setItem('positNum', positNum);
-    sessionStorage.setItem('empId', empId);
+    // TODO
+    var userName = 'apptest01';
+    sessionStorage.setItem('userName', userName);
+    this.getIdByUserName();
+    
   }
 
-  
+  /**
+   * get empId by userName
+   */
+  getIdByUserName () {
+    
+      POST('/monthReport/getUserId', {
+          data:{
+            doMainAcct: sessionStorage.getItem('userName'),
+          }
+      })
+      .then((res) => {
+          if (res.success) {
+            return res.hrmEmpInfo;
+          } else {
+            Toast.info('获取ID失败');
+          }
+      }).then((hrmEmpInfo) => {
+
+          if (!hrmEmpInfo.EMP_ID) {
+            alert('empId无效');
+          }
+          // 设置必要字段到sessionStorage，sessionStorage更方便使用
+          sessionStorage.setItem('positNum', hrmEmpInfo.POSIT_NUM);
+          sessionStorage.setItem('empId', hrmEmpInfo.EMP_ID);
+          // 拿权限
+          this.getAccess();
+          // 设置必要字段到cookie, 暂时没用，可能未来要用
+          // document.cookie = `positNum=${positNum};`;
+          // document.cookie = `empId=${empId};`;
+          // document.cookie = `userName=${userName};`;
+      });
+
+      // TODO　120485 
+      // var positNum = 'A4010338';
+      // var empId = "111160"; // 120485
+      // // 设置必要字段到sessionStorage，sessionStorage更方便使用
+      // sessionStorage.setItem('positNum', positNum);
+      // sessionStorage.setItem('empId', empId);
+      // // 拿权限
+      // this.getAccess();
+  }
+
   /**
    * 获取权限信息
    */
   getAccess () {
-    console.log(require('@/static/json/mPermissionByUser.json').data)
-    this.$store.dispatch(updateMenuAuthority(require('@/static/json/mPermissionByUser.json').data));
+    // console.log(require('@/static/json/mPermissionByUser.json').data)
+    // this.$store.dispatch(updateMenuAuthority(require('@/static/json/mPermissionByUser.json').data));
     POST('/toDo/mPermissionByUser', {
         data:{
           empId: sessionStorage.getItem('empId'),
@@ -137,6 +174,7 @@ class App extends React.Component{
     })
     .then((res) => {
       if (res.success) {
+        this.$store.dispatch(updateHandleAuthority(res.resultB));
         this.$store.dispatch(updateMenuAuthority(res.data));
       }
     });
