@@ -38,7 +38,7 @@ var homeTopBg = {
   backgroundImage:  `url(${home_top})`
 }
 
-// 轮播图url
+// 轮播图url(取pc端的)
 var bannerImgUrl = [
   AppConfig.API + '/static/img/slide/slide-car1.png',
   AppConfig.API + '/static/img/slide/slide-car2.png',
