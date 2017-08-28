@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {updateMenuAuthority} from '@/store/actions';
+import {updateMenuAuthority, updateHandleAuthority} from '@/store/actions';
 
 import { Link } from 'react-router-dom';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -46,7 +46,12 @@ var bannerImgUrl = [
   AppConfig.API + '/static/img/slide/slide-car4.png',
   AppConfig.API + '/static/img/slide/slide-car5.png',
   AppConfig.API + '/static/img/slide/slide-car6.png',
-]
+];
+
+var timer = {
+  time: 0,
+  timer: null
+}; // doSomething 三击要用到
 
 /* 首页 */
 class HomePage extends React.Component{
@@ -120,6 +125,7 @@ class HomePage extends React.Component{
     })
     .then((res) => {
       if (res.success) {
+        this.$store.dispatch(updateHandleAuthority(res.resultB));
         this.$store.dispatch(updateMenuAuthority(res.data));
       }
     });
@@ -141,6 +147,20 @@ class HomePage extends React.Component{
   showMore = () => {
     Toast.info(intl.get('noMoreMenu'), 1.5)
     // this.setState({showMore: true})
+  }
+
+  /**
+   * 这里做些测试(timer.time 为几就代表要快速点击几下)
+   */
+  doSomething = (e) => {
+    clearTimeout(timer.timer);
+    timer.time++;
+    timer.timer = setTimeout(function() {
+      timer.time = 0;
+    }, 400);
+    if (timer.time === 3) {
+      this.context.router.history.push('/toLogin');
+    }
   }
   /*常用的菜单 element*/
   commonMenu () {
@@ -205,9 +225,8 @@ class HomePage extends React.Component{
     )
   }
   render () {
-    
-    var {selectedId, personalInfo} = this.state;
 
+    var {selectedId, personalInfo} = this.state;
     
      return (
         <div className="home" style={{height: window.innerHeight}}>
@@ -226,8 +245,6 @@ class HomePage extends React.Component{
                 }
               </SwiperWrapper>
           </ReactSwiper>
-          {/* <div className="home-banner" style={{backgroundImage: `url(${home_banner})`}}>
-          </div> */}
 
           <div className="home-info">
             <div className="flex-row">
@@ -255,7 +272,7 @@ class HomePage extends React.Component{
                 </div>
               </div>
               <div className="flex-col-2">
-                <div className="icon-wrap" onClick={() => this.context.setLanguage('en')}>
+                <div className="icon-wrap" onClick={this.doSomething}>
                   <svg className="icon info" aria-hidden="true">
                     <use xlinkHref="#icon-geren"></use>
                   </svg>
