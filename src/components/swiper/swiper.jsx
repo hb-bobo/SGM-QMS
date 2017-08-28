@@ -16,7 +16,7 @@ export default class ReactSwiper extends React.Component {
             paginationClickable: true,
             spaceBetween: 2,
             loop: false,
-            autoplay: false
+            autoplay: 2500,
         }
     }
     static propTypes = {

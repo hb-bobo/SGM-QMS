@@ -20,6 +20,7 @@ export default class CreateTabs extends React.Component {
     static propTypes = {
         menuData: PropTypes.array
     }
+
     state = {
         tabValue: '',
     }
@@ -29,6 +30,12 @@ export default class CreateTabs extends React.Component {
         if (this.$store.getState().common.isClearOldtabValue) {
             oldTabValue = '';
         }
+        this.$store.subscribe(() => {
+            var access = this.$store.getState().access;
+            if (access.menuAuthoritys.length > 0 && this.mounted) {
+                this.setState({});
+            }
+        })
     }
 
     componentDidMount () {
@@ -40,10 +47,13 @@ export default class CreateTabs extends React.Component {
             defaultActiveKey = this.tabPanes[0].key;
         }
         this.tabChange(defaultActiveKey);
+        this.mounted = true;
     }
     componentWillUnmount () {
-        oldTabValue = this.state.tabValue
+        oldTabValue = this.state.tabValue;
+        this.mounted = false;
     }
+
     tabChange = (value) => {
         this.setState({
             tabValue: value,
@@ -71,6 +81,7 @@ export default class CreateTabs extends React.Component {
                 )
             }
         }
+
         var defaultActiveKey;
         if (this.tabPanes.length === 0) {
             defaultActiveKey = '';

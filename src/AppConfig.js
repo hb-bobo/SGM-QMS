@@ -6,20 +6,23 @@ const isDev = process.env.NODE_ENV === 'development';
 const proxyMatch = '/localhost';
 
 // 工程名
-const projectName = '/pims'; // '/pims';
+const projectName = '/QMSI'; // '/QMSI';
 
 // eslint-disable-next-line 
 const BASE_URL = window.location.origin + projectName; // const BASE_URL = window.location.origin + window.location.pathname.replace(/(toLogin)|(\w+\.(html|jsp))/, '');
 
 // BASE_URL + proxyMatch
 // eslint-disable-next-line 
-const DEV_API = 'http://localhost:8090/QMS'// 'http://10.203.99.56:7003/QMS'; 'http://localhost:8081' 'http://10.203.99.58/QMS'
+const DEV_API = 'http://10.203.99.58/QMS'; // 'http://10.203.99.56:7003/QMSI'; 'http://localhost:8081' 'http://10.203.99.58/QMS'
 
 const AppConfig = {
     isDev: isDev,
-    // API: isDev? DEV_API : BASE_URL,
-    API: DEV_API,
+    // 接口url
+    API: isDev? BASE_URL + proxyMatch : BASE_URL,
+    // API: DEV_API,
+    // 语言环境
     language: (window.navigator.language || window.navigator.browserLanguage).split('-')[0],
+    // 列表配置
     listConfig: {
         count: 20 // 每个list每次加载多少条数据
     }

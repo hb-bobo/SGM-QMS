@@ -116,7 +116,7 @@ export function POST (url: string, opts: Opts) {
         reqOpts.body = JSON.stringify(opts.data);
     }
 
-    return new Promise(function (resolve: Function, reject?: Function) {
+    return new Promise(function (resolve: Function, reject: Function) {
         _fetch(
             fetch(reqUrl, reqOpts),
             opts.timeout || defaultTimeout
@@ -124,6 +124,9 @@ export function POST (url: string, opts: Opts) {
         .then(checkStatus)
         .then(parseJSON)
         .then((res) => {
+            if (res.ok === false) {
+                reject(res);
+            }
             resolve(res);
         }).catch(error => {
             if (error === 'timeout') {

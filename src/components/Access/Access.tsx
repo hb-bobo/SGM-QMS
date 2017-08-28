@@ -39,7 +39,8 @@ export default class Access extends React.Component<PropTypes, {}> {
 
     public static defaultProps: DefaultProps = {
         PATH: '',
-        type: 'menu'
+        type: 'menu',
+        className: ''
     }
 
     public static contextTypes = {
@@ -61,7 +62,7 @@ export default class Access extends React.Component<PropTypes, {}> {
      */
     public static getAccess (PATH: string, model: string): boolean {
         // 一般来说是菜单权限才用此方法，所以data 参数就写死为menuAuthoritys
-        return getAccess(PATH, model, menuAuthoritys) as boolean;
+        return getAccess(PATH, model, store.getState().access.menuAuthoritys) as boolean;
     }
 
     componentDidMount () {
@@ -109,7 +110,7 @@ export default class Access extends React.Component<PropTypes, {}> {
         // var { menuAuthoritys } = this.state;
         var accessable: boolean = false;
         var Children: React.ReactChildren = this.props.children;
-        var {PATH, type} = this.props;
+        var {PATH, type, className} = this.props;
         
         var data: any = [];
         switch (type) {
@@ -124,10 +125,8 @@ export default class Access extends React.Component<PropTypes, {}> {
         }
         accessable = getAccess(PATH, this.props.model, data);
 
-        // TODO
-        // accessable = true;
         return (
-            <span>
+            <span className={className}>
                 {accessable ? React.Children.toArray(Children).map(c => c) : null}
             </span>
         );

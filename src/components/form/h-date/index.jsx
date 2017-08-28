@@ -151,13 +151,18 @@ class HDate extends React.Component {
 					onSelect={this.handleChange}
 					onCancel={this.handleCancel}
                 />
-                {
-                    !this.state.showClear ? 
-                        <svg className="icon icon-date">
-                            <use xlinkHref="#icon-date" onClick={this.handleClick}></use>
-                        </svg> :
-                        null
-                }
+
+                    
+                <svg 
+                    className="icon icon-date" 
+                    style={{
+                        display: !this.state.showClear ? 'inline-block' : 'none'
+                    }}
+                    onClick={this.handleClick}
+                >
+                    <use xlinkHref="#icon-date"></use>
+                </svg>
+ 
                 <IconClear
                     style={Object.assign(iconStyle, this.props.iconStyle)}
                     className="icon-clear"

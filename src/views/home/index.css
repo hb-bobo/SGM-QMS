@@ -56,6 +56,14 @@
     height: auto;
     margin-bottom: 15px;
 }
+.home-menu .menu-wrap{
+    display: inline-block;
+    width: 4.9em;
+    height: 7em;
+    vertical-align: middle;
+    text-align: center;
+}
+
 .home-menu-item{
     position: relative;
     display: inline-block;

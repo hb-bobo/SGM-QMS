@@ -44,7 +44,12 @@ class HotIssueReviewPlan extends React.Component {
         this.refs.scroller.simulatePullRefresh();
     }
     render () {
-        var { listData, noMoreData, getListData, loadingMore, goAdvance } = this.props;
+        var { listData, noMoreData, getListData, loadingMore, parent } = this.props;
+        var goAdvance = function (problemSource, problemId) {
+            return function () {
+                parent.goAdvance(problemSource, problemId);
+            }
+        }
         return (
             <div>
                 <div className="item-body flex-row" style={{padding: "6px 12px", fontSize: "0.8em"}}>
@@ -88,7 +93,7 @@ class HotIssueReviewPlan extends React.Component {
                                         <div className="flex-col-9">
                                             <div>
                                                 <span>{intl.get('QMS.IssueNo')}: </span>
-                                                <span className="issueNo" onClick={() => {goAdvance(item.problemSource, item.problemId)}}>{item.problemNo}</span>
+                                                <span className="issueNo" onClick={goAdvance(item.problemSource, item.problemId)}>{item.problemNo}</span>
                                             </div>
                                             <div style={{marginTop: '0.6em'}}>
                                                 <span>{intl.get('QMS.Description')}: </span>

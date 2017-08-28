@@ -1,6 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import loadingImg from '@/static/images/home_top.jpg';
+// import loadingImg from '@/static/images/load.gif';
 /**
  * 加载图片
  * @param {Element}  需要懒加载的img对象
@@ -46,7 +46,7 @@ export default class LazyImg extends React.Component {
     render () {
         var {alt, style} = this.props;
         return (
-            <img style={style} ref={ref => this.img = ref} src={loadingImg} alt={alt}/>
+            <img style={style} ref={ref => this.img = ref} alt={alt}/>
         )
     }
 }

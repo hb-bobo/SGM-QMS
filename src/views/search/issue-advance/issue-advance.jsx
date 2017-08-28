@@ -83,12 +83,12 @@ export class IssueAdvance extends React.Component {
       "VOC": 'mVocDetail',
     }
     url += params[this.state.advType];
-    // TODO
-    var res = {"data":{"acutalDemonstration":"","allLaborcode":"","allPartNum":"","assistDiagnoseNum":0,"champion":"","championDept":"","championDesignee":"","closureCode":"","cmplnCatName":"","cmplnType":"","count":0,"createBy":"","createTime":"","crntAprvUser":"Christopher Lata","crntPhase":"Implementation","crntRspnsDept":"","crntRspnsUser":"","crntStepAge":"","crntStepChampion":"","crntStepStartDate":"","crntStepStatus":"","cstmrDetect":"","defAprvDate":"","defStartDate":"","defSubmitDate":"","dept":"","deptId":"","eirPrblmNo":"","engRpo":"","estimatePrblmStatus":"W","ewoInfo":"","ewoNum":"","ewoType":"","failMode":"","failureMode":"","fbAprvDate":"","fbChampion":"","fbDaysInStep":"","fbStartDate":"","fbSubmitDate":"","firstIncidengDescritption":"","hardwareStage":"","hotLevel":"3","impAprvDate":"","impChampion":"","impDaysInStep":"263","impStartDate":"","impSubmitDate":"","impactedPrjctNum":"","impactedProdLine":"","implementByEvent":"","inStockDay":0,"isEff":0,"isRcmndPrblm":0,"issueAge":"","issueClosedDate":"","issueType":"","lastUpdateBy":"","lastUpdateDate":"","linkDfmeaDrbfm":"","llNum":"","llStatus":"","ltActlBreakDate":"","ltActlBreakPhase":"","ltActlBreakSource":"","ltPlanBreakDate":"","ltPlanBreakPhase":"","ltPlanBreaksource":"","ltSolut":"HMI SW integrated modifications to prevent the \"Update Media\" screen in E3 SW.","mainlyCausedBy":"","modelYear":"","originationDate":"","originatorDept":"","originatorName":"","param1":"","param2":"","param3":"","param4":"","param5":"","partFinishMile":"","partFinishPrcnt":"","partTestMile":"","partTestPrcnt":"","planDemonstration":"","pqm":"","prblmDesc":"MODULE ASM , HMI - Screen is blank during start up","prblmFrequency":"","prblmId":"197458","prblmSeverity":"2","prblmSource":"PRTS","prblmStatus":"W","prcAprvDate":"","prcAwaitingAprv":"0","prcChampion":"","prcSubmitDate":"","prjctId":"","prjctName":"","prjctNum":"","problemWorkPlans":[],"prodLine":"","programCode":"","programId":"","rcAprvDate":"","rcChampion":"","rcDayInStep":"0","rcDesignee":"","rcLastCommnt":"The \"Update Media Screen\" was a discovered issue on the D6 and E2 HMI SW sets.  The resolution of this issue was integrated in the E3 HMI SW.","rcStartDate":"","rcSubmitDate":"","rcmndReason":"","readAcrossNum":"","readacross":"","remark":"","reviewStatus":"","riseLevel":"3","rootCauseAnalysis":"","rptTime":"2017-08-30","salesRegion":"","silPrblmNo":"","solAprvDate":"","solChampion":"","solDaysInStep":"0","solDesignee":"","solFixPrblm":"","solLastCmt":"","solStartDate":"","solSubmitDate":"","solutType":"","sourceLevel1":"","sourceLevel2":"","sourceLevel3":"","sourcePrblmId":"31110","sourcePrblmNo":"1836656","stBreakDate":"","stBreakPhase":"","stSolut":"","status":"","subPrjctId":"","totalOpenDate":0,"trnsmsRpo":"","twoInfo":"","type":"","updateBy":"","updateTime":"","userJudgeFlag":"Y","vppsLevel3":"","vppsLevelFour":"","vppsLevelOne":"","vppsLevelThree":"","vppsLevelTwo":"","yearMonth":"","yearMonthEnd":""},"success":true};
-    this.setState({
-      issueData: res.data || {},
-      pc: res.pc
-    });
+    // 假数据
+    // var res = {"data":{"acutalDemonstration":"","allLaborcode":"","allPartNum":"","assistDiagnoseNum":0,"champion":"","championDept":"","championDesignee":"","closureCode":"","cmplnCatName":"","cmplnType":"","count":0,"createBy":"","createTime":"","crntAprvUser":"Christopher Lata","crntPhase":"Implementation","crntRspnsDept":"","crntRspnsUser":"","crntStepAge":"","crntStepChampion":"","crntStepStartDate":"","crntStepStatus":"","cstmrDetect":"","defAprvDate":"","defStartDate":"","defSubmitDate":"","dept":"","deptId":"","eirPrblmNo":"","engRpo":"","estimatePrblmStatus":"W","ewoInfo":"","ewoNum":"","ewoType":"","failMode":"","failureMode":"","fbAprvDate":"","fbChampion":"","fbDaysInStep":"","fbStartDate":"","fbSubmitDate":"","firstIncidengDescritption":"","hardwareStage":"","hotLevel":"3","impAprvDate":"","impChampion":"","impDaysInStep":"263","impStartDate":"","impSubmitDate":"","impactedPrjctNum":"","impactedProdLine":"","implementByEvent":"","inStockDay":0,"isEff":0,"isRcmndPrblm":0,"issueAge":"","issueClosedDate":"","issueType":"","lastUpdateBy":"","lastUpdateDate":"","linkDfmeaDrbfm":"","llNum":"","llStatus":"","ltActlBreakDate":"","ltActlBreakPhase":"","ltActlBreakSource":"","ltPlanBreakDate":"","ltPlanBreakPhase":"","ltPlanBreaksource":"","ltSolut":"HMI SW integrated modifications to prevent the \"Update Media\" screen in E3 SW.","mainlyCausedBy":"","modelYear":"","originationDate":"","originatorDept":"","originatorName":"","param1":"","param2":"","param3":"","param4":"","param5":"","partFinishMile":"","partFinishPrcnt":"","partTestMile":"","partTestPrcnt":"","planDemonstration":"","pqm":"","prblmDesc":"MODULE ASM , HMI - Screen is blank during start up","prblmFrequency":"","prblmId":"197458","prblmSeverity":"2","prblmSource":"PRTS","prblmStatus":"W","prcAprvDate":"","prcAwaitingAprv":"0","prcChampion":"","prcSubmitDate":"","prjctId":"","prjctName":"","prjctNum":"","problemWorkPlans":[],"prodLine":"","programCode":"","programId":"","rcAprvDate":"","rcChampion":"","rcDayInStep":"0","rcDesignee":"","rcLastCommnt":"The \"Update Media Screen\" was a discovered issue on the D6 and E2 HMI SW sets.  The resolution of this issue was integrated in the E3 HMI SW.","rcStartDate":"","rcSubmitDate":"","rcmndReason":"","readAcrossNum":"","readacross":"","remark":"","reviewStatus":"","riseLevel":"3","rootCauseAnalysis":"","rptTime":"2017-08-30","salesRegion":"","silPrblmNo":"","solAprvDate":"","solChampion":"","solDaysInStep":"0","solDesignee":"","solFixPrblm":"","solLastCmt":"","solStartDate":"","solSubmitDate":"","solutType":"","sourceLevel1":"","sourceLevel2":"","sourceLevel3":"","sourcePrblmId":"31110","sourcePrblmNo":"1836656","stBreakDate":"","stBreakPhase":"","stSolut":"","status":"","subPrjctId":"","totalOpenDate":0,"trnsmsRpo":"","twoInfo":"","type":"","updateBy":"","updateTime":"","userJudgeFlag":"Y","vppsLevel3":"","vppsLevelFour":"","vppsLevelOne":"","vppsLevelThree":"","vppsLevelTwo":"","yearMonth":"","yearMonthEnd":""},"success":true};
+    // this.setState({
+    //   issueData: res.data || {},
+    //   pc: res.pc
+    // });
     POST(url, {
       data: {
         id: id
@@ -215,6 +215,7 @@ export class IssueAdvance extends React.Component {
    */
   
   save = (data) => {
+    // issueSaveData from store
     var issueSaveData = this.props.issueSaveData;
     var issueData = this.state.issueData;
 
@@ -226,6 +227,15 @@ export class IssueAdvance extends React.Component {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
 
+    fetch('http://localhost:8090/QMS/toDo/saveProblem', {
+      method: 'POST',
+      mode: 'cors',
+      headers: headers,
+      data: JSON.stringify({
+        prblmId: issueData.prblmId,
+        PrblmStatus: issueData.estimatePrblmStatus,
+      })
+    })
     POST('/mproblem/saveProblem', {
       headers,
       data: {
@@ -282,7 +292,7 @@ export class IssueAdvance extends React.Component {
             <div className="flex-col-5">
               <Access PATH="search_save" type="button">
                 <span onClick={() => this.save()}>
-                  <IconSave style={{width: 39, height: 46, color:'#676767', marginLeft: '6px'}}></IconSave>
+                  <IconSave style={{width: '3.2em', height: '3.2em', color:'#676767', marginLeft: '6px'}}></IconSave>
                 </span>
               </Access>
               <Access PATH="search_review_audit" type="button">

@@ -146,59 +146,62 @@ class HomePage extends React.Component{
   commonMenu () {
     return (
       <div className="home-menu">
-        <div className="flex-row">
-          <div className="flex-col-1">
-            <Access PATH="manage/overview">
+          <Access PATH="manage/overview">
+            <div className="menu-wrap">
                 <Link to="/manage/overview">
                     <MenuButton iconName="project" text="项目质量" bgName="leftBottom"/>
                 </Link>
-            </Access>
-          </div>
-          <div className="flex-col-1">
-            <Access PATH="manage/aftermarket">
+            </div>
+          </Access>
+          <Access PATH="manage/aftermarket">
+            <div className="menu-wrap">
                 <Link to="/manage/aftermarket">
                     <MenuButton iconName="after-sale" text="售后质量" bgName="leftBottom"/>
                 </Link>
-            </Access>
-          </div>
-          <div className="flex-col-1">
-            <Access PATH="manage/report">
+            </div>
+          </Access>
+          <Access PATH="manage/report">
+            <div className="menu-wrap">
               <Link to="/manage/report">
                 <MenuButton iconName="monthly" text="质量月报" bgName="leftBottom"/>
               </Link>
-            </Access>
-          </div>
-          <div className="flex-col-1">
-            <Access PATH="notice" model="includes">
+            </div>
+          </Access>
+          <Access PATH="notice" model="includes">
+            <div className="menu-wrap">
               <Link to="/notice">
                 <MenuButton iconName="notice2" text="通知中心" bgName="leftBottom"/>
               </Link>
-            </Access>
-          </div>
-        </div>
-        <div className="flex-row">
-          <div className="flex-col-1">
-            <Access PATH="todo" model="includes">
+            </div>
+          </Access>
+          <Access PATH="todo" model="includes">
+            <div className="menu-wrap">
               <Link to="/todo">
                 <MenuButton iconName="msg" text="待办事项"/>
               </Link>
-            </Access>
-          </div>
-          <div className="flex-col-1">
-            <Link to="/" onClick={() => Toast.info('II期发布,敬请期待')}>
-              <MenuButton iconName="department" text="部门质量" />
-            </Link>
-          </div>
-          <div className="flex-col-1">
-            <Link to="/" onClick={() => Toast.info('II期发布,敬请期待')}>
-              <MenuButton iconName="person" text="EQR评审" />
-            </Link>
-          </div>
-          <div className="flex-col-1" onClick={this.showMore}>
+            </div>
+          </Access>
+          
+          <Access PATH="" model="includes">
+            <div className="menu-wrap">
+              <Link to="/" onClick={() => Toast.info('II期发布,敬请期待')}>
+                <MenuButton iconName="department" text="部门质量" />
+              </Link>
+            </div>
+          </Access>
+
+          <Access PATH="" model="includes">
+            <div className="menu-wrap">
+              <Link to="/" onClick={() => Toast.info('II期发布,敬请期待')}>
+                <MenuButton iconName="person" text="EQR评审" />
+              </Link>
+            </div>
+          </Access>
+
+          <div className="menu-wrap" onClick={this.showMore}>
               <MenuButton iconName="function" text="更多功能"/>
           </div>
         </div>
-      </div>
     )
   }
   render () {
@@ -245,19 +248,6 @@ class HomePage extends React.Component{
                         })
                       }
                   />
-                  {/* {
-                    Array.isArray(personalInfo) &&　personalInfo.map((item, i) => {
-                      return (
-                        <span 
-                          key={i}
-                          className={selectedId.DEPT_ID === item.DEPT_ID ? "post-item act" : "post-item"}
-                          onClick={() => this.changeId(item.DEPT_ID)}
-                        >
-                          {item.POSIT_DESC}
-                        </span>
-                      )
-                    })
-                  } */}
                 </div>
                 <div>
                   <span>{intl.get('department')}: </span>

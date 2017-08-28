@@ -15,6 +15,10 @@ import asyncComponet from '@/components/asyncComponet';
 
 export const routes = [
   {
+    path: '/toLogin',
+    component: asyncComponet(() => import(/* webpackChunkName: "toLogin" */ '@/views/status/toLogin'))
+  },
+  {
     path: '/404',
     component: asyncComponet(() => import(/* webpackChunkName: "404" */ '@/views/status/404'))
   },

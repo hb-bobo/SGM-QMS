@@ -104,7 +104,7 @@ class App extends React.Component{
         fhname === null ||
         fhname === undefined ||
         fhname === '') {
-        window.location.hash="403";
+        window.location.hash = "403";
       } else {
         // 拿到userName再拿id
         sessionStorage.setItem('userName', fhname);
@@ -115,14 +115,12 @@ class App extends React.Component{
     var userName = 'apptest01';
     sessionStorage.setItem('userName', userName);
     this.getIdByUserName();
-    
   }
 
   /**
    * get empId by userName
    */
   getIdByUserName () {
-    
       POST('/monthReport/getUserId', {
           data:{
             doMainAcct: sessionStorage.getItem('userName'),
