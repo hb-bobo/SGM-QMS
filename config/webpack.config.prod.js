@@ -77,8 +77,8 @@ module.exports = merge(baseWebpackConfig, {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].[chunkhash:8].js', //.[chunkhash:8]
-    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
+    filename: 'static/js/[name].js', //.[chunkhash:8]
+    chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js', // .[chunkhash:8]
   },
   module: {
     rules: [
@@ -153,8 +153,11 @@ module.exports = merge(baseWebpackConfig, {
   },
   plugins: [
     new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify('production')
+        'process.env.NODE_ENV': JSON.stringify('production'),
     }),
+    new webpack.DefinePlugin({
+      'process.env.QA': process.argv.includes('QA') ? true : false
+  }),
     // Generates an `index.html` file with the <script> injected.
     new HtmlWebpackPlugin({
       inject: true,

@@ -116,7 +116,7 @@ class QualityAfterSaleReport extends React.Component {
      * 重置容器高度
      */
     restScroller = () => {
-        setTimeout(() => this.refs.scorller.refresh(), 500)
+        setTimeout(() => this.refs.scorller.refresh(), 500);
     }
 
     render () {
@@ -139,6 +139,7 @@ class QualityAfterSaleReport extends React.Component {
                     autoSetHeight={true}
                     bottomHeight={0}
                     preventDefault={false}
+                    useToTop={false}
                     ref="scorller"
                 >
                     {/*顶部*/}
@@ -202,7 +203,7 @@ class QualityAfterSaleReport extends React.Component {
                             /> 
                         </Accordion.Panel>
                     </Accordion>
-                    <div style={{height: '20px'}} note="只为了垫底"></div>
+                    <div style={{height: '20px'}} data-note="只为了垫底"></div>
                 </SilkScroller>
             </div>
         )

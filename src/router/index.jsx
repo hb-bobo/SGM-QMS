@@ -16,15 +16,15 @@ import asyncComponet from '@/components/asyncComponet';
 export const routes = [
   {
     path: '/toLogin',
-    component: asyncComponet(() => import(/* webpackChunkName: "toLogin" */ '@/views/status/toLogin'))
+    component: asyncComponet(() => import(/* webpackChunkName: "status" */ '@/views/status/toLogin'))
   },
   {
     path: '/404',
-    component: asyncComponet(() => import(/* webpackChunkName: "404" */ '@/views/status/404'))
+    component: asyncComponet(() => import(/* webpackChunkName: "status" */ '@/views/status/404'))
   },
   {
     path: '/403',
-    component: asyncComponet(() => import(/* webpackChunkName: "403" */ '@/views/status/403'))
+    component: asyncComponet(() => import(/* webpackChunkName: "status" */ '@/views/status/403'))
   },
   { 
     path: '/',

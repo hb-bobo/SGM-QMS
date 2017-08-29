@@ -9,11 +9,11 @@ import PropTypes from 'prop-types';
  */
 const loadImg = function (obj, url) {
     var oImg = new Image();
-    oImg.src = url;
     oImg.onload = function () {
         obj.src = url;
         oImg = null;
     }
+    oImg.src = url;
 }
 
 export default class LazyImg extends React.Component {

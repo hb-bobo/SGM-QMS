@@ -24,7 +24,7 @@
 │ │   └── index.ts      # store入口
 │ ├── /types/           # 类型 d.ts
 │ ├── /utils/           # 工具函数
-│ ├── /views/           # 页面
+│ ├── /views/           # 页面(大部分跟pc端一致)
 │ ├── App.jsx           # React入口
 │ ├── AppConfig.js      # App公共配置数据
 │ └── index.js          # 项目入口文件
@@ -34,18 +34,27 @@
 
 ``` bash
 # 安装依赖包
-yarn
+npm install    == mvn install
 
 # 启动开发环境服务
 
-yarn start
+npm run start
+npm run start:noOpen  不会自动打开浏览器
 
 # 打包项目
 
-yarn build
-
+npm run build　ＱＡ
+npm run build:nomap　ＱＡ不生成souce-map文件(此文件只是方便上线后调试，文件很大，看需求)
+npm run build:pd　ｐｄ上生产用这个
 ```
 
 # 代理设置
 package.json 的proxy
+
+
+# 发布
+打包后，index.html和manifest.json，放至java项目的src\main\webapp\WEB-INF\app
+                        static目录放至java项目的src\main\webapp\WEB-INF\static
+
+如果打包出很多很大的map(作用是方便上线debug)，请用npm run build:nomap打包
 

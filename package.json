@@ -25,8 +25,9 @@
   "scripts": {
     "start": "node scripts/start.js",
     "start:noOpen": "node scripts/start.js noOpen",
-    "build": "node scripts/build.js source-map",
-    "build:nomap": "node scripts/build.js",
+    "build": "node scripts/build.js source-map QA",
+    "build:nomap": "node scripts/build.js QA",
+    "build:pd": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
     "data": "node simulate-data/server.js"
   },

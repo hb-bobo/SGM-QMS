@@ -112,9 +112,9 @@ class App extends React.Component{
       }
     }, false);
     // TODO
-    var userName = 'apptest01';
-    sessionStorage.setItem('userName', userName);
-    this.getIdByUserName();
+    // var userName = 'apptest01';
+    // sessionStorage.setItem('userName', userName);
+    // this.getIdByUserName();
   }
 
   /**

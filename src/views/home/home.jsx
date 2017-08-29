@@ -21,12 +21,12 @@ import MoreMenu from './more.jsx';
 import './index.css';
 import home_top from '@/static/images/home_top.jpg';
 
-// import slideCar1 from '@/static/images/slide/slide-car1.png';
-// import slideCar2 from '@/static/images/slide/slide-car2.png';
-// import slideCar3 from '@/static/images/slide/slide-car3.png';
-// import slideCar4 from '@/static/images/slide/slide-car4.png';
-// import slideCar5 from '@/static/images/slide/slide-car5.png';
-// import slideCar6 from '@/static/images/slide/slide-car6.png';
+import slideCar1 from '@/static/images/slide/slide-car1.png'; 
+import slideCar2 from '@/static/images/slide/slide-car2.png'; 
+import slideCar3 from '@/static/images/slide/slide-car3.png'; 
+import slideCar4 from '@/static/images/slide/slide-car4.png'; 
+import slideCar5 from '@/static/images/slide/slide-car5.png'; 
+import slideCar6 from '@/static/images/slide/slide-car6.png'; 
 // 加载本地语言包
 import(/* webpackChunkName: "intl" */ './locale')
 .then((intlMsg) => {
@@ -39,15 +39,22 @@ var homeTopBg = {
 }
 
 // 轮播图url(取pc端的)
+// var bannerImgUrl = [
+//   AppConfig.API + '/static/img/slide/slide-car1.png',
+//   AppConfig.API + '/static/img/slide/slide-car2.png',
+//   AppConfig.API + '/static/img/slide/slide-car3.png',
+//   AppConfig.API + '/static/img/slide/slide-car4.png',
+//   AppConfig.API + '/static/img/slide/slide-car5.png',
+//   AppConfig.API + '/static/img/slide/slide-car6.png',
+// ];
 var bannerImgUrl = [
-  AppConfig.API + '/static/img/slide/slide-car1.png',
-  AppConfig.API + '/static/img/slide/slide-car2.png',
-  AppConfig.API + '/static/img/slide/slide-car3.png',
-  AppConfig.API + '/static/img/slide/slide-car4.png',
-  AppConfig.API + '/static/img/slide/slide-car5.png',
-  AppConfig.API + '/static/img/slide/slide-car6.png',
-];
-
+  slideCar1,
+  slideCar2,
+  slideCar3,
+  slideCar4,
+  slideCar5,
+  slideCar6,
+]
 var timer = {
   time: 0,
   timer: null
@@ -65,6 +72,9 @@ class HomePage extends React.Component{
     showMore: false,
     personalInfo: [],
     selectedId: {}
+  }
+  componentWillMount () {
+    // this.context.router.history.push('/toLogin');
   }
 
   componentDidMount () {
@@ -153,13 +163,17 @@ class HomePage extends React.Component{
    * 这里做些测试(timer.time 为几就代表要快速点击几下)
    */
   doSomething = (e) => {
-    clearTimeout(timer.timer);
-    timer.time++;
-    timer.timer = setTimeout(function() {
-      timer.time = 0;
-    }, 400);
-    if (timer.time === 3) {
-      this.context.router.history.push('/toLogin');
+    // 生产环境失效
+    console.log(process.env.QA)
+    if (process.env.QA || AppConfig.isDev) {
+      clearTimeout(timer.timer);
+      timer.time++;
+      timer.timer = setTimeout(function() {
+        timer.time = 0;
+      }, 400);
+      if (timer.time === 3) {
+        this.context.router.history.push('/toLogin');
+      }
     }
   }
   /*常用的菜单 element*/
