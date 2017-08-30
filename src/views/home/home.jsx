@@ -17,7 +17,6 @@ import AppConfig from '@/AppConfig';
 
 // view
 import MenuButton from './menu-button';
-import MoreMenu from './more.jsx';
 import './index.css';
 import home_top from '@/static/images/home_top.jpg';
 
@@ -154,11 +153,6 @@ class HomePage extends React.Component{
       return false;
     });
   }
-  showMore = () => {
-    Toast.info(intl.get('noMoreMenu'), 1.5)
-    // this.setState({showMore: true})
-  }
-
   /**
    * 这里做些测试(timer.time 为几就代表要快速点击几下)
    */
@@ -176,68 +170,7 @@ class HomePage extends React.Component{
       }
     }
   }
-  /*常用的菜单 element*/
-  commonMenu () {
-    return (
-      <div className="home-menu">
-          <Access PATH="manage/overview">
-            <div className="menu-wrap">
-                <Link to="/manage/overview">
-                    <MenuButton iconName="project" text="项目质量" bgName="leftBottom"/>
-                </Link>
-            </div>
-          </Access>
-          <Access PATH="manage/aftermarket">
-            <div className="menu-wrap">
-                <Link to="/manage/aftermarket">
-                    <MenuButton iconName="after-sale" text="售后质量" bgName="leftBottom"/>
-                </Link>
-            </div>
-          </Access>
-          <Access PATH="manage/report">
-            <div className="menu-wrap">
-              <Link to="/manage/report">
-                <MenuButton iconName="monthly" text="质量月报" bgName="leftBottom"/>
-              </Link>
-            </div>
-          </Access>
-          <Access PATH="notice" model="includes">
-            <div className="menu-wrap">
-              <Link to="/notice">
-                <MenuButton iconName="notice2" text="通知中心" bgName="leftBottom"/>
-              </Link>
-            </div>
-          </Access>
-          <Access PATH="todo" model="includes">
-            <div className="menu-wrap">
-              <Link to="/todo">
-                <MenuButton iconName="msg" text="待办事项"/>
-              </Link>
-            </div>
-          </Access>
-          
-          <Access PATH="" model="includes">
-            <div className="menu-wrap">
-              <Link to="/" onClick={() => Toast.info('II期发布,敬请期待')}>
-                <MenuButton iconName="department" text="部门质量" />
-              </Link>
-            </div>
-          </Access>
 
-          <Access PATH="" model="includes">
-            <div className="menu-wrap">
-              <Link to="/" onClick={() => Toast.info('II期发布,敬请期待')}>
-                <MenuButton iconName="person" text="EQR评审" />
-              </Link>
-            </div>
-          </Access>
-
-          <div className="menu-wrap" onClick={this.showMore}>
-              <MenuButton iconName="function" text="更多功能"/>
-          </div>
-        </div>
-    )
-  }
   render () {
 
     var {selectedId, personalInfo} = this.state;
@@ -294,13 +227,101 @@ class HomePage extends React.Component{
               </div>
             </div>
           </div>
-          {
-            this.state.showMore ? <MoreMenu/> : this.commonMenu()
-          }
-        </div>
+          <Menu showAll={false}/>
+      </div>
     );
   }
 }
+
+export class Menu extends React.Component {
+
+  state = {
+    /**
+     * 是否展示全部菜单
+     */
+    showAll: false
+  }
+  showMore = () => {
+    Toast.info(intl.get('noMoreMenu'), 1.5)
+    // this.setState({
+    //   showAll: true
+    // });
+  }
+  render () {
+    var {showAll} = this.state;
+    return (
+      <div className="home-menu">
+          <Access PATH="manage/overview">
+            <div className="menu-wrap">
+                <Link to="/manage/overview">
+                    <MenuButton iconName="project" text={intl.get('manage/overview')} bgName="leftBottom"/>
+                </Link>
+            </div>
+          </Access>
+          <Access PATH="manage/aftermarket">
+            <div className="menu-wrap">
+                <Link to="/manage/aftermarket">
+                    <MenuButton iconName="after-sale" text={intl.get('QMS.aftermarket')} bgName="leftBottom"/>
+                </Link>
+            </div>
+          </Access>
+          <Access PATH="manage/report">
+            <div className="menu-wrap">
+              <Link to="/manage/report">
+                <MenuButton iconName="monthly" text={intl.get('QMS.MonthlyQualityReport')} bgName="leftBottom"/>
+              </Link>
+            </div>
+          </Access>
+          <Access PATH="notice" model="includes">
+            <div className="menu-wrap">
+              <Link to="/notice">
+                <MenuButton iconName="notice2" text={intl.get('QMS.notice')} bgName="leftBottom"/>
+              </Link>
+            </div>
+          </Access>
+          <Access PATH="todo" model="includes">
+            <div className="menu-wrap">
+              <Link to="/todo">
+                <MenuButton iconName="msg" text={intl.get('QMS.todo')}/>
+              </Link>
+            </div>
+          </Access>
+          
+          <Access PATH="" model="includes">
+            <div className="menu-wrap">
+              <Link to="/" onClick={() => Toast.info('II期发布,敬请期待')}>
+                <MenuButton iconName="department" text={intl.get('QMS.department')} />
+              </Link>
+            </div>
+          </Access>
+  
+          <Access PATH="" model="includes">
+            <div className="menu-wrap">
+              <Link to="/" onClick={() => Toast.info('II期发布,敬请期待')}>
+                <MenuButton iconName="person" text="EQR评审" />
+              </Link>
+            </div>
+          </Access>
+  
+          <div className="menu-wrap" onClick={this.showMore} style={{display: showAll ? 'none': 'inlie-block'}}>
+              <MenuButton iconName="function" text={intl.get('more')}/>
+          </div>
+        
+          {/*更多菜单*/
+            showAll ? 
+            (
+              <span>
+                
+              </span>
+            ) :
+            null
+          }
+      </div>
+    )
+  }
+}
+
+// 这里是测试的
 export class TodoList extends React.Component {
   constructor(props) {
     super(props);

@@ -51,6 +51,8 @@
     padding: 10px 20px;
     height: 38.6vh;
     overflow: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
 }
 .home-menu .flex-row{
     height: auto;
@@ -88,11 +90,13 @@
     height: 2.5em;
 }
 .home-menu-item span{
+    position: absolute;
+    top: 62px;
+    left: 0;
     margin-top: 2px;
     display: inline-block;
     font-size: 0.7em;
     width: 100%;
-    white-space: nowrap;
 }
 /*部分图标得调整大小*/
 .home-menu-item .icon-msg{

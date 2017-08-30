@@ -75,7 +75,7 @@ export default class CreateTabs extends React.Component {
             // 无权限不显示
             if (getAccess(menu.path)) {
                 this.tabPanes.push(
-                    <TabPane tab={<Label value={menu.tabTitle}/>} key={menu.tabTitle}>
+                    <TabPane tab={<Label value={menu.tabTitle}/>} key={menu.tabTitle || i}>
                         <menu.tabContent {...this.props}/>
                     </TabPane>
                 )

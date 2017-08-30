@@ -36,6 +36,7 @@ const menuData = [
         path: 'manage/overview'
     }
 ];
+console.log(menuData, intl.get('QMS.manage/overview'))
 /* 项目质量总览 */
 class Overview extends React.Component {
     static contextTypes = {

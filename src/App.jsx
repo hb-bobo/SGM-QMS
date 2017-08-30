@@ -42,7 +42,7 @@ const muiTheme = getMuiTheme({
 });
 // 设置语言
 intl.setLanguage(AppConfig.language);
-// 设置公共语言包
+// 设置公共语言包(子组件还可以加载特有语言包(/locale))
 import(/* webpackChunkName: "intl" */ '@/static/i18n')
 .then((res) => {
   intl.setMsg(res.default);
@@ -73,10 +73,6 @@ class App extends React.Component{
 
   componentWillMount () {
     // 先清一遍
-    sessionStorage.removeItem('empId');
-    sessionStorage.removeItem('positNum');
-    sessionStorage.removeItem('userName');
-
     if (sessionStorage.getItem('userName') === null) {
       this.getUserName();
     }
@@ -88,6 +84,7 @@ class App extends React.Component{
   componentWillUnmount () {
     sessionStorage.removeItem('empId');
     sessionStorage.removeItem('positNum');
+    sessionStorage.removeItem('userName');
   }
   
   /**

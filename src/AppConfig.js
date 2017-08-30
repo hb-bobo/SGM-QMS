@@ -21,7 +21,7 @@ const AppConfig = {
     API: isDev? DEV_API : BASE_URL,
     // API: DEV_API,
     // 语言环境
-    language: (window.navigator.language || window.navigator.browserLanguage).split('-')[0],
+    language: false || (window.navigator.language || window.navigator.browserLanguage).split('-')[0],
     // 列表配置
     listConfig: {
         count: 20 // 每个list每次加载多少条数据

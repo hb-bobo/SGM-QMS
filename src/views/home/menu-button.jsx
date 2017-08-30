@@ -13,7 +13,7 @@ const MenuButton = (props) => {
             <svg className={`icon icon-${iconName}`}>
                 <use xlinkHref={`#icon-${iconName}`}></use>
             </svg>
-            <span className="text-center" style={{marginTop: '14px'}}>
+            <span className="text-center">
                 {text}
             </span>
         </div>

@@ -13,7 +13,7 @@ interface LocaleData {
  * first,set language
  * then setMsg
  * last get
- * setMsg加载过语言包，子组件子页面里就不用加载了，但子组件可以继续加载不同的语言包，如果有冲突，尽量在外层加载
+ * setMsg加载过语言包，子组件子页面里就不用加载了，但子组件可以继续加载不同的语言包(locale)，如果有冲突，尽量在外层加载
  */
 class Intl {
     private msg: Msg;
