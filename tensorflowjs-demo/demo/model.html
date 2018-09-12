@@ -1,0 +1,133 @@
+<html>
+
+<head>
+    <!-- Load TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.8.0"> </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/4.1.0/echarts.min.js"></script>
+    <!-- Place your code in the script tag below. You can also use an external .js file -->
+ 
+</head>
+
+<body>
+
+    <div id="main" style="height: 300px;">
+
+    </div>
+
+    <div>
+        第6个预测结果:<span id="value"></span>
+    </div>
+    <div>
+        训练次数:<span id="count-value"></span>
+    </div>
+    <button onclick="fit()">fit</button>
+
+    <hr>
+
+    <div>
+        预测第<input type="text" id="inputValue">结果:<span id="outputValue"></span>
+    </div>
+    <button onclick="predict()">predict</button>
+    <script>
+
+            var myChart = echarts.init(document.getElementById('main'));
+
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: ''
+                },
+                tooltip: {
+                    trigger: 'axis',
+                },
+                legend: {
+                    data:['yx']
+                },
+                xAxis: {
+                    data: [1, 2, 3, 4, 5,]
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    name: 'y',
+                    type: 'line',
+                    data: [1, 3, 5, 7, 9]
+                }]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+            
+            const input = document.getElementById('value');
+            let pre = null;
+            let fitCount = 0;
+
+
+            // 1.定义一个线性回归的模型
+            const model = tf.sequential();
+            model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
+    
+            // 2.准备训练模型: 指定loss 和 optimizer.
+
+            /* sgd: SGD算法（随机梯度下降） */
+
+            /* meanSquaredError: 均方误差  */
+            /**
+             * @
+             */
+            model.compile({ loss: 'meanSquaredError', optimizer: 'sgd' });
+
+            window.fit = () => {
+                // Generate some synthetic data for training. [[1, 2, 3, 4, 5, 6, 7, 8], [1, 3, 5, 7, 9, 11, 13, 15]]
+                const xs = tf.tensor2d([1, 2, 3, 4, 5], [5, 1]); 
+                const ys = tf.tensor2d([1, 3, 5, 7, 9], [5, 1]);
+                // const ys = tf.tensor(
+                //     [
+                //         [1],
+                //         [3],
+                //         [5],
+                //         [7]
+                //     ]);
+                // 3.用数据训练模型. {epochs: 2000}
+                model.fit(xs, ys, {epochs: 2000}).then(() => {
+                    // 4. 用一个未见过的数据进行预测
+                    res = model.predict(tf.tensor([6], [1, 1])).get();
+
+
+
+                    fitCount++;
+                    if (res == pre) {
+                        console.log('结果已经最优');
+                        return;
+                    }
+                    input.innerHTML = res;
+                    document.getElementById('count-value').innerHTML = fitCount;
+                    pre = res
+                    // 更新echart
+                    renderChart(6, res);
+                    // setTimeout(() => {
+                    //     window.fit();
+                    // }, 100)
+                })
+            }
+
+            function predict () {
+                let inputValue = document.getElementById('inputValue').value;
+                
+                predictY = Math.round(model.predict(tf.tensor([inputValue | 0], [1, 1])).get(0, 0));
+                document.getElementById('outputValue').innerText = predictY
+
+                // 更新echart
+                renderChart(Number(inputValue), predictY);
+            }
+
+            function renderChart(x, y) {
+                // 更新echart
+                option.xAxis.data[x - 1] = x;
+                option.series[0].data[x - 1] = y
+                myChart.setOption(option);
+            }
+        </script>
+</body>
+
+</html>

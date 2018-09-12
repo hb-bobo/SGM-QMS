@@ -1,0 +1,39 @@
+{
+  "name": "tensorflowjs-demo",
+  "version": "1.0.0",
+  "description": "ts-mnist",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack-dev-server --mode=development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hb-bobo/tensorflowjs-demo.git"
+  },
+  "keywords": [
+    "tensorflowjs"
+  ],
+  "author": "hubo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hb-bobo/tensorflowjs-demo/issues"
+  },
+  "homepage": "https://github.com/hb-bobo/tensorflowjs-demo#readme",
+  "dependencies": {
+    "@tensorflow/tfjs": "^0.12.7",
+    "vega-embed": "^3.19.2"
+  },
+  "devDependencies": {
+    "babel-loader": "^8.0.2",
+    "babel-preset-env": "^1.7.0",
+    "copy-webpack-plugin": "^4.5.2",
+    "css-loader": "^1.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "style-loader": "^0.23.0",
+    "ts-loader": "^5.1.0",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.8"
+  }
+}

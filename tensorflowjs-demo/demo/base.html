@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <!-- Load TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.8.0"> </script>
+
+    <!-- Place your code in the script tag below. You can also use an external .js file -->
+ 
+</head>
+
+<body>
+    
+    <script>
+        // Tensor
+        const shape = [2, 3]; // 2 rows, 3 columns
+        const a1 = tf.tensor([1.0, 2.0, 3.0, 10.0, 20.0, 30.0], shape);
+        const b1 = tf.tensor([[1.0, 2.0, 3.0], [10.0, 20.0, 30.0]]);
+        // [
+        //     []
+        // ]
+        // console.log(a1.dataSync())
+        // a1.print();
+        // b1.print();
+        // const c = tf.tensor2d([
+        //     [1.0 , 2.0 , 3.0],
+        //     [10.0, 20.0, 30.0]
+        // ]);
+        // c.print();
+        // const b = tf.scalar(1)
+        // b.print();
+
+        // const zeros = tf.zeros([3, 5]);
+        // zeros.print();
+
+        
+        // const initialValues = tf.zeros([5]);
+        // const biases = tf.variable(initialValues); // initialize biases
+        // biases.print(); // output: [0, 0, 0, 0, 0]
+
+        // const updatedValues = tf.tensor1d([0, 1, 0, 1, 0]);
+        // biases.assign(updatedValues); // update values of biases
+        // biases.print(); // output: [0, 1, 0, 1, 0]
+        // // Operations.add
+        //  const a = tf.tensor([1, 2]);
+        //  const b = tf.tensor([2, 3]);
+        //  // .add(b).print();  
+        //  tf.add(a, b).print();
+        // // 一元操作
+        // const x = tf.tensor1d([1, 2, Math.sqrt(2), -1]);
+        // x.square().print();
+        const a = tf.scalar(2);
+        const b = tf.scalar(4);
+        const c = tf.scalar(8);
+        function predict(input) {
+            // y = a * x ^ 2 + b * x + c
+            // tidy再下面会讲
+            return tf.tidy(() => {
+                const x = tf.scalar(input);
+
+                const ax2 = a.mul(x.square());
+                const bx = b.mul(x);
+                const y = ax2.add(bx).add(c);
+
+                return y;
+            });
+}
+
+    predict(1).print();
+
+    </script>
+</body>
+
+</html>
