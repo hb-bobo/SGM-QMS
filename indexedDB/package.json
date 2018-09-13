@@ -1,5 +1,5 @@
 {
-  "name": "tensorflowjs-demo",
+  "name": "indexed_db",
   "version": "1.0.0",
   "description": "ts-mnist",
   "main": "index.js",
@@ -9,17 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hb-bobo/share.git"
+    "url": "git+https://github.com/hb-bobo/share/tree/master/indexedDB"
   },
   "keywords": [
-    "tensorflowjs"
+    "IndexedDB"
   ],
   "author": "hubo",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/hb-bobo/share/issues"
-  },
-  "homepage": "https://github.com/hb-bobo/share/tree/master/tensorflowjs-demo",
+  "homepage": "https://github.com/hb-bobo/share/tree/master/indexedDB#readme",
   "dependencies": {
     "@tensorflow/tfjs": "^0.12.7",
     "vega-embed": "^3.19.2"
