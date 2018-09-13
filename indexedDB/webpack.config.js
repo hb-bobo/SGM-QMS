@@ -19,17 +19,26 @@ module.exports = {
         path: resolve('dist'),
     },
     resolve: {
-        extensions: ['.js', '.ts']
+        extensions: ['.js', '.ts', '.d.ts']
     },
     module: {
         rules: [
             {
                 test: /\.js$/,
-                // exclude: /(node_modules|bower_components)/,
+                exclude: /(node_modules|bower_components)/,
                 use: {
                     loader: 'babel-loader',
                     options: {
                         babelrc: true
+                    }
+                }
+            },
+            {
+                test: /\.(ts|d.ts)$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: 'ts-loader',
+                    options: {
                     }
                 }
             }
@@ -39,12 +48,5 @@ module.exports = {
     plugins: [
         new HtmlWebpackPlugin({ template: 'src/index.html' }),
         new webpack.HotModuleReplacementPlugin(),
-        new CopyWebpackPlugin([
-            {
-              from: resolve('static'),
-              to: 'static',
-              ignore: ['.*']
-            }
-        ])
     ]
 }; 
