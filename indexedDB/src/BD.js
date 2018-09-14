@@ -14,7 +14,6 @@ export default class DB {
     init(databaseName) {
         const request = indexedDB.open( databaseName, this.version );
 			request.onupgradeneeded = function ( event ) {
-				console.log(event)
 				this.db = event.target.result;
 				if ( this.db.objectStoreNames.contains( 'states' ) === false ) {
 					this.db.createObjectStore( 'states' );
@@ -26,5 +25,45 @@ export default class DB {
 			request.onerror = function ( event ) {
 				console.error( 'IndexedDB', event );
 			};
-    }
+	}
+	/* 事务 */
+	transaction(stroeName) {
+		return database.transaction( [ stroeName ], 'readwrite' );
+	}
+	/*  */
+	objectStore(stroeName) {
+		this.transaction(stroeName).objectStore( stroeName );
+	}
+	get(stroeName, callback) {
+		// 事物
+		var objectStore = this.objectStore( stroeName );
+		var request = objectStore.get( 0 );
+		request.onsuccess = function ( event ) {
+			callback( event.target.result );
+		};
+	}
+
+	put(stroeName, data, callback) {
+		var objectStore = this.objectStore( stroeName );
+		var request = objectStore.put( data, 0 );
+		request.onsuccess = function ( event ) {
+			callback(event.target.result);
+		};
+
+	}
+
+	add(data, callback) {
+
+	}
+	clear(stroeName) {
+		if ( this.database === undefined ) return;
+		var objectStore = this.objectStore( stroeName );
+		var request = objectStore.clear();
+		request.onsuccess = function ( event ) {
+
+			console.log( '[' + /\d\d\:\d\d\:\d\d/.exec( new Date() )[ 0 ] + ']', 'Cleared IndexedDB.' );
+
+		};
+
+	}
 }
