@@ -1,5 +1,8 @@
 # indexedDB
 
+推荐第三方库 [zangodb](https://erikolson186.github.io/zangodb/)、[dexie.js](http://dexie.org/)
+
+
 ## IndexedDB 具有以下特点。
 
 （1）IndexedDB 数据库存储键值对。 IndexedDB 内部采用对象仓库（object store）存放数据。所有类型的数据都可以直接存入，包括 JavaScript 对象。对象仓库中，数据以"键值对"的形式保存，每一个数据记录都有对应的主键，主键是独一无二的，不能有重复，否则会抛出一个错误。
