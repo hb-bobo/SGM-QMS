@@ -21,7 +21,7 @@
 ## 基本模式
 
 - 打开数据库 -> indexedDB.open() -> IDBDatabase
-- 开始一个事务 -> IDBDatabase.transaction() -> IDBTransaction
+- 开始一个事务 -> IDBDatabase.transaction() -> IDBTransaction ->IDBObjectStore
 
 - 新建数据库 (IDBObjectStore.createObjectStore())
 - 新增数据 (IDBObjectStore.add())
@@ -33,21 +33,101 @@
 1. 打开数据库
 ```javascript
     // IDBOpenDBRequest  表示打开数据库的请求
-    const request = indexedDB.open( databaseName, version );
+    const request: IDBOpenDBRequest  = indexedDB.open( databaseName, version );
         // 版本更新，创建新的store的时候
         request.onupgradeneeded = ( event ) => {
             // // IDBDatabase 表示与数据库的连接。这是获取数据库事务的唯一方法。
-            db = event.target.result;
+            const db: IDBDatabase = event.target.result;
             if ( db.objectStoreNames.contains( stroeName ) === false ) {
-                db.createObjectStore( stroeName );
+                db.createObjectStore( stroeName, {keyPath: 'key'} );
             }
         };
         request.onsuccess = ( event ) => {
             // IDBDatabase 表示与数据库的连接。这是获取数据库事务的唯一方法。
-            db = event.target.result;
+            const db: IDBDatabase = event.target.result;
+            openSuccess(db);
         };
         request.onerror = ( event ) => {
             console.error( 'IndexedDB', event );
         };
 
  ```
+
+
+  2. 开始一个事务
+```ts
+   function openSuccess (db: IDBDatabase) {
+       transaction: IDBTransaction = db.transaction( [ storeName ], 'readwrite' );
+   }
+
+ ```
+  3. 新建数据库
+```javascript
+   function openSuccess (db: IDBDatabase) {
+       transaction: IDBTransaction = db.transaction( [ storeName ], 'readwrite' );
+        objectStore: IDBObjectStore = transaction.objectStore(storeName);
+   }
+
+ ```
+  4. 新增数据
+```javascript
+   const request: IDBRequest = objectStore.add(data);
+    request.onsuccess = function ( event ) {
+    };
+    request.onerror = function ( event ) {
+    };
+
+ ```
+
+5. 读取数据
+```javascript
+    // 根据keyPath查询
+   const request: IDBRequest = objectStore.get(data);
+    request.onsuccess = function ( event ) {
+        // 获取查询结果
+        event.target.result;
+    };
+    request.onerror = function ( event ) {
+    };
+
+ ```
+
+   6. 更新数据
+```javascript
+   const request: IDBRequest = objectStore.put(data);
+    request.onsuccess = function ( event ) {
+    };
+    request.onerror = function ( event ) {
+    };
+
+ ```
+
+   7. 删除数据
+```javascript
+    // 根据keyPath删除
+   const request: IDBRequest = objectStore.delete(data);
+    request.onsuccess = function ( event ) {
+    };
+    request.onerror = function ( event ) {
+    };
+
+ ```
+
+  8. 遍历数据
+  ```typescript
+    const request = objectStore.openCursor();
+    request.onsuccess = ( event ) => {
+        let cursor = event.target.result;
+        // 没有数据可遍历时 cursor === null
+        if (cursor !== null) {
+            callback(cursor.value);
+            // 下一个
+            cursor.continue();
+        }
+    };
+    request.onerror = (event) => {
+        callback(event)
+    }
+
+ ```
+  

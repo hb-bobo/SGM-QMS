@@ -35,6 +35,10 @@ export default class DB {
 	 */
     open(databaseName, version, storeOptions) {
 		return new Promise((resolve, reject) => {
+			if (this._dbs[databaseName + version]) {
+				resolve(this._dbs[databaseName + version]);
+				return;
+			}
 			// IDBOpenDBRequest 
 			const request = indexedDB.open( databaseName, version );
 				// 版本更新，创建新的store的时候
@@ -49,7 +53,7 @@ export default class DB {
 							database.createObjectStore( key, {keyPath});
 						}
 					}
-					resolve();
+					resolve(database);
 				};
 				request.onsuccess = ( event ) => {
 					// IDBDatabase 
@@ -99,8 +103,8 @@ export default class DB {
 	 * @return {IDBObjectStore}
 	 */
 	async _getObjectStore(storeName, version) {
-		let objectStore = await this._getTransaction(storeName, version);
-		return objectStore.objectStore( storeName );;
+		let transaction = await this._getTransaction(storeName, version);
+		return transaction.objectStore( storeName );
 	}
 
 	/**
@@ -113,12 +117,16 @@ export default class DB {
 		this._getObjectStore(storeName, version);
 		return this;
 	}
+	/**
+	 * 
+	 * @param {any} data store中的keyPath
+	 */
 	get(data) {
 		return new Promise((resolve, reject) => {
 			this._getObjectStore(this.currentStore).then((objectStore) => {
-				const request = objectStore.get( 0 );
+				const request = objectStore.get(data);
 				request.onsuccess = function ( event ) {
-					resolve(event);
+					resolve(event.target.result);
 				};
 			});
 		});
@@ -131,17 +139,21 @@ export default class DB {
 	add(data) {
 		return new Promise((resolve, reject) => {
 			this._getObjectStore(this.currentStore).then((objectStore) => {
-				console.log(data)
 				const request = objectStore.add(data);
+				console.log(request)
 				request.onsuccess = function ( event ) {
 					resolve(event);
+				};
+				request.onerror = function ( event ) {
+					console.error(event);
+					// reject(event);
 				};
 			});
 		});
 	}
 	/**
 	 * 
-	 * @param {any} data 
+	 * @param {any} data store中的keyPath
 	 * @return {Promise}
 	 */
 	delete(data) {
@@ -166,6 +178,10 @@ export default class DB {
 				request.onsuccess = function ( event ) {
 					resolve(event);
 				};
+				request.onerror = function ( event ) {
+					console.error(event);
+					// reject(event);
+				};
 			});
 		});
 	}
@@ -177,14 +193,30 @@ export default class DB {
 	 */
 	clear(storeName) {
 		return new Promise((resolve, reject) => {
-			const objectStore = this.getObjectStore( storeName );
-			const request = objectStore.clear();
+			this._getObjectStore(this.currentStore).then((objectStore) => {
+				const request = objectStore.clear();
+				request.onsuccess = ( event ) => {
+					resolve(event);
+				};
+				request.onerror = (event) => {
+					reject(event)
+				}
+			});
+		});
+	}
+	each(callback) {
+		this._getObjectStore(this.currentStore).then((objectStore) => {
+			const request = objectStore.openCursor();
 			request.onsuccess = ( event ) => {
-				resolve(event);
+				let cursor = event.target.result;
+				if (cursor !== null) {
+					callback(cursor.value);
+					cursor.continue();
+				}
 			};
 			request.onerror = (event) => {
-				reject(event)
+				callback(event)
 			}
-	});
+		});
 	}
 }
