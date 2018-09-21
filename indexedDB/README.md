@@ -41,6 +41,7 @@
             if ( db.objectStoreNames.contains( stroeName ) === false ) {
                 db.createObjectStore( stroeName, {keyPath: 'key'} );
             }
+            openSuccess(db);
         };
         request.onsuccess = ( event ) => {
             // IDBDatabase 表示与数据库的连接。这是获取数据库事务的唯一方法。
