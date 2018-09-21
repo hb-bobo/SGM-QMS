@@ -81,6 +81,7 @@
  ```
 
 5. 读取数据
+
 ```javascript
     // 根据keyPath查询
    const request: IDBRequest = objectStore.get(data);
@@ -94,6 +95,7 @@
  ```
 
    6. 更新数据
+
 ```javascript
    const request: IDBRequest = objectStore.put(data);
     request.onsuccess = function ( event ) {
@@ -104,6 +106,7 @@
  ```
 
    7. 删除数据
+
 ```javascript
     // 根据keyPath删除
    const request: IDBRequest = objectStore.delete(data);
@@ -115,6 +118,7 @@
  ```
 
   8. 遍历数据
+
   ```typescript
     const request = objectStore.openCursor();
     request.onsuccess = ( event ) => {
