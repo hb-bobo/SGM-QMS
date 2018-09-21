@@ -62,7 +62,7 @@
    }
 
  ```
-  3. 新建数据库
+  3. 获取IDBObjectStore
 ```javascript
    function openSuccess (db: IDBDatabase) {
        transaction: IDBTransaction = db.transaction( [ storeName ], 'readwrite' );
